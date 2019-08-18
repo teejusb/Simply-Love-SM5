@@ -4,6 +4,10 @@ local SongStats = SONGMAN:GetNumSongs() .. " songs in "
 SongStats = SongStats .. SONGMAN:GetNumSongGroups() .. " groups, "
 SongStats = SongStats .. #SONGMAN:GetAllCourses(PREFSMAN:GetPreference("AutogenGroupCourses")) .. " courses"
 
+-- re-enable both players now
+SCREENMAN:set_input_redirected(PLAYER_1, false)
+SCREENMAN:set_input_redirected(PLAYER_2, false)
+
 -- - - - - - - - - - - - - - - - - - - - -
 local game = GAMESTATE:GetCurrentGame():GetName();
 if game ~= "dance" and game ~= "pump" then
@@ -48,6 +52,9 @@ local af = Def.ActorFrame{
 	InitCommand=function(self)
 		--see: ./Scripts/SL_Initialize.lua
 		InitializeSimplyLove()
+
+		-- see: ./Scripts/ECS.lua
+		InitializeECS()
 
 		self:Center()
 	end,

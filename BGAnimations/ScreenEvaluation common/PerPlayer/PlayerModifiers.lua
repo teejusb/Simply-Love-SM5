@@ -15,6 +15,11 @@ if SL.Global.GameMode ~= "Casual" then
 	end
 
 	local TimingWindowScale = round(PREFSMAN:GetPreference("TimingWindowScale") * 100)
+	local LifeDifficultyScale = round(PREFSMAN:GetPreference("LifeDifficultyScale"), 1)
+	local lifescales = {
+		["1.0"] = 4,
+		["0.8"] = 5
+	}
 
 	--  ...and append options to that string as needed
 	for i,option in ipairs(PlayerOptions) do
@@ -41,6 +46,10 @@ if SL.Global.GameMode ~= "Casual" then
 	-- Display TimingWindowScale as a modifier if it's set to anything other than 1.0
 	if TimingWindowScale ~= 100 then
 		optionslist = optionslist .. ", " .. tostring(TimingWindowScale) .. "% Timing Window"
+	end
+
+	if LifeDifficultyScale ~= 1 then
+		optionslist = optionslist .. ", " .. "Life" .. lifescales[tostring(LifeDifficultyScale)]
 	end
 
 	local font_zoom = 0.7

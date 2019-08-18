@@ -1,4 +1,9 @@
 local t = Def.ActorFrame{
+	OnCommand=function(self)
+		-- don't allow players latejoin the other side by disabling input for it
+		local other_player = OtherPlayer[GAMESTATE:GetMasterPlayerNumber()]
+		SCREENMAN:set_input_redirected(other_player, true)
+	end,
 	ChangeStepsMessageCommand=function(self, params)
 		self:playcommand("StepsHaveChanged", params)
 	end,

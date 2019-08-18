@@ -28,6 +28,7 @@ for player in ivalues( GAMESTATE:GetHumanPlayers() ) do
 	t[#t+1] = LoadActor("./PerColumnJudgmentTracking.lua", player)
 	t[#t+1] = LoadActor("./ReceptorArrowsPosition.lua", player)
 	t[#t+1] = LoadActor("./JudgmentOffsetTracking.lua", player)
+	t[#t+1] = LoadActor("./ECS8.lua", player)
 end
 
 return t

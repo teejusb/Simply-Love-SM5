@@ -11,6 +11,20 @@ local function GetModsAndPlayerOptions(player)
 	return mods, playeroptions
 end
 
+local BroadcastRelicSelection = function(self, name, list)
+	if self.Choices[1] == "n/a" then
+		MESSAGEMAN:Broadcast(name.."Selected", nil)
+		return
+	end
+
+	for i, item in ipairs(list) do
+		if item then
+			MESSAGEMAN:Broadcast(name.."Selected", ECS.Relics[i])
+			break
+		end
+	end
+end
+
 ------------------------------------------------------------
 -- when to use Choices() vs. Values()
 --
@@ -411,10 +425,8 @@ local Overrides = {
 	},
 	-------------------------------------------------------------------------
 	ScreenAfterPlayerOptions = {
-		Values = function()
-			local choices = { "Gameplay", "Select Music", "Options2", "Options3"  }
-			if SL.Global.MenuTimer.ScreenSelectMusic < 1 then table.remove(choices, 2) end
-			return choices
+		Choices = function()
+			return { 'Gameplay', 'Select Music', 'Extra Mods' }
 		end,
 		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
@@ -423,23 +435,14 @@ local Overrides = {
 		end,
 		SaveSelections = function(self, list, pn)
 			if list[1] then SL.Global.ScreenAfter.PlayerOptions = Branch.GameplayScreen() end
-
-			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions = SelectMusicOrCourse() end
-				if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
-				if list[4] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions3" end
-			else
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
-				if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions3" end
-			end
+			if list[2] then SL.Global.ScreenAfter.PlayerOptions = SelectMusicOrCourse() end
+			if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
 		end
 	},
 	-------------------------------------------------------------------------
 	ScreenAfterPlayerOptions2 = {
-		Values = function()
-			local choices = { "Gameplay", "Select Music", "Options1", "Options3"  }
-			if SL.Global.MenuTimer.ScreenSelectMusic < 1 then table.remove(choices, 2) end
-			return choices
+		Choices = function()
+			return { 'Gameplay', 'Select Music', 'Normal Mods' }
 		end,
 		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
@@ -448,15 +451,8 @@ local Overrides = {
 		end,
 		SaveSelections = function(self, list, pn)
 			if list[1] then SL.Global.ScreenAfter.PlayerOptions2 = Branch.GameplayScreen() end
-
-			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = SelectMusicOrCourse() end
-				if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
-				if list[4] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions3" end
-			else
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
-				if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions3" end
-			end
+			if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = SelectMusicOrCourse() end
+			if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
 		end
 	},
 	-------------------------------------------------------------------------
@@ -488,6 +484,60 @@ local Overrides = {
 	-------------------------------------------------------------------------
 }
 
+Overrides.Relic1 = {
+	Choices = function() return { "n/a" } end,
+	ExportOnChange = true,
+}
+Overrides.Relic2 = {
+	Choices = function() return { "n/a" } end,
+	ExportOnChange = true,
+}
+Overrides.Relic3 = {
+	Choices = function() return { "n/a" } end,
+	ExportOnChange = true,
+}
+Overrides.Relic4 = {
+	Choices = function() return { "n/a" } end,
+	ExportOnChange = true,
+}
+
+-- Necessary??
+-- Overrides.Staminadventurer = {
+-- 	Choices = function()
+-- 		local players_with_oghma = { "none" }
+-- 		local profile_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
+
+-- 		for player_name, player_data in pairs(ECS.Players) do
+-- 			-- oghma is at index 12
+-- 			if player_data.relics[12].chg > 0 and player_name ~= profile_name then
+-- 				table.insert(players_with_oghma, player_name)
+-- 			end
+-- 		end
+
+-- 		return players_with_oghma
+-- 	end,
+-- 	ExportOnChange = true,
+-- 	SaveSelections = function(self, list, pn)
+-- 		for i=1,#list do
+-- 			if list[i] then
+-- 				local choices = {}
+-- 				if i > 1 then
+-- 					choices = ECS.GetRelicNames( ECS.Player.Relics )
+-- 				end
+-- 				if #choices < 1 then
+-- 					choices = { "n/a" }
+-- 				end
+
+-- 				MESSAGEMAN:Broadcast('UpdateRelicToCancelChoices', choices)
+-- 			end
+-- 		end
+-- 	end
+-- }
+
+Overrides.RelicToCancel = {
+	Choices = function() return  { "n/a" } end,
+	ExportOnChange = true,
+}
 
 ------------------------------------------------------------
 -- Generic OptionRow Definition

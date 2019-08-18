@@ -55,24 +55,6 @@ local t = Def.ActorFrame {
 
 		local style = GAMESTATE:GetCurrentStyle():GetName():gsub("8", "")
 
-		-- Allow players to switch from single to double and from double to single
-		-- but only present these options if Joint Double or Joint Premium is enabled
-		if not (PREFSMAN:GetPreference("Premium") == "Premium_Off" and GAMESTATE:GetCoinMode() == "CoinMode_Pay") then
-			if style == "single" then
-				table.insert(wheel_options, {"ChangeStyle", "Double"})
-			elseif style == "double" then
-				table.insert(wheel_options, {"ChangeStyle", "Single"})
-			end
-		end
-
-
-		-- Allow players to switch out to a different GameMode if no stages have been played yet.
-		if SL.Global.Stages.PlayedThisGame == 0 then
-			table.insert(wheel_options, {"ChangeMode", "ITG"})
-			table.insert(wheel_options, {"ChangeMode", "FA+"})
-			table.insert(wheel_options, {"ChangeMode", "StomperZ"})
-		end
-
 		-- Override sick_wheel's default focus_pos, which is math.floor(num_items / 2)
 		--
 		-- keep in mind that num_items is the number of Actors in the wheel (here, 7)
@@ -90,15 +72,6 @@ local t = Def.ActorFrame {
 		for i=1, #wheel_options do
 			if wheel_options[i][1] == "SortBy" and wheel_options[i][2] == current_sort_order then
 				current_sort_order_index = i
-				break
-			end
-		end
-
-		-- remove the option that would allow us to switch to the already active SL GameMode
-		-- for example, if we're already in FA+, remove the choice to switch to FA+
-		for i=1, #wheel_options do
-			if wheel_options[i][1] == "ChangeMode" and wheel_options[i][2] == SL.Global.GameMode then
-				table.remove(wheel_options, i)
 				break
 			end
 		end

@@ -25,38 +25,8 @@ local function input(event)
 				MESSAGEMAN:Broadcast('Sort',{order=focus.sort_by})
 				overlay:queuecommand("HideSortMenu")
 
-			elseif focus.kind == "ChangeMode" then
-				SL.Global.GameMode = focus.change
-				SetGameModePreferences()
-				THEME:ReloadMetrics()
-
-				-- Change the header text to reflect the newly selected GameMode.
-				overlay:GetParent():GetChild("Header"):playcommand("UpdateHeaderText")
-
-				-- Reload the SortMenu's available options and queue "HideSortMenu"
-				-- which also returns input back away from Lua back to the engine.
-				overlay:GetChild("SortMenu"):playcommand("On"):queuecommand("HideSortMenu")
-
-			elseif focus.kind == "ChangeStyle" then
-				-- If the MenuTimer is in effect, make sure to grab its current
-				-- value before reloading the screen.
-				if PREFSMAN:GetPreference("MenuTimer") then
-					overlay:playcommand("ShowPressStartForOptions")
-				end
-
-				-- Get the style we want to change to
-				local new_style = focus.change:lower()
-
-				-- accommodate techno game
-				if GAMESTATE:GetCurrentGame():GetName()=="techno" then new_style = new_style.."8" end
-
-				-- set it in the engine
-				GAMESTATE:SetCurrentStyle(new_style)
-
-				-- finally, reload the screen
-				local topscreen = SCREENMAN:GetTopScreen()
-				topscreen:SetNextScreenName("ScreenReloadSSM")
-				topscreen:StartTransitioningScreen("SM_GoToNextScreen")
+			elseif focus.kind == "SwitchPads" then
+				
 			end
 
 		elseif event.GameButton == "Back" or event.GameButton == "Select" then
