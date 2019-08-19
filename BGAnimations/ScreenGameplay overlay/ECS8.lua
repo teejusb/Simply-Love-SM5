@@ -85,13 +85,11 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
 	local data = ""
 
-	for i=1, 4 do
+	for i=1, 5 do
 		local relic = ECS.Player.Relics[i]
 		local name =  relic and relic.name or "*"
-		local oghma = (relic and relic.Oghma) and true or false
-		local oghma_player = oghma and relic.Oghma or "*"
 
-		data = data .. name .. "+" .. tostring(oghma) .. "+" .. oghma_player .. "\n"
+		data = data .. name .. "\n"
 	end
 
 	local f = RageFileUtil.CreateRageFile()
@@ -208,7 +206,7 @@ return Def.Actor{
 			local year, month, day = Year(), MonthOfYear() + 1, DayOfMonth()
 			local hour, minute, second = Hour(), Minute(), Second()
 			local seconds = (hour*60*60) + (minute*60) + second
-			local month_string = THEME:GetString("ScreenNameEntryTraditional", "Month"..month)
+			local month_string = THEME:GetString("Months", "Month"..month)
 
 			CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 			CreateRelicFile(day, month_string, year, seconds)

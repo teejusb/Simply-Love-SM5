@@ -1,5 +1,5 @@
 local pane_width = 240
-local pane_height = 80
+local pane_height = 70
 local padding = 10
 
 local af = Def.ActorFrame{
@@ -9,7 +9,7 @@ local af = Def.ActorFrame{
 }
 
 
-for i=1,4 do
+for i=1,5 do
 
 	local pane = Def.ActorFrame{
 		Name="RelicPane"..i,
@@ -53,8 +53,8 @@ for i=1,4 do
 		pane[#pane+1] = Def.Sprite{
 			Texture=THEME:GetPathG("", "_relics/" .. relic.img),
 			InitCommand=function(self)
-				self:xy(-106, -36)
-				self:visible(false):zoom(0.7):align(0,0)
+				self:xy(-106, -33)
+				self:visible(false):zoom(0.6):align(0,0)
 			end,
 			["Relic"..i.."SelectedCommand"]=function(self, params)
 				self:visible(false)
@@ -69,7 +69,7 @@ for i=1,4 do
 	pane[#pane+1] = Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:xy(-74, 25)
+			self:xy(-80, 18)
 				:align(0.5,0):zoom(0.8)
 				-- :wrapwidthpixels((pane_height)/0.9)
 				:maxwidth(pane_height+10)
@@ -88,9 +88,9 @@ for i=1,4 do
 	pane[#pane+1] = Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:xy(-20, -32):vertspacing(-6)
+			self:xy(-35, -32):vertspacing(-6)
 				:align(0,0):zoom(0.8)
-				:wrapwidthpixels(165)
+				:wrapwidthpixels(189)
 		end,
 		["Relic"..i.."SelectedCommand"]=function(self, params)
 			if params and params.effect then
@@ -105,7 +105,7 @@ for i=1,4 do
 	pane[#pane+1] = Def.BitmapText{
 		Font="_miso",
 		InitCommand=function(self)
-			self:xy(-20, 25)
+			self:xy(-35, 15)
 				:align(0,0):zoom(0.8)
 				:wrapwidthpixels(((pane_width-padding*2)/0.9))
 		end,

@@ -6,6 +6,7 @@ local Rows = {
 	"Relic2",
 	"Relic3",
 	"Relic4",
+	"Relic5",
 	"Exit"
 }
 
@@ -20,11 +21,15 @@ end
 
 -- this works because no single player in ECS8 has both Order of Ambrosia and Champion Belt
 local GetNumActiveRows = function()
+	local num_active_rows = 2
 	for active_relic in ivalues(active_relics) do
-		if active_relic.name == "Order of Ambrosia" then return 4 end
-		if active_relic.name == "Champion Belt" then return 3 end
+		if active_relic.name == "Order of Ambrosia" then
+			num_active_rows = num_active_rows + 2
+		elseif active_relic.name == "Champion Belt" then
+			num_active_rows = num_active_rows + 1
+		end
 	end
-	return 2
+	return num_active_rows
 end
 
 local mpn = GAMESTATE:GetMasterPlayerNumber()
@@ -36,7 +41,7 @@ local player_relics = { {name="(nothing)"} }
 for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 	for master_relic in ivalues(ECS.Relics) do
 		if master_relic.name == player_relic.name then
-			if player_relic.chg > 0 and player_relic.name ~= "Oghma Infinium" then
+			if player_relic.chg > 0 then
 				player_relics[#player_relics+1] = {
 					name=player_relic.name,
 					chg=player_relic.chg,
@@ -51,10 +56,10 @@ end
 
 
 -- the number of rows that can be vertically stacked on-screen simultaneously
-local NumRowsToDraw = 5
+local NumRowsToDraw = 6
 local header_height = 32
 local footer_height = 32
-local RowHeight = 80
+local RowHeight = 70
 
 
 local OptionRowWheels = {}

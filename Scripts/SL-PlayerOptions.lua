@@ -500,39 +500,10 @@ Overrides.Relic4 = {
 	Choices = function() return { "n/a" } end,
 	ExportOnChange = true,
 }
-
--- Necessary??
--- Overrides.Staminadventurer = {
--- 	Choices = function()
--- 		local players_with_oghma = { "none" }
--- 		local profile_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
-
--- 		for player_name, player_data in pairs(ECS.Players) do
--- 			-- oghma is at index 12
--- 			if player_data.relics[12].chg > 0 and player_name ~= profile_name then
--- 				table.insert(players_with_oghma, player_name)
--- 			end
--- 		end
-
--- 		return players_with_oghma
--- 	end,
--- 	ExportOnChange = true,
--- 	SaveSelections = function(self, list, pn)
--- 		for i=1,#list do
--- 			if list[i] then
--- 				local choices = {}
--- 				if i > 1 then
--- 					choices = ECS.GetRelicNames( ECS.Player.Relics )
--- 				end
--- 				if #choices < 1 then
--- 					choices = { "n/a" }
--- 				end
-
--- 				MESSAGEMAN:Broadcast('UpdateRelicToCancelChoices', choices)
--- 			end
--- 		end
--- 	end
--- }
+Overrides.Relic5 = {
+	Choices = function() return { "n/a" } end,
+	ExportOnChange = true,
+}
 
 Overrides.RelicToCancel = {
 	Choices = function() return  { "n/a" } end,

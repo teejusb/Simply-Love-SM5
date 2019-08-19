@@ -16,7 +16,7 @@ local player_relics, active_relics = {}, {}
 for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 	for master_relic in ivalues(ECS.Relics) do
 		if master_relic.name == player_relic.name then
-			if player_relic.chg > 0 and player_relic.name ~= "Oghma Infinium" then
+			if player_relic.chg > 0 then
 				player_relics[#player_relics+1] = {
 					name=player_relic.name,
 					chg=player_relic.chg,
