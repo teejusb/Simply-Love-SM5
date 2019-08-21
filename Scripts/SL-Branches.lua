@@ -109,7 +109,7 @@ Branch.PlayerOptions = function()
 	if SCREENMAN:GetTopScreen():GetGoToOptions() then
 		return "ScreenPlayerOptions"
 	else
-		if ECS.Mode == "ECS8" then
+		if ECS.Mode ~= "Warmup" then
 			return "ScreenEquipRelics"
 		else
 			return Branch.GameplayScreen()

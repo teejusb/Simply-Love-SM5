@@ -113,18 +113,9 @@ end
 -- It's certainly not foolproof, but I'm unsure how else to handle this.
 
 local start_is_being_held = false
-local protect_ring_is_active = false
-
-for relic in ivalues(ECS.Player.Relics) do
-	if relic.name == "Protect Ring" then
-		protect_ring_is_active = true
-	end
-end
-
 
 local InputHandler = function(event)
 	if not event.PlayerNumber or not event.button then return false	end
-	if protect_ring_is_active then return false end
 
 	if event.GameButton == "Start" then
 		start_is_being_held = (not (event.type == "InputEventType_Release"))

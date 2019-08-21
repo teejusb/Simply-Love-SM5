@@ -434,7 +434,7 @@ local Overrides = {
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
-			if list[1] then SL.Global.ScreenAfter.PlayerOptions = ECS.Mode == "ECS8" and "ScreenEquipRelics" or Branch.GameplayScreen() end
+			if list[1] then SL.Global.ScreenAfter.PlayerOptions = ECS.Mode ~= "Warmup" and "ScreenEquipRelics" or Branch.GameplayScreen() end
 			if list[2] then SL.Global.ScreenAfter.PlayerOptions = SelectMusicOrCourse() end
 			if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
 		end
@@ -450,7 +450,7 @@ local Overrides = {
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
-			if list[1] then SL.Global.ScreenAfter.PlayerOptions2 = ECS.Mode == "ECS8" and "ScreenEquipRelics" or Branch.GameplayScreen() end
+			if list[1] then SL.Global.ScreenAfter.PlayerOptions2 = ECS.Mode ~= "Warmup" and "ScreenEquipRelics" or Branch.GameplayScreen() end
 			if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = SelectMusicOrCourse() end
 			if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
 		end
@@ -472,7 +472,7 @@ local Overrides = {
 			if list[1] then SL.Global.ScreenAfter.PlayerOptions3 = Branch.GameplayScreen() end
 
 			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions3 = ECS.Mode == "ECS8" and "ScreenEquipRelics" or Branch.GameplayScreen() end
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions3 = ECS.Mode ~= "Warmup" and "ScreenEquipRelics" or Branch.GameplayScreen() end
 				if list[3] then SL.Global.ScreenAfter.PlayerOptions3 = "ScreenPlayerOptions" end
 				if list[4] then SL.Global.ScreenAfter.PlayerOptions3 = "ScreenPlayerOptions2" end
 			else

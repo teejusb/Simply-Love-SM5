@@ -42,14 +42,16 @@ for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 	for master_relic in ivalues(ECS.Relics) do
 		if master_relic.name == player_relic.name then
 			if not master_relic.is_consumable or player_relic.quantity > 0 then
-				player_relics[#player_relics+1] = {
-					name=master_relic.name,
-					quantity=player_relic.quantity,
-					is_consumable=master_relic.is_consumable,
-					desc=master_relic.desc,
-					effect=master_relic.effect,
-					action=master_relic.action
-				}
+				if (ECS.Mode == "ECS8" and not master_relic.is_marathon) or (ECS.Mode == "Marathon" and master_relic.is_marathon) then
+					player_relics[#player_relics+1] = {
+						name=master_relic.name,
+						quantity=player_relic.quantity,
+						is_consumable=master_relic.is_consumable,
+						desc=master_relic.desc,
+						effect=master_relic.effect,
+						action=master_relic.action
+					}
+				end
 			end
 		end
 	end
