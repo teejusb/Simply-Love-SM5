@@ -17,8 +17,13 @@ if SL.Global.GameMode ~= "Casual" then
 	local TimingWindowScale = round(PREFSMAN:GetPreference("TimingWindowScale") * 100)
 	local LifeDifficultyScale = round(PREFSMAN:GetPreference("LifeDifficultyScale"), 1)
 	local lifescales = {
+		["1.6"] = 1,
+		["1.4"] = 2,
+		["1.2"] = 3,
 		["1.0"] = 4,
-		["0.8"] = 5
+		["0.8"] = 5,
+		["0.6"] = 6,
+		["0.4"] = 7,
 	}
 
 	--  ...and append options to that string as needed

@@ -2,41 +2,6 @@ local player = ...
 local profile_name = PROFILEMAN:GetPlayerName(player)
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
-
--- local WriteOutSongDataToDisk = function()
--- 	-- get songs
--- 	local songs = SONGMAN:GetSongsInGroup("ECS8")
---
--- 	-- get just song titles
--- 	local titles = {}
--- 	for song in ivalues(songs) do
--- 		titles[#titles+1] = song:GetDisplayMainTitle()
--- 	end
---
--- 	-- sort alphabetically
--- 	table.sort(titles)
---
--- 	local s = "ECS.Songs={\n"
--- 	for i,title in ipairs(titles) do
--- 		s = s .."\t[\"" .. title .. "\"] = {id=".. i .."}," .."\n"
--- 	end
--- 	s = s .."}"
---
--- 	local path = "Themes/ECS8/ECS8Data/songs.lua"
--- 	local f = RageFileUtil.CreateRageFile()
---
--- 	if f:Open(path, 2) then
--- 		f:Write( s )
--- 	else
--- 		local fError = f:GetError()
--- 		Trace( "[FileUtils] Error writing to ".. path ..": ".. fError )
--- 		f:ClearError()
--- 	end
---
--- 	f:destroy()
--- end
-
-
 local CreateScoreFile = function(day, month_string, year, seconds, hour, minute, second)
 	local passed_song = pss:GetFailed() and "Failed" or "Passed"
 
@@ -47,10 +12,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
 
-	-- local song_id = ""
-	-- if group_name == "ECS8" then
-	-- 	song_id = ECS.Songs[song_name] and ECS.Songs[song_name].id or ""
-	-- end
+	if group_name ~= "ECS8 - Upper" or group_name ~= "ECS8 - Lower" then return end
 
 	-- ----------------------------------------------------------
 
@@ -60,7 +22,6 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	data = data..percent_score .."\n"
 	data = data..passed_song.."\n"
 	data = data..group_name.."\n"
-	-- data = data..song_id.."\n"
 	data = data..song_name.."\n"
 	data = data..day.." "..month_string.." "..year.."\n"
 	data = data..hour..":"..minute..":"..second
@@ -80,7 +41,10 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 end
 
 local CreateRelicFile = function(day, month_string, year, seconds)
+	local song = GAMESTATE:GetCurrentSong()
+	local group_name = song:GetGroupName()
 
+	if group_name ~= "ECS8 - Upper" or group_name ~= "ECS8 - Lower" then return end
 
 	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
 	local data = ""
@@ -116,7 +80,11 @@ local WriteRelicDataToDisk = function()
 
 		local s = "return {\n"
 		for relic in ivalues(ECS.Players[profile_name].relics) do
-			s = s .. "\t{name=\"" .. relic.name .. "\", chg=" .. relic.chg .."},\n"
+			if relic.quantity then
+				s = s .. "\t{name=\"" .. relic.name .. "\", quantity=" .. relic.quantity .."},\n"
+			else
+				s = s .. "\t{name=\"" .. relic.name .. "\"},\n"
+			end
 		end
 		s = s .. "}"
 
@@ -168,8 +136,8 @@ end
 local ExpendChargesOnActiveRelics = function()
 	for relic in ivalues(ECS.Players[profile_name].relics) do
 		for active_relic in ivalues(ECS.Player.Relics) do
-			if active_relic.name == relic.name then
-				relic.chg = relic.chg - 1
+			if active_relic.name == relic.name and relic.quantity ~= nil then
+				relic.quantity = relic.quantity - 1
 			end
 		end
 	end

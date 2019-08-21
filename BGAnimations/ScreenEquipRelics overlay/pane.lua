@@ -54,7 +54,7 @@ for i=1,5 do
 			Texture=THEME:GetPathG("", "_relics/" .. relic.img),
 			InitCommand=function(self)
 				self:xy(-106, -33)
-				self:visible(false):zoom(0.6):align(0,0)
+				self:visible(false):zoom(0.5):align(0,0)
 			end,
 			["Relic"..i.."SelectedCommand"]=function(self, params)
 				self:visible(false)
@@ -110,8 +110,14 @@ for i=1,5 do
 				:wrapwidthpixels(((pane_width-padding*2)/0.9))
 		end,
 		["Relic"..i.."SelectedCommand"]=function(self, params)
-			if params and params.chg then
-				self:settext("Remaining: " .. params.chg)
+			if params then
+				if not params.is_consumable then
+					self:settext("Remaining: ∞")
+				elseif params.quantity then
+					self:settext("Remaining: " .. params.quantity)
+				else
+					self:settext("")
+				end
 			else
 				self:settext("")
 			end

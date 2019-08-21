@@ -18,12 +18,12 @@ end
 return Def.ActorFrame {
 	OnCommand=function(self) ApplyRelicActions() end,
 	OffCommand=function(self)
-		-- always undo the effects of Astral Ring when leaving ScreenEval, even if it wasn't active
+		-- always undo the effects of Astral Ring/Astral Earring when leaving ScreenEval, even if they weren't active
 		SL.Global.ActiveModifiers.WorstTimingWindow = 5
 		PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
 		PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
 
-		-- always undo the effects of Protect Ring when leaving ScreenEval, even if it wasn't active
+		-- Protect ring functions differently for ECS8, but no reason not to always set fail type appropriately.
 		local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
 		if player_state then
 			local po = player_state:GetPlayerOptions("ModsLevel_Preferred")
@@ -32,7 +32,7 @@ return Def.ActorFrame {
 			end
 		end
 
-		-- always undo the effect of Pendulum Blade when leaving ScreenEval, even if it wasn't active
+		-- always undo the effects of any relics that change LifeDifficulty when leaving ScreenEval, even if they weren't active
 		PREFSMAN:SetPreference("LifeDifficultyScale", 1)
 	end,
 

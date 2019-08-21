@@ -41,10 +41,11 @@ local player_relics = { {name="(nothing)"} }
 for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 	for master_relic in ivalues(ECS.Relics) do
 		if master_relic.name == player_relic.name then
-			if player_relic.chg > 0 then
+			if not master_relic.is_consumable or player_relic.quantity > 0 then
 				player_relics[#player_relics+1] = {
-					name=player_relic.name,
-					chg=player_relic.chg,
+					name=master_relic.name,
+					quantity=player_relic.quantity,
+					is_consumable=master_relic.is_consumable,
 					desc=master_relic.desc,
 					effect=master_relic.effect,
 					action=master_relic.action
@@ -111,6 +112,8 @@ local InputHandler = function(event)
 				return false
 			end
 
+			SOUND:PlayOnce(THEME:GetPathS("", "_next row.ogg"))
+
 			OptionRowWheels[pn]:scroll_by_amount(1)
 
 			-- if we've NOW reached the end of the list, don't try to update the pane
@@ -122,15 +125,18 @@ local InputHandler = function(event)
 			-- broadcast this so that the relic panes to the right update
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
 
+
 		elseif event.button == "Select" then
+			SOUND:PlayOnce(THEME:GetPathS("", "_prev row.ogg"))
+
 			OptionRowWheels[pn]:scroll_by_amount(-1)
+
 			-- if we've NOW reached the end of the list, don't try to update the pane
 			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] then return false end
 
 			local row = OptionRowWheels[pn]:get_info_at_focus_pos()
 			local relic = OptionRowWheels[pn][row]:get_info_at_focus_pos()
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
-
 
 		elseif event.button == "MenuLeft" or event.button == "MenuRight" then
 
@@ -149,6 +155,7 @@ local InputHandler = function(event)
 				local row = OptionRowWheels[pn]:get_info_at_focus_pos()
 				local relic = OptionRowWheels[pn][row]:get_info_at_focus_pos()
 				SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
+				SOUND:PlayOnce(THEME:GetPathS("", "_change value.ogg"))
 
 				-- add the new relic to the active_relics table at the appropriate index
 				local newly_active_relic = OptionRowWheels[pn][row]:get_info_at_focus_pos()

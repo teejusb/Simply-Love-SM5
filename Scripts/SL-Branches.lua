@@ -12,6 +12,11 @@ SelectMusicOrCourse = function()
 	end
 end
 
+-- Copy of the function in _fallback. Doesn't matter if this function already pre-existed.	
+Branch.GameplayScreen = function()
+	return IsRoutine() and "ScreenGameplayShared" or "ScreenGameplay"
+end
+
 Branch.AllowScreenSelectProfile = function()
 	if ThemePrefs.Get("AllowScreenSelectProfile") then
 		return "ScreenSelectProfile"
@@ -104,7 +109,11 @@ Branch.PlayerOptions = function()
 	if SCREENMAN:GetTopScreen():GetGoToOptions() then
 		return "ScreenPlayerOptions"
 	else
-		return "ScreenGameplay"
+		if ECS.Mode == "ECS8" then
+			return "ScreenEquipRelics"
+		else
+			return Branch.GameplayScreen()
+		end
 	end
 end
 
