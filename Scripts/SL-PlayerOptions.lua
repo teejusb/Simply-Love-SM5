@@ -480,8 +480,55 @@ local Overrides = {
 				if list[3] then SL.Global.ScreenAfter.PlayerOptions3 = "ScreenPlayerOptions2" end
 			end
 		end
-	}
+	},
 	-------------------------------------------------------------------------
+	LimitRelics = {
+	    -- I don't know whether you want to use Values() or Choices() here
+	    -- read the inline comments at the top of ./Scripts/SL-PlayerOptions.lua
+	    -- and ask if you have questions
+	    Choices = function()
+	        -- some kind of work that returns a table of the current player's relics as strings
+	        local mpn = GAMESTATE:GetMasterPlayerNumber()
+			local profile_name = PROFILEMAN:GetPlayerName(mpn)
+			local relic_names = {}
+
+			for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
+				for master_relic in ivalues(ECS.Relics) do
+					if master_relic.name == player_relic.name then
+						if not master_relic.is_consumable or player_relic.quantity > 0 then
+							if ECS.Mode == "ECS8" and not master_relic.is_marathon then
+								relic_names[#relic_names+1] = master_relic.name
+							end
+						end
+					end
+				end
+			end
+	        return relic_names
+	    end,
+	    
+	    -- "SelectMultiple" allows multiple items in this row to be chosen instead of just one
+	    SelectType = "SelectMultiple",
+	    
+	    -- ExportOnChange means that we call SaveSelections() every time a change is made in this OptionRow
+	    -- we'll want this true so we can broadcast to ScreenLimitRelics as new relics are selected/de-selected
+	    ExportOnChange=true,    
+
+	    SaveSelections = function(self, list, pn)
+
+	        local vals = self.Choices
+	        local num_active = 0
+	        -- list will come in as an numerically-indexed table of true/false values
+	        -- one for each possible value; you should be able to do something like...
+	        for i=1, #list do
+	            if list[i] then
+	                num_active = num_active+1
+	                -- this will broadcast to ScreenLimitRelics so you can listen for
+	                -- RelicActivatedMessageCommand=function(self, params) end
+	                MESSAGEMAN:BroadCast("RelicActivated", {Index=num_active, RelicIndex=i})
+	            end
+	        end
+	    end
+	},
 }
 
 Overrides.Relic1 = {
