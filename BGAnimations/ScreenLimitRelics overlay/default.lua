@@ -47,7 +47,6 @@ local t = Def.ActorFrame{
 		end,
 		OffCommand=function(self) self:sleep(0.3):linear(0.55):diffusealpha(1) end
 	}
-
 }
 
 t[#t+1] = LoadActor("./pane.lua")

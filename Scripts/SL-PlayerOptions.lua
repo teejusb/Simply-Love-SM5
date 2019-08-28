@@ -524,37 +524,15 @@ local Overrides = {
 	                num_active = num_active+1
 	                -- this will broadcast to ScreenLimitRelics so you can listen for
 	                -- RelicActivatedMessageCommand=function(self, params) end
-	                MESSAGEMAN:BroadCast("RelicActivated", {Index=num_active, RelicIndex=i})
+	                MESSAGEMAN:Broadcast("RelicActivated", {Index=num_active, RelicIndex=i})
 	            end
 	        end
-	    end
+	    end,
+
+	    NotifyOfSelection=function(self, pn, choice)
+	    	return false
+		end
 	},
-}
-
-Overrides.Relic1 = {
-	Choices = function() return { "n/a" } end,
-	ExportOnChange = true,
-}
-Overrides.Relic2 = {
-	Choices = function() return { "n/a" } end,
-	ExportOnChange = true,
-}
-Overrides.Relic3 = {
-	Choices = function() return { "n/a" } end,
-	ExportOnChange = true,
-}
-Overrides.Relic4 = {
-	Choices = function() return { "n/a" } end,
-	ExportOnChange = true,
-}
-Overrides.Relic5 = {
-	Choices = function() return { "n/a" } end,
-	ExportOnChange = true,
-}
-
-Overrides.RelicToCancel = {
-	Choices = function() return  { "n/a" } end,
-	ExportOnChange = true,
 }
 
 ------------------------------------------------------------
