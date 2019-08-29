@@ -65,7 +65,7 @@ local af = Def.ActorFrame{
 		OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 
 		LoadFont("Common Normal")..{
-			Text=sm_version .. "       " .. sl_name .. (sl_version and (" v" .. sl_version) or ""),
+			Text=sm_version .. "       " .. sl_name .. (sl_version and (" v" .. sl_version) or "") .. "       ECS Machine: " .. GetECSID(),
 			InitCommand=function(self) self:y(-20):diffuse(TextColor) end,
 		},
 		LoadFont("Common Normal")..{

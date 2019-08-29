@@ -19,6 +19,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."SCORE"..".txt"
 
 	local data = ""
+	data = data..GetECSID()
 	data = data..percent_score .."\n"
 	data = data..passed_song.."\n"
 	data = data..group_name.."\n"
