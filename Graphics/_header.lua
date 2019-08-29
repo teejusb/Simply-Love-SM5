@@ -1,6 +1,8 @@
 local dark = {0,0,0,0.9}
 local light = {0.65,0.65,0.65,1}
 
+local settimer_seconds = 3600
+
 local endgame_warning_has_been_issued = false
 
 local breaktimer_at_screen_start
@@ -27,11 +29,11 @@ local SecondsToMMSS = function(seconds)
 end
 
 local SessionHasEnded = function()
-	if ECS.BreakTimer < 0 then return true end
+	if ECS.Mode == "ECS8" and ECS.BreakTimer < 0 then return true end
 
 	if SL.Global.TimeAtSessionStart
-	and (GetTimeSinceStart() - SL.Global.TimeAtSessionStart > 3600)
-	and SL.Global.Stages.PlayedThisGame >= 7
+	and (GetTimeSinceStart() - SL.Global.TimeAtSessionStart > settimer_seconds)
+	and (ECS.Mode == "Warmup" or (ECS.Mode == "ECS8" and SL.Global.Stages.PlayedThisGame >= 7))
 	then
 		return true
 	end
@@ -50,12 +52,12 @@ local InputHandler = function(event)
 end
 
 local Update = function(af, dt)
-
+	SM("updating")
 	if SL.Global.TimeAtSessionStart ~= nil then
 		local session_seconds = GetTimeSinceStart() - SL.Global.TimeAtSessionStart
 
 		-- if this game session is less than 1 hour in duration so far
-		if session_seconds < 3600 then
+		if session_seconds < settimer_seconds then
 			sessiontimer_actor:settext( SecondsToMMSS(session_seconds) )
 		else
 			sessiontimer_actor:settext( SecondsToHHMMSS(session_seconds) ):diffuse(1,0,0,1)
@@ -65,21 +67,32 @@ local Update = function(af, dt)
 			ECS.BreakTimer = breaktimer_at_screen_start - (GetTimeSinceStart() - seconds_at_screen_start)
 		end
 
-		breaktimer_actor:settext( SecondsToMMSS(ECS.BreakTimer) )
+		if breaktimer_actor then
+			breaktimer_actor:settext( SecondsToMMSS(ECS.BreakTimer) )
 
-		-- BREAK'S OVER
-		if ECS.BreakTimer < 0 then
-			breaktimer_actor:diffuse(1,0,0,1)
+			-- BREAK'S OVER
+			if ECS.BreakTimer < 0 then
+				breaktimer_actor:diffuse(1,0,0,1)
+			end
 		end
 
-		if SessionHasEnded() and (not endgame_warning_has_been_issued) and SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" then
-			endgame_warning_has_been_issued = true
-			af:queuecommand("SessionHasEnded")
+		if SessionHasEnded() and (not endgame_warning_has_been_issued) then
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				if ECS.Mode == "Warmup" then
+					-- Force users out of screen gameplay if their set timer has ended.
+					SCREENMAN:GetTopScreen():PostScreenMessage("SM_BeginFailed", 0)
+				end
+			elseif SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" then
+				endgame_warning_has_been_issued = true
+				af:queuecommand("SessionHasEnded")
+			end
 		end
 	end
 end
 
 local DeductFromBreakTimer = function()
+	if ECS.Mode == "Warmup" then return false end
+
 	local screen_name = SCREENMAN:GetTopScreen():GetName()
 
 	if screen_name == "ScreenSelectMusic"
@@ -96,7 +109,7 @@ local af = Def.ActorFrame{
 	Name="Header",
 	InitCommand=function(self) self:queuecommand("PostInit") end,
 	PostInitCommand=function(self)
-		if PREFSMAN:GetPreference("EventMode") and ECS.Mode == "ECS8" then
+		if PREFSMAN:GetPreference("EventMode") and ECS.Mode ~= "Marathon" then
 			-- TimeAtSessionStart will be reset to nil between game sesssions
 			-- thus, if it's currently nil, we're loading ScreenSelectMusic
 			-- for the first time this particular game session
@@ -172,12 +185,11 @@ local af = Def.ActorFrame{
 	}
 }
 
-if ECS.Mode == "ECS8" then
+if ECS.Mode ~= "Marathon" then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			local screen_name = SCREENMAN:GetTopScreen():GetName()
-			if screen_name == "ScreenEvaluationSummary"
-			then
+			if screen_name == "ScreenEvaluationSummary"	then
 				self:visible(false)
 			end
 		end,
@@ -198,9 +210,12 @@ if ECS.Mode == "ECS8" then
 				self:sleep(0.1):decelerate(0.33):diffusealpha(1)
 			end,
 		},
+	}
 
+	-- Only add BreakTimer in ECS8 Mode
+	if ECS.Mode == "ECS8" then
 		-- Break Timer
-		Def.BitmapText{
+		af[#af+1] = Def.BitmapText{
 			Font="_wendy small",
 			Name="BreakTimer",
 			InitCommand=function(self)
@@ -214,8 +229,8 @@ if ECS.Mode == "ECS8" then
 
 				self:sleep(0.1):decelerate(0.33):diffusealpha(1)
 			end,
-		},
-	}
+		}
+	end
 
 	-- SessionHasEnded warning
 	af[#af+1] = Def.ActorFrame{
@@ -244,11 +259,15 @@ if ECS.Mode == "ECS8" then
 			Font="_miso",
 			InitCommand=function(self) self:xy(_screen.cx, 200):wrapwidthpixels(380/1.5):zoom(1.5) end,
 			SessionHasEndedCommand=function(self)
-				local s = "Your ECS8 session has ended because you "
-				if ECS.BreakTimer < 0 then
-					s = s .. "used up all your break time!\n\n"
-				else
-					s = s .. "played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+				local s = "Your " .. ECS.Mode .. " session has ended because you"
+				if ECS.Mode == "ECS8" then
+					if ECS.BreakTimer < 0 then
+						s = s .. " used up all your break time!\n\n"
+					else
+						s = s .. " played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+					end
+				elseif ECS.Mode == "Warmup" then
+					s = s .. "'ve played longer than 1 hour!\n\n"
 				end
 
 				s = s .. "Unless there are some extenuating circumstances that Ian has approved, it looks like your finished, bud.\n\n"
