@@ -67,6 +67,31 @@ Branch.AfterScreenSelectColor = function()
 	return "ScreenSelectStyle"
 end
 
+Branch.ScreenLimitRelics = function()
+	local mpn = GAMESTATE:GetMasterPlayerNumber()
+	local profile_name = PROFILEMAN:GetPlayerName(mpn)
+	local total_ro_relics = 0
+	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].relics then
+		-- First count how many selectable relics there are for RO.
+		for player_relic in ivalues(ECS.Players[profile_name].relics) do
+			for master_relic in ivalues(ECS.Relics) do
+				if master_relic.name == player_relic.name then
+					if not master_relic.is_marathon and (not master_relic.is_consumable or player_relic.quantity > 0) then
+						total_ro_relics = total_ro_relics + 1
+					end
+				end
+			end
+		end
+		if total_ro_relics > 10 then
+			return "ScreenLimitRelics"
+		else
+			return "ScreenProfileLoad"
+		end
+	end
+	-- No valid profile loaded to participate in ECS. Go back to the title menu.
+	return Branch.TitleMenu()
+end
+
 Branch.AfterEvaluationStage = function()
 	-- If we're in Casual mode, don't save the profile(s).
 	if SL.Global.GameMode == "Casual" then

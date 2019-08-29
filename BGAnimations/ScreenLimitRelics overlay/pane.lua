@@ -4,7 +4,7 @@ local padding = 10
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
-		self:xy(_screen.cx-360, _screen.cy + 100)
+		self:xy(_screen.cx-360, _screen.cy + 130)
 	end,
 }
 
@@ -12,7 +12,7 @@ local af = Def.ActorFrame{
 
 local pane = Def.ActorFrame{
 	Name="RelicPreviewPane",
-	InitCommand=function(self) self:xy(-20, -170) end,
+	InitCommand=function(self) self:xy((2 + pane_width)*1.5, 0*(pane_height) - 250) end,
 	OffCommand=function(self)
 		self:sleep(0.04):linear(0.2):diffusealpha(0)
 	end,
@@ -123,11 +123,10 @@ pane[#pane+1] = Def.BitmapText{
 }
 af[#af+1] = pane
 
-
 -- ====== Loop over for the 10 potentially selectable relics ======
 for i=1,10 do
 	local column = i % 3
-	local row = i % 4 + 1
+	local row = math.floor(i / 3) + 1
 
 	local pane = Def.ActorFrame{
 		Name="RelicPane"..i,
@@ -137,11 +136,7 @@ for i=1,10 do
 		end,
 		["Relic"..i.."SelectedCommand"]=function(self, params)
 			if params and params.name then
-				if params.name == "(nothing)" then
-					self:diffusealpha(0.65)
-				else
-					self:diffusealpha(1)
-				end
+				self:diffusealpha(1)
 			end
 		end
 	}
