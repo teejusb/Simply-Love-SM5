@@ -52,7 +52,6 @@ local InputHandler = function(event)
 end
 
 local Update = function(af, dt)
-	SM("updating")
 	if SL.Global.TimeAtSessionStart ~= nil then
 		local session_seconds = GetTimeSinceStart() - SL.Global.TimeAtSessionStart
 
