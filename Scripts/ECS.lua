@@ -390,6 +390,7 @@ ECS.Relics = {
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.4) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.4)
+					SM("Set to Life 7")
 				end
 			end
 		end
@@ -417,6 +418,7 @@ ECS.Relics = {
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
+					SM("Set to Life 5")
 				end
 			end
 		end
@@ -434,6 +436,7 @@ ECS.Relics = {
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
+					SM("Set to Life 5")
 				end
 			end
 		end
@@ -482,6 +485,7 @@ ECS.Relics = {
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
+					SM("Set to Life 5")
 				end
 			elseif SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -521,6 +525,7 @@ ECS.Relics = {
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
+					SM("Set to Life 1")
 				end
 			end
 		end
@@ -830,6 +835,7 @@ ECS.Relics = {
 					local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 					if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
 						PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
+						SM("Set to Life 1")
 					end
 				end
 			end
@@ -850,6 +856,7 @@ ECS.Relics = {
 					local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 					if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
 						PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+						SM("Set to Life 3")
 					end
 				end
 			end

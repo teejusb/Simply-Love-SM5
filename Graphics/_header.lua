@@ -83,7 +83,6 @@ local DeductFromBreakTimer = function()
 	local screen_name = SCREENMAN:GetTopScreen():GetName()
 
 	if screen_name == "ScreenSelectMusic"
-	or screen_name == "ScreenEquipRelics"
 	or screen_name == "ScreenPlayerOptions"
 	or screen_name == "ScreenPlayerOptions2"
 	or screen_name == "ScreenEvaluationStage" then
