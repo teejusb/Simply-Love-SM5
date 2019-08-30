@@ -1149,6 +1149,7 @@ end
 ECS.Players = {}
 
 ECS.Players["CardboardBox"] = {
+	isupper = true,
 	relics = {
 		{name="Iron Sword"},
 		{name="Mythril Sword"},
