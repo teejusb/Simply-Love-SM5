@@ -1,7 +1,21 @@
 local dark = {0,0,0,0.9}
 local light = {0.65,0.65,0.65,1}
 
-local settimer_seconds = 3600
+local settimer_seconds = 60 * 60
+
+
+local ArvinsGambitIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Arvin's Gambit" then
+			return true
+		end
+	end
+	return false
+end
+
+if ArvinsGambitIsActive() then
+	settimer_seconds = 20 * 60
+end
 
 local endgame_warning_has_been_issued = false
 
@@ -33,7 +47,7 @@ local SessionHasEnded = function()
 
 	if SL.Global.TimeAtSessionStart
 	and (GetTimeSinceStart() - SL.Global.TimeAtSessionStart > settimer_seconds)
-	and (ECS.Mode == "Warmup" or (ECS.Mode == "ECS8" and SL.Global.Stages.PlayedThisGame >= 7))
+	and (ECS.Mode == "Warmup" or (ECS.Mode == "ECS8" and SL.Global.Stages.PlayedThisGame >= 7) or ArvinsGambitIsActive())
 	then
 		return true
 	end
@@ -108,7 +122,7 @@ local af = Def.ActorFrame{
 	Name="Header",
 	InitCommand=function(self) self:queuecommand("PostInit") end,
 	PostInitCommand=function(self)
-		if PREFSMAN:GetPreference("EventMode") and ECS.Mode ~= "Marathon" then
+		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode ~= "Marathon" or ArvinsGambitIsActive()) then
 			-- TimeAtSessionStart will be reset to nil between game sesssions
 			-- thus, if it's currently nil, we're loading ScreenSelectMusic
 			-- for the first time this particular game session
@@ -184,7 +198,7 @@ local af = Def.ActorFrame{
 	}
 }
 
-if ECS.Mode ~= "Marathon" then
+if ECS.Mode ~= "Marathon" or ArvinsGambitIsActive() then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			local screen_name = SCREENMAN:GetTopScreen():GetName()
@@ -258,19 +272,25 @@ if ECS.Mode ~= "Marathon" then
 			Font="_miso",
 			InitCommand=function(self) self:xy(_screen.cx, 200):wrapwidthpixels(380/1.5):zoom(1.5) end,
 			SessionHasEndedCommand=function(self)
-				local s = "Your " .. ECS.Mode .. " session has ended because you"
-				if ECS.Mode == "ECS8" then
-					if ECS.BreakTimer < 0 then
-						s = s .. " used up all your break time!\n\n"
-					else
-						s = s .. " played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+				local s = ""
+				if ECS.Mode == "Marathon" then
+					s = s .. "That's all the time you get to warmup and fix the pads bud. Hopefully you'll do a better job this time around.\n\n"
+					s = s .. "Please press &START; to dismiss this message, then restart the marathon."
+				else
+					s = "Your " .. ECS.Mode .. " session has ended because you"
+					if ECS.Mode == "ECS8" then
+						if ECS.BreakTimer < 0 then
+							s = s .. " used up all your break time!\n\n"
+						else
+							s = s .. " played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+						end
+					elseif ECS.Mode == "Warmup" then
+						s = s .. "'ve played longer than 1 hour!\n\n"
 					end
-				elseif ECS.Mode == "Warmup" then
-					s = s .. "'ve played longer than 1 hour!\n\n"
-				end
 
-				s = s .. "Unless there are some extenuating circumstances that Ian has approved, it looks like your finished, bud.\n\n"
-				s = s .. "Please press &START; to dismiss this message, then exit your set."
+					s = s .. "Unless there are some extenuating circumstances that Ian has approved, it looks like your finished, bud.\n\n"
+					s = s .. "Please press &START; to dismiss this message, then exit your set."
+				end
 
 				self:settext(s)
 			end

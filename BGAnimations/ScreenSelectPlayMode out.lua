@@ -15,7 +15,10 @@ return Def.Actor{
 				end
 			end
 		elseif ECS.Mode == "Marathon" then
-
+			local masochisma = SONGMAN:FindSong("ECS8 - Upper Marathon/Masochisma Mk 0")
+			if masochisma then
+				GAMESTATE:SetPreferredSong(masochisma)
+			end
 		end
 	end
 }

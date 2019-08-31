@@ -204,8 +204,15 @@ end
 Branch.AfterProfileSave = function()
 
 	if PREFSMAN:GetPreference("EventMode") then
+		if ECS.Mode == "Marathon" then
+			for active_relic in ivalues(ECS.Player.Relics) do
+				if active_relic.name == "Arvin's Gambit" then
+					return SelectMusicOrCourse()
+				end
+			end
+			return Branch.AllowScreenEvalSummary()
+		end
 		return SelectMusicOrCourse()
-
 	elseif GAMESTATE:IsCourseMode() then
 		return Branch.AllowScreenNameEntry()
 
