@@ -532,7 +532,7 @@ PlayerIsUpper = function()
 		return ECS.Players[profile_name].isupper
 	end
 	-- default to IsUpper = true
-	return true
+	return nil
 end
 
 -- -----------------------------------------------------------------------
@@ -612,16 +612,17 @@ GetComboFonts = function()
 			if directory_name == "Wendy" then
 				table.insert(fonts, 1, directory_name)
 
-			-- special-cased Wendy (Cursed) to always appear last in the last
+			-- special-cased Wendy (Cursed) to always appear last in the list
 			elseif directory_name == "Wendy (Cursed)" then
 				has_wendy_cursed = true
-			else
+			elseif directory_name ~= "Source Code" then
 				table.insert(fonts, directory_name)
 			end
 		end
 	end
 
-	if has_wendy_cursed then table.insert(fonts, "Wendy (Cursed)") end
+	-- Don't add wendy_cursed for ECS8. 
+	-- if has_wendy_cursed then table.insert(fonts, "Wendy (Cursed)") end
 
 	return fonts
 end

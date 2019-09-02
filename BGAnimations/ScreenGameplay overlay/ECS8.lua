@@ -12,7 +12,14 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
 
-	if group_name ~= "ECS8 - Upper" or group_name ~= "ECS8 - Lower" then return end
+	if PlayerIsUpper() == nil then return end
+
+	if PlayerIsUpper() then
+		if ECS.Mode == "ECS8" and group_name ~= "ECS8 - Upper" then return end
+		if ECS.Mode == "Marathon" and group_name ~= "ECS8 - Upper Marathon" then return end
+	else
+		if group_name ~= "ECS8 - Lower" then return end
+	end
 
 	-- ----------------------------------------------------------
 
@@ -45,7 +52,14 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 
-	if group_name ~= "ECS8 - Upper" or group_name ~= "ECS8 - Lower" then return end
+	if PlayerIsUpper() == nil then return end
+
+	if PlayerIsUpper() then
+		if ECS.Mode == "ECS8" and group_name ~= "ECS8 - Upper" then return end
+		if ECS.Mode == "Marathon" and group_name ~= "ECS8 - Upper Marathon" then return end
+	else
+		if group_name ~= "ECS8 - Lower" then return end
+	end
 
 	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
 	local data = ""
@@ -153,7 +167,7 @@ return Def.Actor{
 		ApplyRelicActions()
 
 		ExpendChargesOnActiveRelics()
-
+ 
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 	end,
 	OffCommand=function(self)

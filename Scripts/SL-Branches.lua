@@ -126,7 +126,7 @@ Branch.AfterHeartEntry = function()
 end
 
 Branch.AfterSelectMusic = function()
-	if SCREENMAN:GetTopScreen():GetGoToOptions() then
+	if SCREENMAN:GetTopScreen() and SCREENMAN:GetTopScreen().GetGoToOptions ~= nil and SCREENMAN:GetTopScreen():GetGoToOptions() then
 		return "ScreenPlayerOptions"
 	else
 		-- routine mode specifically uses ScreenGameplayShared
@@ -137,8 +137,32 @@ Branch.AfterSelectMusic = function()
 
 		-- while everything else (single, versus, double, etc.) uses ScreenGameplay
 		if ECS.Mode ~= "Warmup" then
-			return "ScreenEquipRelics"
+			local song = GAMESTATE:GetCurrentSong()
+			if song then
+				local group_name = song:GetGroupName()
+
+				-- Using an unknown profile, just go straight to ScreenGameplay.
+				if PlayerIsUpper() == nil then
+					return "ScreenGameplay"
+				end
+
+				if (PlayerIsUpper() and
+						((ECS.Mode == "ECS8" and group_name == "ECS8 - Upper") or
+						(ECS.Mode == "Marathon" and group_name == "ECS8 - Upper Marathon")) or
+					(not PlayerIsUpper() and
+						group_name ~= "ECS8 - Lower")) then
+					-- Only go to ScreenEquipRelics if it's a valid song for the player.
+					return "ScreenEquipRelics"
+				else
+					-- Otherwise go directly to gameplay.
+					return "ScreenGameplay"
+				end
+			else
+				-- If for some reason we can't determine the song, then try to equip relics just in case.
+				return "ScreenEquipRelics"
+			end
 		else
+			-- No need to select relics in warmup.
 			return "ScreenGameplay"
 		end
 	end

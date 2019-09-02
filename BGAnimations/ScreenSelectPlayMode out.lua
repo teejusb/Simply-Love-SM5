@@ -3,6 +3,8 @@ return Def.Actor{
 		self:sleep(0.9)
 
 		if ECS.Mode == "ECS8" then
+			if PlayerIsUpper() == nil then return end
+
 			if PlayerIsUpper() then 
 				local extrasolar_planets = SONGMAN:FindSong("ECS8 - Upper/[18] [187] Extrasolar Planets For Business")
 				if extrasolar_planets then
