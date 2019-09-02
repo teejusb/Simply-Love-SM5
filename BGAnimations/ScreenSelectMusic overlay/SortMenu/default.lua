@@ -1,39 +1,105 @@
+------------------------------------------------------------
+-- set up the SortMenu's choices first, prior to Actor initialization
+
+-- sick_wheel_mt is a metatable with global scope defined in ./Scripts/Consensual-sick_wheel.lua
 local sort_wheel = setmetatable({}, sick_wheel_mt)
 
-local input = LoadActor("InputHandler.lua", sort_wheel)
+-- the logic that handles navigating the SortMenu
+-- (scrolling through choices, choosing one, canceling)
+-- is large enough that I moved it to its own file
+local sortmenu_input = LoadActor("SortMenu_InputHandler.lua", sort_wheel)
+local testinput_input = LoadActor("TestInput_InputHandler.lua")
+
+-- WheelItemMT is a generic definition of an choice within the SortMenu
+-- "mt" is my personal means of denoting that it (the file, the variable, whatever)
+-- has something to do with a Lua metatable.
+--
+-- metatables in Lua are a useful construct when designing reusable components,
+-- but many online tutorials and guides are incredibly obtuse and unhelpful
+-- for non-computer-science people (like me). https://lua.org/pil/13.html is just frustratingly scant.
+--
+-- http://phrogz.net/lua/LearningLua_ValuesAndMetatables.html is less bad than most.
+-- I get immediately lost in the criss-crossing diagrams, and I'll continue to
+-- argue that naming things foo, bar, and baz abstract programming tutorials right
+-- out of practical reality, but I found its prose to be practical, applicable, and concise,
+-- so I guess I'll recommend that tutorial until I find a more helpful one.
 local wheel_item_mt = LoadActor("WheelItemMT.lua")
 
 local sortmenu = { w=210, h=160 }
--- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+------------------------------------------------------------
 
 local t = Def.ActorFrame {
 	Name="SortMenu",
-	InitCommand=function(self)
-		-- Always ensure that the SortMenu is hidden and that player input
-		-- is directed back to the engine on screen initialization.
-		self:queuecommand("HideSortMenu")
-	end,
-	ShowSortMenuCommand=function(self)
-		SOUND:StopMusic()
-		SCREENMAN:GetTopScreen():AddInputCallback(input)
+
+	-- Always ensure player input is directed back to the engine when initializing SelectMusic.
+	InitCommand=function(self) self:visible(false):queuecommand("DirectInputToEngine") end,
+	-- Always ensure player input is directed back to the engine when leaving SelectMusic.
+	OffCommand=function(self) self:playcommand("DirectInputToEngine") end,
+
+	-- Figure out which choices to put in the SortWheel based on various current conditions.
+	OnCommand=function(self) self:playcommand("AssessAvailableChoices") end,
+	-- We'll want to (re)assess available choices in the SortMenu if a player late-joins
+	PlayerJoinedMessageCommand=function(self, params) self:queuecommand("AssessAvailableChoices") end,
+
+
+	ShowSortMenuCommand=function(self) self:visible(true) end,
+	HideSortMenuCommand=function(self) self:visible(false) end,
+
+	DirectInputToSortMenuCommand=function(self)
+		local screen = SCREENMAN:GetTopScreen()
+		local overlay = self:GetParent()
+
+		screen:RemoveInputCallback(testinput_input)
+		screen:AddInputCallback(sortmenu_input)
 
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			SCREENMAN:set_input_redirected(player, true)
 		end
-		self:visible(true)
+		self:playcommand("ShowSortMenu")
+		overlay:playcommand("HideTestInput")
 	end,
-	HideSortMenuCommand=function(self)
-		SCREENMAN:GetTopScreen():RemoveInputCallback(input)
+	DirectInputToTestInputCommand=function(self)
+		local screen = SCREENMAN:GetTopScreen()
+		local overlay = self:GetParent()
+
+		screen:RemoveInputCallback(sortmenu_input)
+		screen:AddInputCallback(testinput_input)
+
+		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+			SCREENMAN:set_input_redirected(player, true)
+		end
+		self:playcommand("HideSortMenu")
+		overlay:playcommand("ShowTestInput")
+	end,
+	-- this returns input back to the engine and its ScreenSelectMusic
+	DirectInputToEngineCommand=function(self)
+		local screen = SCREENMAN:GetTopScreen()
+		local overlay = self:GetParent()
+
+		screen:RemoveInputCallback(sortmenu_input)
+		screen:RemoveInputCallback(testinput_input)
+
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 			SCREENMAN:set_input_redirected(player, false)
 		end
-		self:visible(false)
+		self:playcommand("HideSortMenu")
+		overlay:playcommand("HideTestInput")
 	end,
-	-- Always ensure that player input is directed back to the engine when leaving SelectMusic.
-	OffCommand=function(self) self:playcommand("HideSortMenu") end,
 
-	OnCommand=function(self)
+
+
+	AssessAvailableChoicesCommand=function(self)
 		self:visible(false)
+
+		-- normally I would give variables like these file scope, and not declare
+		-- within OnCommand(), but if the player uses the SortMenu to switch from
+		-- single to double, we'll need reassess which choices to present.
+
+		-- a style like "single", "double", "versus", "solo", or "routine"
+		-- remove the possible presence of an "8" in case we're in Techno game
+		-- and the style is "single8", "double8", etc.
+		local style = GAMESTATE:GetCurrentStyle():GetName():gsub("8", "")
 
 		local wheel_options = {
 			{"SortBy", "Group"},
@@ -42,18 +108,61 @@ local t = Def.ActorFrame {
 			{"SortBy", "Genre"},
 			{"SortBy", "BPM"},
 			{"SortBy", "Length"},
-
-			{"SortBy", "BeginnerMeter"},
-			{"SortBy", "EasyMeter"},
-			{"SortBy", "MediumMeter"},
-			{"SortBy", "HardMeter"},
-			{"SortBy", "ChallengeMeter"},
-
-			{"SortBy", "Popularity"},
-			{"SortBy", "Recent"}
 		}
 
-		local style = GAMESTATE:GetCurrentStyle():GetName():gsub("8", "")
+		-- the engine's MusicWheel has distinct items in the SortOrder enum for double
+		if style == "double" then
+			table.insert(wheel_options, {"SortBy", "DoubleChallengeMeter"})
+			table.insert(wheel_options, {"SortBy", "DoubleHardMeter"})
+			table.insert(wheel_options, {"SortBy", "DoubleMediumMeter"})
+			table.insert(wheel_options, {"SortBy", "DoubleEasyMeter"})
+			table.insert(wheel_options, {"SortBy", "DoubleBeginnerMeter"})
+
+		-- Otherwise... use the SortOrders that don't specify double.
+		-- Does this imply that difficulty sorting in more uncommon styles
+		-- (solo, routine, etc.) probably doesn't work?
+		else
+			table.insert(wheel_options, {"SortBy", "ChallengeMeter"})
+			table.insert(wheel_options, {"SortBy", "HardMeter"})
+			table.insert(wheel_options, {"SortBy", "MediumMeter"})
+			table.insert(wheel_options, {"SortBy", "EasyMeter"})
+			table.insert(wheel_options, {"SortBy", "BeginnerMeter"})
+		end
+
+		table.insert(wheel_options, {"SortBy", "Popularity"})
+		table.insert(wheel_options, {"SortBy", "Recent"})
+
+
+		-- Allow players to switch from single to double and from double to single
+		-- but only present these options if Joint Double or Joint Premium is enabled
+		if not (PREFSMAN:GetPreference("Premium") == "Premium_Off" and GAMESTATE:GetCoinMode() == "CoinMode_Pay") then
+			if style == "single" then
+				table.insert(wheel_options, {"ChangeStyle", "Double"})
+			elseif style == "double" then
+				table.insert(wheel_options, {"ChangeStyle", "Single"})
+
+			-- Routine is not ready for use yet, but it might be soon.
+			-- This can be uncommented at that time to allow switching from versus into routine.
+			-- elseif style == "versus" then
+			--	table.insert(wheel_options, {"ChangeStyle", "Routine"})
+			end
+		end
+
+		-- Allow players to switch out to a different SL GameMode if no stages have been played yet,
+		-- but don't add the current SL GameMode as a choice. If a player is already in FA+, don't
+		-- present a choice that would allow them to switch to FA+.
+		if SL.Global.Stages.PlayedThisGame == 0 then
+			if SL.Global.GameMode ~= "StomperZ" then table.insert(wheel_options, {"ChangeMode", "StomperZ"}) end
+			if SL.Global.GameMode ~= "ITG"      then table.insert(wheel_options, {"ChangeMode", "ITG"}) end
+			if SL.Global.GameMode ~= "FA+"      then table.insert(wheel_options, {"ChangeMode", "FA+"}) end
+		end
+
+		-- allow players to switch to a TestInput overlay if the current game has visual assets to support it
+		-- and if we're in EventMode (public arcades probably don't want random players attempting to diagnose the pads...)
+		local game = GAMESTATE:GetCurrentGame():GetName()
+		if (game=="dance" or game=="pump" or game=="techno") and GAMESTATE:IsEventMode() then
+			table.insert(wheel_options, {"FeelingSalty", "TestInput"})
+		end
 
 		-- Override sick_wheel's default focus_pos, which is math.floor(num_items / 2)
 		--
@@ -125,7 +234,7 @@ local t = Def.ActorFrame {
 			if PREFSMAN:GetPreference("ThreeKeyNavigation") then
 				self:visible(false)
 			else
-				self:xy(_screen.cx, _screen.cy+100):zoom(0.3):diffusealpha(0.6)
+				self:xy(_screen.cx, _screen.cy+100):zoom(0.3):diffuse(0.7,0.7,0.7,1)
 			end
 		end
 	},

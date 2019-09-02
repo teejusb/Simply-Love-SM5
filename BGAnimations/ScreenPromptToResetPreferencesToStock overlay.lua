@@ -26,12 +26,7 @@ local InputHandler = function(event)
 
 			-- if the player wants to reset Preferences back to SM5 defaults
 			if active_index == 0 then
-				-- loop through all the Preferences that SL forcibly manages and reset them
-				for key, value in pairs(SL.Preferences[SL.Global.GameMode]) do
-					PREFSMAN:SetPreferenceToDefault(key)
-				end
-				-- now that those Preferences are reset to default values, write Preferences.ini to disk now
-				PREFSMAN:SavePreferences()
+				ResetPreferencesToStockSM5()
 			end
 
 			--either way, change the theme now
@@ -45,7 +40,7 @@ local t = Def.ActorFrame{ OnCommand=function(self) af=self; SCREENMAN:GetTopScre
 t[#t+1] = LoadFont("Common Normal")..{
 	Text=ScreenString("Paragraph1"),
 	InitCommand=function(self)
-		self:xy(_screen.cx-text_width/2, 25):wrapwidthpixels(text_width):align(0,0):diffusealpha(0)
+		self:xy(_screen.cx-text_width/2, 25):_wrapwidthpixels(text_width):align(0,0):diffusealpha(0)
 	end,
 	OnCommand=function(self) self:linear(0.15):diffusealpha(1) end
 }
@@ -53,7 +48,7 @@ t[#t+1] = LoadFont("Common Normal")..{
 t[#t+1] = LoadFont("Common Normal")..{
 	Text=ScreenString("Paragraph2"),
 	InitCommand=function(self)
-		self:xy(_screen.cx-text_width/2, 315):wrapwidthpixels(text_width):align(0,0):diffusealpha(0)
+		self:xy(_screen.cx-text_width/2, 315):_wrapwidthpixels(text_width):align(0,0):diffusealpha(0)
 	end,
 	OnCommand=function(self) self:linear(0.15):diffusealpha(1) end
 }

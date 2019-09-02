@@ -1,4 +1,16 @@
 -- ----------------------------------------------------
+-- local tables containing NoteSkins and JudgmentGraphics available to SL
+-- wW'll compare values from profiles against these "master" tables as it
+-- seems to be disconcertingly possible for user data to contain errata, typos, etc.
+
+local noteskins = NOTESKIN:GetNoteSkinNames()
+local judgment_graphics = {
+	ITG=GetJudgmentGraphics("ITG"),
+	["FA+"]=GetJudgmentGraphics("FA+"),
+	StomperZ=GetJudgmentGraphics("StomperZ"),
+}
+
+-- ----------------------------------------------------
 -- some local functions that will help process profile data into presentable strings
 
 local RecentMods = function(mods)
@@ -8,18 +20,28 @@ local RecentMods = function(mods)
 
 	-- SpeedModType should be a string and SpeedMod should be a number
 	if type(mods.SpeedModType)=="string" and type(mods.SpeedMod)=="number" then
-		if mods.SpeedModType=="x" and mods.SpeedMod > 0 then text = text..tostring(mods.SpeedMod).."x, "
-		elseif (mods.SpeedModType=="M" or mods.SpeedModType=="C") and mods.SpeedMod > 0 then text = text..mods.SpeedModType..tostring(mods.SpeedMod)..", "
+		if mods.SpeedModType=="x" and mods.SpeedMod > 0 then text = text..tostring(mods.SpeedMod).."x"
+		elseif (mods.SpeedModType=="M" or mods.SpeedModType=="C") and mods.SpeedMod > 0 then text = text..mods.SpeedModType..tostring(mods.SpeedMod)
 		end
 	end
 
-	-- a NoteSkin title might consist of only numbers and be read in by the IniFile utility as a number, so just ensure it isn't nil
-	if mods.NoteSkin ~= nil and mods.NoteSkin ~= "" then text = text..mods.NoteSkin..", " end
+	-- Mini should definitely be a string
+	if type(mods.Mini)=="string" and mods.Mini ~= "" then text = text..", "..mods.Mini.." "..THEME:GetString("OptionTitles", "Mini") end
 
-	-- Mini and JudgmentGraphic should definitely be strings
-	if type(mods.Mini)=="string" and mods.Mini ~= "" and mods.Mini ~= "0%" then text = text..mods.Mini.." "..THEME:GetString("OptionTitles", "Mini")..", " end
-	if type(mods.JudgmentGraphic)=="string" and mods.JudgmentGraphic ~= "" then text = text..StripSpriteHints(mods.JudgmentGraphic) .. ", " end
-	if type(mods.ComboFont)=="string" and mods.ComboFont ~= "" then text = text..mods.ComboFont .. ", " end
+	-- some linebreaks to make space for NoteSkin and JudgmentGraphic previews
+	text = text.."\n\n\n"
+
+	-- the NoteSkin and JudgmentGraphic previews are not text and thus handled elsewhere
+
+	-- ASIDE: My informal testing of reading ~80 unique JudgmentGraphic files from disk and
+	-- loading them into memory caused Stepmania to hang for a few seconds, so
+	-- JudgmentGraphicPreviews.lua and NoteSkinPreviews.lua only load assets that are
+	-- needed by current player profiles (not every possible asset).
+
+	-- FIXME: If a profile's values for NoteSkin and/or JudgmentGraphic don't match with anything
+	-- available to StepMania (players commonly modify their profiles by hand and introduce typos),
+	-- we currently don't show anything.  Maybe a generic graphic of a question mark (or similar)
+	-- would be nice but that can wait for a future release.
 
 	-- loop for mods that save as booleans
 	local flags, hideflags = "", ""
@@ -71,23 +93,27 @@ local TotalSongs = function(numSongs)
 end
 
 -- ----------------------------------------------------
--- retrieve and process data (mods, most recently played song, high score name, etc.)
--- for each profile at Init and put it in the profile_data table indexed by "ProfileIndex" (provided by engine)
+-- Retrieve and process data (mods, most recently played song, high score name, etc.)
+-- for each available local profile and put it in the profile_data table.
 -- Since both players are using the same list of local profiles, this only needs to be performed once (not once for each player).
 -- I'm doing it here, in PlayerProfileData.lua, to keep default.lua from growing too large/unwieldy.  Once done, pass the
 -- table of data back default.lua where it can be sent via playcommand parameter to the appropriate PlayerFrames as needed.
 
 local profile_data = {}
 
-for i=0, PROFILEMAN:GetNumLocalProfiles()-1 do
+for i=1, PROFILEMAN:GetNumLocalProfiles() do
 
-	local profile = PROFILEMAN:GetLocalProfileFromIndex(i)
-	local id = PROFILEMAN:GetLocalProfileIDFromIndex(i)
+	-- GetLocalProfileFromIndex() expects indices to start at 0
+	local profile = PROFILEMAN:GetLocalProfileFromIndex(i-1)
+	-- GetLocalProfileIDFromIndex() also expects indices to start at 0
+	local id = PROFILEMAN:GetLocalProfileIDFromIndex(i-1)
 	local dir = PROFILEMAN:LocalProfileIDToDir(id)
 	local userprefs = ReadProfileCustom(profile, dir)
 	local mods, noteskin, judgment = RecentMods(userprefs)
 
-	profile_data[i] = {
+	local data = {
+		index = i,
+		displayname = profile:GetDisplayName(),
 		highscorename = profile:GetLastUsedHighScoreName(),
 		recentsong = RecentSong(profile:GetLastPlayedSong()),
 		totalsongs = TotalSongs(profile:GetNumTotalSongsPlayed()),
@@ -95,6 +121,8 @@ for i=0, PROFILEMAN:GetNumLocalProfiles()-1 do
 		noteskin = noteskin,
 		judgment = judgment,
 	}
+
+	table.insert(profile_data, data)
 end
 
 return profile_data

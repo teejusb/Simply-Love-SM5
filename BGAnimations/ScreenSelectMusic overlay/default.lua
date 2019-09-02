@@ -1,9 +1,5 @@
 local t = Def.ActorFrame{
-	OnCommand=function(self)
-		-- don't allow players latejoin the other side by disabling input for it
-		local other_player = OtherPlayer[GAMESTATE:GetMasterPlayerNumber()]
-		SCREENMAN:set_input_redirected(other_player, true)
-	end,
+	InitCommand=function(self) SL.Global.GameplayReloadCheck = false end,
 	ChangeStepsMessageCommand=function(self, params)
 		self:playcommand("StepsHaveChanged", params)
 	end,
@@ -21,15 +17,17 @@ local t = Def.ActorFrame{
 	-- ---------------------------------------------------
 	-- next, load visual elements; the order of the layers matters for most of these
 
+	-- make the MusicWheel appear to cascade down; this should draw underneath P2's PaneDisplay
+	LoadActor("./MusicWheelAnimation.lua"),
+
 	-- elements we need two of (one for each player) that draw underneath the StepsDisplayList
+	-- this includes the stepartist boxes and the PaneDisplays (number of steps, jumps, holds, etc.)
 	LoadActor("./PerPlayer/Under.lua"),
 	-- grid of Difficulty Blocks (normal) or CourseContentsList (CourseMode)
 	LoadActor("./StepsDisplayList/default.lua"),
 	-- elements we need two of that draw over the StepsDisplayList (just the bouncing cursors, really)
 	LoadActor("./PerPlayer/Over.lua"),
 
-	-- make the MusicWheel appear to cascade down
-	LoadActor("./MusicWheelAnimation.lua"),
 	-- Graphical Banner
 	LoadActor("./Banner.lua"),
 	-- Song Artist, BPM, Duration (Referred to in other themes as "PaneDisplay")
@@ -37,7 +35,9 @@ local t = Def.ActorFrame{
 
 	-- ---------------------------------------------------
 	-- finally, load the overlay used for sorting the MusicWheel (and more), hidden by default
-	LoadActor("./SortMenu/default.lua")
+	LoadActor("./SortMenu/default.lua"),
+	-- a Test Input overlay can (maybe) be accessed from the SortMenu
+	LoadActor("./TestInput.lua"),
 }
 
 return t

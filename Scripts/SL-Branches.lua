@@ -12,11 +12,6 @@ SelectMusicOrCourse = function()
 	end
 end
 
--- Copy of the function in _fallback. Doesn't matter if this function already pre-existed.	
-Branch.GameplayScreen = function()
-	return IsRoutine() and "ScreenGameplayShared" or "ScreenGameplay"
-end
-
 Branch.AllowScreenSelectProfile = function()
 	if ThemePrefs.Get("AllowScreenSelectProfile") then
 		return "ScreenSelectProfile"
@@ -130,14 +125,21 @@ Branch.AfterHeartEntry = function()
 	if( pm == "Nonstop" ) then return "ScreenEvaluationNonstop" end
 end
 
-Branch.PlayerOptions = function()
+Branch.AfterSelectMusic = function()
 	if SCREENMAN:GetTopScreen():GetGoToOptions() then
 		return "ScreenPlayerOptions"
 	else
+		-- routine mode specifically uses ScreenGameplayShared
+		local style = GAMESTATE:GetCurrentStyle():GetName()
+		if style == "routine" then
+			return "ScreenGameplayShared"
+		end
+
+		-- while everything else (single, versus, double, etc.) uses ScreenGameplay
 		if ECS.Mode ~= "Warmup" then
 			return "ScreenEquipRelics"
 		else
-			return Branch.GameplayScreen()
+			return "ScreenGameplay"
 		end
 	end
 end
@@ -218,7 +220,7 @@ Branch.AfterProfileSave = function()
 
 	else
 
-		-- deduct the number of stages that stock Stepmania says the song is
+		-- deduct the number of stages that stock StepMania says the song is
 		local song = GAMESTATE:GetCurrentSong()
 		local SMSongCost = (song:IsMarathon() and 3) or (song:IsLong() and 2) or 1
 		SL.Global.Stages.Remaining = SL.Global.Stages.Remaining - SMSongCost
@@ -243,9 +245,8 @@ Branch.AfterProfileSave = function()
 			SL.Global.Stages.Remaining = SL.Global.Stages.Remaining + StagesToAddBack
 		end
 
-		-- Now, check if StepMania and SL disagree on the stage count
-		-- If necessary, add stages back
-		-- This might be necessary because
+		-- Now, check if StepMania and SL disagree on the stage count. If necessary, add stages back.
+		-- This might be necessary because:
 		-- a) a Lua chart reloaded ScreenGameplay, or
 		-- b) everyone failed, and StepmMania zeroed out the stage numbers
 		if GAMESTATE:GetNumStagesLeft(GAMESTATE:GetMasterPlayerNumber()) < SL.Global.Stages.Remaining then

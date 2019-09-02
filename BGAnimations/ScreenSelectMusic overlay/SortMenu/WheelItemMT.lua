@@ -31,7 +31,7 @@ return {
 				Font="_wendy small",
 				InitCommand=function(subself)
 					self.bottom_text = subself
-					subself:zoom(0.85):y(10):diffusealpha(0)
+					subself:zoom(0.85):y(10):diffusealpha(0):maxwidth(405)
 				end,
 				OnCommand=function(subself)
 					subself:sleep(0.1):linear(0.15):diffusealpha(1)
@@ -74,15 +74,18 @@ return {
 			if self.kind == "SortBy" then
 				self.sort_by = info[2]
 
-				self.top_text:settext(THEME:GetString("ScreenSelectMusic", info[1]))
-				-- don't duplicate the names of game modes in en.ini.
-				-- but "single", "double" has different semantic meaning in 1P.
-				self.bottom_text:settext(THEME:GetString(self.kind == "ChangeMode" and "ScreenSelectPlayMode" or "ScreenSelectMusic", info[2]))
-
-			elseif self.kind == "SwitchPads" then
-				self.top_text:settext("")
-				self.bottom_text:settext(THEME:GetString("ScreenSelectMusic", "SwitchPads"))
+			elseif self.kind == "ChangeMode" or self.kind == "ChangeStyle" then
+				self.change = info[2]
+			else
+				self.new_overlay = info[2]
 			end
+
+			local toptext = self.kind ~= "" and THEME:GetString("ScreenSelectMusic", self.kind) or ""
+
+			self.top_text:settext(toptext)
+			-- don't duplicate the names of game modes in en.ini.
+			-- but "single", "double" has different semantic meaning in 1P.
+			self.bottom_text:settext(THEME:GetString(self.kind == "ChangeMode" and "ScreenSelectPlayMode" or "ScreenSelectMusic", info[2]))
 		end
 	}
 }
