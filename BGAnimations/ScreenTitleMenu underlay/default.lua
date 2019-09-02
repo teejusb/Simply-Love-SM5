@@ -90,6 +90,14 @@ local af = Def.ActorFrame{
 	LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
 		InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
 		OffCommand=function(self) self:linear(0.5):shadowlength(0) end
+	},
+
+	Def.BitmapText{
+		Font="_wendy small",
+		Text="8",
+		InitCommand=function(self)
+			self:addy(85)
+		end,
 	}
 }
 
