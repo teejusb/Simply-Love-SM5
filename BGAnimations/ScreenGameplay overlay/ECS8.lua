@@ -162,11 +162,13 @@ end
 
 return Def.Actor{
 	OnCommand=function(self)
-		-- relic actions depend on the current screen,
-		-- so ApplyRelicActions() must be called from OnCommand
-		ApplyRelicActions()
+		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
+			-- relic actions depend on the current screen,
+			-- so ApplyRelicActions() must be called from OnCommand
+			ApplyRelicActions()
 
-		ExpendChargesOnActiveRelics()
+			ExpendChargesOnActiveRelics()
+		end
  
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 	end,
@@ -176,7 +178,7 @@ return Def.Actor{
 			passed_song = "Failed"
 		end
 
-		if ECS.Mode ~= "Warmup" then
+		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
 			local year, month, day = Year(), MonthOfYear() + 1, DayOfMonth()
 			local hour, minute, second = Hour(), Minute(), Second()
 			local seconds = (hour*60*60) + (minute*60) + second

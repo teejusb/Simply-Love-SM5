@@ -136,7 +136,7 @@ Branch.AfterSelectMusic = function()
 		end
 
 		-- while everything else (single, versus, double, etc.) uses ScreenGameplay
-		if ECS.Mode ~= "Warmup" then
+		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
 			local song = GAMESTATE:GetCurrentSong()
 			if song then
 				local group_name = song:GetGroupName()
@@ -162,7 +162,7 @@ Branch.AfterSelectMusic = function()
 				return "ScreenEquipRelics"
 			end
 		else
-			-- No need to select relics in warmup.
+			-- No need to select relics in warmup or freeplay.
 			return "ScreenGameplay"
 		end
 	end

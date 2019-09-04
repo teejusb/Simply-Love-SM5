@@ -122,7 +122,8 @@ local af = Def.ActorFrame{
 	Name="Header",
 	InitCommand=function(self) self:queuecommand("PostInit") end,
 	PostInitCommand=function(self)
-		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode ~= "Marathon" or ArvinsGambitIsActive()) then
+		-- Setup session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
+		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
 			-- TimeAtSessionStart will be reset to nil between game sesssions
 			-- thus, if it's currently nil, we're loading ScreenSelectMusic
 			-- for the first time this particular game session
@@ -168,7 +169,7 @@ local af = Def.ActorFrame{
 		OffCommand=cmd(accelerate,0.33; diffusealpha,0)
 	},
 
-	-- Warmup | ECS8 | Marathon
+	-- Freeplay | Warmup | ECS8 | Marathon
 	Def.BitmapText{
 		Name="GameModeText",
 		Font="_wendy small",
@@ -198,7 +199,8 @@ local af = Def.ActorFrame{
 	}
 }
 
-if ECS.Mode ~= "Marathon" or ArvinsGambitIsActive() then
+-- Display session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
+if (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			local screen_name = SCREENMAN:GetTopScreen():GetName()
@@ -225,7 +227,7 @@ if ECS.Mode ~= "Marathon" or ArvinsGambitIsActive() then
 		},
 	}
 
-	-- Only add BreakTimer in ECS8 Mode
+	-- Only add BreakTimer in ECS8 Mode.
 	if ECS.Mode == "ECS8" then
 		-- Break Timer
 		af[#af+1] = Def.BitmapText{
