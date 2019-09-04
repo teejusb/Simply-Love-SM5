@@ -425,8 +425,10 @@ local Overrides = {
 	},
 	-------------------------------------------------------------------------
 	ScreenAfterPlayerOptions = {
-		Choices = function()
-			return { 'Gameplay', 'Select Music', 'Extra Mods' }
+		Values = function()
+			local choices = { "Gameplay", "Select Music", "Options2", "Options3" }
+			if SL.Global.MenuTimer.ScreenSelectMusic < 1 then table.remove(choices, 2) end
+			return choices
 		end,
 		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
@@ -435,14 +437,23 @@ local Overrides = {
 		end,
 		SaveSelections = function(self, list, pn)
 			if list[1] then SL.Global.ScreenAfter.PlayerOptions = Branch.AfterSelectMusic() end
-			if list[2] then SL.Global.ScreenAfter.PlayerOptions = SelectMusicOrCourse() end
-			if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
+
+			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions = SelectMusicOrCourse() end
+				if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
+				if list[4] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions3" end
+			else
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
+				if list[3] then SL.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions3" end
+			end
 		end
 	},
 	-------------------------------------------------------------------------
 	ScreenAfterPlayerOptions2 = {
-		Choices = function()
-			return { 'Gameplay', 'Select Music', 'Normal Mods' }
+		Values = function()
+			local choices = { "Gameplay", "Select Music", "Options1", "Options3"  }
+			if SL.Global.MenuTimer.ScreenSelectMusic < 1 then table.remove(choices, 2) end
+			return choices
 		end,
 		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
@@ -451,8 +462,15 @@ local Overrides = {
 		end,
 		SaveSelections = function(self, list, pn)
 			if list[1] then SL.Global.ScreenAfter.PlayerOptions2 = Branch.AfterSelectMusic() end
-			if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = SelectMusicOrCourse() end
-			if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
+
+			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = SelectMusicOrCourse() end
+				if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
+				if list[4] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions3" end
+			else
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions" end
+				if list[3] then SL.Global.ScreenAfter.PlayerOptions2 = "ScreenPlayerOptions3" end
+			end
 		end
 	},
 	-------------------------------------------------------------------------
@@ -469,10 +487,10 @@ local Overrides = {
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
-			if list[1] then SL.Global.ScreenAfter.PlayerOptions3 = Branch.GameplayScreen() end
+			if list[1] then SL.Global.ScreenAfter.PlayerOptions3 = Branch.AfterSelectMusic() end
 
 			if SL.Global.MenuTimer.ScreenSelectMusic > 1 then
-				if list[2] then SL.Global.ScreenAfter.PlayerOptions3 = Branch.AfterSelectMusic() end
+				if list[2] then SL.Global.ScreenAfter.PlayerOptions3 = SelectMusicOrCourse() end
 				if list[3] then SL.Global.ScreenAfter.PlayerOptions3 = "ScreenPlayerOptions" end
 				if list[4] then SL.Global.ScreenAfter.PlayerOptions3 = "ScreenPlayerOptions2" end
 			else

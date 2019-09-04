@@ -82,6 +82,7 @@ local t = Def.ActorFrame{
 		},
 		Def.Quad{
 			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-20) end,
+			OnCommand=function(self) if choices[2]==nil then self:visible(false) end end,
 			OffCommand=function(self) self:sleep(0.3):linear(0.1):diffusealpha(0) end
 		},
 		Def.Quad{
