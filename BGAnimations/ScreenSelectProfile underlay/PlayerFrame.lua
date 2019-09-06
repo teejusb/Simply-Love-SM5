@@ -169,21 +169,77 @@ return Def.ActorFrame{
 					end
 				},
 
+				-- ----------------------------------------------
+				-- "recent song" commented out for ECS8
+
 				-- the song that was most recently played, presented as "group name/song name", eventually
 				-- truncated so it passes the "How to Cook Delicious Rice and the Effects of Eating Rice" test.
-				LoadFont("Common Normal")..{
-					Name="MostRecentSong",
-					InitCommand=function(self) self:align(0,0):xy(-50,-85):zoom(0.65):_wrapwidthpixels(104/0.65):vertspacing(-3) end,
+				-- LoadFont("Common Normal")..{
+				-- 	Name="MostRecentSong",
+				-- 	InitCommand=function(self) self:align(0,0):xy(-50,-85):zoom(0.65):_wrapwidthpixels(104/0.65):vertspacing(-3) end,
+				-- 	SetCommand=function(self, params)
+				-- 		if params then
+				-- 			local desc = THEME:GetString("ScreenSelectProfile","MostRecentSong") .. ":\n"
+				-- 			self:settext(desc .. (params.recentsong or "")):Truncate(112)
+				-- 		else
+				-- 			self:settext("")
+				-- 		end
+				-- 	end
+				-- },
+				-- ----------------------------------------------
+
+				-- Country / Flag
+				Def.ActorProxy{
+					Name="CountryFlag",
+					InitCommand=function(self) self:zoom(0.5):xy(30,-45) end,
 					SetCommand=function(self, params)
-						if params then
-							local desc = THEME:GetString("ScreenSelectProfile","MostRecentSong") .. ":\n"
-							self:settext(desc .. (params.recentsong or "")):Truncate(112)
+						local underlay = SCREENMAN:GetTopScreen():GetChild("Underlay")
+						if params and params.country then
+							local flag = underlay:GetChild("Flag_"..params.country)
+							if flag then
+								self:visible(true):SetTarget(flag)
+							else
+								self:visible(false)
+							end
 						else
-							self:settext("")
+							self:visible(false)
 						end
 					end
 				},
 
+				-- SRPG3 Avatar
+				Def.ActorProxy{
+					Name="Avatar",
+					InitCommand=function(self) self:zoom(0.65):xy(-50,-20):align(0,0) end,
+					SetCommand=function(self, params)
+						local underlay = SCREENMAN:GetTopScreen():GetChild("Underlay")
+						if params and params.country then
+							local avatar = underlay:GetChild("Avatar_"..params.displayname)
+							if avatar then
+								self:visible(true):SetTarget(avatar)
+							else
+								self:visible(false)
+							end
+						else
+							self:visible(false)
+						end
+					end
+				},
+
+				LoadFont("Common Normal")..{
+					Name="SRPG3 Level",
+					InitCommand=function(self) self:align(0,0):xy(-50,-16):zoom(0.65):maxwidth(104/0.65):vertspacing(-2) end,
+					SetCommand=function(self, params)
+						if params then
+							self:visible(true):settext(params.level and ("SRPG3 Level: "..params.level) or "")
+						else
+							self:visible(false):settext("")
+						end
+					end
+				},
+
+
+				-- ----------------------------------------------
 				-- how many songs this player has completed in gameplay
 				-- failing a song will increment this count, but backing out will not
 				LoadFont("Common Normal")..{

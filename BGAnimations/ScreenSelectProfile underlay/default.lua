@@ -221,5 +221,7 @@ end
 
 LoadActor("./JudgmentGraphicPreviews.lua", {af=t, profile_data=profile_data})
 LoadActor("./NoteSkinPreviews.lua", {af=t, profile_data=profile_data})
+LoadActor("./Flags.lua", {af=t})
+LoadActor("./Avatars.lua", {af=t})
 
 return t
