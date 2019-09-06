@@ -1150,6 +1150,9 @@ ECS.Players = {}
 
 ECS.Players["Rust"] = {
    isupper=true,
+   country="U.S.A",
+   level=100,
+   exp=4501575,
    relics = {
       {name="Tattered Mario",                 quantity=1},
       {name="Contemporary Mario",             quantity=1},
@@ -1227,6 +1230,9 @@ ECS.Players["Rust"] = {
 
 ECS.Players["nico"] = {
    isupper=true,
+   country="U.S.A.",
+   level=99,
+   exp=3007066,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Lance of Longinus"},
@@ -1295,6 +1301,9 @@ ECS.Players["nico"] = {
 
 ECS.Players["SoftTofu"] = {
    isupper=true,
+   country="U.S.A.",
+   level=99,
+   exp=3330976,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Astral Earring",                 quantity=1},
@@ -1366,6 +1375,9 @@ ECS.Players["SoftTofu"] = {
 
 ECS.Players["rawinput"] = {
    isupper=true,
+   country="U.S.A.",
+   level=99,
+   exp=2160908,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -1412,6 +1424,9 @@ ECS.Players["rawinput"] = {
 
 ECS.Players["milkopia"] = {
    isupper=true,
+   country="",
+   level=92,
+   exp=1283028,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -1446,6 +1461,9 @@ ECS.Players["milkopia"] = {
 
 ECS.Players["Archi"] = {
    isupper=true,
+   country="U.S.A.",
+   level=99,
+   exp=2168263,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Diamond Blade"},
@@ -1500,6 +1518,9 @@ ECS.Players["Archi"] = {
 
 ECS.Players["hippaheikki"] = {
    isupper=true,
+   country="Finland",
+   level=87,
+   exp=876966,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Astral Earring",                 quantity=1},
@@ -1529,6 +1550,9 @@ ECS.Players["hippaheikki"] = {
 
 ECS.Players["Bran"] = {
    isupper=true,
+   country="U.S.A.",
+   level=99,
+   exp=2467525,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Diamond Blade"},
@@ -1574,6 +1598,9 @@ ECS.Players["Bran"] = {
 
 ECS.Players["lil_beastling"] = {
    isupper=true,
+   country="Australia",
+   level=82,
+   exp=606665,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Lance of Longinus"},
@@ -1601,6 +1628,9 @@ ECS.Players["lil_beastling"] = {
 
 ECS.Players["SteveReen"] = {
    isupper=true,
+   country="U.S.A.",
+   level=85,
+   exp=743637,
    relics = {
       {name="Mythril Axe"},
       {name="Silver Stopwatch",               quantity=1},
@@ -1630,6 +1660,9 @@ ECS.Players["SteveReen"] = {
 
 ECS.Players["Jeremy"] = {
    isupper=true,
+   country="U.S.A.",
+   level=76,
+   exp=374781,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Astral Earring",                 quantity=1},
@@ -1651,6 +1684,9 @@ ECS.Players["Jeremy"] = {
 
 ECS.Players["sudzi781"] = {
    isupper=true,
+   country="U.S.A.",
+   level=36,
+   exp=12056,
    relics = {
       {name="Mythril Dagger"},
       {name="Silver Stopwatch",               quantity=1},
@@ -1677,6 +1713,9 @@ ECS.Players["sudzi781"] = {
 
 ECS.Players["JDongs"] = {
    isupper=true,
+   country="U.S.A.",
+   level=85,
+   exp=719071,
    relics = {
       {name="Champion Belt",                  quantity=1},
       {name="Tattered Mario",                 quantity=1},
@@ -1702,6 +1741,9 @@ ECS.Players["JDongs"] = {
 
 ECS.Players["TheUltravioletCatastrophe"] = {
    isupper=true,
+   country="U.S.A.",
+   level=91,
+   exp=1219226,
    relics = {
       {name="Tattered Mario",                 quantity=1},
       {name="Fiery Broadsword"},
@@ -1738,6 +1780,9 @@ ECS.Players["TheUltravioletCatastrophe"] = {
 
 ECS.Players["Koettmaskinen"] = {
    isupper=true,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Lance of Longinus"},
@@ -1768,6 +1813,9 @@ ECS.Players["Koettmaskinen"] = {
 
 ECS.Players["Okami"] = {
    isupper=true,
+   country="France",
+   level=79,
+   exp=451195,
    relics = {
       {name="Bronze Sword"},
       {name="Iron Sword"},
@@ -1798,6 +1846,9 @@ ECS.Players["Okami"] = {
 
 ECS.Players["GIEZ"] = {
    isupper=true,
+   country="Japan",
+   level=75,
+   exp=322468,
    relics = {
       {name="Mythril Flail"},
       {name="Tainted Broadsword"},
@@ -1819,6 +1870,9 @@ ECS.Players["GIEZ"] = {
 
 ECS.Players["ITGAlex"] = {
    isupper=true,
+   country="U.S.A.",
+   level=82,
+   exp=587551,
    relics = {
       {name="Mythril Dagger"},
       {name="Silver Stopwatch",               quantity=1},
@@ -1845,6 +1899,9 @@ ECS.Players["ITGAlex"] = {
 
 ECS.Players["RD"] = {
    isupper=true,
+   country="U.S.A.",
+   level=86,
+   exp=822677,
    relics = {
       {name="Mythril Rapier"},
       {name="Silver Stopwatch",               quantity=1},
@@ -1876,6 +1933,9 @@ ECS.Players["RD"] = {
 
 ECS.Players["Dr.0ctgonapus"] = {
    isupper=true,
+   country="U.S.A.",
+   level=74,
+   exp=313775,
    relics = {
       {name="Iron Axe"},
       {name="ECS Hat",                        quantity=1},
@@ -1890,6 +1950,9 @@ ECS.Players["Dr.0ctgonapus"] = {
 
 ECS.Players["Sidro"] = {
    isupper=true,
+   country="U.S.A.",
+   level=81,
+   exp=544738,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Tainted Broadsword"},
@@ -1919,6 +1982,9 @@ ECS.Players["Sidro"] = {
 
 ECS.Players["skateinmars"] = {
    isupper=true,
+   country="France",
+   level=80,
+   exp=486345,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Astral Earring",                 quantity=1},
@@ -1947,6 +2013,9 @@ ECS.Players["skateinmars"] = {
 
 ECS.Players["Keaize"] = {
    isupper=true,
+   country="U.S.A.",
+   level=79,
+   exp=460506,
    relics = {
       {name="Bronze Sword"},
       {name="Iron Sword"},
@@ -1984,6 +2053,9 @@ ECS.Players["Keaize"] = {
 
 ECS.Players["JOKR"] = {
    isupper=false,
+   country="United Kingdom",
+   level=77,
+   exp=397352,
    relics = {
       {name="Bronze Sword"},
       {name="Iron Sword"},
@@ -2010,6 +2082,9 @@ ECS.Players["JOKR"] = {
 
 ECS.Players["ensypuri"] = {
    isupper=false,
+   country="U.S.A.",
+   level=77,
+   exp=408874,
    relics = {
       {name="Mythril Flail"},
       {name="Silver Stopwatch",               quantity=1},
@@ -2037,6 +2112,9 @@ ECS.Players["ensypuri"] = {
 
 ECS.Players["Yung Kiki"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
       {name="Iron Axe"},
       {name="Silver Stopwatch",               quantity=1},
@@ -2056,6 +2134,9 @@ ECS.Players["Yung Kiki"] = {
 
 ECS.Players["lolipo"] = {
    isupper=false,
+   country="U.S.A.",
+   level=66,
+   exp=162509,
    relics = {
       {name="ECS Hat",                        quantity=1},
       {name="Broadsword"},
@@ -2073,6 +2154,9 @@ ECS.Players["lolipo"] = {
 
 ECS.Players["sefirot"] = {
    isupper=false,
+   country="Japan",
+   level=71,
+   exp=239960,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2093,6 +2177,9 @@ ECS.Players["sefirot"] = {
 
 ECS.Players["Andkaseywaslike"] = {
    isupper=false,
+   country="U.S.A.",
+   level=66,
+   exp=159284,
    relics = {
       {name="Iron Sword"},
       {name="Iron Dagger"},
@@ -2117,6 +2204,9 @@ ECS.Players["Andkaseywaslike"] = {
 
 ECS.Players["zxevik"] = {
    isupper=false,
+   country="U.S.A.",
+   level=75,
+   exp=327393,
    relics = {
       {name="Tainted Broadsword"},
       {name="Blade"},
@@ -2139,6 +2229,9 @@ ECS.Players["zxevik"] = {
 
 ECS.Players["Rems"] = {
    isupper=false,
+   country="France",
+   level=63,
+   exp=129550,
    relics = {
       {name="Iron Sword"},
       {name="Bronze Dagger"},
@@ -2160,6 +2253,9 @@ ECS.Players["Rems"] = {
 
 ECS.Players["Kev"] = {
    isupper=false,
+   country="U.S.A.",
+   level=69,
+   exp=208316,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2192,6 +2288,9 @@ ECS.Players["Kev"] = {
 
 ECS.Players["dominick"] = {
    isupper=false,
+   country="U.S.A.",
+   level=81,
+   exp=562911,
    relics = {
       {name="Mythril Sword"},
       {name="Mythril Flail"},
@@ -2221,6 +2320,9 @@ ECS.Players["dominick"] = {
 
 ECS.Players["teejusb"] = {
    isupper=false,
+   country="U.S.A.",
+   level=57,
+   exp=72804,
    relics = {
       {name="Bronze Axe"},
       {name="Iron Axe"},
@@ -2240,6 +2342,9 @@ ECS.Players["teejusb"] = {
 
 ECS.Players["Janus5k"] = {
    isupper=false,
+   country="U.S.A.",
+   level=64,
+   exp=131362,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2268,6 +2373,9 @@ ECS.Players["Janus5k"] = {
 
 ECS.Players["Xynn"] = {
    isupper=false,
+   country="Canada",
+   level=59,
+   exp=91060,
    relics = {
       {name="Bronze Sword"},
       {name="Iron Sword"},
@@ -2293,6 +2401,9 @@ ECS.Players["Xynn"] = {
 
 ECS.Players["Made"] = {
    isupper=false,
+   country="Chile",
+   level=55,
+   exp=61329,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2313,6 +2424,9 @@ ECS.Players["Made"] = {
 
 ECS.Players["TYLR"] = {
    isupper=false,
+   country="U.S.A.",
+   level=59,
+   exp=92387,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2329,6 +2443,9 @@ ECS.Players["TYLR"] = {
 
 ECS.Players["VincentITG"] = {
    isupper=false,
+   country="U.S.A.",
+   level=50,
+   exp=41181,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2339,6 +2456,9 @@ ECS.Players["VincentITG"] = {
 
 ECS.Players["aminuteawayx"] = {
    isupper=false,
+   country="U.S.A.",
+   level=54,
+   exp=57055,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2363,6 +2483,9 @@ ECS.Players["aminuteawayx"] = {
 
 ECS.Players["I_ONLY_PLAY_BOARD_GAMES_NOW"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2374,6 +2497,9 @@ ECS.Players["I_ONLY_PLAY_BOARD_GAMES_NOW"] = {
 
 ECS.Players["pinkloon"] = {
    isupper=false,
+   country="U.S.A.",
+   level=42,
+   exp=19832,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2386,6 +2512,9 @@ ECS.Players["pinkloon"] = {
 
 ECS.Players["Sal!V2"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2397,6 +2526,9 @@ ECS.Players["Sal!V2"] = {
 
 ECS.Players["Chief Skittles"] = {
    isupper=false,
+   country="U.S.A.",
+   level=50,
+   exp=39879,
    relics = {
       {name="Iron Rapier"},
       {name="Broadsword"},
@@ -2411,6 +2543,9 @@ ECS.Players["Chief Skittles"] = {
 
 ECS.Players["IKA3K"] = {
    isupper=false,
+   country="Japan",
+   level=50,
+   exp=39783,
    relics = {
       {name="Iron Rapier"},
       {name="Broadsword"},
@@ -2426,6 +2561,9 @@ ECS.Players["IKA3K"] = {
 
 ECS.Players["HOT TAKE"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2435,6 +2573,9 @@ ECS.Players["HOT TAKE"] = {
 
 ECS.Players["Redzone"] = {
    isupper=false,
+   country="U.S.A.",
+   level=51,
+   exp=45046,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2453,6 +2594,9 @@ ECS.Players["Redzone"] = {
 
 ECS.Players["Kyy"] = {
    isupper=false,
+   country="Finland",
+   level=43,
+   exp=21553,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2470,6 +2614,9 @@ ECS.Players["Kyy"] = {
 
 ECS.Players["Sereni"] = {
    isupper=false,
+   country="",
+   level=50,
+   exp=40451,
    relics = {
       {name="Iron Rapier"},
       {name="Broadsword"},
@@ -2485,6 +2632,9 @@ ECS.Players["Sereni"] = {
 
 ECS.Players["@@"] = {
    isupper=false,
+   country="U.S.A.",
+   level=28,
+   exp=5386,
    relics = {
       {name="Broadsword"},
       {name="Colada"},
@@ -2500,6 +2650,9 @@ ECS.Players["AV6"] = {
 
 ECS.Players["Pluto"] = {
    isupper=false,
+   country="France",
+   level=25,
+   exp=3824,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2511,6 +2664,9 @@ ECS.Players["Pluto"] = {
 
 ECS.Players["tom no bar"] = {
    isupper=false,
+   country="U.S.A.",
+   level=25,
+   exp=3840,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2521,6 +2677,9 @@ ECS.Players["tom no bar"] = {
 
 ECS.Players["robbumon"] = {
    isupper=false,
+   country="U.S.A.",
+   level=28,
+   exp=5116,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2536,6 +2695,9 @@ ECS.Players["robbumon"] = {
 
 ECS.Players["rynker"] = {
    isupper=false,
+   country="U.S.A.",
+   level=15,
+   exp=1117,
    relics = {
       {name="Champion Belt",                  quantity=1},
       {name="Broadsword"},
@@ -2545,6 +2707,9 @@ ECS.Players["rynker"] = {
 
 ECS.Players["StoryTime"] = {
    isupper=false,
+   country="U.S.A.",
+   level=13,
+   exp=825,
    relics = {
       {name="Broadsword"},
       {name="Colada"},
@@ -2553,12 +2718,18 @@ ECS.Players["StoryTime"] = {
 
 ECS.Players["titandude21"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
    }
 }
 
 ECS.Players["DMAC"] = {
    isupper=false,
+   country="U.S.A.",
+   level=49,
+   exp=37710,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2571,6 +2742,9 @@ ECS.Players["DMAC"] = {
 
 ECS.Players["MLA"] = {
    isupper=false,
+   country="",
+   level=nil,
+   exp=nil,
    relics = {
    }
 }
