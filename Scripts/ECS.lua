@@ -1766,6 +1766,36 @@ ECS.Players["Koettmaskinen"] = {
 	}
 }
 
+ECS.Players["Okami"] = {
+	isupper=true,
+	relics = {
+		{name="Bronze Sword"},
+		{name="Iron Sword"},
+		{name="Bronze Dagger"},
+		{name="Iron Dagger"},
+		{name="Bronze Axe"},
+		{name="Iron Axe"},
+		{name="Bronze Flail"},
+		{name="Iron Flail"},
+		{name="Bronze Rapier"},
+		{name="Iron Rapier"},
+		{name="Fiery Broadsword"},
+		{name="Max Blade"},
+		{name="Sword, Made of Steel"},
+		{name="Skull Ring",			quantity=1},
+		{name="Lapis Fly Wing Rapier",			quantity=1},
+		{name="Morning Star",			quantity=1},
+		{name="Wizard Rod",			quantity=1},
+		{name="Gaia Hammer",			quantity=1},
+		{name="Zweihander",			quantity=1},
+		{name="Markuksen Kirves",			quantity=1},
+		{name="Arrow Vortex",			quantity=1},
+		{name="Baguette"},
+		{name="Boomerang",			quantity=1},
+		{name="Staminadventurer's License"},
+	}
+}
+
 ECS.Players["GIEZ"] = {
 	isupper=true,
 	relics = {

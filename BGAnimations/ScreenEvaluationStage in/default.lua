@@ -23,15 +23,6 @@ return Def.ActorFrame {
 		PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
 		PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
 
-		-- Protect ring functions differently for ECS8, but no reason not to always set fail type appropriately.
-		local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
-		if player_state then
-			local po = player_state:GetPlayerOptions("ModsLevel_Preferred")
-			if po then
-				po:FailSetting('FailType_ImmediateContinue')
-			end
-		end
-
 		-- always undo the effects of any relics that change LifeDifficulty when leaving ScreenEval, even if they weren't active
 		PREFSMAN:SetPreference("LifeDifficultyScale", 1)
 	end,

@@ -1,5 +1,19 @@
 local t = Def.ActorFrame{
 	InitCommand=function(self) SL.Global.GameplayReloadCheck = false end,
+	OnCommand=function(self)
+		-- Protect ring functions differently for ECS8, but no reason not to always set fail type appropriately.
+		local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
+		if player_state then
+			local po = player_state:GetPlayerOptions("ModsLevel_Preferred")
+			if po then
+				if ECS.Mode == "ECS8" then
+					po:FailSetting('FailType_Immediate')
+				else
+					po:FailSetting('FailType_ImmediateContinue')
+				end
+			end
+		end
+	end,
 	ChangeStepsMessageCommand=function(self, params)
 		self:playcommand("StepsHaveChanged", params)
 	end,
