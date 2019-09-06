@@ -1150,7 +1150,7 @@ ECS.Players = {}
 
 ECS.Players["Rust"] = {
 	isupper=true,
-	country="U.S.A",
+	country="U.S.A.",
 	level=100,
 	exp=4501575,
 	relics = {
@@ -2505,7 +2505,7 @@ ECS.Players["GALAGA"] = {
 
 ECS.Players["I_ONLY_PLAY_BOARD_GAMES_NOW"] = {
 	isupper=false,
-	country="U.S.A",
+	country="U.S.A.",
 	level=41,
 	exp=18570,
 	relics = {
@@ -2743,7 +2743,7 @@ ECS.Players["StoryTime"] = {
 
 ECS.Players["titandude21"] = {
 	isupper=false,
-	country="",
+	country="U.S.A.",
 	level=nil,
 	exp=nil,
 	relics = {
@@ -2767,7 +2767,7 @@ ECS.Players["DMAC"] = {
 
 ECS.Players["MLA"] = {
 	isupper=false,
-	country="",
+	country="U.S.A.",
 	level=nil,
 	exp=nil,
 	relics = {
