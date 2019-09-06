@@ -2643,6 +2643,9 @@ ECS.Players["@@"] = {
 
 ECS.Players["AV6"] = {
    isupper=false,
+   country="France",
+   level=25,
+   exp=3824,
    relics = {
       {name="Broadsword"},
    }
@@ -2650,9 +2653,9 @@ ECS.Players["AV6"] = {
 
 ECS.Players["Pluto"] = {
    isupper=false,
-   country="France",
-   level=25,
-   exp=3824,
+   country="Russian Federation",
+   level=27,
+   exp=4722,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
