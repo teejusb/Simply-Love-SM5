@@ -2152,6 +2152,23 @@ ECS.Players["lolipo"] = {
 	}
 }
 
+ECS.Players["CaptainBlack"] = {
+	isupper=true,
+	country="U.S.A.",
+	level=66,
+	exp=159774,
+	relics = {
+		{name="ECS Hat",			quantity=1},
+		{name="Champion Belt",			quantity=1},
+		{name="Broadsword"},
+		{name="Blade"},
+		{name="Skull Ring",			quantity=1},
+		{name="Lapis Fly Wing Rapier",			quantity=1},
+		{name="Morning Star",			quantity=1},
+		{name="Gaia Hammer",			quantity=1},
+	}
+}
+
 ECS.Players["sefirot"] = {
 	isupper=false,
 	country="Japan",
