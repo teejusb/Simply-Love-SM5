@@ -93,6 +93,24 @@ local TotalSongs = function(numSongs)
 end
 
 -- ----------------------------------------------------
+-- ECS8 functions
+
+local ECSCountry = function(name)
+	if not ECS.Players[name] then return nil end
+	return ECS.Players[name].country
+end
+
+local ECSLevel = function(name)
+	if not ECS.Players[name] then return nil end
+	return ECS.Players[name].level
+end
+
+local ECSExp = function(name)
+	if not ECS.Players[name] then return nil end
+	return ECS.Players[name].exp
+end
+
+-- ----------------------------------------------------
 -- Retrieve and process data (mods, most recently played song, high score name, etc.)
 -- for each available local profile and put it in the profile_data table.
 -- Since both players are using the same list of local profiles, this only needs to be performed once (not once for each player).
@@ -105,6 +123,8 @@ for i=1, PROFILEMAN:GetNumLocalProfiles() do
 
 	-- GetLocalProfileFromIndex() expects indices to start at 0
 	local profile = PROFILEMAN:GetLocalProfileFromIndex(i-1)
+	local profile_name = profile:GetDisplayName()
+
 	-- GetLocalProfileIDFromIndex() also expects indices to start at 0
 	local id = PROFILEMAN:GetLocalProfileIDFromIndex(i-1)
 	local dir = PROFILEMAN:LocalProfileIDToDir(id)
@@ -113,13 +133,16 @@ for i=1, PROFILEMAN:GetNumLocalProfiles() do
 
 	local data = {
 		index = i,
-		displayname = profile:GetDisplayName(),
+		displayname = profile_name,
 		highscorename = profile:GetLastUsedHighScoreName(),
 		recentsong = RecentSong(profile:GetLastPlayedSong()),
 		totalsongs = TotalSongs(profile:GetNumTotalSongsPlayed()),
 		mods = mods,
 		noteskin = noteskin,
 		judgment = judgment,
+		country = ECSCountry(profile_name),
+		level = ECSLevel(profile_name),
+		exp = ECSExp(profile_name)
 	}
 
 	table.insert(profile_data, data)
