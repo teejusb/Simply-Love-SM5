@@ -228,7 +228,7 @@ return Def.ActorFrame{
 
 				LoadFont("Common Normal")..{
 					Name="SRPG3 Level",
-					InitCommand=function(self) self:align(0,0):xy(-50,-20):zoom(0.65):maxwidth(104/0.65):vertspacing(-2) end,
+					InitCommand=function(self) self:align(0,0):xy(-50,-16):zoom(0.65):maxwidth(104/0.65):vertspacing(-2) end,
 					SetCommand=function(self, params)
 						if params then
 							self:visible(true):settext(params.level and ("SRPG3 Level: "..params.level) or "")

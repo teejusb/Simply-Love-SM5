@@ -1780,9 +1780,9 @@ ECS.Players["TheUltravioletCatastrophe"] = {
 
 ECS.Players["Koettmaskinen"] = {
    isupper=true,
-   country="",
-   level=nil,
-   exp=nil,
+   country="Sweden",
+   level=87,
+   exp=849398,
    relics = {
       {name="Silver Stopwatch",               quantity=1},
       {name="Lance of Longinus"},
@@ -2112,9 +2112,9 @@ ECS.Players["ensypuri"] = {
 
 ECS.Players["Yung Kiki"] = {
    isupper=false,
-   country="",
-   level=nil,
-   exp=nil,
+   country="U.S.A.",
+   level=71,
+   exp=234050,
    relics = {
       {name="Iron Axe"},
       {name="Silver Stopwatch",               quantity=1},
@@ -2482,29 +2482,32 @@ ECS.Players["aminuteawayx"] = {
 }
 
 ECS.Players["GALAGA"] = {
-	isupper=false,
-	relics = {
-		{name="Silver Stopwatch",			quantity=1},
-		{name="Broadsword"},
-		{name="Blade"},
-		{name="Skull Ring",			quantity=1},
-		{name="Lapis Fly Wing Rapier",			quantity=1},
-		{name="Jewel Knuckles",			quantity=1},
-		{name="Morning Star",			quantity=1},
-		{name="Colada"},
-		{name="Joyeuse"},
-		{name="Markuksen Kirves",			quantity=1},
-		{name="Arrow Vortex",			quantity=1},
-		{name="Baguette"},
-		{name="Staminadventurer's License"},
-	}
+   isupper=false,
+	country="U.S.A.",
+	level=55,
+	exp=nil,
+   relics = {
+      {name="Silver Stopwatch",               quantity=1},
+      {name="Broadsword"},
+      {name="Blade"},
+      {name="Skull Ring",                     quantity=1},
+      {name="Lapis Fly Wing Rapier",          quantity=1},
+      {name="Jewel Knuckles",                 quantity=1},
+      {name="Morning Star",                   quantity=1},
+      {name="Colada"},
+      {name="Joyeuse"},
+      {name="Markuksen Kirves",               quantity=1},
+      {name="Arrow Vortex",                   quantity=1},
+      {name="Baguette"},
+      {name="Staminadventurer's License"},
+   }
 }
 
 ECS.Players["I_ONLY_PLAY_BOARD_GAMES_NOW"] = {
    isupper=false,
-   country="",
-   level=nil,
-   exp=nil,
+   country="U.S.A",
+   level=41,
+   exp=18570,
    relics = {
       {name="Bronze Sword"},
       {name="Bronze Dagger"},
@@ -2531,9 +2534,9 @@ ECS.Players["pinkloon"] = {
 
 ECS.Players["Sal!V2"] = {
    isupper=false,
-   country="",
-   level=nil,
-   exp=nil,
+   country="U.S.A.",
+   level=45,
+   exp=25851,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
@@ -2580,9 +2583,9 @@ ECS.Players["IKA3K"] = {
 
 ECS.Players["HOT TAKE"] = {
    isupper=false,
-   country="",
-   level=nil,
-   exp=nil,
+   country="U.S.A.",
+   level=34,
+   exp=9883,
    relics = {
       {name="Broadsword"},
       {name="Blade"},
