@@ -1016,7 +1016,15 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="aegis.png",
-		action=function() end
+		action=function()
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+					SM("Set to Life 3")
+				end
+			end
+		end
 	},
 	{
 		id=90,
@@ -1026,7 +1034,15 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="throne.png",
-		action=function() end
+		action=function()
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+					SM("Set to Life 3")
+				end
+			end
+		end
 	},
 	{
 		id=91,
