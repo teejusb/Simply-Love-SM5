@@ -1,4 +1,34 @@
-local af = Def.ActorFrame{ InitCommand=function(self) self:Center() end }
+local quotes = {
+	{
+		{"In the race for success,\nspeed is less important\nthan stamina.", _screen.cx-100, _screen.cy-10},
+		{"- B. C. Forbes", _screen.cx+45, _screen.cy+36}
+	},
+	{
+		{"A stream is music and motion.", _screen.cx-100, _screen.cy-10},
+		{"- Nelson Bryant", _screen.cx+84, _screen.cy+12}
+	},
+	{
+		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed.", _screen.cx-150, _screen.cy-10},
+		{"- Zetorux, ECS1", _screen.cx+159, _screen.cy+25}
+	},
+	{
+		{"Are you asking about my stamina cap ?", _screen.cx-100, _screen.cy-10},
+		{"- aijbot", _screen.cx+138, _screen.cy+12}
+	},
+}
+
+local body, author
+local w = 310
+-- ---------------------------------------
+
+local af = Def.ActorFrame{
+	InitCommand=function(self)
+		self:Center()
+		local quote = quotes[math.random(#quotes)]
+		body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
+		author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
+	end
+}
 
 -- check SM5 version, current game (dance, pump, etc.), and RTT support
 af[#af+1] = LoadActor("./CompatibilityChecks.lua")
@@ -55,6 +85,26 @@ af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self) self:diffuse(GetHexColor(slc)):diffusealpha(0) end,
 	OnCommand=function(self) self:sleep(3):linear(0.25):diffusealpha(1) end,
 	OffCommand=function(self) self:linear(0.25):diffusealpha(0) end,
+}
+
+-- quote body
+af[#af+1] = LoadFont("Common Normal")..{
+	InitCommand=function(self)
+		body = self
+		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(left):vertspacing(-4)
+	end,
+	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(linear,0.25; diffusealpha,0)
+}
+
+-- quote author
+af[#af+1] = LoadFont("Common Normal")..{
+	InitCommand=function(self)
+		author = self
+		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(right)
+	end,
+	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(linear,0.25; diffusealpha,0)
 }
 
 return af

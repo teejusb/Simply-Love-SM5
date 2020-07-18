@@ -14,6 +14,17 @@ if SL[pn].ActiveModifiers.SpeedModType == "X" and SL[pn].ActiveModifiers.SpeedMo
 	optionslist = "1x, "
 end
 
+local LifeDifficultyScale = round(PREFSMAN:GetPreference("LifeDifficultyScale"), 1)
+local lifescales = {
+	["1.6"] = 1,
+	["1.4"] = 2,
+	["1.2"] = 3,
+	["1.0"] = 4,
+	["0.8"] = 5,
+	["0.6"] = 6,
+	["0.4"] = 7,
+}
+
 --  ...and append options to that string as needed
 for i,option in ipairs(PlayerOptions) do
 
@@ -40,6 +51,10 @@ end
 local TimingWindowScale = PREFSMAN:GetPreference("TimingWindowScale")
 if TimingWindowScale ~= 1 then
 	optionslist = optionslist .. ", " .. (ScreenString("TimingWindowScale")):format(TimingWindowScale*100)
+end
+
+if LifeDifficultyScale ~= 1 then
+	optionslist = optionslist .. ", " .. "Life" .. lifescales[tostring(LifeDifficultyScale)]
 end
 
 local font_zoom = 0.7
