@@ -51,7 +51,7 @@ local wheel_item_mt = {
 				Name=name,
 				InitCommand=function(subself)
 					self.container = subself
-					if ThemePrefs.Get("VisualTheme")=="Gay" then
+					if ThemePrefs.Get("VisualTheme")=="Gay" and not HolidayCheer() then
 						subself:bob():effectmagnitude(0,0,0):effectclock('bgm'):effectperiod(0.666)
 					end
 				end,
@@ -135,7 +135,7 @@ local wheel_item_mt = {
 
 local t = Def.ActorFrame{
 	InitCommand=function(self)
-		wheel:set_info_set(SL.Colors, SL.Global.ActiveColorIndex)
+		wheel:set_info_set(SL.DecorativeColors, SL.Global.ActiveColorIndex)
 		self:queuecommand("Capture")
 		self:GetChild("ColorWheel"):SetDrawByZPosition(true)
 	end,
@@ -161,7 +161,7 @@ local t = Def.ActorFrame{
 	FinishCommand=function(self)
 		self:GetChild("start_sound"):play()
 
-		SL.Global.ActiveColorIndex = FindInTable( wheel:get_info_at_focus_pos(), SL.Colors )
+		SL.Global.ActiveColorIndex = FindInTable( wheel:get_info_at_focus_pos(), SL.DecorativeColors )
 		ThemePrefs.Set("SimplyLoveColor", SL.Global.ActiveColorIndex)
 		ThemePrefs.Save()
 

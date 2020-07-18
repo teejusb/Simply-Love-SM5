@@ -7,39 +7,39 @@ local current_game = GAMESTATE:GetCurrentGame():GetName()
 local choices = {
 	{
 		name="single",
-		x=_screen.cx-_screen.w/4,
+		x=_screen.cx-SL_WideScale(160, 214),
 		pads = {
-			{color=GetHexColor(SL.Global.ActiveColorIndex+1), offset=0}
+			{color=GetHexColor(SL.Global.ActiveColorIndex+1, true), offset=0}
 		}
 	},
 	{
 		name="versus",
 		x=_screen.cx,
 		pads = {
-			{color=GetHexColor(SL.Global.ActiveColorIndex), offset=-WideScale(42,51)},
-			{color=GetHexColor(SL.Global.ActiveColorIndex+3), offset= WideScale(42,51)}
+			{color=GetHexColor(SL.Global.ActiveColorIndex, true),   offset=-SL_WideScale(42,51)},
+			{color=GetHexColor(SL.Global.ActiveColorIndex+3, true), offset= SL_WideScale(42,51)}
 		}
 	},
 	{
 		name="double",
-		x=_screen.cx+_screen.w/4,
+		x=_screen.cx+SL_WideScale(160, 214),
 		pads = {
-			{color=GetHexColor(SL.Global.ActiveColorIndex+2), offset=-WideScale(42,51)},
-			{color=GetHexColor(SL.Global.ActiveColorIndex+2), offset= WideScale(42,51)}
+			{color=GetHexColor(SL.Global.ActiveColorIndex+2, true), offset=-SL_WideScale(42,51)},
+			{color=GetHexColor(SL.Global.ActiveColorIndex+2, true), offset= SL_WideScale(42,51)}
 		}
 	},
 }
 
 if current_game=="dance" and ThemePrefs.Get("AllowDanceSolo") then
-	choices[1].x = _screen.w/4-_screen.w/8
-	choices[2].x = (_screen.w/4)*2-_screen.w/8
-	choices[3].x = (_screen.w/4)*3-_screen.w/8
-	choices[4] = { name="solo", pads={ {color=GetHexColor(SL.Global.ActiveColorIndex+1), offset=0}}, x=_screen.w-_screen.w/8 }
+	choices[1].x = _screen.cx - SL_WideScale(210,245)
+	choices[2].x = _screen.cx - SL_WideScale(75,90)
+	choices[3].x = _screen.cx + SL_WideScale(75,90)
+	choices[4] = { name="solo", pads={ {color=GetHexColor(SL.Global.ActiveColorIndex+1, true), offset=0}}, x=_screen.cx + SL_WideScale(210,245) }
 
 -- double is not a valid style in kb7 and para
 elseif current_game=="kb7" or current_game=="para" then
-	choices[1].x = _screen.cx-_screen.w/6
-	choices[2].x = _screen.cx+_screen.w/6
+	choices[1].x = _screen.cx-SL_WideScale(106, 140)
+	choices[2].x = _screen.cx+SL_WideScale(106, 140)
 	table.remove(choices, 3)
 end
 
@@ -55,38 +55,52 @@ local EnableChoices = function()
 	or GAMESTATE:GetCoinMode() ~= "CoinMode_Pay"
 	or GAMESTATE:GetCoinMode() == "CoinMode_Pay" and GAMESTATE:GetPremium() == "Premium_2PlayersFor1Credit" then
 		for i, child in ipairs( af:GetChild("") ) do
-			child.Enabled = true
+			child:aux(1)
+		end
+		return
+	end
+
+
+	if GAMESTATE:GetCoinMode() == "CoinMode_Pay" then
+
+		-- if both players are already joined, disable "1 Player" as a choice
+		af:GetChild("")[1]:aux( (#GAMESTATE:GetHumanPlayers() == 1) and 1 or 0)
+
+		-- double for 1 credit
+		if GAMESTATE:GetPremium() == "Premium_DoubleFor1Credit" then
+
+			-- maybe enable "2 Players"
+			if GAMESTATE:EnoughCreditsToJoin()
+			or #GAMESTATE:GetHumanPlayers() == 2 then
+				af:GetChild("")[2]:aux(1)
+			else
+				af:GetChild("")[2]:aux(0)
+			end
+
+			-- enable "Double"
+			af:GetChild("")[3]:aux(1)
+
+		-- premium off
+		elseif GAMESTATE:GetPremium() == "Premium_Off" then
+
+			if GAMESTATE:EnoughCreditsToJoin()
+			or #GAMESTATE:GetHumanPlayers() == 2 then
+				-- enable "2 Players" and "Double"
+				af:GetChild("")[2]:aux(1)
+				af:GetChild("")[3]:aux(1)
+			else
+				-- disable "2 Players" and "Double"
+				af:GetChild("")[2]:aux(0)
+				af:GetChild("")[3]:aux(0)
+			end
 		end
 	end
 
-	-- double for 1 credit
-	if GAMESTATE:GetCoinMode() == "CoinMode_Pay" and GAMESTATE:GetPremium() == "Premium_DoubleFor1Credit" then
-		-- if both players are already joined, disable 1 Player as a choice
-		af:GetChild("")[1].Enabled = (#GAMESTATE:GetHumanPlayers() == 1)
 
-		af:GetChild("")[3].Enabled = true
-
-		if GAMESTATE:EnoughCreditsToJoin()
-		or #GAMESTATE:GetHumanPlayers() == 2 then
-			af:GetChild("")[2].Enabled = true
-		end
-	end
-
-	-- premium off
-	if GAMESTATE:GetCoinMode() == "CoinMode_Pay" and GAMESTATE:GetPremium() == "Premium_Off" then
-		-- if both players are already joined, disable 1 Player as a choice
-		af:GetChild("")[1].Enabled = (#GAMESTATE:GetHumanPlayers() == 1)
-
-		if GAMESTATE:EnoughCreditsToJoin()
-		or #GAMESTATE:GetHumanPlayers() == 2 then
-			af:GetChild("")[2].Enabled = true
-			af:GetChild("")[3].Enabled = true
-		end
-	end
 
 	-- dance solo
 	if current_game=="dance" and ThemePrefs.Get("AllowDanceSolo") then
-		af:GetChild("")[4].Enabled = true
+		af:GetChild("")[4]:aux(1)
 	end
 end
 
@@ -99,7 +113,7 @@ local GetNextEnabledChoice = function(dir)
 	for i=start, stop, dir do
 		local index = ((i-1) % #choices) + 1
 
-		if af:GetChild("")[index].Enabled then
+		if af:GetChild("")[index]:getaux()==1 then
 			current_index = index
 			return
 		end
@@ -109,7 +123,7 @@ end
 local JoinOrUnjoinPlayersMaybe = function(style, player)
 	-- if going into versus, ensure that both players are joined
 	if style == "versus" then
-		for player in ivalues({PLAYER_1, PLAYER_2}) do
+		for player in ivalues( PlayerNumber ) do
 			if not GAMESTATE:IsHumanPlayer(player) then GAMESTATE:JoinPlayer(player) end
 		end
 		return
@@ -126,11 +140,8 @@ local JoinOrUnjoinPlayersMaybe = function(style, player)
 	-- ensure that player is actually joined now to avoid having no one joined in ScreenSelectPlayMode
 	if not GAMESTATE:IsHumanPlayer(player) then GAMESTATE:JoinPlayer(player) end
 
-	if player == PLAYER_1 then
-		GAMESTATE:UnjoinPlayer(PLAYER_2)
-	else
-		GAMESTATE:UnjoinPlayer(PLAYER_1)
-	end
+	-- OtherPlayer convenience table defined in _fallback/Scripts/00 init.lua
+	GAMESTATE:UnjoinPlayer(OtherPlayer[player])
 end
 
 local ManageCredits = function(style)
@@ -244,10 +255,11 @@ local t = Def.ActorFrame{
 			self:queuecommand("Listen")
 		end
 	end,
+	CoinModeChangedMessageCommand=function(self) self:playcommand("CoinsChanged") end,
 	CoinsChangedMessageCommand=function(self)
 		EnableChoices()
 		-- if the current choice is no longer valid after the coin change
-		if not self:GetChild("")[current_index].Enabled then
+		if self:GetChild("")[current_index]:getaux()==0 then
 			-- get the next valid choice to the right
 			GetNextEnabledChoice(1)
 			-- force all choices to LoseFocus
@@ -284,6 +296,14 @@ local t = Def.ActorFrame{
 		-- set this now, but keep in mind that the style can change during a game session in a number
 		-- of ways, like latejoin (when available) and using SSM's SortMenu to change styles mid-game
 		GAMESTATE:SetCurrentStyle(style)
+
+		for i=1, #choices do
+			if i ~= current_index then
+				af:GetChild("")[i]:playcommand("NotChosen")
+			else
+				af:GetChild("")[i]:playcommand("Chosen")
+			end
+		end
 
 		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 	end,

@@ -5,8 +5,8 @@ local MasterPlayerState = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumb
 local so = GAMESTATE:GetSongOptionsObject("ModsLevel_Song")
 
 local bpmDisplay, SongPosition
-local StepsP1, StepsP2
 
+-- -----------------------------------------------------------------------
 
 -- the update function when a single BPM Display is in use
 local UpdateSingleBPM = function(af)
@@ -43,7 +43,7 @@ end
 
 local SingleBPMDisplay = function()
 	return Def.ActorFrame{
-		InitCommand=cmd(SetUpdateFunction,UpdateSingleBPM),
+		InitCommand=function(self) self:SetUpdateFunction(UpdateSingleBPM) end,
 
 		LoadFont("Common Normal")..{
 			Name="BPMDisplay",
@@ -59,7 +59,6 @@ local DualBPMDisplay = function()
 	return Def.ActorFrame{
 		InitCommand=function(self) self:SetUpdateFunction(Update2PBPM) end,
 
-		-- manual bpm displays
 		LoadFont("Common Normal")..{
 			Name="DisplayP1",
 			InitCommand=function(self)
@@ -77,20 +76,20 @@ local DualBPMDisplay = function()
 	}
 end
 
--- -------------------------------------
+-- -----------------------------------------------------------------------
 
 local t = Def.ActorFrame{
 	InitCommand=function(self)
-		self:xy(_screen.cx, 52):valign(1)
+		self:xy(_screen.cx, 52):valign(1):zoom(1.33)
 
-		if PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1 then
+		local styletype = ToEnumShortString(GAMESTATE:GetCurrentStyle():GetStyleType())
+
+		if (styletype == "OnePlayerTwoSides") or (PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1) then
 			local mpn = GAMESTATE:GetMasterPlayerNumber()
 			if SL[ToEnumShortString(mpn)].ActiveModifiers.NPSGraphAtTop then
-				self:x(_screen.cx + GetNotefieldWidth(mpn) * (mpn==PLAYER_1 and 1 or -1))
+				self:x(_screen.cx + _screen.w * (mpn==PLAYER_1 and 0.3 or -0.3))
 			end
 		end
-
-		self:zoom(SL.Global.GameMode == "StomperZ" and 1 or 1.33)
 	end,
 
 	LoadFont("Common Normal")..{
@@ -103,14 +102,6 @@ local t = Def.ActorFrame{
 	}
 }
 
-if SL.Global.GameMode == "StomperZ" then
-	t[#t+1] = Def.Quad{
-		InitCommand=function(self)
-			self:diffuse(0,0,0,0.85):zoomto(66,40):valign(0):xy( 0, -20 )
-		end
-	}
-end
-
 
 if #Players == 1 then
 	t[#t+1] = SingleBPMDisplay()
@@ -121,8 +112,8 @@ if #Players == 2 then
 
 	if not GAMESTATE:IsCourseMode() then
 		-- check if both players are playing the same steps
-		StepsP1 = GAMESTATE:GetCurrentSteps(PLAYER_1)
-		StepsP2 = GAMESTATE:GetCurrentSteps(PLAYER_2)
+		local StepsP1 = GAMESTATE:GetCurrentSteps(PLAYER_1)
+		local StepsP2 = GAMESTATE:GetCurrentSteps(PLAYER_2)
 
 		-- get timing data...
 		local TimingDataP1 = StepsP1:GetTimingData()

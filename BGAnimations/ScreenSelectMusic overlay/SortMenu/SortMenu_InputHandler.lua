@@ -13,11 +13,11 @@ local function input(event)
 
 	if event.type ~= "InputEventType_Release" then
 
-		if event.GameButton == "MenuRight" then
+		if event.GameButton == "MenuRight" or event.GameButton == "MenuDown" then
 			sort_wheel:scroll_by_amount(1)
 			sortmenu:GetChild("change_sound"):play()
 
-		elseif event.GameButton == "MenuLeft" then
+		elseif event.GameButton == "MenuLeft" or event.GameButton == "MenuUp" then
 			sort_wheel:scroll_by_amount(-1)
 			sortmenu:GetChild("change_sound"):play()
 
@@ -36,8 +36,9 @@ local function input(event)
 				SetGameModePreferences()
 				THEME:ReloadMetrics()
 
-				-- Change the header text to reflect the newly selected GameMode.
-				overlay:GetParent():GetChild("Header"):playcommand("UpdateHeaderText")
+				-- Broadcast that the SL GameMode has changed
+				-- SSM's header will update its text and highscore names in the PaneDisplays will refresh
+				MESSAGEMAN:Broadcast("SLGameModeChanged")
 
 				-- Reload the SortMenu's available options and queue "DirectInputToEngine"
 				-- to return input from Lua back to the engine and hide the SortMenu from view

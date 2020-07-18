@@ -66,7 +66,7 @@ local song_mt = {
 					PlayMusicPreviewCommand=function(subself) play_sample_music() end,
 				},
 
-				-- AF for Banner and blinking Quad
+				-- AF for jacket/banner and blinking Quad
 				Def.ActorFrame{
 					GainFocusCommand=function(subself) subself:y(10) end,
 					LoseFocusCommand=function(subself) subself:y(0) end,
@@ -89,7 +89,7 @@ local song_mt = {
 						SlideBackIntoGridCommand=function(subself) subself:linear(0.12):zoomto(128,128) end
 					},
 
-					-- banner / jacket
+					-- jacket/banner
 					Def.Sprite{
 						Name="Banner",
 						InitCommand=function(subself) self.banner = subself; subself:diffusealpha(0) end,
@@ -101,15 +101,15 @@ local song_mt = {
 							else
 								subself:zoomto(126,126)
 							end
-							subself:diffusealpha(1)
+							subself:diffusealpha(1):setstate(0):position(0)
 						end,
 						GainFocusCommand=function(subself)
-							subself:linear(0.2):zoomto(126,126):stopeffect()
+							subself:setstate(0):position(0):play():linear(0.2):zoomto(126,126):stopeffect()
 							if self.song == "CloseThisFolder" then
 								subself:diffuseshift():effectcolor1(1,0.65,0.65,1):effectcolor2(1,1,1,1)
 							end
 						end,
-						LoseFocusCommand=function(subself) subself:linear(0.2):zoomto(55,55):stopeffect() end,
+						LoseFocusCommand=function(subself) subself:pause():setstate(0):position(0):linear(0.2):zoomto(55,55):stopeffect() end,
 						SlideToTopCommand=function(subself) subself:linear(0.3):zoomto(110,110):rotationy(360):sleep(0):rotationy(0) end,
 						SlideBackIntoGridCommand=function(subself) subself:linear(0.12):zoomto(126,126) end,
 					},
@@ -133,11 +133,35 @@ local song_mt = {
 						if self.song == "CloseThisFolder" then
 							subself:zoom(0.8)
 						else
-							subself:zoom(0.725)
+							subself:zoom(0.775)
 						end
 						subself:y(40):visible(true)
 					end,
 				},
+				-- subtitle
+				Def.BitmapText{
+					Font="Common Normal",
+					InitCommand=function(subself)
+						self.subtitle_bmt = subself
+						subself:zoom(0.8):diffuse(Color.White):shadowlength(0.75)
+					end,
+					GainFocusCommand=function(subself)
+						if self.song == "CloseThisFolder" then
+							subself:zoom(0.9)
+						else
+							subself:visible(false)
+						end
+					end,
+					LoseFocusCommand=function(subself)
+						if self.song == "CloseThisFolder" then
+							subself:zoom(0.8)
+						else
+							subself:zoom(0.625)
+						end
+						subself:y(54):visible(true)
+					end,
+				},
+
 			}
 
 			return af
@@ -228,6 +252,7 @@ local song_mt = {
 				-- we are passed in a Song object as info
 				self.song = song
 				self.title_bmt:settext( self.song:GetDisplayMainTitle() ):Truncate(max_chars)
+				self.subtitle_bmt:settext( self.song:GetDisplaySubTitle() ):Truncate(max_chars)
 
 				if song:HasJacket() then
 					self.img_path = song:GetJacketPath()

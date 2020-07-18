@@ -1,4 +1,8 @@
 local t = Def.ActorFrame{
+	-- GameplayReloadCheck is a kludgy global variable used in ScreenGameplay in.lua to check
+	-- if ScreenGameplay is being entered "properly" or being reloaded by a scripted mod-chart.
+	-- If we're here in SelectMusic, set GameplayReloadCheck to false, signifying that the next
+	-- time ScreenGameplay loads, it should have a properly animated entrance.
 	InitCommand=function(self) SL.Global.GameplayReloadCheck = false end,
 	OnCommand=function(self)
 		-- Protect ring functions differently for ECS8, but no reason not to always set fail type appropriately.
@@ -52,6 +56,9 @@ local t = Def.ActorFrame{
 	LoadActor("./SortMenu/default.lua"),
 	-- a Test Input overlay can (maybe) be accessed from the SortMenu
 	LoadActor("./TestInput.lua"),
+	-- a yes/no prompt overlay for backing out of SelectMusic when in EventMode can be
+	-- activated via "CodeEscapeFromEventMode" under [ScreenSelectMusic] in Metrics.ini
+	LoadActor("./EscapeFromEventMode.lua"),
 }
 
 return t

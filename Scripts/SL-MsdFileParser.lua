@@ -15,7 +15,7 @@
 -- #VALUE2:PARAM2
 -- we'll recover.
 
-function ParseMsdFile(SongDir)
+function ParseMsdFile(steps)
 	local function AddParam(t, p, plen)
 		-- table.concat(table_name, separator, start, end)
 		local param = table.concat(p, '', 1, plen)
@@ -47,12 +47,11 @@ function ParseMsdFile(SongDir)
 		return s:sub(i, i)
 	end
 
-	local SimfileString, FileType = GetSimfileString(SongDir)
-	if not SimfileString then return {} end
-	if FileType ~= 'sm' then return {} end
+	local simfileString, fileType = GetSimfileString(steps)
+	if not simfileString then return {} end
 
 	local final = {}
-	local length = SimfileString:len()
+	local length = simfileString:len()
 	local ReadingValue = false
 	local processed = {}
 	for i = 0, length - 1 do
@@ -65,17 +64,17 @@ function ParseMsdFile(SongDir)
 	local continue = false
 
 	while i < length do
-		if(i + 1 < length and at(SimfileString, i+1) == '/' and at(SimfileString, i+2) == '/') then
+		if(i + 1 < length and at(simfileString, i+1) == '/' and at(simfileString, i+2) == '/') then
 			-- Skip a comment entirely; don't copy the comment to the value/parameter
 			i = i + 1
-			while i < length and at(SimfileString, i+1) ~= '\n' do
+			while i < length and at(simfileString, i+1) ~= '\n' do
 				i = i + 1
 			end
 
 			continue = true
 		end
 
-		if(not continue and ReadingValue and at(SimfileString, i+1) == '#') then
+		if(not continue and ReadingValue and at(simfileString, i+1) == '#') then
 			-- Unfortunately, many of these files are missing ;'s.
 			-- If we get a # when we thought we were inside a value, assume we
 			-- missed the ;.  Back up and end the value.
@@ -93,7 +92,7 @@ function ParseMsdFile(SongDir)
 
 			if not firstChar then
 				-- We're not the first char on a line.  Treat it as if it were a normal character.
-				processed[processedLen+1] = at(SimfileString, i+1)
+				processed[processedLen+1] = at(simfileString, i+1)
 				processedLen = processedLen + 1
 				i = i + 1
 				continue = true
@@ -118,13 +117,13 @@ function ParseMsdFile(SongDir)
 		end
 
 		-- # starts a new value.
-		if(not continue and not ReadingValue and at(SimfileString, i+1) == '#') then
+		if(not continue and not ReadingValue and at(simfileString, i+1) == '#') then
 			AddValue(final)
 			ReadingValue = true
 		end
 
 		if(not continue and not ReadingValue) then
-			if(at(SimfileString, i+1) == '\\') then
+			if(at(simfileString, i+1) == '\\') then
 				i = i + 2
 			else
 				i = i + 1
@@ -134,35 +133,35 @@ function ParseMsdFile(SongDir)
 		end
 
 		-- : and ; end the current param, if any.
-		if(not continue and processedLen ~= -1 and (at(SimfileString, i+1) == ':' or at(SimfileString, i+1) == ';')) then
+		if(not continue and processedLen ~= -1 and (at(simfileString, i+1) == ':' or at(simfileString, i+1) == ';')) then
 			AddParam(final, processed, processedLen)
 		end
 
 		-- # and : begin new params.
-		if(not continue and (at(SimfileString, i+1) == '#' or at(SimfileString, i+1) == ':')) then
+		if(not continue and (at(simfileString, i+1) == '#' or at(simfileString, i+1) == ':')) then
 			i = i + 1
 			processedLen = 0
 			continue = true
 		end
 
 		-- ; ends the current value.
-		if(not continue and at(SimfileString, i+1) == ';') then
+		if(not continue and at(simfileString, i+1) == ';') then
 			ReadingValue = false
 			i = i + 1
 			continue = true
 		end
 
-		-- We've gone through all the control characters.  All that is left is either an escaped character, 
+		-- We've gone through all the control characters.  All that is left is either an escaped character,
 		-- ie \#, \\, \:, etc., or a regular character.
 		-- NOTE: There is usually an 'unescape' bool passed to this top level function,
 		-- but when reading SM/SSC files it's always set to true so we assume that.
-		if(not continue and i < length and at(SimfileString, i+1) == '\\') then
+		if(not continue and i < length and at(simfileString, i+1) == '\\') then
 			i = i + 1
 		end
 
 		-- Add any unterminated value at the very end.
 		if (not continue and i < length) then
-			processed[processedLen+1] = at(SimfileString, i+1)
+			processed[processedLen+1] = at(simfileString, i+1)
 			processedLen = processedLen + 1
 			i = i + 1
 		end
@@ -174,5 +173,5 @@ function ParseMsdFile(SongDir)
 		AddParam(final, processed, processedLen)
 	end
 
-	return final
+	return final, fileType
 end

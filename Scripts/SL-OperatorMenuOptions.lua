@@ -3,7 +3,7 @@ OperatorMenuOptionRows = {}
 OperatorMenuOptionRows.EditorNoteskin = function()
 	local skins = NOTESKIN:GetNoteSkinNames()
 	return {
-		Name = "Editor Noteskin",
+		Name = "EditorNoteSkin",
 		LayoutType = "ShowOneInRow",
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = true,
@@ -154,14 +154,15 @@ OperatorMenuOptionRows.Theme = function()
 	}
 end
 
+------------------------------------------------------------
+-- Graphics/Sound Options
 
--- the OptionRow for changing the VideoRenderer should only appear in Windows
--- (see [ScreenOptionsGraphicsSound] in Metrics.ini), but we'll make an effort
--- to present valid choices in macOS and Linux, Just In Case.
-OperatorMenuOptionRows.VideoRendererWindows = function()
+OperatorMenuOptionRows.VideoRenderer = function()
 
-	-- opengl is a valid VideoRenderer for all architectures, so start
-	-- by assuming it is the only choice.
+	-- opengl is a valid VideoRenderer for all platforms right now
+	-- so start by assuming it is the only choice.
+	-- If there is a method available to Lua to get available renderers
+	-- from the engine, I haven't found it yet.
 	local choices = { "opengl" }
 	local values  = { "opengl" }
 
@@ -208,8 +209,76 @@ OperatorMenuOptionRows.VideoRendererWindows = function()
 	}
 end
 
+OperatorMenuOptionRows.VisualDelaySeconds = function()
+
+	-- visual delay seconds
+	local vds = PREFSMAN:GetPreference("VisualDelaySeconds")
+	-- visual delay milliseconds, rounded to nearest int
+	local vdms = round(vds * 1000)
+
+	-- it's hopefully safe to assume that the player does not have a VisualDelaySeconds value
+	-- smaller than -1 or larger than 1, but accommodate if they do by using their value as
+	-- the largest or smallest available choice in this OptionRow
+	local low  = round(math.min(-1000, vdms))
+	local high = round(math.max( 1000, vdms))
+
+	-- _values as a temp table of values * 1000 as an intermediate step, not presented to players
+	-- _choices as millisecond integers, used for comparison, not presented to players
+	--  choices as millisecond integers with "ms" appended, presented to players
+	local _values  = range(low, high)
+	local _choices = stringify(_values, "%i")
+	local choices  = stringify(_values, "%ims")
+
+	return {
+		Name="VisualDelaySeconds",
+		Choices=choices,
+		LayoutType = "ShowOneInRow",
+		SelectType = "SelectOne",
+		OneChoiceForAllPlayers = true,
+		ExportOnChange = false,
+		LoadSelections = function(self, list, pn)
+			local i = FindInTable(("%i"):format(vdms), _choices) or math.ceil(#choices/2)
+			list[i] = true
+		end,
+		SaveSelections = function(self, list, pn)
+			for i=1, #choices do
+				if list[i] then
+					PREFSMAN:SetPreference("VisualDelaySeconds", tonumber(_choices[i])/1000)
+					break
+				end
+			end
+		end
+	}
+end
+
 ------------------------------------------------------------
--- CustomSongs from USB profiles
+-- USB profiles
+
+-- the engine doesn't seem to have a conf definition
+-- for the MemoryCards preference, so make one here
+OperatorMenuOptionRows.MemoryCards = function()
+
+	local values = {false, true}
+	local choices = {THEME:GetString("OptionNames","Off"), THEME:GetString("OptionNames","On")}
+
+	return {
+		Name="MemoryCards",
+		Choices=choices,
+		LayoutType = "ShowAllInRow",
+		SelectType = "SelectOne",
+		OneChoiceForAllPlayers = true,
+		ExportOnChange = false,
+		LoadSelections = function(self, list, pn)
+			local pref = PREFSMAN:GetPreference("MemoryCards") and 2 or 1
+			list[pref] = true
+		end,
+		SaveSelections = function(self, list, pn)
+			local pref = (list[2]==true)
+			PREFSMAN:SetPreference("MemoryCards", pref)
+		end,
+	}
+end
+
 
 OperatorMenuOptionRows.CustomSongsMaxSeconds = function()
 	-- first, define a reasonable range of 1:45 to 15:00

@@ -141,8 +141,7 @@ local function YieldStepPattern(i, dir)
 				:queuecommand('LoopMarathon')
 		end
 	}
-
-
+	local files
 	if dir == "center" then
 		files = { "center-body.png", "center-border.png", "center-feet.png" }
 	else
@@ -151,13 +150,13 @@ local function YieldStepPattern(i, dir)
 
 	for index,file in ipairs(files) do
 		step[#step+1] = LoadActor( file )..{
-			InitCommand=cmd( diffuse,color("1,1,1,1"); zoom, ColumnZoom(dir) ),
+			InitCommand=function(self) self:diffuse(1,1,1,1):zoom(ColumnZoom(dir)) end,
 			OnCommand=function(self)
 				if file == "center-feet.png" or file == "arrow-stripes.png" then
 					self:blend(Blend.Multiply)
 				end
 				if file == "center-body.png" or file == "center-feet.png" or file == "arrow-body.png" then
-					self:diffuse( GetHexColor(i) )
+					self:diffuse( GetHexColor(i, true) )
 				end
 			end,
 		}
