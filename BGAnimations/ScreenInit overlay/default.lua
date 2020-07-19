@@ -1,19 +1,19 @@
 local quotes = {
 	{
-		{"In the race for success,\nspeed is less important\nthan stamina.", _screen.cx-100, _screen.cy-10},
-		{"- B. C. Forbes", _screen.cx+45, _screen.cy+36}
+		{"In the race for success,\nspeed is less important\nthan stamina.", -100, -10},
+		{"- B. C. Forbes", 45, 36}
 	},
 	{
-		{"A stream is music and motion.", _screen.cx-100, _screen.cy-10},
-		{"- Nelson Bryant", _screen.cx+84, _screen.cy+12}
+		{"A stream is music and motion.", -100, -10},
+		{"- Nelson Bryant", 84, 12}
 	},
 	{
-		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed.", _screen.cx-150, _screen.cy-10},
-		{"- Zetorux, ECS1", _screen.cx+159, _screen.cy+25}
+		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed.", -150, -10},
+		{"- Zetorux, ECS1", 159, 25}
 	},
 	{
-		{"Are you asking about my stamina cap ?", _screen.cx-100, _screen.cy-10},
-		{"- aijbot", _screen.cx+138, _screen.cy+12}
+		{"Are you asking about my stamina cap ?", -100, -10},
+		{"- aijbot", 138, 12}
 	},
 }
 
@@ -79,13 +79,6 @@ for i=1,7 do
 
 	af[#af+1] = arrow
 end
-
-af[#af+1] = LoadFont("Common Normal")..{
-	Text=ScreenString("ThemeDesign"),
-	InitCommand=function(self) self:diffuse(GetHexColor(slc)):diffusealpha(0) end,
-	OnCommand=function(self) self:sleep(3):linear(0.25):diffusealpha(1) end,
-	OffCommand=function(self) self:linear(0.25):diffusealpha(0) end,
-}
 
 -- quote body
 af[#af+1] = LoadFont("Common Normal")..{

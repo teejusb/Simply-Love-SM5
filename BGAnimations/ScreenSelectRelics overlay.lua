@@ -258,8 +258,7 @@ for i=1,4 do
 
 
 	-- relic #
-	pane[#pane+1] = Def.BitmapText{
-		Font="_miso",
+	pane[#pane+1] = LoadFont("Miso/_miso")..{
 		Text="Relic #"..i,
 		InitCommand=function(self)
 			self:xy(-pane_width/2 + padding*2, -pane_height/2 + padding)
@@ -285,8 +284,7 @@ for i=1,4 do
 	end
 
 	-- relic name
-	pane[#pane+1] = Def.BitmapText{
-		Font="_miso",
+	pane[#pane+1] = LoadFont("Miso/_miso")..{
 		InitCommand=function(self)
 			self:xy(-20, -pane_height/2 + padding)
 				:align(0,0):zoom(1)
@@ -302,8 +300,7 @@ for i=1,4 do
 	}
 
 	-- relic desc
-	pane[#pane+1] = Def.BitmapText{
-		Font="_miso",
+	pane[#pane+1] = LoadFont("Miso/_miso")..{
 		InitCommand=function(self)
 			self:xy(-20, -130)
 				:align(0,0):zoom(0.55)
@@ -319,8 +316,7 @@ for i=1,4 do
 	}
 
 	-- relic effect
-	pane[#pane+1] = Def.BitmapText{
-		Font="_miso",
+	pane[#pane+1] = LoadFont("Miso/_miso")..{
 		InitCommand=function(self)
 			self:xy(-pane_width/2 + padding*2, -50)
 				:align(0,0):zoom(0.9)
@@ -336,8 +332,7 @@ for i=1,4 do
 	}
 
 	-- charge remaining
-	pane[#pane+1] = Def.BitmapText{
-		Font="_miso",
+	pane[#pane+1] = LoadFont("Miso/_miso")..{
 		InitCommand=function(self)
 			self:xy(-pane_width/2 + padding*2, 30)
 				:align(0,0):zoom(0.9)

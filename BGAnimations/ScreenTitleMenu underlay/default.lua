@@ -100,8 +100,10 @@ af[#af+1] = Def.ActorFrame{
 		Text=SongStats,
 		InitCommand=function(self) self:diffuse(TextColor) end,
 	},
-	Def.BitmapText{
-		Font="_wendy small",
+}
+
+af[#af+1] = Def.ActorFrame{
+	LoadFont("Wendy/_wendy small")..{
 		Text="8",
 		InitCommand=function(self)
 			self:addy(85)

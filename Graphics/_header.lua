@@ -148,9 +148,8 @@ local af = Def.ActorFrame{
 	},
 
 	-- Freeplay | Warmup | ECS8 | Marathon
-	Def.BitmapText{
+	LoadFont("Wendy/_wendy small")..{
 		Name="GameModeText",
-		Font="_wendy small",
 		InitCommand=function(self)
 			self:diffusealpha(0):zoom( WideScale(0.5,0.6)):xy(_screen.w-70, 15):halign(1)
 			if not PREFSMAN:GetPreference("MenuTimer") then
