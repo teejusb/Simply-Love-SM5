@@ -156,8 +156,7 @@ local t = Def.ActorFrame{
 	},
 
 	-- Score
-	Def.BitmapText{
-		Font="_wendy monospace numbers",
+	LoadFont("Wendy/_wendy monospace numbers")..{
 		InitCommand=function(self)
 			self:zoom(0.225):xy(124,-68):diffusealpha(0)
 		end,
