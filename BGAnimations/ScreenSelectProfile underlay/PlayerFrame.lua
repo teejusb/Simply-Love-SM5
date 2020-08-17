@@ -65,18 +65,6 @@ local FrameBackground = function(c, player, w)
 				self:cropbottom(1):zoomto(w, frame.h):diffuse(c):diffusetopedge(LightenColor(c))
 			end
 		},
-
-		-- a png asset that gives the colored frame (above) a lightly frosted feel
-		-- currently inherited from _fallback
-		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardFrame") )..{
-			InitCommand=function(self) self:cropbottom(1) end,
-			OnCommand=function(self) self:smooth(0.3):cropbottom(0) end,
-			OffCommand=function(self)
-				if not GAMESTATE:IsSideJoined(player) then
-					self:accelerate(0.25):cropbottom(1)
-				end
-			end
-		}
 	}
 end
 
