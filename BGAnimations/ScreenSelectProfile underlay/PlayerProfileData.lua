@@ -98,7 +98,7 @@ local TotalSongs = function(numSongs)
 end
 
 -- ----------------------------------------------------
--- ECS8 functions
+-- ECS functions
 
 local ECSCountry = function(name)
 	if not ECS.Players[name] then return nil end

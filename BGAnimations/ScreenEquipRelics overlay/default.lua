@@ -19,7 +19,7 @@ local IsActiveRelic = function(relic)
 	return false
 end
 
--- this works because no single player in ECS8 has both Order of Ambrosia and Champion Belt
+-- this works because no single player in ECS has both Order of Ambrosia and Champion Belt
 local GetNumActiveRows = function()
 	local num_active_rows = 2
 	for active_relic in ivalues(active_relics) do
@@ -42,7 +42,7 @@ for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 	for master_relic in ivalues(ECS.Relics) do
 		if master_relic.name == player_relic.name then
 			if not master_relic.is_consumable or player_relic.quantity > 0 then
-				if (ECS.Mode == "ECS8" and not master_relic.is_marathon) or (ECS.Mode == "Marathon" and master_relic.is_marathon) then
+				if (ECS.Mode == "ECS" and not master_relic.is_marathon) or (ECS.Mode == "Marathon" and master_relic.is_marathon) then
 					player_relics[#player_relics+1] = {
 						name=master_relic.name,
 						quantity=player_relic.quantity,

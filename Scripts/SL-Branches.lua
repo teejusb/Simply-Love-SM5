@@ -176,7 +176,7 @@ Branch.AfterSelectMusic = function()
 		end
 
 		-- while everything else (single, versus, double, etc.) uses ScreenGameplay
-		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
+		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			local song = GAMESTATE:GetCurrentSong()
 			if song then
 				local group_name = song:GetGroupName()
@@ -187,10 +187,10 @@ Branch.AfterSelectMusic = function()
 				end
 
 				if (PlayerIsUpper() and
-						((ECS.Mode == "ECS8" and group_name == "ECS8 - Upper") or
-						(ECS.Mode == "Marathon" and group_name == "ECS8 - Upper Marathon")) or
+						((ECS.Mode == "ECS" and group_name == "ECS - Upper") or
+						(ECS.Mode == "Marathon" and group_name == "ECS - Upper Marathon")) or
 					(not PlayerIsUpper() and
-						group_name == "ECS8 - Lower")) then
+						group_name == "ECS - Lower")) then
 					-- Only go to ScreenEquipRelics if it's a valid song for the player.
 					return "ScreenEquipRelics"
 				else

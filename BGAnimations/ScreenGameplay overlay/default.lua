@@ -36,7 +36,7 @@ for player in ivalues( GAMESTATE:GetHumanPlayers() ) do
 	-- FIXME: refactor PerColumnJudgmentTracking to not be inside this loop
 	--        the Lua input callback logic shouldn't be duplicated for each player
 	af[#af+1] = LoadActor("./PerColumnJudgmentTracking.lua", player)
-	af[#af+1] = LoadActor("./ECS8.lua", player)
+	af[#af+1] = LoadActor("./ECS.lua", player)
 end
 
 return af

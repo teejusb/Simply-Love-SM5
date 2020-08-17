@@ -15,15 +15,15 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	if PlayerIsUpper() == nil then return end
 
 	if PlayerIsUpper() then
-		if ECS.Mode == "ECS8" and group_name ~= "ECS8 - Upper" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS8 - Upper Marathon" then return end
+		if ECS.Mode == "ECS" and group_name ~= "ECS9 - Upper" then return end
+		if ECS.Mode == "Marathon" and group_name ~= "ECS9 - Upper Marathon" then return end
 	else
-		if group_name ~= "ECS8 - Lower" then return end
+		if group_name ~= "ECS9 - Lower" then return end
 	end
 
 	-- ----------------------------------------------------------
 
-	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."SCORE"..".txt"
+	local path = "Themes/ECS9/ECSData/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."SCORE"..".txt"
 
 	local data = ""
 	data = data..GetECSID()
@@ -55,13 +55,13 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	if PlayerIsUpper() == nil then return end
 
 	if PlayerIsUpper() then
-		if ECS.Mode == "ECS8" and group_name ~= "ECS8 - Upper" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS8 - Upper Marathon" then return end
+		if ECS.Mode == "ECS" and group_name ~= "ECS9 - Upper" then return end
+		if ECS.Mode == "Marathon" and group_name ~= "ECS9 - Upper Marathon" then return end
 	else
-		if group_name ~= "ECS8 - Lower" then return end
+		if group_name ~= "ECS9 - Lower" then return end
 	end
 
-	local path = "Themes/ECS8/ECS8Data/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
+	local path = "Themes/ECS9/ECSData/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
 	local data = ""
 
 	for i=1, 5 do
@@ -162,7 +162,7 @@ end
 
 return Def.Actor{
 	OnCommand=function(self)
-		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
+		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			-- relic actions depend on the current screen,
 			-- so ApplyRelicActions() must be called from OnCommand
 			ApplyRelicActions()
@@ -178,7 +178,7 @@ return Def.Actor{
 			passed_song = "Failed"
 		end
 
-		if ECS.Mode == "ECS8" or ECS.Mode == "Marathon" then
+		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			local year, month, day = Year(), MonthOfYear() + 1, DayOfMonth()
 			local hour, minute, second = Hour(), Minute(), Second()
 			local seconds = (hour*60*60) + (minute*60) + second

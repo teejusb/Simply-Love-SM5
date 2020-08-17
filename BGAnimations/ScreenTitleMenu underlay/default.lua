@@ -104,7 +104,7 @@ af[#af+1] = Def.ActorFrame{
 
 af[#af+1] = Def.ActorFrame{
 	LoadFont("Wendy/_wendy small")..{
-		Text="8",
+		Text="9",
 		InitCommand=function(self)
 			self:addy(85)
 		end,

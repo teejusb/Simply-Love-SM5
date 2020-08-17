@@ -168,7 +168,7 @@ end
 
 
 -- conveniently, double-stacking via Champion Belt + Order of Ambrosia is not
--- possible in ECS8 because no single player earned both those relics
+-- possible in ECS because no single player earned both those relics
 -- so, we really only need to worry about catching a stacking relic from rows 1 and 2
 af.Relic1SelectedCommand=function(self, params)
 	if params.name == "Champion Belt" then

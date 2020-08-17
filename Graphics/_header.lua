@@ -44,11 +44,11 @@ local SecondsToMMSS = function(seconds)
 end
 
 local SessionHasEnded = function()
-	if ECS.Mode == "ECS8" and ECS.BreakTimer < 0 then return true end
+	if ECS.Mode == "ECS" and ECS.BreakTimer < 0 then return true end
 
 	if SL.Global.TimeAtSessionStart
 	and (GetTimeSinceStart() - SL.Global.TimeAtSessionStart > settimer_seconds)
-	and (ECS.Mode == "Warmup" or (ECS.Mode == "ECS8" and SL.Global.Stages.PlayedThisGame >= 7) or ArvinsGambitIsActive())
+	and (ECS.Mode == "Warmup" or (ECS.Mode == "ECS" and SL.Global.Stages.PlayedThisGame >= 7) or ArvinsGambitIsActive())
 	then
 		return true
 	end
@@ -123,8 +123,8 @@ local af = Def.ActorFrame{
 	Name="Header",
 	InitCommand=function(self) self:queuecommand("PostInit") end,
 	PostInitCommand=function(self)
-		-- Setup session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
-		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
+		-- Setup session timer for ECS, Warmup, and Marathon (only if it's the second attempt).
+		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode == "ECS" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
 			-- TimeAtSessionStart will be reset to nil between game sessions
 			-- thus, if it's currently nil, we're loading ScreenSelectMusic
 			-- for the first time this particular game session
@@ -168,7 +168,7 @@ local af = Def.ActorFrame{
 		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end
 	},
 
-	-- Freeplay | Warmup | ECS8 | Marathon
+	-- Freeplay | Warmup | ECS | Marathon
 	LoadFont("Wendy/_wendy small")..{
 		Name="GameModeText",
 		InitCommand=function(self)
@@ -197,8 +197,8 @@ local af = Def.ActorFrame{
 	}
 }
 
--- Display session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
-if (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
+-- Display session timer for ECS, Warmup, and Marathon (only if it's the second attempt).
+if (ECS.Mode == "ECS" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			local screen_name = SCREENMAN:GetTopScreen():GetName()
@@ -224,8 +224,8 @@ if (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and Ar
 		},
 	}
 
-	-- Only add BreakTimer in ECS8 Mode.
-	if ECS.Mode == "ECS8" then
+	-- Only add BreakTimer in ECS Mode.
+	if ECS.Mode == "ECS" then
 		-- Break Timer
 		af[#af+1] = LoadFont("Wendy/_wendy small")..{
 			Name="BreakTimer",
@@ -275,7 +275,7 @@ if (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and Ar
 					s = s .. "Please press &START; to dismiss this message, then restart the marathon."
 				else
 					s = "Your " .. ECS.Mode .. " session has ended because you"
-					if ECS.Mode == "ECS8" then
+					if ECS.Mode == "ECS" then
 						if ECS.BreakTimer < 0 then
 							s = s .. " used up all your break time!\n\n"
 						else

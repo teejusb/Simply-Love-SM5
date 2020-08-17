@@ -5,12 +5,12 @@ local t = Def.ActorFrame{
 	-- time ScreenGameplay loads, it should have a properly animated entrance.
 	InitCommand=function(self) SL.Global.GameplayReloadCheck = false end,
 	OnCommand=function(self)
-		-- Protect ring functions differently for ECS8, but no reason not to always set fail type appropriately.
+		-- Protect ring functions differently for ECS, but no reason not to always set fail type appropriately.
 		local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
 		if player_state then
 			local po = player_state:GetPlayerOptions("ModsLevel_Preferred")
 			if po then
-				if ECS.Mode == "ECS8" then
+				if ECS.Mode == "ECS" then
 					po:FailSetting('FailType_Immediate')
 				else
 					po:FailSetting('FailType_ImmediateContinue')

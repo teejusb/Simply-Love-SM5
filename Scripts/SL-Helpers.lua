@@ -748,7 +748,7 @@ GetComboFonts = function()
 		end
 	end
 
-	-- Don't add wendy_cursed for ECS8. 
+	-- Don't add wendy_cursed for ECS. 
 	-- if has_wendy_cursed then table.insert(fonts, "Wendy (Cursed)") end
 
 	return fonts

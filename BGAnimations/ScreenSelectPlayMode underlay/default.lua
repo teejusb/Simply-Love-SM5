@@ -58,7 +58,7 @@ local t = Def.ActorFrame{
 			-- to set certain Gameplay settings and determine which screen comes next
 			ECS.Mode = choices[cursor.index+1]
 
-			-- hardcode this to always be ITG windows for the ECS8 event
+			-- hardcode this to always be ITG windows for the ECS event
 			SL.Global.GameMode = "ITG"
 
 			-- now that a GameMode has been selected, set related preferences

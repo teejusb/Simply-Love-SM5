@@ -602,7 +602,7 @@ local Overrides = {
 	-- 			for master_relic in ivalues(ECS.Relics) do
 	-- 				if master_relic.name == player_relic.name then
 	-- 					if not master_relic.is_consumable or player_relic.quantity > 0 then
-	-- 						if ECS.Mode == "ECS8" and not master_relic.is_marathon then
+	-- 						if ECS.Mode == "ECS" and not master_relic.is_marathon then
 	-- 							relic_names[#relic_names+1] = master_relic.name
 	-- 						end
 	-- 					end
