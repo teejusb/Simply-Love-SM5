@@ -121,6 +121,27 @@ end
 
 local af = Def.ActorFrame{
 	Name="Header",
+	InitCommand=function(self) self:queuecommand("PostInit") end,
+	PostInitCommand=function(self)
+		-- Setup session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
+		if PREFSMAN:GetPreference("EventMode") and (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
+			-- TimeAtSessionStart will be reset to nil between game sessions
+			-- thus, if it's currently nil, we're loading ScreenSelectMusic
+			-- for the first time this particular game session
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" and SL.Global.TimeAtSessionStart == nil then
+				SL.Global.TimeAtSessionStart = GetTimeSinceStart()
+			end
+
+			breaktimer_at_screen_start = ECS.BreakTimer
+			seconds_at_screen_start = GetTimeSinceStart()
+
+			if SL.Global.TimeAtSessionStart ~= nil then
+				self:SetUpdateFunction( Update )
+			end
+
+			deduct_from_breaktimer = DeductFromBreakTimer()
+		end
+	end,
 
 	Def.Quad{
 		InitCommand=function(self)
@@ -175,3 +196,103 @@ local af = Def.ActorFrame{
 		end
 	}
 }
+
+-- Display session timer for ECS8, Warmup, and Marathon (only if it's the second attempt).
+if (ECS.Mode == "ECS8" or ECS.Mode == "Warmup" or (ECS.Mode == "Marathon" and ArvinsGambitIsActive())) then
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			local screen_name = SCREENMAN:GetTopScreen():GetName()
+			if screen_name == "ScreenEvaluationSummary"	then
+				self:visible(false)
+			end
+		end,
+
+		-- Session Timer
+		LoadFont("Wendy/_wendy small")..{
+			Name="SessionTimer",
+			InitCommand=function(self)
+				sessiontimer_actor = self
+				self:diffusealpha(0):zoom( WideScale(0.5,0.6) ):xy(_screen.cx-100, 15):halign(0)
+			end,
+			OnCommand=function(self)
+				if not PREFSMAN:GetPreference("EventMode") then
+					self:settext( SSM_Header_StageText() )
+				end
+
+				self:sleep(0.1):decelerate(0.33):diffusealpha(1)
+			end,
+		},
+	}
+
+	-- Only add BreakTimer in ECS8 Mode.
+	if ECS.Mode == "ECS8" then
+		-- Break Timer
+		af[#af+1] = LoadFont("Wendy/_wendy small")..{
+			Name="BreakTimer",
+			InitCommand=function(self)
+				breaktimer_actor = self
+				self:diffusealpha(0):zoom( WideScale(0.5,0.6) ):xy(_screen.cx+50, 15):halign(0)
+			end,
+			OnCommand=function(self)
+				if not PREFSMAN:GetPreference("EventMode") then
+					self:settext( SSM_Header_StageText() )
+				end
+
+				self:sleep(0.1):decelerate(0.33):diffusealpha(1)
+			end,
+		}
+	end
+
+	-- SessionHasEnded warning
+	af[#af+1] = Def.ActorFrame{
+		InitCommand=function(self) self:visible(false):diffusealpha(0) end,
+		SessionHasEndedCommand=function(self)
+			for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+				SCREENMAN:set_input_redirected(player, true)
+			end
+			SCREENMAN:GetTopScreen():AddInputCallback( InputHandler )
+			self:visible(true):linear(0.15):diffusealpha(1)
+		end,
+		FadeOutWarningMessageCommand=function(self) self:linear(0.15):diffusealpha(0):queuecommand("Hide") end,
+		HideCommand=function(self)
+			SCREENMAN:GetTopScreen():RemoveInputCallback(InputHandler)
+			for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+				SCREENMAN:set_input_redirected(player, false)
+			end
+			self:visible(false)
+		end,
+
+		Def.Quad{
+			InitCommand=function(self) self:diffuse(0,0,0,0.925):FullScreen():Center() end
+		},
+
+		LoadFont("Miso/_miso")..{
+			InitCommand=function(self) self:xy(_screen.cx, 200):wrapwidthpixels(380/1.5):zoom(1.5) end,
+			SessionHasEndedCommand=function(self)
+				local s = ""
+				if ECS.Mode == "Marathon" then
+					s = s .. "That's all the time you get to warmup and fix the pads bud. Hopefully you'll do a better job this time around.\n\n"
+					s = s .. "Please press &START; to dismiss this message, then restart the marathon."
+				else
+					s = "Your " .. ECS.Mode .. " session has ended because you"
+					if ECS.Mode == "ECS8" then
+						if ECS.BreakTimer < 0 then
+							s = s .. " used up all your break time!\n\n"
+						else
+							s = s .. " played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+						end
+					elseif ECS.Mode == "Warmup" then
+						s = s .. "'ve played longer than 1 hour!\n\n"
+					end
+
+					s = s .. "Unless there are some extenuating circumstances that Ian has approved, it looks like your finished, bud.\n\n"
+					s = s .. "Please press &START; to dismiss this message, then exit your set."
+				end
+
+				self:settext(s)
+			end
+		}
+	}
+end
+
+return af

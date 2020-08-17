@@ -188,10 +188,27 @@ return Def.ActorFrame{
 				InitCommand=function(self) self:diffusealpha(0) end,
 				OnCommand=function(self) self:sleep(0.45):linear(0.1):diffusealpha(1) end,
 
+				-- the name the player most recently used for high score entry
+				LoadFont("Common Normal")..{
+					Name="HighScoreName",
+					InitCommand=function(self)
+						self:align(0,0):xy(info.padding*1.25,-94):zoom(0.65):maxwidth(104/0.65):vertspacing(-2)
+						self:maxwidth((info.w-info.padding*2.5)/self:GetZoom())
+					end,
+					SetCommand=function(self, params)
+						if params then
+							local desc = THEME:GetString("ScreenGameOver","LastUsedHighScoreName") .. ": "
+							self:visible(true):settext(desc .. (params.highscorename or ""))
+						else
+							self:visible(false):settext("")
+						end
+					end
+				},
+						
 				-- --------------------------------------------------------------------------------
 				-- Avatar ActorFrame
 				Def.ActorFrame{
-					InitCommand=function(self) self:xy(info.padding*1.125,-103.5) end,
+					InitCommand=function(self) self:xy(info.padding*1.125,-75):zoom(0.6) end,
 
 					---------------------------------------
 					-- fallback avatar
@@ -249,7 +266,7 @@ return Def.ActorFrame{
 				-- Country / Flag
 				Def.ActorProxy{
 					Name="CountryFlag",
-					InitCommand=function(self) self:zoom(0.5):xy(30,-45) end,
+					InitCommand=function(self) self:zoom(0.4):xy(75,-30) end,
 					SetCommand=function(self, params)
 						local underlay = SCREENMAN:GetTopScreen():GetChild("Underlay")
 						if params and params.country then
