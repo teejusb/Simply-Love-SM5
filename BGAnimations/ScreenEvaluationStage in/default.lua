@@ -19,7 +19,7 @@ return Def.ActorFrame {
 	OnCommand=function(self) ApplyRelicActions() end,
 	OffCommand=function(self)
 		-- always undo the effects of Astral Ring/Astral Earring when leaving ScreenEval, even if they weren't active
-		SL.Global.ActiveModifiers.WorstTimingWindow = 5
+		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
 		PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
 		PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
 
