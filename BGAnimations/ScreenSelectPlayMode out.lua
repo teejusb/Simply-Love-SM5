@@ -18,7 +18,7 @@ return Def.Actor{
 					local asereje = SONGMAN:FindSong("ECS9 - Lower/[17] [185] Asereje")
 					if asereje then
 						GAMESTATE:SetPreferredSong(asereje)
-					else
+					end
 				end
 			end
 		elseif ECS.Mode == "Marathon" then
