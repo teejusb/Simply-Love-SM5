@@ -633,18 +633,6 @@ GetECSID = function()
 end
 
 -- -----------------------------------------------------------------------
--- Determines if the current loaded player is in Upper division or not.
-PlayerIsUpper = function()
-	local mpn = GAMESTATE:GetMasterPlayerNumber()
-	local profile_name = PROFILEMAN:GetPlayerName(mpn)
-	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].isupper ~= nil then
-		return ECS.Players[profile_name].isupper
-	end
-	-- default to IsUpper = true
-	return nil
-end
-
--- -----------------------------------------------------------------------
 -- functions handle custom judgment graphic detection/loading
 
 local function FilenameIsMultiFrameSprite(filename)

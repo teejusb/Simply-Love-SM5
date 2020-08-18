@@ -8,6 +8,8 @@ InitializeECS = function()
 	ECS.Player = {
 		Profile=nil,
 		Relics={},
+		PointsPerSong={},
+		TotalMarathonPoints=0,
 	}
 end
 
@@ -20,7 +22,8 @@ ECS.Relics = {
 		effect="Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=1,
@@ -29,7 +32,8 @@ ECS.Relics = {
 		effect="Lv. 1 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=2,
@@ -38,7 +42,8 @@ ECS.Relics = {
 		effect="Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=3,
@@ -47,7 +52,8 @@ ECS.Relics = {
 		effect="+150 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=4,
@@ -56,7 +62,8 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=5,
@@ -65,7 +72,8 @@ ECS.Relics = {
 		effect="Lv. 2 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=6,
@@ -74,7 +82,8 @@ ECS.Relics = {
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=7,
@@ -83,7 +92,8 @@ ECS.Relics = {
 		effect="+350 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=8,
@@ -92,7 +102,8 @@ ECS.Relics = {
 		effect="Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=9,
@@ -101,7 +112,8 @@ ECS.Relics = {
 		effect="Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=10,
@@ -110,7 +122,8 @@ ECS.Relics = {
 		effect="Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=11,
@@ -119,7 +132,8 @@ ECS.Relics = {
 		effect="+650 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=12,
@@ -128,7 +142,8 @@ ECS.Relics = {
 		effect="Lv. 4 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=13,
@@ -137,7 +152,8 @@ ECS.Relics = {
 		effect="Lv. 5 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=14,
@@ -146,7 +162,8 @@ ECS.Relics = {
 		effect="+250 BP",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=15,
@@ -161,7 +178,8 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.Competitive.TimingWindowSecondsW3)
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=16,
@@ -178,7 +196,8 @@ ECS.Relics = {
 					ECS.BreakTimer = ECS.BreakTimer + 45
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=17,
@@ -189,7 +208,8 @@ ECS.Relics = {
 		is_marathon=false,
 		action=function() 
 		--TODO(teejusb)
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=18,
@@ -198,7 +218,8 @@ ECS.Relics = {
 		effect="+3000 MP",
 		is_consumable=false,
 		is_marathon=true,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=19,
@@ -207,7 +228,8 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime Song Gold|+BP based on Lifetime Song Gold for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=20,
@@ -216,7 +238,8 @@ ECS.Relics = {
 		effect="At end of set, +BP equal to (average BPM of passed songs-120)^1.3",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=21,
@@ -225,7 +248,8 @@ ECS.Relics = {
 		effect="Lv. 3 DP Bonus with bow equipped|+500 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=22,
@@ -234,7 +258,8 @@ ECS.Relics = {
 		effect="Lv. 4 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=23,
@@ -243,7 +268,8 @@ ECS.Relics = {
 		effect="Lv. 5 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=24,
@@ -252,7 +278,8 @@ ECS.Relics = {
 		effect="Lv. 5 RP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=25,
@@ -261,7 +288,8 @@ ECS.Relics = {
 		effect="+150 BP for tiers 270 and over|Lv. 6 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=26,
@@ -270,7 +298,8 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime JP|+BP based on Lifetime JP for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=27,
@@ -279,7 +308,8 @@ ECS.Relics = {
 		effect="+150 BP for 130 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=28,
@@ -288,7 +318,8 @@ ECS.Relics = {
 		effect="+150 BP for 140 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=29,
@@ -297,7 +328,8 @@ ECS.Relics = {
 		effect="+150 BP for 150 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=30,
@@ -306,7 +338,8 @@ ECS.Relics = {
 		effect="+150 BP for 160 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=31,
@@ -315,7 +348,8 @@ ECS.Relics = {
 		effect="+150 BP for 170 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=32,
@@ -324,7 +358,8 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|+50 BP with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=33,
@@ -333,7 +368,8 @@ ECS.Relics = {
 		effect="+150 BP for 190 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=34,
@@ -342,7 +378,8 @@ ECS.Relics = {
 		effect="+150 BP for 200 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=35,
@@ -351,7 +388,8 @@ ECS.Relics = {
 		effect="+200 BP for 210 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=36,
@@ -360,7 +398,8 @@ ECS.Relics = {
 		effect="+200 BP for 220 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=37,
@@ -369,7 +408,8 @@ ECS.Relics = {
 		effect="+200 BP for 230 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=38,
@@ -378,7 +418,8 @@ ECS.Relics = {
 		effect="+200 BP for 240 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=39,
@@ -387,7 +428,8 @@ ECS.Relics = {
 		effect="+200 BP for 250 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=40,
@@ -396,7 +438,8 @@ ECS.Relics = {
 		effect="+200 BP for 260 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=41,
@@ -405,7 +448,8 @@ ECS.Relics = {
 		effect="+100 BP for 270 BPM songs|Lv. 4 DP Bonus|+100 BP for tiers 280 and over with Laevitas equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=42,
@@ -414,7 +458,8 @@ ECS.Relics = {
 		effect="+BP equal to your skill in the speed tier",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=43,
@@ -423,7 +468,8 @@ ECS.Relics = {
 		effect="+100 BP for 130 BPM songs|Lv. 1 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=44,
@@ -432,7 +478,8 @@ ECS.Relics = {
 		effect="+100 BP for 140 BPM songs|Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=45,
@@ -441,7 +488,8 @@ ECS.Relics = {
 		effect="+100 BP for 150 BPM songs|Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=46,
@@ -450,7 +498,8 @@ ECS.Relics = {
 		effect="+100 BP for 160 BPM songs|Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=47,
@@ -459,7 +508,8 @@ ECS.Relics = {
 		effect="+100 BP for 170 BPM songs|Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=48,
@@ -468,7 +518,8 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|Lv. 2 DP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=49,
@@ -477,7 +528,8 @@ ECS.Relics = {
 		effect="+100 BP for 190 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=50,
@@ -486,7 +538,8 @@ ECS.Relics = {
 		effect="+100 BP for 200 BPM songs|Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=51,
@@ -495,7 +548,8 @@ ECS.Relics = {
 		effect="+100 BP for 210 BPM songs|Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=52,
@@ -504,7 +558,8 @@ ECS.Relics = {
 		effect="+100 BP for 220 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=53,
@@ -513,7 +568,8 @@ ECS.Relics = {
 		effect="+100 BP for 230 BPM songs|Lv. 4 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=54,
@@ -522,7 +578,8 @@ ECS.Relics = {
 		effect="+100 BP for 240 BPM songs|Lv. 4 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=55,
@@ -531,7 +588,8 @@ ECS.Relics = {
 		effect="+100 BP for 250 BPM songs|Lv. 5 EP Bonus|Lv. 1 AP Bonus if Gae Derg is equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=56,
@@ -540,7 +598,8 @@ ECS.Relics = {
 		effect="+100 BP for 260 BPM songs|Lv. 5 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=57,
@@ -549,7 +608,8 @@ ECS.Relics = {
 		effect="+100 BP for 270 BPM songs|Lv. 5 DP Bonus|+100 BP for tiers 280 and over with Leavitas equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=58,
@@ -562,7 +622,8 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				ECS.BreakTimer = ECS.BreakTimer - 30
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=59,
@@ -571,7 +632,8 @@ ECS.Relics = {
 		effect="+150 BP for 140 BPM songs|Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=60,
@@ -580,7 +642,8 @@ ECS.Relics = {
 		effect="+100 BP for 150 BPM songs|Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=61,
@@ -589,7 +652,8 @@ ECS.Relics = {
 		effect="+150 BP for 160 BPM songs|Lv. 2 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=62,
@@ -598,7 +662,8 @@ ECS.Relics = {
 		effect="+100 BP for 170 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=63,
@@ -607,7 +672,8 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|Lv. 3 AP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=64,
@@ -616,7 +682,8 @@ ECS.Relics = {
 		effect="+150 BP for 190 BPM songs|Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=65,
@@ -625,7 +692,8 @@ ECS.Relics = {
 		effect="+150 BP for 200 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=66,
@@ -634,7 +702,8 @@ ECS.Relics = {
 		effect="+100 BP for 210 BPM songs|Lv. 4 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=67,
@@ -643,7 +712,8 @@ ECS.Relics = {
 		effect="+200 BP for 220 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=68,
@@ -652,7 +722,8 @@ ECS.Relics = {
 		effect="+200 BP for 230 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=69,
@@ -661,7 +732,8 @@ ECS.Relics = {
 		effect="+200 BP for 240 BPM songs|Lv. 4 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=70,
@@ -670,7 +742,8 @@ ECS.Relics = {
 		effect="+200 BP for 250 BPM songs|Lv. 5 EP Bonus|Lv. 1 RP Bonus if Gae Buide is equipped",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=71,
@@ -679,7 +752,8 @@ ECS.Relics = {
 		effect="+150 BP for tiers 260 and under|Lv. 6 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=72,
@@ -688,7 +762,8 @@ ECS.Relics = {
 		effect="+100 BP",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=73,
@@ -705,7 +780,8 @@ ECS.Relics = {
 					SM("Set to Life 5")
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=74,
@@ -714,7 +790,8 @@ ECS.Relics = {
 		effect="Lv. 4 RP Bonus on any French Coast Stamina/BaguetteStreamz songs",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=75,
@@ -723,7 +800,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=76,
@@ -732,7 +810,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=77,
@@ -741,7 +820,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=78,
@@ -750,7 +830,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=79,
@@ -759,7 +840,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=80,
@@ -768,7 +850,8 @@ ECS.Relics = {
 		effect="+1000 BP|The BP here stands for Burger Points|The Burger Points don't do anything",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=81,
@@ -777,7 +860,8 @@ ECS.Relics = {
 		effect="Lv. 1 EP Bonus|Lv. 1 DP Bonus|Lv. 1 RP Bonus|Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=82,
@@ -786,7 +870,8 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=83,
@@ -806,7 +891,8 @@ ECS.Relics = {
 					end
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=84,
@@ -815,7 +901,8 @@ ECS.Relics = {
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=85,
@@ -824,7 +911,8 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=86,
@@ -833,7 +921,8 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus|Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=87,
@@ -842,7 +931,8 @@ ECS.Relics = {
 		effect="+77 BP",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=88,
@@ -862,7 +952,8 @@ ECS.Relics = {
 					end
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=89,
@@ -871,7 +962,8 @@ ECS.Relics = {
 		effect="Lv. 4 AP Bonus",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=90,
@@ -880,7 +972,8 @@ ECS.Relics = {
 		effect="Lv. 6 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=91,
@@ -897,7 +990,8 @@ ECS.Relics = {
 					SM("Set to Life 5")
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=92,
@@ -906,7 +1000,8 @@ ECS.Relics = {
 		effect="+2000 MP",
 		is_consumable=false,
 		is_marathon=true,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=93,
@@ -923,7 +1018,8 @@ ECS.Relics = {
 					SM("Set to Life 3")
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=94,
@@ -940,7 +1036,8 @@ ECS.Relics = {
 					SM("Set to Life 3")
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=95,
@@ -963,7 +1060,8 @@ ECS.Relics = {
 					ECS.BreakTimer = ECS.BreakTimer + 60
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=96,
@@ -978,7 +1076,8 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.Competitive.TimingWindowSecondsW3)
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=97,
@@ -995,7 +1094,8 @@ ECS.Relics = {
 					SM("Set to Life 1")
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=98,
@@ -1004,7 +1104,8 @@ ECS.Relics = {
 		effect="+100 BP|Allows user to equip one additional relic",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=99,
@@ -1013,7 +1114,8 @@ ECS.Relics = {
 		effect="Access to #bronze-bistro on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=100,
@@ -1022,7 +1124,8 @@ ECS.Relics = {
 		effect="Access to #mythril-lounge on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=101,
@@ -1031,7 +1134,8 @@ ECS.Relics = {
 		effect="Access to #crystal-cafe on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=102,
@@ -1040,7 +1144,8 @@ ECS.Relics = {
 		effect="At end of set, +100 BP for each song with a different speed tier",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=103,
@@ -1049,7 +1154,8 @@ ECS.Relics = {
 		effect="At end of set, +BP equal to total steps of passed songs divided by 75",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=104,
@@ -1066,7 +1172,8 @@ ECS.Relics = {
 					ECS.BreakTimer = ECS.BreakTimer + 90
 				end
 			end
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=105,
@@ -1077,7 +1184,8 @@ ECS.Relics = {
 		is_marathon=true,
 		action=function()
 		--TODO(teejusb)
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=106,
@@ -1086,7 +1194,8 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime EXP|+BP based on Lifetime EXP for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=107,
@@ -1097,7 +1206,8 @@ ECS.Relics = {
 		is_marathon=true,
 		action=function()
 		-- TODO(teejusb)
-		end
+		end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=108,
@@ -1106,7 +1216,8 @@ ECS.Relics = {
 		effect="Lv. 6 RP Bonus",
 		is_consumable=false,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 	{
 		id=109,
@@ -1115,7 +1226,8 @@ ECS.Relics = {
 		effect="Allows user to equip an additional two relics",
 		is_consumable=true,
 		is_marathon=false,
-		action=function() end
+		action=function() end,
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
 	},
 }
 
@@ -1131,6 +1243,3208 @@ ECS.GetRelicNames = function( list )
 end
 
 -- ------------------------------------------------------
+-- Song Data
+
+ECS.SongInfo = {}
+ECS.SongInfo.Lower = {
+	-- These values will be calculated and set below.
+	MinBpm = 0,
+	MaxBpm = 0,
+	MinScaled16ths = 0,
+	MaxScaled16ths = 0,
+	MinBlockLevel = 0,
+	MaxBlockLevel = 0,
+	MinLength = 0,
+	Songs = {
+		{
+			id=1,
+			name="[12] [130] Once and Future King",
+			pack="Kamelot",
+			difficulty=12,
+			bpm_tier=130,
+			measures=98,
+			adj_stream=0.7424,
+			bpm=130,
+			length=4.4,
+		},
+		{
+			id=2,
+			name="[12] [130] Discovery",
+			pack="StoryTime Chapter 1",
+			difficulty=12,
+			bpm_tier=130,
+			measures=110,
+			adj_stream=0.7971,
+			bpm=130,
+			length=4.4,
+		},
+		{
+			id=3,
+			name="[12] [133] Crazy Loop (Mm Ma Ma)",
+			pack="Xynn's LVTS 2",
+			difficulty=12,
+			bpm_tier=130,
+			measures=82,
+			adj_stream=0.7664,
+			bpm=133,
+			length=3.55,
+		},
+		{
+			id=4,
+			name="[12] [136] The Ones We Loved (Dogzilla Remix)",
+			pack="TranceMania 3",
+			difficulty=12,
+			bpm_tier=130,
+			measures=86,
+			adj_stream=0.6772,
+			bpm=136,
+			length=4.94,
+		},
+		{
+			id=5,
+			name="[12] [140] Beyond Life",
+			pack="Helblinde 2016",
+			difficulty=12,
+			bpm_tier=140,
+			measures=105,
+			adj_stream=0.6688,
+			bpm=140,
+			length=4.63,
+		},
+		{
+			id=6,
+			name="[12] [140] Zi-Zi's Journey",
+			pack="Lindsey Stirling",
+			difficulty=12,
+			bpm_tier=140,
+			measures=77,
+			adj_stream=0.7476,
+			bpm=140,
+			length=3.29,
+		},
+		{
+			id=7,
+			name="[12] [145] Pernicious Deed",
+			pack="Nav's Spicy Singles",
+			difficulty=12,
+			bpm_tier=140,
+			measures=84,
+			adj_stream=0.5316,
+			bpm=145,
+			length=5.6,
+		},
+		{
+			id=8,
+			name="[12] [146] Wastelands",
+			pack="Mozee Metal",
+			difficulty=12,
+			bpm_tier=140,
+			measures=82,
+			adj_stream=0.6165,
+			bpm=146,
+			length=4.55,
+		},
+		{
+			id=9,
+			name="[12] [150] EdenEcho",
+			pack="Kamelot",
+			difficulty=12,
+			bpm_tier=150,
+			measures=61,
+			adj_stream=0.4388,
+			bpm=150,
+			length=4,
+		},
+		{
+			id=10,
+			name="[12] [150] The Sampling Paradise (Extended)",
+			pack="SlowStreamz",
+			difficulty=12,
+			bpm_tier=150,
+			measures=64,
+			adj_stream=0.3596,
+			bpm=150,
+			length=5.12,
+		},
+		{
+			id=11,
+			name="[12] [150] Blood Is Pumpin' (Hard)",
+			pack="SlowStreamz",
+			difficulty=12,
+			bpm_tier=150,
+			measures=49,
+			adj_stream=0.3063,
+			bpm=150,
+			length=5.52,
+		},
+		{
+			id=12,
+			name="[12] [156] Wheelpower & Go",
+			pack="Eurobeat Is Fantastic",
+			difficulty=12,
+			bpm_tier=150,
+			measures=43,
+			adj_stream=0.3094,
+			bpm=156,
+			length=3.77,
+		},
+		{
+			id=13,
+			name="[12] [160] Speedy Runner",
+			pack="Eurobeat Is Fantastic",
+			difficulty=12,
+			bpm_tier=160,
+			measures=45,
+			adj_stream=0.2866,
+			bpm=160,
+			length=4.13,
+		},
+		{
+			id=14,
+			name="[12] [160] Stay Awake (Hard)",
+			pack="Hospitality",
+			difficulty=12,
+			bpm_tier=160,
+			measures=47,
+			adj_stream=0.4123,
+			bpm=160,
+			length=3.4,
+		},
+		{
+			id=15,
+			name="[12] [160] When the Sun Goes Down (Medium)",
+			pack="Eurobeat Is Fantastic",
+			difficulty=12,
+			bpm_tier=160,
+			measures=53,
+			adj_stream=0.4015,
+			bpm=160,
+			length=4.35,
+		},
+		{
+			id=16,
+			name="[12] [160] Drink",
+			pack="Squirrel Metal II",
+			difficulty=12,
+			bpm_tier=160,
+			measures=62,
+			adj_stream=0.5536,
+			bpm=160,
+			length=3.32,
+		},
+		{
+			id=17,
+			name="[13] [132] No Shields",
+			pack="SlowStreamz",
+			difficulty=13,
+			bpm_tier=130,
+			measures=135,
+			adj_stream=0.8766,
+			bpm=132,
+			length=5.21,
+		},
+		{
+			id=18,
+			name="[13] [134] March of the ants",
+			pack="The Starter Pack of Stamina",
+			difficulty=13,
+			bpm_tier=130,
+			measures=101,
+			adj_stream=0.9902,
+			bpm=134,
+			length=3.43,
+		},
+		{
+			id=19,
+			name="[13] [138] Alone Tonight (Ronski Speed Remix)",
+			pack="SlowStreamz",
+			difficulty=13,
+			bpm_tier=130,
+			measures=190,
+			adj_stream=0.819,
+			bpm=138,
+			length=7.33,
+		},
+		{
+			id=20,
+			name="[13] [138] On A Good Day Above & Beyond Club Mix",
+			pack="BaguetteStreamz",
+			difficulty=13,
+			bpm_tier=130,
+			measures=200,
+			adj_stream=0.7576,
+			bpm=138,
+			length=7.8,
+		},
+		{
+			id=21,
+			name="[13] [140] Switch !",
+			pack="Eurobeat Is Fantastic",
+			difficulty=13,
+			bpm_tier=140,
+			measures=117,
+			adj_stream=0.7905,
+			bpm=140,
+			length=5.03,
+		},
+		{
+			id=22,
+			name="[13] [140] Blue Destination",
+			pack="Trails of Cold Stream",
+			difficulty=13,
+			bpm_tier=140,
+			measures=119,
+			adj_stream=0.8686,
+			bpm=140,
+			length=4.23,
+		},
+		{
+			id=23,
+			name="[13] [140] Set Me On Fire (Novice)",
+			pack="Pendulum Act III",
+			difficulty=13,
+			bpm_tier=140,
+			measures=142,
+			adj_stream=0.8402,
+			bpm=140,
+			length=5.09,
+		},
+		{
+			id=24,
+			name="[13] [145] Sa'eed",
+			pack="SlowStreamz",
+			difficulty=13,
+			bpm_tier=140,
+			measures=153,
+			adj_stream=0.6955,
+			bpm=145,
+			length=6.62,
+		},
+		{
+			id=25,
+			name="[13] [150] Louder",
+			pack="Hardbass Madness",
+			difficulty=13,
+			bpm_tier=150,
+			measures=86,
+			adj_stream=0.5772,
+			bpm=150,
+			length=4.4,
+		},
+		{
+			id=26,
+			name="[13] [150] RAVE2000009",
+			pack="Sharpnelstreamz v2",
+			difficulty=13,
+			bpm_tier=150,
+			measures=98,
+			adj_stream=0.6853,
+			bpm=150,
+			length=4.11,
+		},
+		{
+			id=27,
+			name="[13] [154] Deja Vu",
+			pack="Eurobeat Is Fantastic",
+			difficulty=13,
+			bpm_tier=150,
+			measures=94,
+			adj_stream=0.6763,
+			bpm=154,
+			length=4.13,
+		},
+		{
+			id=28,
+			name="[13] [155] Aphasia",
+			pack="Team Grimoire",
+			difficulty=13,
+			bpm_tier=150,
+			measures=97,
+			adj_stream=0.6736,
+			bpm=155,
+			length=3.98,
+		},
+		{
+			id=29,
+			name="[13] [160] The Top",
+			pack="Eurobeat Is Fantastic",
+			difficulty=13,
+			bpm_tier=160,
+			measures=62,
+			adj_stream=0.6019,
+			bpm=160,
+			length=3.22,
+		},
+		{
+			id=30,
+			name="[13] [160] GravitoN",
+			pack="VocaJawnz II",
+			difficulty=13,
+			bpm_tier=160,
+			measures=71,
+			adj_stream=0.5868,
+			bpm=160,
+			length=3.7,
+		},
+		{
+			id=31,
+			name="[13] [162] Uh...Man",
+			pack="Jayrocking",
+			difficulty=13,
+			bpm_tier=160,
+			measures=91,
+			adj_stream=0.6408,
+			bpm=162,
+			length=3.78,
+		},
+		{
+			id=32,
+			name="[13] [165] P.L.U.C.K. (Medium)",
+			pack="System of a Down",
+			difficulty=13,
+			bpm_tier=160,
+			measures=67,
+			adj_stream=0.6505,
+			bpm=165,
+			length=3.42,
+		},
+		{
+			id=33,
+			name="[13] [175] Timeleap",
+			pack="Comiket 95",
+			difficulty=13,
+			bpm_tier=170,
+			measures=86,
+			adj_stream=0.6232,
+			bpm=165,
+			length=4.23,
+		},
+		{
+			id=34,
+			name="[13] [170] Lost in Singularity",
+			pack="Helblinde 2016",
+			difficulty=13,
+			bpm_tier=170,
+			measures=52,
+			adj_stream=0.4602,
+			bpm=170,
+			length=3.79,
+		},
+		{
+			id=35,
+			name="[13] [174] Come & Get It",
+			pack="Hospitality",
+			difficulty=13,
+			bpm_tier=170,
+			measures=57,
+			adj_stream=0.5534,
+			bpm=174,
+			length=3.03,
+		},
+		{
+			id=36,
+			name="[13] [175] Sakura Fubuki (Ata Remix)",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=13,
+			bpm_tier=170,
+			measures=63,
+			adj_stream=0.7159,
+			bpm=175,
+			length=2.83,
+		},
+		{
+			id=37,
+			name="[14] [140] Dreamenddischarger",
+			pack="SlowStreamz",
+			difficulty=14,
+			bpm_tier=140,
+			measures=277,
+			adj_stream=0.8602,
+			bpm=140,
+			length=9.37,
+		},
+		{
+			id=38,
+			name="[14] [140] Pendulum",
+			pack="Stephcharts and Richarts 2",
+			difficulty=14,
+			bpm_tier=140,
+			measures=306,
+			adj_stream=0.7727,
+			bpm=140,
+			length=11.37,
+		},
+		{
+			id=39,
+			name="[14] [145] Mala",
+			pack="SlowStreamz",
+			difficulty=14,
+			bpm_tier=140,
+			measures=209,
+			adj_stream=0.9048,
+			bpm=145,
+			length=7.37,
+		},
+		{
+			id=40,
+			name="[14] [147] Moscow 3980",
+			pack="SlowStreamz",
+			difficulty=14,
+			bpm_tier=140,
+			measures=249,
+			adj_stream=0.9055,
+			bpm=147,
+			length=7.97,
+		},
+		{
+			id=41,
+			name="[14] [150] Meteor 36.0",
+			pack="VocaJawnz",
+			difficulty=14,
+			bpm_tier=150,
+			measures=125,
+			adj_stream=0.8741,
+			bpm=150,
+			length=4.03,
+		},
+		{
+			id=42,
+			name="[14] [150] Eyes Of Sky",
+			pack="Eurobeat Is Fantastic 2",
+			difficulty=14,
+			bpm_tier=150,
+			measures=121,
+			adj_stream=0.8963,
+			bpm=150,
+			length=4.16,
+		},
+		{
+			id=43,
+			name="[14] [154] Gas Gas Gas",
+			pack="Eurobeat Is Fantastic",
+			difficulty=14,
+			bpm_tier=150,
+			measures=143,
+			adj_stream=0.8363,
+			bpm=154,
+			length=4.52,
+		},
+		{
+			id=44,
+			name="[14] [158] Full Circle",
+			pack="???",
+			difficulty=14,
+			bpm_tier=150,
+			measures=174,
+			adj_stream=0.719,
+			bpm=158,
+			length=7.44,
+		},
+		{
+			id=45,
+			name="[14] [160] Hooligans",
+			pack="Eurobeat Is Fantastic",
+			difficulty=14,
+			bpm_tier=160,
+			measures=105,
+			adj_stream=0.7343,
+			bpm=160,
+			length=4.08,
+		},
+		{
+			id=46,
+			name="[14] [160] Katamari on the Rocks",
+			pack="Xynn's LVTS 2",
+			difficulty=14,
+			bpm_tier=160,
+			measures=148,
+			adj_stream=0.682,
+			bpm=160,
+			length=5.88,
+		},
+		{
+			id=47,
+			name="[14] [161] 80808",
+			pack="Death Grips",
+			difficulty=14,
+			bpm_tier=160,
+			measures=100,
+			adj_stream=0.7812,
+			bpm=161,
+			length=3.23,
+		},
+		{
+			id=48,
+			name="[14] [165] When the Rain Begins To Fall",
+			pack="Stamina Showcase",
+			difficulty=14,
+			bpm_tier=160,
+			measures=120,
+			adj_stream=0.7453,
+			bpm=165,
+			length=4.15,
+		},
+		{
+			id=49,
+			name="[14] [174] Tension",
+			pack="Hospitality",
+			difficulty=14,
+			bpm_tier=170,
+			measures=89,
+			adj_stream=0.6593,
+			bpm=174,
+			length=4.8,
+		},
+		{
+			id=50,
+			name="[14] [174] Witchcraft",
+			pack="Pendulum Act III",
+			difficulty=14,
+			bpm_tier=170,
+			measures=97,
+			adj_stream=0.6644,
+			bpm=174,
+			length=4.18,
+		},
+		{
+			id=51,
+			name="[14] [174] Black Church",
+			pack="Cirque du Miura",
+			difficulty=14,
+			bpm_tier=170,
+			measures=96,
+			adj_stream=0.7273,
+			bpm=174,
+			length=4.09,
+		},
+		{
+			id=52,
+			name="[14] [175] kagetsu",
+			pack="Stamina Showcase 2",
+			difficulty=14,
+			bpm_tier=170,
+			measures=111,
+			adj_stream=0.5812,
+			bpm=175,
+			length=5.05,
+		},
+		{
+			id=53,
+			name="[14] [180] squartatrice",
+			pack="Cirque Du Enzo",
+			difficulty=14,
+			bpm_tier=180,
+			measures=87,
+			adj_stream=0.5437,
+			bpm=180,
+			length=4.8,
+		},
+		{
+			id=54,
+			name="[14] [180] Way Away",
+			pack="???",
+			difficulty=14,
+			bpm_tier=180,
+			measures=95,
+			adj_stream=0.6738,
+			bpm=180,
+			length=3.38,
+		},
+		{
+			id=55,
+			name="[14] [180] Vertex ALPHA (Hard)",
+			pack="BaguetteStreamz 2",
+			difficulty=14,
+			bpm_tier=180,
+			measures=75,
+			adj_stream=0.5102,
+			bpm=180,
+			length=4.07,
+		},
+		{
+			id=56,
+			name="[14] [185] The Defeated Boy",
+			pack="VocaJawnz II",
+			difficulty=14,
+			bpm_tier=180,
+			measures=47,
+			adj_stream=0.4196,
+			bpm=185,
+			length=3.61,
+		},
+		{
+			id=57,
+			name="[15] [150] Hallucinogen",
+			pack="French Coast Stamina 2",
+			difficulty=15,
+			bpm_tier=150,
+			measures=311,
+			adj_stream=0.9041,
+			bpm=150,
+			length=10.13,
+		},
+		{
+			id=58,
+			name="[15] [155] Night Of Fire v2",
+			pack="BaguetteStreamz",
+			difficulty=15,
+			bpm_tier=150,
+			measures=179,
+			adj_stream=0.9728,
+			bpm=155,
+			length=4.85,
+		},
+		{
+			id=59,
+			name="[15] [155] G e n g a o z o -Noize of Nocent-",
+			pack="Stamina Secret Santa 2019",
+			difficulty=15,
+			bpm_tier=150,
+			measures=269,
+			adj_stream=0.934,
+			bpm=155,
+			length=8.03,
+		},
+		{
+			id=60,
+			name="[15] [159] REASON for RED (Hard)",
+			pack="Stamina Showcase 2",
+			difficulty=15,
+			bpm_tier=150,
+			measures=149,
+			adj_stream=0.9141,
+			bpm=159,
+			length=4.58,
+		},
+		{
+			id=61,
+			name="[15] [160] Battle Train -HOT SOTA MIX-",
+			pack="Xynn's LVTS 2",
+			difficulty=15,
+			bpm_tier=160,
+			measures=162,
+			adj_stream=0.8438,
+			bpm=160,
+			length=5.18,
+		},
+		{
+			id=62,
+			name="[15] [165] Defiance",
+			pack="untitled stream pack",
+			difficulty=15,
+			bpm_tier=160,
+			measures=131,
+			adj_stream=0.9493,
+			bpm=165,
+			length=4.02,
+		},
+		{
+			id=63,
+			name="[15] [165] Zusammengehorigkeit Hommarju Remix",
+			pack="Baguettestreamz",
+			difficulty=15,
+			bpm_tier=160,
+			measures=175,
+			adj_stream=0.8102,
+			bpm=165,
+			length=5.79,
+		},
+		{
+			id=64,
+			name="[15] [168] Ice Angel",
+			pack="StoryTime Chapter 1",
+			difficulty=15,
+			bpm_tier=160,
+			measures=193,
+			adj_stream=0.7782,
+			bpm=168,
+			length=6,
+		},
+		{
+			id=65,
+			name="[15] [174] Dimension Ninja",
+			pack="Cirque Du Enzo",
+			difficulty=15,
+			bpm_tier=170,
+			measures=100,
+			adj_stream=0.4785,
+			bpm=174,
+			length=4.9,
+		},
+		{
+			id=66,
+			name="[15] [174] Salt in the Wounds",
+			pack="Pendulum Act III",
+			difficulty=15,
+			bpm_tier=170,
+			measures=141,
+			adj_stream=0.6589,
+			bpm=174,
+			length=6.38,
+		},
+		{
+			id=67,
+			name="[15] [175] Wrong (Muzzy Remix)",
+			pack="Hospitality",
+			difficulty=15,
+			bpm_tier=170,
+			measures=138,
+			adj_stream=0.5679,
+			bpm=175,
+			length=6.72,
+		},
+		{
+			id=68,
+			name="[15] [175] I Can Fly in the Universe",
+			pack="Stamina Showcase",
+			difficulty=15,
+			bpm_tier=170,
+			measures=144,
+			adj_stream=0.6575,
+			bpm=175,
+			length=6.1,
+		},
+		{
+			id=69,
+			name="[15] [180] A Town With An Ocean View (el Poco Maro Remix)",
+			pack="Hospitality",
+			difficulty=15,
+			bpm_tier=180,
+			measures=91,
+			adj_stream=0.7054,
+			bpm=180,
+			length=3.36,
+		},
+		{
+			id=70,
+			name="[15] [180] Get Over the Barrier! (-Evolution!!-)",
+			pack="Trails of Cold Stream II",
+			difficulty=15,
+			bpm_tier=180,
+			measures=115,
+			adj_stream=0.7188,
+			bpm=180,
+			length=3.91,
+		},
+		{
+			id=71,
+			name="[15] [180] Epimedium",
+			pack="Bass Chasers",
+			difficulty=15,
+			bpm_tier=180,
+			measures=94,
+			adj_stream=0.6912,
+			bpm=180,
+			length=3.51,
+		},
+		{
+			id=72,
+			name="[15] [188] Shanghai Kouchakan Chinese Tea Orchid Remix",
+			pack="Cuties Party",
+			difficulty=15,
+			bpm_tier=180,
+			measures=103,
+			adj_stream=0.6776,
+			bpm=188,
+			length=3.55,
+		},
+		{
+			id=73,
+			name="[15] [190] Oshama Scramble",
+			pack="Cuties Party",
+			difficulty=15,
+			bpm_tier=190,
+			measures=106,
+			adj_stream=0.5464,
+			bpm=190,
+			length=4.23,
+		},
+		{
+			id=74,
+			name="[15] [190] Dawn Of Victory",
+			pack="BaguetteStreamz 2",
+			difficulty=15,
+			bpm_tier=190,
+			measures=126,
+			adj_stream=0.6238,
+			bpm=190,
+			length=4.72,
+		},
+		{
+			id=75,
+			name="[15] [190] Unreliable Narrator",
+			pack="Resistance Device",
+			difficulty=15,
+			bpm_tier=190,
+			measures=68,
+			adj_stream=0.8608,
+			bpm=190,
+			length=2.61,
+		},
+		{
+			id=76,
+			name="[15] [191] AO-INFINITY",
+			pack="Cirque Du Enzo",
+			difficulty=15,
+			bpm_tier=190,
+			measures=72,
+			adj_stream=0.6667,
+			bpm=191,
+			length=3.56,
+		},
+		{
+			id=77,
+			name="[16] [160] Eurobeat Is Fantastic ~Part 3~",
+			pack="???",
+			difficulty=16,
+			bpm_tier=160,
+			measures=330,
+			adj_stream=0.8684,
+			bpm=160,
+			length=9.82,
+		},
+		{
+			id=78,
+			name="[16] [162] Entity",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=16,
+			bpm_tier=160,
+			measures=291,
+			adj_stream=0.9238,
+			bpm=162,
+			length=7.93,
+		},
+		{
+			id=79,
+			name="[16] [165] Bright Colors",
+			pack="French Coast Stamina 3",
+			difficulty=16,
+			bpm_tier=160,
+			measures=608,
+			adj_stream=0.76,
+			bpm=165,
+			length=20.02,
+		},
+		{
+			id=80,
+			name="[16] [165] Eastern Dream",
+			pack="Demetori ACT 1",
+			difficulty=16,
+			bpm_tier=160,
+			measures=324,
+			adj_stream=0.8438,
+			bpm=165,
+			length=10.33,
+		},
+		{
+			id=81,
+			name="[16] [173] Just One Second",
+			pack="Hospitality",
+			difficulty=16,
+			bpm_tier=170,
+			measures=201,
+			adj_stream=0.9013,
+			bpm=173,
+			length=5.46,
+		},
+		{
+			id=82,
+			name="[16] [174] Crush",
+			pack="Pendulum Act III",
+			difficulty=16,
+			bpm_tier=170,
+			measures=120,
+			adj_stream=1,
+			bpm=174,
+			length=3.06,
+		},
+		{
+			id=83,
+			name="[16] [174] Meteor Shower",
+			pack="Cirque Du Enzo",
+			difficulty=16,
+			bpm_tier=170,
+			measures=224,
+			adj_stream=0.875,
+			bpm=174,
+			length=5.98,
+		},
+		{
+			id=84,
+			name="[16] [178] Horrrable Dreamz",
+			pack="Scrapyard Kent",
+			difficulty=16,
+			bpm_tier=170,
+			measures=217,
+			adj_stream=0.9118,
+			bpm=178,
+			length=6.43,
+		},
+		{
+			id=85,
+			name="[16] [180] Hynek's Scale 180",
+			pack="BaguetteStreamz",
+			difficulty=16,
+			bpm_tier=180,
+			measures=206,
+			adj_stream=0.8583,
+			bpm=180,
+			length=5.78,
+		},
+		{
+			id=86,
+			name="[16] [184] Heretic Witch",
+			pack="SHARPNELSTREAMZ v3 Part 2",
+			difficulty=16,
+			bpm_tier=180,
+			measures=133,
+			adj_stream=0.9925,
+			bpm=184,
+			length=3.06,
+		},
+		{
+			id=87,
+			name="[16] [184] Cybernecia Catharsis",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=16,
+			bpm_tier=180,
+			measures=138,
+			adj_stream=0.7797,
+			bpm=184,
+			length=4.59,
+		},
+		{
+			id=88,
+			name="[16] [186] Fly Away",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=16,
+			bpm_tier=180,
+			measures=134,
+			adj_stream=0.8375,
+			bpm=186,
+			length=3.48,
+		},
+		{
+			id=89,
+			name="[16] [190] Ad Astra",
+			pack="Helblinde 2016",
+			difficulty=16,
+			bpm_tier=190,
+			measures=158,
+			adj_stream=0.6475,
+			bpm=190,
+			length=5.24,
+		},
+		{
+			id=90,
+			name="[16] [192] Say Hello to HOLLOWood feat. Nene Akagawa",
+			pack="BaguetteStreamz 2",
+			difficulty=16,
+			bpm_tier=190,
+			measures=127,
+			adj_stream=0.6318,
+			bpm=192,
+			length=4.56,
+		},
+		{
+			id=91,
+			name="[16] [192] Night sky",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=16,
+			bpm_tier=190,
+			measures=148,
+			adj_stream=0.7668,
+			bpm=192,
+			length=4.44,
+		},
+		{
+			id=92,
+			name="[16] [192] Salvation",
+			pack="Cirque Du Enzo",
+			difficulty=16,
+			bpm_tier=190,
+			measures=130,
+			adj_stream=0.6373,
+			bpm=192,
+			length=4.92,
+		},
+		{
+			id=93,
+			name="[16] [200] Promethium",
+			pack="SHARPNELSTREAMZ v3 Part 1",
+			difficulty=16,
+			bpm_tier=200,
+			measures=107,
+			adj_stream=0.7483,
+			bpm=200,
+			length=4.52,
+		},
+		{
+			id=94,
+			name="[16] [200] Heaven's Fall 2016 Rebuild",
+			pack="Helblinde 2016",
+			difficulty=16,
+			bpm_tier=200,
+			measures=127,
+			adj_stream=0.6287,
+			bpm=200,
+			length=4.24,
+		},
+		{
+			id=95,
+			name="[16] [200] Liberator feat. blaxervant",
+			pack="Resistance Device",
+			difficulty=16,
+			bpm_tier=200,
+			measures=78,
+			adj_stream=0.6903,
+			bpm=200,
+			length=3.56,
+		},
+		{
+			id=96,
+			name="[16] [208] Deus ex Machina",
+			pack="Cirque Du Enzo",
+			difficulty=16,
+			bpm_tier=200,
+			measures=87,
+			adj_stream=0.6541,
+			bpm=208,
+			length=2.94,
+		},
+		{
+			id=97,
+			name="[17] [174] Ian's OP",
+			pack="Pendulum Act III",
+			difficulty=17,
+			bpm_tier=170,
+			measures=577,
+			adj_stream=0.6191,
+			bpm=174,
+			length=23.28,
+		},
+		{
+			id=98,
+			name="[17] [175] Space Box",
+			pack="Scrapyard Kent",
+			difficulty=17,
+			bpm_tier=170,
+			measures=575,
+			adj_stream=0.8557,
+			bpm=175,
+			length=15.86,
+		},
+		{
+			id=99,
+			name="[17] [179] Bio Tunnel Magnetic Transport",
+			pack="Hospitality",
+			difficulty=17,
+			bpm_tier=170,
+			measures=336,
+			adj_stream=0.7636,
+			bpm=179,
+			length=10.3,
+		},
+		{
+			id=100,
+			name="[17] [179] Lift Off FB 179",
+			pack="Scrapyard Kent",
+			difficulty=17,
+			bpm_tier=170,
+			measures=279,
+			adj_stream=0.9555,
+			bpm=179,
+			length=7.24,
+		},
+		{
+			id=101,
+			name="[17] [180] Signal (Girl's Vocal Mix)",
+			pack="BaguetteStreamz 2",
+			difficulty=17,
+			bpm_tier=180,
+			measures=250,
+			adj_stream=0.8621,
+			bpm=180,
+			length=6.87,
+		},
+		{
+			id=102,
+			name="[17] [185] Tell Your Name",
+			pack="Lolistyle GabberS",
+			difficulty=17,
+			bpm_tier=180,
+			measures=246,
+			adj_stream=0.9111,
+			bpm=185,
+			length=6.1,
+		},
+		{
+			id=103,
+			name="[17] [185] Asereje (Speed Mix)",
+			pack="Jimmy Jawns 4",
+			difficulty=17,
+			bpm_tier=180,
+			measures=208,
+			adj_stream=0.9858,
+			bpm=185,
+			length=4.67,
+		},
+		{
+			id=104,
+			name="[17] [187] Destination Talos",
+			pack="Cranked Pastry",
+			difficulty=17,
+			bpm_tier=180,
+			measures=270,
+			adj_stream=0.8157,
+			bpm=187,
+			length=7.47,
+		},
+		{
+			id=105,
+			name="[17] [190] I Miss You",
+			pack="Trails of Cold Stream",
+			difficulty=17,
+			bpm_tier=190,
+			measures=232,
+			adj_stream=0.917,
+			bpm=190,
+			length=5.37,
+		},
+		{
+			id=106,
+			name="[17] [190] La Morale De La Fable",
+			pack="ExJam09 Jams",
+			difficulty=17,
+			bpm_tier=190,
+			measures=207,
+			adj_stream=0.7841,
+			bpm=190,
+			length=6.08,
+		},
+		{
+			id=107,
+			name="[17] [191] Difficulty-G",
+			pack="SHARPNELSTREAMZ v3 Part 2",
+			difficulty=17,
+			bpm_tier=190,
+			measures=141,
+			adj_stream=0.8393,
+			bpm=191,
+			length=4.24,
+		},
+		{
+			id=108,
+			name="[17] [195] Weigh Anchor!",
+			pack="Lolistyle GabberS",
+			difficulty=17,
+			bpm_tier=190,
+			measures=178,
+			adj_stream=0.7706,
+			bpm=195,
+			length=4.8,
+		},
+		{
+			id=109,
+			name="[17] [200] Extraction Zone",
+			pack="Dragonforce Kaioken",
+			difficulty=17,
+			bpm_tier=200,
+			measures=149,
+			adj_stream=0.6082,
+			bpm=200,
+			length=5.08,
+		},
+		{
+			id=110,
+			name="[17] [204] New Odyssey",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=17,
+			bpm_tier=200,
+			measures=162,
+			adj_stream=0.7788,
+			bpm=204,
+			length=4.75,
+		},
+		{
+			id=111,
+			name="[17] [205] Little Lies",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=17,
+			bpm_tier=200,
+			measures=169,
+			adj_stream=0.6815,
+			bpm=205,
+			length=5.4,
+		},
+		{
+			id=112,
+			name="[17] [208] Yui & I",
+			pack="Helblinde PDTA",
+			difficulty=17,
+			bpm_tier=200,
+			measures=164,
+			adj_stream=0.6189,
+			bpm=208,
+			length=5.51,
+		},
+		{
+			id=113,
+			name="[17] [210] Outbreak (P*Light & DJ Myosuke Remix)",
+			pack="Stamina Selects",
+			difficulty=17,
+			bpm_tier=210,
+			measures=117,
+			adj_stream=0.6126,
+			bpm=210,
+			length=4.3,
+		},
+		{
+			id=114,
+			name="[17] [210] The Loop (AleX Tune Mashup Mix)",
+			pack="Jimmy Jawns 3",
+			difficulty=17,
+			bpm_tier=210,
+			measures=125,
+			adj_stream=0.7764,
+			bpm=210,
+			length=3.56,
+		},
+		{
+			id=115,
+			name="[17] [210] Unsainted",
+			pack="Jimmy Jawns 4",
+			difficulty=17,
+			bpm_tier=210,
+			measures=123,
+			adj_stream=0.7834,
+			bpm=210,
+			length=3.83,
+		},
+		{
+			id=116,
+			name="[17] [212] Zap Your Channel",
+			pack="Rebuild of Sharpnel",
+			difficulty=17,
+			bpm_tier=210,
+			measures=107,
+			adj_stream=0.6859,
+			bpm=212,
+			length=3.15,
+		},
+		{
+			id=117,
+			name="[18] [180] Call Of Beauty",
+			pack="BaguetteStreamz",
+			difficulty=18,
+			bpm_tier=180,
+			measures=490,
+			adj_stream=1,
+			bpm=180,
+			length=12.84,
+		},
+		{
+			id=118,
+			name="[18] [185] White Laguna",
+			pack="Scrapyard Kent",
+			difficulty=18,
+			bpm_tier=180,
+			measures=374,
+			adj_stream=0.9894,
+			bpm=185,
+			length=8.32,
+		},
+		{
+			id=119,
+			name="[18] [185] Stars FP 185",
+			pack="Cranked Pastry",
+			difficulty=18,
+			bpm_tier=180,
+			measures=388,
+			adj_stream=0.97,
+			bpm=185,
+			length=9.45,
+		},
+		{
+			id=120,
+			name="[18] [188] Radiation 239",
+			pack="BaguetteStreamz 2",
+			difficulty=18,
+			bpm_tier=180,
+			measures=298,
+			adj_stream=0.9198,
+			bpm=188,
+			length=7.34,
+		},
+		{
+			id=121,
+			name="[18] [190] Chaos Structure (Restep)",
+			pack="Masochisma Mk 1",
+			difficulty=18,
+			bpm_tier=190,
+			measures=277,
+			adj_stream=0.9327,
+			bpm=190,
+			length=6.8,
+		},
+		{
+			id=122,
+			name="[18] [195] Pacific Girls",
+			pack="SHARPNELSTREAMZ v3 Part 2",
+			difficulty=18,
+			bpm_tier=190,
+			measures=212,
+			adj_stream=0.8833,
+			bpm=195,
+			length=5.35,
+		},
+		{
+			id=123,
+			name="[18] [197] Silver Screen FB 197",
+			pack="Cirque du Huayra",
+			difficulty=18,
+			bpm_tier=190,
+			measures=236,
+			adj_stream=0.9112,
+			bpm=197,
+			length=5.5,
+		},
+		{
+			id=124,
+			name="[18] [198] Shihen (Piece of Poetry)",
+			pack="SHARPNELSTREAMZ v3 Part 2",
+			difficulty=18,
+			bpm_tier=190,
+			measures=275,
+			adj_stream=0.854,
+			bpm=198,
+			length=6.61,
+		},
+		{
+			id=125,
+			name="[18] [200] Marunouchi Surviver",
+			pack="SHARPNELSTREAMZ v3 Part 1",
+			difficulty=18,
+			bpm_tier=200,
+			measures=196,
+			adj_stream=0.9202,
+			bpm=200,
+			length=4.71,
+		},
+		{
+			id=126,
+			name="[18] [200] USAO ULTIMATE HYPER MEGA MIX",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=18,
+			bpm_tier=200,
+			measures=213,
+			adj_stream=0.9301,
+			bpm=200,
+			length=5.08,
+		},
+		{
+			id=127,
+			name="[18] [200] Something Special",
+			pack="The Apocalypse Sampler",
+			difficulty=18,
+			bpm_tier=200,
+			measures=261,
+			adj_stream=0.8208,
+			bpm=200,
+			length=6.74,
+		},
+		{
+			id=128,
+			name="[18] [203] SRPX-0004 (Part 2)",
+			pack="SHARPNEL MARATHONZ",
+			difficulty=18,
+			bpm_tier=200,
+			measures=330,
+			adj_stream=0.8271,
+			bpm=203,
+			length=8.75,
+		},
+		{
+			id=129,
+			name="[18] [210] We Luv Lama",
+			pack="Rebuild of Sharpnel",
+			difficulty=18,
+			bpm_tier=210,
+			measures=176,
+			adj_stream=0.6743,
+			bpm=210,
+			length=5.45,
+		},
+		{
+			id=130,
+			name="[18] [210] Killian Is Lying To You",
+			pack="Petriform's Factory",
+			difficulty=18,
+			bpm_tier=210,
+			measures=188,
+			adj_stream=0.8393,
+			bpm=210,
+			length=4.3,
+		},
+		{
+			id=131,
+			name="[18] [213] Hunter's Anthem",
+			pack="BaguetteStreamz 2.5",
+			difficulty=18,
+			bpm_tier=210,
+			measures=166,
+			adj_stream=0.7511,
+			bpm=213,
+			length=4.69,
+		},
+		{
+			id=132,
+			name="[18] [218] Sunshine Coastline",
+			pack="Trails of Cold Stream",
+			difficulty=18,
+			bpm_tier=210,
+			measures=119,
+			adj_stream=0.8561,
+			bpm=218,
+			length=3.17,
+		},
+		{
+			id=133,
+			name="[18] [220] The Silent World",
+			pack="untitled stream pack",
+			difficulty=18,
+			bpm_tier=220,
+			measures=106,
+			adj_stream=0.6235,
+			bpm=220,
+			length=3.29,
+		},
+		{
+			id=134,
+			name="[18] [220] Energy Bomb",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=18,
+			bpm_tier=220,
+			measures=105,
+			adj_stream=0.6604,
+			bpm=220,
+			length=3.82,
+		},
+		{
+			id=135,
+			name="[18] [222] NINJA IS DEAD",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=18,
+			bpm_tier=220,
+			measures=116,
+			adj_stream=0.6554,
+			bpm=222,
+			length=3.57,
+		},
+		{
+			id=136,
+			name="[18] [225] Livingdead",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=18,
+			bpm_tier=220,
+			measures=92,
+			adj_stream=0.575,
+			bpm=225,
+			length=3.24,
+		},
+		{
+			id=137,
+			name="[19] [193] Only Love (We Will Take)",
+			pack="BaguetteStreamz",
+			difficulty=19,
+			bpm_tier=190,
+			measures=574,
+			adj_stream=0.9914,
+			bpm=193,
+			length=12.64,
+		},
+		{
+			id=138,
+			name="[19] [193] Extraterrestrial Pudding",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=190,
+			measures=626,
+			adj_stream=0.9858,
+			bpm=193,
+			length=13.28,
+		},
+		{
+			id=139,
+			name="[19] [195] Through The Fire And France (Hard)",
+			pack="French Coast Stamina 3",
+			difficulty=19,
+			bpm_tier=190,
+			measures=807,
+			adj_stream=0.8235,
+			bpm=195,
+			length=20.18,
+		},
+		{
+			id=140,
+			name="[19] [197] Ride the Centaurus FP 197",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=190,
+			measures=406,
+			adj_stream=0.9291,
+			bpm=197,
+			length=9.71,
+		},
+		{
+			id=141,
+			name="[19] [202] Modern Primitive",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=200,
+			measures=912,
+			adj_stream=0.8932,
+			bpm=184,
+			length=22.29,
+		},
+		{
+			id=142,
+			name="[19] [200] Trails of Cold Stream SC (Part 3)",
+			pack="Trails of Cold Stream II",
+			difficulty=19,
+			bpm_tier=200,
+			measures=407,
+			adj_stream=0.9004,
+			bpm=200,
+			length=9.1,
+		},
+		{
+			id=143,
+			name="[19] [204] The Bell",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=19,
+			bpm_tier=200,
+			measures=368,
+			adj_stream=0.9583,
+			bpm=204,
+			length=7.75,
+		},
+		{
+			id=144,
+			name="[19] [207] Digital Messias FB 207",
+			pack="Cirque du Huayra",
+			difficulty=19,
+			bpm_tier=200,
+			measures=331,
+			adj_stream=0.922,
+			bpm=207,
+			length=7.05,
+		},
+		{
+			id=145,
+			name="[19] [210] Mental Spectrum Hacker",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=19,
+			bpm_tier=210,
+			measures=310,
+			adj_stream=0.8378,
+			bpm=210,
+			length=7.26,
+		},
+		{
+			id=146,
+			name="[19] [210] Dodgeball",
+			pack="Petriform's Factory",
+			difficulty=19,
+			bpm_tier=210,
+			measures=183,
+			adj_stream=0.8883,
+			bpm=210,
+			length=4.17,
+		},
+		{
+			id=147,
+			name="[19] [212] Floating",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=210,
+			measures=289,
+			adj_stream=0.8838,
+			bpm=212,
+			length=6.51,
+		},
+		{
+			id=148,
+			name="[19] [218] Plateau (Hard)",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=19,
+			bpm_tier=210,
+			measures=222,
+			adj_stream=0.7525,
+			bpm=218,
+			length=6.09,
+		},
+		{
+			id=149,
+			name="[19] [220] katagiri catchball",
+			pack="katagiri",
+			difficulty=19,
+			bpm_tier=220,
+			measures=170,
+			adj_stream=0.85,
+			bpm=220,
+			length=3.85,
+		},
+		{
+			id=150,
+			name="[19] [220] Fallen World",
+			pack="Dragonforce Kaioken",
+			difficulty=19,
+			bpm_tier=220,
+			measures=171,
+			adj_stream=0.8261,
+			bpm=220,
+			length=4.11,
+		},
+		{
+			id=151,
+			name="[19] [224] Sayonara Planet Wars",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=19,
+			bpm_tier=220,
+			measures=150,
+			adj_stream=0.7109,
+			bpm=224,
+			length=3.91,
+		},
+		{
+			id=152,
+			name="[19] [225] Vicodin Beach Party",
+			pack="Petriform's Factory",
+			difficulty=19,
+			bpm_tier=220,
+			measures=127,
+			adj_stream=0.7937,
+			bpm=225,
+			length=3.2,
+		},
+		{
+			id=153,
+			name="[19] [230] Daydreamer",
+			pack="???",
+			difficulty=19,
+			bpm_tier=230,
+			measures=105,
+			adj_stream=0.8015,
+			bpm=230,
+			length=3.5,
+		},
+		{
+			id=154,
+			name="[19] [230] Struggle In Your Room With J. (Restep)",
+			pack="???",
+			difficulty=19,
+			bpm_tier=230,
+			measures=112,
+			adj_stream=0.5685,
+			bpm=230,
+			length=3.72,
+		},
+		{
+			id=155,
+			name="[19] [230] Heisei Memehunters (Hard)",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=19,
+			bpm_tier=230,
+			measures=115,
+			adj_stream=0.5838,
+			bpm=230,
+			length=3.57,
+		},
+		{
+			id=156,
+			name="[19] [236] EgO",
+			pack="StreamVoltex ep.2",
+			difficulty=19,
+			bpm_tier=230,
+			measures=79,
+			adj_stream=0.7054,
+			bpm=236,
+			length=2.03,
+		},
+		{
+			id=157,
+			name="[20] [200] Spacetime",
+			pack="Psychedelia 2",
+			difficulty=20,
+			bpm_tier=200,
+			measures=528,
+			adj_stream=1,
+			bpm=200,
+			length=10.8,
+		},
+		{
+			id=158,
+			name="[20] [205] Trails of Cold Stream the 3rd (Part 2)",
+			pack="Trails of Cold Stream III",
+			difficulty=20,
+			bpm_tier=200,
+			measures=504,
+			adj_stream=0.8675,
+			bpm=205,
+			length=11.47,
+		},
+		{
+			id=159,
+			name="[20] [208] Ride the Centaurus",
+			pack="Scrapyard Kent",
+			difficulty=20,
+			bpm_tier=200,
+			measures=406,
+			adj_stream=0.9291,
+			bpm=208,
+			length=9.19,
+		},
+		{
+			id=160,
+			name="[20] [208] Guilty Surfacing FP 208",
+			pack="Scrapyard Kent",
+			difficulty=20,
+			bpm_tier=200,
+			measures=404,
+			adj_stream=0.9182,
+			bpm=208,
+			length=8.71,
+		},
+		{
+			id=161,
+			name="[20] [210] Trails of Cold Stream SC (Part 5)",
+			pack="Trails of Cold Stream II",
+			difficulty=20,
+			bpm_tier=210,
+			measures=405,
+			adj_stream=0.8368,
+			bpm=210,
+			length=9.55,
+		},
+		{
+			id=162,
+			name="[20] [212] Life Burst (Liquid E.T. Remix)",
+			pack="Stamina Showcase 2",
+			difficulty=20,
+			bpm_tier=210,
+			measures=372,
+			adj_stream=0.9323,
+			bpm=212,
+			length=8.28,
+		},
+		{
+			id=163,
+			name="[20] [214] We Came To Gangbang",
+			pack="Stamina Selects",
+			difficulty=20,
+			bpm_tier=210,
+			measures=272,
+			adj_stream=0.9444,
+			bpm=214,
+			length=6,
+		},
+		{
+			id=164,
+			name="[20] [215] Flamethrower Jambon Beurre",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=20,
+			bpm_tier=210,
+			measures=321,
+			adj_stream=0.9093,
+			bpm=215,
+			length=6.88,
+		},
+		{
+			id=165,
+			name="[20] [220] Out Of Time",
+			pack="Psychedelia",
+			difficulty=20,
+			bpm_tier=220,
+			measures=255,
+			adj_stream=0.8444,
+			bpm=220,
+			length=5.84,
+		},
+		{
+			id=166,
+			name="[20] [224] Spiral of Erebos",
+			pack="Trails of Cold Stream III",
+			difficulty=20,
+			bpm_tier=220,
+			measures=164,
+			adj_stream=0.988,
+			bpm=224,
+			length=3.87,
+		},
+		{
+			id=167,
+			name="[20] [225] Glorious Crown",
+			pack="Stamina Selects",
+			difficulty=20,
+			bpm_tier=220,
+			measures=191,
+			adj_stream=0.8451,
+			bpm=226,
+			length=4.08,
+		},
+		{
+			id=168,
+			name="[20] [226] Black night",
+			pack="???",
+			difficulty=20,
+			bpm_tier=220,
+			measures=209,
+			adj_stream=0.836,
+			bpm=226,
+			length=4.78,
+		},
+		{
+			id=169,
+			name="[20] [230] Battle with Rival (Speed Metal Arrange)",
+			pack="Jimmy Jawns 4",
+			difficulty=20,
+			bpm_tier=230,
+			measures=125,
+			adj_stream=0.8333,
+			bpm=230,
+			length=2.82,
+		},
+		{
+			id=170,
+			name="[20] [230] Grimm (Restep) (DJKurara Remix)",
+			pack="???",
+			difficulty=20,
+			bpm_tier=230,
+			measures=163,
+			adj_stream=0.6546,
+			bpm=230,
+			length=4.45,
+		},
+		{
+			id=171,
+			name="[20] [232] Endless Adventure",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=20,
+			bpm_tier=230,
+			measures=157,
+			adj_stream=0.801,
+			bpm=232,
+			length=3.93,
+		},
+		{
+			id=172,
+			name="[20] [234] Ragnarok",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=20,
+			bpm_tier=230,
+			measures=142,
+			adj_stream=0.5966,
+			bpm=234,
+			length=4.76,
+		},
+		{
+			id=173,
+			name="[20] [240] Ernst (Ys vs. Sora no Kiseki) (Medium)",
+			pack="Trails of Cold Stream III",
+			difficulty=20,
+			bpm_tier=240,
+			measures=111,
+			adj_stream=0.5311,
+			bpm=240,
+			length=4.13,
+		},
+		{
+			id=174,
+			name="[20] [240] Concentrate All Firepower!! (Evolution)",
+			pack="Trails of Cold Stream II",
+			difficulty=20,
+			bpm_tier=240,
+			measures=115,
+			adj_stream=0.7099,
+			bpm=240,
+			length=2.87,
+		},
+		{
+			id=175,
+			name="[20] [240] Reboot",
+			pack="StreamVoltex ep.2",
+			difficulty=20,
+			bpm_tier=240,
+			measures=79,
+			adj_stream=0.6583,
+			bpm=240,
+			length=2.05,
+		},
+		{
+			id=176,
+			name="[20] [241] Madness",
+			pack="SPEEDCOOOORE 4",
+			difficulty=20,
+			bpm_tier=240,
+			measures=104,
+			adj_stream=0.638,
+			bpm=241,
+			length=2.92,
+		},
+		{
+			id=177,
+			name="[21] [214] Cranked Pastry Megamix (Side B)",
+			pack="Psychedelia",
+			difficulty=21,
+			bpm_tier=210,
+			measures=1396,
+			adj_stream=0.9382,
+			bpm=202,
+			length=30.44,
+		},
+		{
+			id=178,
+			name="[21] [210] Penultimate Trip",
+			pack="BUTTLANDER",
+			difficulty=21,
+			bpm_tier=210,
+			measures=731,
+			adj_stream=0.9265,
+			bpm=208,
+			length=16.03,
+		},
+		{
+			id=179,
+			name="[21] [210] HAUNT Sampler Mix",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=21,
+			bpm_tier=210,
+			measures=613,
+			adj_stream=0.9445,
+			bpm=210,
+			length=13.09,
+		},
+		{
+			id=180,
+			name="[21] [219] The Bell FB 219",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=21,
+			bpm_tier=210,
+			measures=368,
+			adj_stream=0.9583,
+			bpm=219,
+			length=7.49,
+		},
+		{
+			id=181,
+			name="[21] [220] Sonic Energy",
+			pack="Scrapyard Kent",
+			difficulty=21,
+			bpm_tier=220,
+			measures=353,
+			adj_stream=0.9698,
+			bpm=220,
+			length=6.64,
+		},
+		{
+			id=182,
+			name="[21] [220] Funky Fresh Blitz (Restep)",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=220,
+			measures=567,
+			adj_stream=0.8526,
+			bpm=220,
+			length=12.49,
+		},
+		{
+			id=183,
+			name="[21] [226] Dino 2.0 FB 226",
+			pack="Scrapyard Kent",
+			difficulty=21,
+			bpm_tier=220,
+			measures=276,
+			adj_stream=0.8762,
+			bpm=226,
+			length=5.89,
+		},
+		{
+			id=184,
+			name="[21] [228] Lunar Eclipse",
+			pack="Psychedelia",
+			difficulty=21,
+			bpm_tier=220,
+			measures=263,
+			adj_stream=0.8457,
+			bpm=228,
+			length=6.09,
+		},
+		{
+			id=185,
+			name="[21] [230] Xenoflux",
+			pack="The Apocalypse Sampler",
+			difficulty=21,
+			bpm_tier=230,
+			measures=258,
+			adj_stream=0.9736,
+			bpm=218,
+			length=5.04,
+		},
+		{
+			id=186,
+			name="[21] [230] NIGHTMARE CITY",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=21,
+			bpm_tier=230,
+			measures=250,
+			adj_stream=0.753,
+			bpm=230,
+			length=7.08,
+		},
+		{
+			id=187,
+			name="[21] [232] Stronger",
+			pack="ITGAlex's Stamina Safari",
+			difficulty=21,
+			bpm_tier=230,
+			measures=216,
+			adj_stream=0.931,
+			bpm=232,
+			length=4.17,
+		},
+		{
+			id=188,
+			name="[21] [235] Mario-chi Survivor (Restep)",
+			pack="Content Cop - Tachyon Epsilon",
+			difficulty=21,
+			bpm_tier=230,
+			measures=141,
+			adj_stream=0.8924,
+			bpm=235,
+			length=3.01,
+		},
+		{
+			id=189,
+			name="[21] [240] Call of the Hound",
+			pack="Content Cop - Tachyon Epsilon",
+			difficulty=21,
+			bpm_tier=240,
+			measures=113,
+			adj_stream=0.876,
+			bpm=240,
+			length=2.68,
+		},
+		{
+			id=190,
+			name="[21] [240] Punch Buggy Slug Bug",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=240,
+			measures=146,
+			adj_stream=0.73,
+			bpm=240,
+			length=3.5,
+		},
+		{
+			id=191,
+			name="[21] [246] Metal Max Metals",
+			pack="Saitama's Ultimate Weapon",
+			difficulty=21,
+			bpm_tier=240,
+			measures=129,
+			adj_stream=0.7371,
+			bpm=246,
+			length=3.28,
+		},
+		{
+			id=192,
+			name="[21] [248] Omakeno Stroke (HARI KARI REMIX)",
+			pack="Jimmy Jawns 3",
+			difficulty=21,
+			bpm_tier=240,
+			measures=91,
+			adj_stream=0.5583,
+			bpm=248,
+			length=3.29,
+		},
+		{
+			id=193,
+			name="[21] [250] Call My Life",
+			pack="BangerZ 2",
+			difficulty=21,
+			bpm_tier=250,
+			measures=96,
+			adj_stream=0.6316,
+			bpm=250,
+			length=3.79,
+		},
+		{
+			id=194,
+			name="[21] [250] I'm A Maid (C-type Remix)",
+			pack="Rebuild of Sharpnel",
+			difficulty=21,
+			bpm_tier=250,
+			measures=96,
+			adj_stream=0.6957,
+			bpm=250,
+			length=2.76,
+		},
+		{
+			id=195,
+			name="[21] [250] Shakunetsu Candle Master Tomosy",
+			pack="Confetto",
+			difficulty=21,
+			bpm_tier=250,
+			measures=129,
+			adj_stream=0.5265,
+			bpm=250,
+			length=4.37,
+		},
+		{
+			id=196,
+			name="[21] [252] The Island (Medium) Pt. 2 (Dusk)",
+			pack="Pendulum Act III",
+			difficulty=21,
+			bpm_tier=250,
+			measures=103,
+			adj_stream=0.4905,
+			bpm=252,
+			length=4.17,
+		},
+	}
+}
+
+ECS.SongInfo.Upper = {
+	-- These values will be calculated and set below.
+	MinBpm = 0,
+	MaxBpm = 0,
+	MinScaled16ths = 0,
+	MaxScaled16ths = 0,
+	MinBlockLevel = 0,
+	MaxBlockLevel = 0,
+	MinLength = 0,
+	Songs = {
+		{
+			id=1,
+			name="[18] [186] One More Lovely (After After Hours) FP 186",
+			pack="Crapyard Scent",
+			difficulty=18,
+			bpm_tier=180,
+			measures=358,
+			adj_stream=0.9917,
+			bpm=186,
+			length=8.56,
+		},
+		{
+			id=2,
+			name="[18] [187] JackOff Marathon FP 187",
+			pack="Cranked Pastry",
+			difficulty=18,
+			bpm_tier=180,
+			measures=404,
+			adj_stream=0.9309,
+			bpm=187,
+			length=9.43,
+		},
+		{
+			id=3,
+			name="[18] [197] Magic Cycles",
+			pack="SHARPNELSTREAMZ v3 Part 1",
+			difficulty=18,
+			bpm_tier=190,
+			measures=225,
+			adj_stream=0.8621,
+			bpm=197,
+			length=5.46,
+		},
+		{
+			id=4,
+			name="[18] [198] Hochzeit Girl",
+			pack="Scrapyard Kent",
+			difficulty=18,
+			bpm_tier=190,
+			measures=240,
+			adj_stream=0.8759,
+			bpm=198,
+			length=6.42,
+		},
+		{
+			id=5,
+			name="[18] [190] 90's Girly Tekno Beats",
+			pack="Morbidly Obese Waves",
+			difficulty=18,
+			bpm_tier=190,
+			measures=351,
+			adj_stream=0.9213,
+			bpm=190,
+			length=8.17,
+		},
+		{
+			id=6,
+			name="[18] [208] Dynasty -Da Capo-",
+			pack="BaguetteStreamz 2.5",
+			difficulty=18,
+			bpm_tier=200,
+			measures=233,
+			adj_stream=0.8204,
+			bpm=208,
+			length=5.62,
+		},
+		{
+			id=7,
+			name="[18] [200] Robot Brain Era",
+			pack="Cirque du Huayra",
+			difficulty=18,
+			bpm_tier=200,
+			measures=324,
+			adj_stream=0.8757,
+			bpm=200,
+			length=7.92,
+		},
+		{
+			id=8,
+			name="[18] [202] Ruten",
+			pack="Scrapyard Kent",
+			difficulty=18,
+			bpm_tier=200,
+			measures=335,
+			adj_stream=0.9005,
+			bpm=202,
+			length=7.41,
+		},
+		{
+			id=9,
+			name="[18] [215] I Don't Like The Original Title of This Song So I Changed It, F**k You",
+			pack="Petriform's Factory",
+			difficulty=18,
+			bpm_tier=210,
+			measures=122,
+			adj_stream=0.8472,
+			bpm=215,
+			length=3.11,
+		},
+		{
+			id=10,
+			name="[18] [210] Driver's High",
+			pack="Jayrocking",
+			difficulty=18,
+			bpm_tier=210,
+			measures=144,
+			adj_stream=0.8571,
+			bpm=210,
+			length=3.49,
+		},
+		{
+			id=11,
+			name="[18] [210] Battle for Eternity",
+			pack="Gloryhammer",
+			difficulty=18,
+			bpm_tier=210,
+			measures=149,
+			adj_stream=0.7602,
+			bpm=210,
+			length=3.87,
+		},
+		{
+			id=12,
+			name="[18] [222] say it ain't low",
+			pack="Goreshit 2020",
+			difficulty=18,
+			bpm_tier=220,
+			measures=97,
+			adj_stream=0.7185,
+			bpm=222,
+			length=2.67,
+		},
+		{
+			id=13,
+			name="[18] [220] Todestrieb und Lebenstrieb",
+			pack="BaguetteStreamz 2.5",
+			difficulty=18,
+			bpm_tier=220,
+			measures=147,
+			adj_stream=0.6562,
+			bpm=220,
+			length=4.35,
+		},
+		{
+			id=14,
+			name="[19] [197] After End Start Before FP 197",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=190,
+			measures=408,
+			adj_stream=0.9488,
+			bpm=197,
+			length=9.42,
+		},
+		{
+			id=15,
+			name="[19] [190] Call Of Beauty FB 190",
+			pack="BaguetteStreamz",
+			difficulty=19,
+			bpm_tier=190,
+			measures=490,
+			adj_stream=1,
+			bpm=190,
+			length=12.17,
+		},
+		{
+			id=16,
+			name="[19] [208] Ruten (Angry Luna Mix) FB 208",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=200,
+			measures=280,
+			adj_stream=0.9655,
+			bpm=208,
+			length=5.69,
+		},
+		{
+			id=17,
+			name="[19] [204] 2 Crazy Brothers",
+			pack="Masochisma Mk 1",
+			difficulty=19,
+			bpm_tier=200,
+			measures=359,
+			adj_stream=0.989,
+			bpm=204,
+			length=7.31,
+		},
+		{
+			id=18,
+			name="[19] [200] Yaadae",
+			pack="Scrapyard Kent",
+			difficulty=19,
+			bpm_tier=200,
+			measures=395,
+			adj_stream=0.9316,
+			bpm=200,
+			length=9.04,
+		},
+		{
+			id=19,
+			name="[19] [200] Lucky Lotus 8 VIP",
+			pack="Zaniel's Junts",
+			difficulty=19,
+			bpm_tier=200,
+			measures=851,
+			adj_stream=0.7298,
+			bpm=200,
+			length=24.02,
+		},
+		{
+			id=20,
+			name="[19] [210] What Is A Tunecore",
+			pack="Morbidly Obese Waves",
+			difficulty=19,
+			bpm_tier=210,
+			measures=216,
+			adj_stream=0.9643,
+			bpm=210,
+			length=4.59,
+		},
+		{
+			id=21,
+			name="[19] [217] So Damn Tough (Kopophobia RMX)",
+			pack="Feelin' Rusty 4",
+			difficulty=19,
+			bpm_tier=210,
+			measures=251,
+			adj_stream=0.848,
+			bpm=217,
+			length=6.08,
+		},
+		{
+			id=22,
+			name="[19] [218] Reflection",
+			pack="Noah",
+			difficulty=19,
+			bpm_tier=210,
+			measures=260,
+			adj_stream=0.7808,
+			bpm=218,
+			length=6.35,
+		},
+		{
+			id=23,
+			name="[19] [225] Liar, Liar",
+			pack="The Joy Of Streaming",
+			difficulty=19,
+			bpm_tier=220,
+			measures=130,
+			adj_stream=0.8025,
+			bpm=225,
+			length=3.16,
+		},
+		{
+			id=24,
+			name="[19] [220] Hustle Bones",
+			pack="Death Grips",
+			difficulty=19,
+			bpm_tier=220,
+			measures=142,
+			adj_stream=0.8875,
+			bpm=220,
+			length=3.09,
+		},
+		{
+			id=25,
+			name="[19] [220] Katayoku no Tori",
+			pack="Morbidly Obese Waves",
+			difficulty=19,
+			bpm_tier=220,
+			measures=179,
+			adj_stream=0.7336,
+			bpm=220,
+			length=4.53,
+		},
+		{
+			id=26,
+			name="[19] [235] Catch Game Battle of Humankind vs. Ball-Throwing Robot Tama-chan",
+			pack="Confetto",
+			difficulty=19,
+			bpm_tier=230,
+			measures=124,
+			adj_stream=0.6294,
+			bpm=235,
+			length=3.54,
+		},
+		{
+			id=27,
+			name="[19] [232] Tengaku (Medium)",
+			pack="Jayrocking",
+			difficulty=19,
+			bpm_tier=230,
+			measures=128,
+			adj_stream=0.5565,
+			bpm=232,
+			length=4.45,
+		},
+		{
+			id=28,
+			name="[20] [208] Fast Animu Music 2020 Reduxx FB 208",
+			pack="BaguetteStreamz 2.5",
+			difficulty=20,
+			bpm_tier=200,
+			measures=447,
+			adj_stream=0.9332,
+			bpm=208,
+			length=9.62,
+		},
+		{
+			id=29,
+			name="[20] [209] Cheper FB 209",
+			pack="French Coast Stamina 3",
+			difficulty=20,
+			bpm_tier=200,
+			measures=596,
+			adj_stream=0.8221,
+			bpm=209,
+			length=14.51,
+		},
+		{
+			id=30,
+			name="[20] [217] scotch cherries",
+			pack="Goreshit 2020",
+			difficulty=20,
+			bpm_tier=210,
+			measures=217,
+			adj_stream=0.9954,
+			bpm=217,
+			length=4.13,
+		},
+		{
+			id=31,
+			name="[20] [214] Cosmic Energy",
+			pack="Scrapyard Kent",
+			difficulty=20,
+			bpm_tier=210,
+			measures=355,
+			adj_stream=0.9595,
+			bpm=214,
+			length=7.55,
+		},
+		{
+			id=32,
+			name="[20] [212] Extreme Ritual",
+			pack="Digital Nightmare",
+			difficulty=20,
+			bpm_tier=210,
+			measures=362,
+			adj_stream=0.905,
+			bpm=212,
+			length=8.19,
+		},
+		{
+			id=33,
+			name="[20] [227] thinking of you",
+			pack="Goreshit 2020",
+			difficulty=20,
+			bpm_tier=220,
+			measures=136,
+			adj_stream=1,
+			bpm=227,
+			length=2.85,
+		},
+		{
+			id=34,
+			name="[20] [222] Non-existence proof",
+			pack="Noah",
+			difficulty=20,
+			bpm_tier=220,
+			measures=202,
+			adj_stream=0.8559,
+			bpm=222,
+			length=4.43,
+		},
+		{
+			id=35,
+			name="[20] [225] Abyssal",
+			pack="Masochisma Mk 1",
+			difficulty=20,
+			bpm_tier=220,
+			measures=237,
+			adj_stream=0.7204,
+			bpm=225,
+			length=6.4,
+		},
+		{
+			id=36,
+			name="[20] [234] crossing blue",
+			pack="StreamVoltex ep.2",
+			difficulty=20,
+			bpm_tier=230,
+			measures=83,
+			adj_stream=0.7981,
+			bpm=234,
+			length=2.02,
+		},
+		{
+			id=37,
+			name="[20] [230] Countdown",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=20,
+			bpm_tier=230,
+			measures=161,
+			adj_stream=0.7778,
+			bpm=230,
+			length=3.74,
+		},
+		{
+			id=38,
+			name="[20] [230] SprrRush!!",
+			pack="ITGAlex's Stamina Singles",
+			difficulty=20,
+			bpm_tier=230,
+			measures=163,
+			adj_stream=0.8069,
+			bpm=230,
+			length=3.81,
+		},
+		{
+			id=39,
+			name="[20] [240] GaLaXyEggPlanT",
+			pack="StreamVoltex ep.1",
+			difficulty=20,
+			bpm_tier=240,
+			measures=78,
+			adj_stream=0.8041,
+			bpm=240,
+			length=1.82,
+		},
+		{
+			id=40,
+			name="[20] [242] MEGALOVANIA (Camellia Remix)",
+			pack="BaguetteStreamz 2.5",
+			difficulty=20,
+			bpm_tier=240,
+			measures=167,
+			adj_stream=0.5045,
+			bpm=242,
+			length=6.02,
+		},
+		{
+			id=41,
+			name="[21] [217] FASTER Animu Music 2020 Reduxx FB 217",
+			pack="BaguetteStreamz 2.5",
+			difficulty=21,
+			bpm_tier=210,
+			measures=459,
+			adj_stream=0.8878,
+			bpm=217,
+			length=9.81,
+		},
+		{
+			id=42,
+			name="[21] [213] Winter Solstice FP 213",
+			pack="Masochisma Mk 1",
+			difficulty=21,
+			bpm_tier=210,
+			measures=511,
+			adj_stream=0.9257,
+			bpm=213,
+			length=10.76,
+		},
+		{
+			id=43,
+			name="[21] [210] nothing is for sure (Side A)",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=210,
+			measures=1505,
+			adj_stream=0.858,
+			bpm=209,
+			length=33.49,
+		},
+		{
+			id=44,
+			name="[21] [228] Video Girl (Petriform Remix)",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=220,
+			measures=190,
+			adj_stream=0.9048,
+			bpm=228,
+			length=5.05,
+		},
+		{
+			id=45,
+			name="[21] [220] Dernier Voyage (Hard) 2020 Reduxx",
+			pack="BaguetteStreamz 2.5",
+			difficulty=21,
+			bpm_tier=220,
+			measures=433,
+			adj_stream=0.8109,
+			bpm=219,
+			length=10.25,
+		},
+		{
+			id=46,
+			name="[21] [220] Funky Fresh Blitz",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=220,
+			measures=567,
+			adj_stream=0.8526,
+			bpm=220,
+			length=12.49,
+		},
+		{
+			id=47,
+			name="[21] [236] Confront",
+			pack="Noah",
+			difficulty=21,
+			bpm_tier=230,
+			measures=134,
+			adj_stream=0.859,
+			bpm=236,
+			length=2.76,
+		},
+		{
+			id=48,
+			name="[21] [234] Concentrate All Firepower!! FB 234",
+			pack="Trails of Cold Stream IV",
+			difficulty=21,
+			bpm_tier=230,
+			measures=141,
+			adj_stream=0.9156,
+			bpm=234,
+			length=2.8,
+		},
+		{
+			id=49,
+			name="[21] [230] Eternity",
+			pack="THE DARK SQUIRRELS OF METAL",
+			difficulty=21,
+			bpm_tier=230,
+			measures=217,
+			adj_stream=0.9909,
+			bpm=230,
+			length=3.9,
+		},
+		{
+			id=50,
+			name="[21] [240] Not The Same (Petriform Cover)",
+			pack="Petriform's Factory",
+			difficulty=21,
+			bpm_tier=240,
+			measures=139,
+			adj_stream=0.7898,
+			bpm=240,
+			length=3.1,
+		},
+		{
+			id=51,
+			name="[21] [240] Having Sex",
+			pack="Jimmy Jawns 4",
+			difficulty=21,
+			bpm_tier=240,
+			measures=153,
+			adj_stream=0.7217,
+			bpm=240,
+			length=3.73,
+		},
+		{
+			id=52,
+			name="[21] [240] planet of the kemomimi loli",
+			pack="katagiri",
+			difficulty=21,
+			bpm_tier=240,
+			measures=183,
+			adj_stream=0.8206,
+			bpm=240,
+			length=4.05,
+		},
+		{
+			id=53,
+			name="[21] [256] on stage!",
+			pack="ITGAlex's Footspeed Fiesta",
+			difficulty=21,
+			bpm_tier=250,
+			measures=65,
+			adj_stream=0.5,
+			bpm=256,
+			length=2.77,
+		},
+		{
+			id=54,
+			name="[21] [250] Gjallarhorn",
+			pack="ITGAlex's Footspeed Fiesta",
+			difficulty=21,
+			bpm_tier=250,
+			measures=91,
+			adj_stream=0.4892,
+			bpm=250,
+			length=3.3,
+		},
+		{
+			id=55,
+			name="[22] [224] Revengeful 255 Train FP 224",
+			pack="Morbidly Obese Waves",
+			difficulty=22,
+			bpm_tier=220,
+			measures=633,
+			adj_stream=0.8474,
+			bpm=224,
+			length=13.91,
+		},
+		{
+			id=56,
+			name="[22] [225] Trails of Cold Stream the 3rd (Part 5)",
+			pack="Trails of Cold Stream III",
+			difficulty=22,
+			bpm_tier=220,
+			measures=759,
+			adj_stream=0.7906,
+			bpm=225,
+			length=18.08,
+		},
+		{
+			id=57,
+			name="[22] [237] Your Contract Has Expired FP 237",
+			pack="Stamina Secret Santa 2019",
+			difficulty=22,
+			bpm_tier=230,
+			measures=222,
+			adj_stream=0.9328,
+			bpm=237,
+			length=4.1,
+		},
+		{
+			id=58,
+			name="[22] [234] Blaze and determination",
+			pack="Noah",
+			difficulty=22,
+			bpm_tier=230,
+			measures=244,
+			adj_stream=0.9208,
+			bpm=234,
+			length=4.6,
+		},
+		{
+			id=59,
+			name="[22] [240] Avenger",
+			pack="katagiri",
+			difficulty=22,
+			bpm_tier=240,
+			measures=138,
+			adj_stream=1,
+			bpm=240,
+			length=2.53,
+		},
+		{
+			id=60,
+			name="[22] [244] FLYING OUT TO THE SKY",
+			pack="Confetto",
+			difficulty=22,
+			bpm_tier=240,
+			measures=208,
+			adj_stream=0.8421,
+			bpm=244,
+			length=4.43,
+		},
+		{
+			id=61,
+			name="[22] [258] Kangokurakuou",
+			pack="StreamVoltex ep.2",
+			difficulty=22,
+			bpm_tier=250,
+			measures=76,
+			adj_stream=0.7238,
+			bpm=258,
+			length=1.84,
+		},
+		{
+			id=62,
+			name="[22] [252] The Island (Hard) Pt. 2 (Dusk)",
+			pack="Pendulum Act III",
+			difficulty=22,
+			bpm_tier=250,
+			measures=120,
+			adj_stream=0.5714,
+			bpm=252,
+			length=4.17,
+		},
+		{
+			id=63,
+			name="[22] [260] IMAGE-MATERIAL <REFLEC BEAT Edition>",
+			pack="StoryTime Chapter 1",
+			difficulty=22,
+			bpm_tier=260,
+			measures=71,
+			adj_stream=0.8161,
+			bpm=260,
+			length=1.88,
+		},
+		{
+			id=64,
+			name="[23] [238] Apocynthion Drive FB 238",
+			pack="SRPG3",
+			difficulty=23,
+			bpm_tier=230,
+			measures=299,
+			adj_stream=0.9172,
+			bpm=238,
+			length=5.6,
+		},
+		{
+			id=65,
+			name="[23] [230] Stamina Nation Megamix 2",
+			pack="Jimmy Jawns 4",
+			difficulty=23,
+			bpm_tier=230,
+			measures=748,
+			adj_stream=0.8034,
+			bpm=230,
+			length=16.63,
+		},
+		{
+			id=66,
+			name="[23] [249] Bwark?",
+			pack="Petriform's Factory",
+			difficulty=23,
+			bpm_tier=240,
+			measures=185,
+			adj_stream=0.7974,
+			bpm=249,
+			length=4.34,
+		},
+		{
+			id=67,
+			name="[23] [240] H.A.R.D.C.O.R.E.",
+			pack="Morbidly Obese Waves",
+			difficulty=23,
+			bpm_tier=240,
+			measures=294,
+			adj_stream=0.9046,
+			bpm=240,
+			length=5.85,
+		},
+		{
+			id=68,
+			name="[23] [250] Code Name- Foxtrot",
+			pack="katagiri",
+			difficulty=23,
+			bpm_tier=250,
+			measures=163,
+			adj_stream=0.9157,
+			bpm=250,
+			length=3.15,
+		},
+		{
+			id=69,
+			name="[23] [255] Cartoon Heroes (Speedy Mix)",
+			pack="Dump Dump Revolution",
+			difficulty=23,
+			bpm_tier=250,
+			measures=170,
+			adj_stream=0.8057,
+			bpm=255,
+			length=3.84,
+		},
+		{
+			id=70,
+			name="[23] [266] NaiNai 69",
+			pack="Jimmy Jawns 4",
+			difficulty=23,
+			bpm_tier=260,
+			measures=83,
+			adj_stream=0.7411,
+			bpm=266,
+			length=2.26,
+		},
+		{
+			id=71,
+			name="[23] [260] Otworz Oczy (Bez Miesa Version)",
+			pack="Kyypakkaus",
+			difficulty=23,
+			bpm_tier=260,
+			measures=95,
+			adj_stream=0.76,
+			bpm=260,
+			length=2.45,
+		},
+		{
+			id=72,
+			name="[23] [270] Rabbit in the Black Room",
+			pack="Morbidly Obese Waves",
+			difficulty=23,
+			bpm_tier=270,
+			measures=60,
+			adj_stream=0.566,
+			bpm=270,
+			length=2.21,
+		},
+		{
+			id=73,
+			name="[24] [244] Wings of Stones FB 244",
+			pack="Morbidly Obese Waves",
+			difficulty=24,
+			bpm_tier=240,
+			measures=443,
+			adj_stream=0.9801,
+			bpm=244,
+			length=8.16,
+		},
+		{
+			id=74,
+			name="[24] [250] Tachyon Beam Cannon",
+			pack="Jimmy Jawns 4",
+			difficulty=24,
+			bpm_tier=250,
+			measures=191,
+			adj_stream=0.9845,
+			bpm=250,
+			length=3.55,
+		},
+		{
+			id=75,
+			name="[24] [257] Crimson",
+			pack="Morbidly Obese Waves",
+			difficulty=24,
+			bpm_tier=250,
+			measures=211,
+			adj_stream=0.7153,
+			bpm=257,
+			length=4.87,
+		},
+		{
+			id=76,
+			name="[24] [264] Condemnation Wings II",
+			pack="Morbidly Obese Waves",
+			difficulty=24,
+			bpm_tier=260,
+			measures=127,
+			adj_stream=0.9769,
+			bpm=264,
+			length=2.27,
+		},
+		{
+			id=77,
+			name="[24] [260] Masochist",
+			pack="Pendulum Act III",
+			difficulty=24,
+			bpm_tier=260,
+			measures=186,
+			adj_stream=0.8416,
+			bpm=260,
+			length=3.54,
+		},
+		{
+			id=78,
+			name="[24] [270] High-Dimensional Space",
+			pack="BangerZ",
+			difficulty=24,
+			bpm_tier=270,
+			measures=74,
+			adj_stream=1,
+			bpm=270,
+			length=2.69,
+		},
+		{
+			id=79,
+			name="[24] [275] Chu Chu Lovely (Maximum The Hormone Cover)",
+			pack="Jimmy Jawns 4",
+			difficulty=24,
+			bpm_tier=270,
+			measures=89,
+			adj_stream=0.8091,
+			bpm=275,
+			length=1.66,
+		},
+		{
+			id=80,
+			name="[24] [280] NITRO PANIC!",
+			pack="fof",
+			difficulty=24,
+			bpm_tier=280,
+			measures=80,
+			adj_stream=0.597,
+			bpm=280,
+			length=2.5,
+		},
+		{
+			id=81,
+			name="[25] [256] Yume No Tsuzuki (DJ HypeBeat Remaster)",
+			pack="City Pop",
+			difficulty=25,
+			bpm_tier=250,
+			measures=274,
+			adj_stream=0.9856,
+			bpm=256,
+			length=4.77,
+		},
+		{
+			id=82,
+			name="[25] [268] Battle #3",
+			pack="fof",
+			difficulty=25,
+			bpm_tier=260,
+			measures=219,
+			adj_stream=0.8939,
+			bpm=268,
+			length=4.09,
+		},
+		{
+			id=83,
+			name="[25] [260] Alice in Underground",
+			pack="BaguetteStreamz 2.5",
+			difficulty=25,
+			bpm_tier=260,
+			measures=339,
+			adj_stream=0.8737,
+			bpm=260,
+			length=6.28,
+		},
+		{
+			id=84,
+			name="[25] [270] Epic Manner",
+			pack="Content Cop - Tachyon Epsilon",
+			difficulty=25,
+			bpm_tier=270,
+			measures=123,
+			adj_stream=0.8542,
+			bpm=270,
+			length=2.53,
+		},
+		{
+			id=85,
+			name="[25] [270] Burnout",
+			pack="ITGAlex's Footspeed Fiesta",
+			difficulty=25,
+			bpm_tier=270,
+			measures=196,
+			adj_stream=0.7538,
+			bpm=270,
+			length=4.53,
+		},
+		{
+			id=86,
+			name="[25] [280] Magus Night Fever",
+			pack="Tachyon Rebirth",
+			difficulty=25,
+			bpm_tier=280,
+			measures=98,
+			adj_stream=0.8376,
+			bpm=280,
+			length=1.83,
+		},
+		{
+			id=87,
+			name="[25] [280] Penguins Prank Party",
+			pack="katagiri",
+			difficulty=25,
+			bpm_tier=280,
+			measures=117,
+			adj_stream=0.7091,
+			bpm=280,
+			length=2.73,
+		},
+		{
+			id=88,
+			name="[26] [250] Chipspeed Legacy",
+			pack="Morbidly Obese Waves",
+			difficulty=26,
+			bpm_tier=250,
+			measures=1144,
+			adj_stream=0.8854,
+			bpm=250,
+			length=21.97,
+		},
+		{
+			id=89,
+			name="[26] [262] Silent Desert (Super Arrange)",
+			pack="Trails of Cold Stream IV",
+			difficulty=26,
+			bpm_tier=260,
+			measures=310,
+			adj_stream=0.9118,
+			bpm=262,
+			length=5.71,
+		},
+		{
+			id=90,
+			name="[26] [272] Holy Orders (Be Just or Be Dead) (Exploding Festival Ver.)",
+			pack="Saitama's Ultimate Weapon",
+			difficulty=26,
+			bpm_tier=270,
+			measures=222,
+			adj_stream=0.8605,
+			bpm=272,
+			length=4.09,
+		},
+		{
+			id=91,
+			name="[26] [282] Lay Your Hands On Me",
+			pack="fof",
+			difficulty=26,
+			bpm_tier=280,
+			measures=144,
+			adj_stream=0.7826,
+			bpm=282,
+			length=3.76,
+		},
+	}
+}
+
+local InitializeSongStats = function(SongInfo)
+	for _, song_info in ipairs(SongInfo.Songs) do
+		SongInfo.MinBpm = SongInfo.MinBpm == 0 and song_info.bpm or math.min(SongInfo.MinBpm, song_info.bpm)
+		SongInfo.MaxBpm = SongInfo.MaxBpm == 0 and song_info.bpm or math.max(SongInfo.MaxBpm, song_info.bpm)
+		SongInfo.MinScaled16ths = SongInfo.MinScaled16ths == 0 and song_info.measures or math.min(SongInfo.MinScaled16ths, song_info.measures)
+		SongInfo.MaxScaled16ths = SongInfo.MaxScaled16ths == 0 and song_info.measures or math.max(SongInfo.MaxScaled16ths, song_info.measures)
+		SongInfo.MinBlockLevel = SongInfo.MinBlockLevel == 0 and song_info.difficulty or math.min(SongInfo.MinBlockLevel, song_info.difficulty)
+		SongInfo.MaxBlockLevel = SongInfo.MaxBlockLevel == 0 and song_info.difficulty or math.max(SongInfo.MaxBlockLevel, song_info.difficulty)
+		SongInfo.MinLength = SongInfo.MinLength == 0 and song_info.length or math.min(SongInfo.MinLength, song_info.length)
+	end
+end
+
+InitializeSongStats(ECS.SongInfo.Lower)
+InitializeSongStats(ECS.SongInfo.Upper)
+
+-- ------------------------------------------------------
 -- Player Data
 
 -- initial player relic data
@@ -1142,7 +4456,116 @@ ECS.Players["Rust"] = {
 	level=100,
 	exp=4501575,
 	relics = {},
+	tier_skill = {},
+	affinities = {dp=0, ep=0, rp=0, ap=0},
+}
+
+ECS.Players["teejusb"] = {
+	isupper=false,
+	country="U.S.A.",
+	level=50,
+	exp=90,
+	relics = {},
+	tier_skill = {},
+	affinities = {dp=0, ep=0, rp=0, ap=0},
 }
 
 
 InitializeECS()
+
+
+-- -----------------------------------------------------------------------
+-- Helper Functions
+
+-- Determines if the current loaded player is in Upper division or not.
+PlayerIsUpper = function()
+	local mpn = GAMESTATE:GetMasterPlayerNumber()
+	local profile_name = PROFILEMAN:GetPlayerName(mpn)
+	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].isupper ~= nil then
+		return ECS.Players[profile_name].isupper
+	end
+	-- default to IsUpper = true
+	return nil
+end
+
+-- ------------------------------------------------------
+-- Score Calculations
+
+CalculateScore = function(ecs_player, song_name, score, relics_used, failed)
+	local FindSong = function(song_name, song_list)
+		for _, data in ipairs(song_list) do
+			if data.name == song_name then
+				return data
+			end
+		end
+		return nil
+	end
+
+	local DP = function(song_data, song_info)
+		return math.ceil(1000 * (1 - (song_data.MaxBpm-song_data.bpm) / (song_data.MaxBpm-song_data.MinBpm)))
+	end
+
+	local EP = function(song_data, song_info)
+		local scaled_16ths = song_data.measures * song_data.adj_stream^1.6
+		return math.ceil(1000 * (1 - (song_info.MaxScaled16ths-scaled_16ths) / (song_info.MaxScaled16ths - song_info.MinScaled16ths)))
+	end
+
+	local RP = function(song_data, song_info) 
+		return 1000 * (1 + (song_data.difficulty-song_info.MinBlockLevel))
+	end
+
+	local AP = function(score)
+		return math.ceil((score^4) * 1000)
+	end
+
+	local BP = function(ecs_player, song_data, relics_used, dp, ep, rp, ap, song_info)
+		local bp = 0
+		-- Handle relics first
+		for _, relic in ipairs(relics_used) do
+			bp = bp + relic.score(ecs_player, song_data, relics_used, dp, ep, rp, ap)()
+		end
+
+		-- Then affinities
+		max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+		bp = bp + math.floor((ecs_player.affinities.dp/2000)*dp +
+						 (ecs_player.affinities.ep/2000)*ep +
+						 (ecs_player.affinities.ap/2000)*ap +
+						 (rp/(max_division_rp/1000)*(ecs_player.affinities.rp/2000)))
+		return bp
+	end
+
+	local FailedScore = function(ecs_player, song_data, song_info, score)
+		local tier_skill = ecs_player.tier_skill[song_data.bpm_tier]
+		if not tier_skill then tier_skill = 1 end
+
+		local dp = DP(song_data, song_info)
+		local ep = EP(song_data, song_info)
+		local rp = RP(song_data, song_info)
+		local ap = AP(score)
+
+		if song_data.length < 8 then
+			return ((dp + ep + rp + ap) * (tier_skill / 99) * score) * ((song_data.length - song_info.MinLength + 0.1) / ( 8 - (song_info.MinLength)))
+		else
+			return (dp + ep + rp + ap) * (tier_skill / 99) * score
+		end
+	end
+
+	score = 0
+
+	song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
+	song_data = FindSong(song_name, song_info)
+	if not song_data then return 0 end
+
+	if failed then
+		return FailedScore(ecs_player, song_data, song_info)
+	else
+		local dp = DP(song_data, song_info)
+		local ep = EP(song_data, song_info)
+		local rp = RP(song_data, song_info)
+		local ap = AP(score)
+		local bp = BP(ecs_player, song_data, relics_used, dp, ep, rp, ap, song_info)
+		return dp + ep + rp + ap + bp
+	end
+
+	return 0
+end

@@ -6,18 +6,18 @@ return Def.Actor{
 			if PlayerIsUpper() == nil then return end
 
 			if PlayerIsUpper() then 
-				local girly_tekno_beats = SONGMAN:FindSong("ECS9 - Upper/[18] [190] 90's Girly Tekno Beats")
-				if girly_tekno_beats then
-					GAMESTATE:SetPreferredSong(girly_tekno_beats)
+				local omlaah = SONGMAN:FindSong("ECS9 - Upper/[18] [186] One More Lovely (After After Hours) FP 186")
+				if omlaah then
+					GAMESTATE:SetPreferredSong(omlaah)
 				end
 			else
-				local beyond_life = SONGMAN:FindSong("ECS9 - Lower/[12] [140] Beyond Life")
-				if beyond_life then
-					GAMESTATE:SetPreferredSong(beyond_life)
+				local discovery = SONGMAN:FindSong("ECS9 - Lower/[12] [130] Discovery")
+				if discovery then
+					GAMESTATE:SetPreferredSong(discovery)
 				else
-					local asereje = SONGMAN:FindSong("ECS9 - Lower/[17] [185] Asereje")
-					if asereje then
-						GAMESTATE:SetPreferredSong(asereje)
+					local ians_op = SONGMAN:FindSong("ECS9 - Lower/[17] [174] Ian's OP")
+					if ians_op then
+						GAMESTATE:SetPreferredSong(ians_op)
 					end
 				end
 			end
