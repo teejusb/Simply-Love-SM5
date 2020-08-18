@@ -23,7 +23,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ap * 0.1)
+		end
 	},
 	{
 		id=1,
@@ -33,7 +35,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(dp * 0.1)
+		end
 	},
 	{
 		id=2,
@@ -43,7 +47,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ep * 0.1)
+		end
 	},
 	{
 		id=3,
@@ -53,7 +59,21 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_bow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Long Bow" or name == "Eurytus Bow" or
+				    name == "Artemis Bow" or name == "Twisted Bow") then
+					has_bow = true
+				end
+			end
+			if has_bow then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=4,
@@ -63,7 +83,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ap * 0.2)
+		end
 	},
 	{
 		id=5,
@@ -73,7 +95,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(dp * 0.2)
+		end
 	},
 	{
 		id=6,
@@ -83,7 +107,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) 
+			return math.floor(ep * 0.2)
+		end
 	},
 	{
 		id=7,
@@ -93,7 +119,21 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_bow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Long Bow" or name == "Eurytus Bow" or
+				    name == "Artemis Bow" or name == "Twisted Bow") then
+					has_bow = true
+				end
+			end
+			if has_bow then
+				return 350
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=8,
@@ -103,7 +143,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ap * 0.3)
+		end
 	},
 	{
 		id=9,
@@ -113,7 +155,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(dp * 0.3)
+		end
 	},
 	{
 		id=10,
@@ -123,7 +167,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ep * 0.3)
+		end
 	},
 	{
 		id=11,
@@ -133,7 +179,21 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_bow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Long Bow" or name == "Eurytus Bow" or
+				    name == "Artemis Bow" or name == "Twisted Bow") then
+					has_bow = true
+				end
+			end
+			if has_bow then
+				return 650
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=12,
@@ -143,7 +203,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ap * 0.4)
+		end
 	},
 	{
 		id=13,
@@ -153,7 +215,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(ap * 0.5)
+		end
 	},
 	{
 		id=14,
@@ -163,7 +227,9 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return 250
+		end
 	},
 	{
 		id=15,
@@ -179,7 +245,7 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=16,
@@ -197,7 +263,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=17,
@@ -209,7 +275,15 @@ ECS.Relics = {
 		action=function() 
 		--TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			for _, relic in relics_used do
+				local name = relic.name
+				if name == "Scythe of Vitur" then 
+					return 300
+				end
+			end
+			return 0
+		end
 	},
 	{
 		id=18,
@@ -219,7 +293,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			-- TODO(teejusb): Handle MP
+			return 0
+		end
 	},
 	{
 		id=19,
@@ -229,7 +306,23 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local all_gold_amounts = {}
+			for name, player in ECS.Players do
+				all_gold_amounts[#all_gold_amounts + 1] = player.lifetime_song_gold
+			end
+			table.sort(all_gold_amounts)
+
+			local max_gold = all_gold_amounts[#all_gold_amounts]
+			if max_gold == nil then return 0 end
+			if max_gold == ecs_player.lifetime_song_gold then
+				return 600
+			else
+				local second_highest = all_gold_amounts[#all_gold_amounts-1]
+				if second_highest == nil then return 0 end
+				return math.floor(400*(ecs_player.lifetime_song_gold / second_highest))
+			end
+		end
 	},
 	{
 		id=20,
@@ -239,7 +332,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			-- TODO(teejusb): Handle end of set relics
+			return 0
+		end
 	},
 	{
 		id=21,
@@ -249,7 +345,21 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_bow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Long Bow" or name == "Eurytus Bow" or
+				    name == "Artemis Bow" or name == "Twisted Bow") then
+					has_bow = true
+				end
+			end
+			if has_bow then
+				return 500 + math.floor(dp * 0.3)
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=22,
@@ -259,7 +369,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(dp * 0.4)
+		end
 	},
 	{
 		id=23,
@@ -269,7 +381,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return math.floor(dp * 0.5)
+		end
 	},
 	{
 		id=24,
@@ -279,7 +393,21 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_arrow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+					has_arrow = true
+				end
+			end
+			if has_arrow then
+				-- TODO(teejusb): need max rp for division or max block level for division
+				return math.floor(rp/(max_rp_for_division/1000)*0.5)
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=25,
@@ -289,7 +417,13 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier >= 270 then
+				bp = bp + 150
+			end
+			return bp + math.floor(dp * 0.6)
+		end
 	},
 	{
 		id=26,
@@ -299,7 +433,23 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local all_jp_amounts = {}
+			for name, player in ECS.Players do
+				all_jp_amounts[#all_jp_amounts + 1] = player.lifetime_jp
+			end
+			table.sort(all_jp_amounts)
+
+			local max_jp = all_jp_amounts[#all_jp_amounts]
+			if max_jp == nil then return 0 end
+			if max_jp == ecs_player.lifetime_jp then
+				return 600
+			else
+				local second_highest = all_jp_amounts[#all_jp_amounts-1]
+				if second_highest == nil then return 0 end
+				return math.floor(400*(ecs_player.lifetime_jp / second_highest))
+			end
+		end
 	},
 	{
 		id=27,
@@ -309,7 +459,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 130 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=28,
@@ -319,7 +475,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 140 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=29,
@@ -329,7 +491,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 150 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=30,
@@ -339,7 +507,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 160 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=31,
@@ -349,7 +523,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 170 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=32,
@@ -359,7 +539,24 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_arrow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+					has_arrow = true
+				end
+			end
+			if has_arrow then
+				if song_data.bpm_tier == 180 then
+					return 100 + 50
+				else
+					return 50
+				end
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=33,
@@ -369,7 +566,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 190 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=34,
@@ -379,7 +582,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 200 then
+				return 150
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=35,
@@ -389,7 +598,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 210 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=36,
@@ -399,7 +614,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 220 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=37,
@@ -409,7 +630,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 230 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=38,
@@ -419,7 +646,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 240 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=39,
@@ -429,7 +662,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 250 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=40,
@@ -439,7 +678,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			if song_data.bpm_tier == 260 then
+				return 200
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=41,
@@ -449,7 +694,24 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_laevitas = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if name == "Laevitas" then
+					has_laevitas = true
+				end
+			end
+			local bp = 0
+			if song_data.bpm_tier == 270 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(dp * 0.4)
+			if has_laevitas and song_data.bpm_tier >= 280 then
+				bp = bp + 100
+			end
+			return bp
+		end
 	},
 	{
 		id=42,
@@ -459,7 +721,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			return ecs_player.tier_skill[song_data.bpm_tier]
+		end
 	},
 	{
 		id=43,
@@ -469,7 +733,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 130 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(dp * 0.1)
+			return bp
+		end
 	},
 	{
 		id=44,
@@ -479,7 +750,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 140 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ap * 0.1)
+			return bp
+		end
 	},
 	{
 		id=45,
@@ -489,7 +767,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 150 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ep * 0.1)
+			return bp
+		end
 	},
 	{
 		id=46,
@@ -499,7 +784,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 160 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ep * 0.2)
+			return bp
+		end
 	},
 	{
 		id=47,
@@ -509,7 +801,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 170 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ap * 0.2)
+			return bp
+		end
 	},
 	{
 		id=48,
@@ -519,7 +818,24 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local has_arrow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+					has_arrow = true
+				end
+			end
+			if has_arrow then
+				if song_data.bpm_tier == 180 then
+					return 100 + math.floor(dp * 0.2)
+				else
+					return math.floor(dp * 0.2)
+				end
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=49,
@@ -529,7 +845,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 190 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ep * 0.3)
+			return bp
+		end
 	},
 	{
 		id=50,
@@ -539,7 +862,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 200 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(dp * 0.3)
+			return bp
+		end
 	},
 	{
 		id=51,
@@ -549,7 +879,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 210 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ap * 0.3)
+			return bp
+		end
 	},
 	{
 		id=52,
@@ -559,7 +896,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			local bp = 0
+			if song_data.bpm_tier == 220 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ep * 0.4)
+			return bp
+		end
 	},
 	{
 		id=53,
@@ -569,7 +913,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+			-- TODO(teejusb): DP/EP things
+			return 0
+		end
 	},
 	{
 		id=54,
@@ -579,7 +926,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=55,
@@ -589,7 +936,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=56,
@@ -599,7 +946,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=57,
@@ -609,7 +956,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=58,
@@ -623,7 +970,7 @@ ECS.Relics = {
 				ECS.BreakTimer = ECS.BreakTimer - 30
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=59,
@@ -633,7 +980,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=60,
@@ -643,7 +990,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=61,
@@ -653,7 +1000,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=62,
@@ -663,7 +1010,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=63,
@@ -673,7 +1020,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=64,
@@ -683,7 +1030,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=65,
@@ -693,7 +1040,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=66,
@@ -703,7 +1050,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=67,
@@ -713,7 +1060,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=68,
@@ -723,7 +1070,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=69,
@@ -733,7 +1080,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=70,
@@ -743,7 +1090,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=71,
@@ -753,7 +1100,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=72,
@@ -763,7 +1110,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=73,
@@ -781,7 +1128,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=74,
@@ -791,7 +1138,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=75,
@@ -801,7 +1148,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=76,
@@ -811,7 +1158,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=77,
@@ -821,7 +1168,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=78,
@@ -831,7 +1178,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=79,
@@ -841,7 +1188,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=80,
@@ -851,7 +1198,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=81,
@@ -861,7 +1208,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=82,
@@ -871,7 +1218,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=83,
@@ -892,7 +1239,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=84,
@@ -902,7 +1249,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=85,
@@ -912,7 +1259,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=86,
@@ -922,7 +1269,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=87,
@@ -932,7 +1279,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=88,
@@ -953,7 +1300,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=89,
@@ -963,7 +1310,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=90,
@@ -973,7 +1320,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=91,
@@ -991,7 +1338,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=92,
@@ -1001,7 +1348,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=93,
@@ -1019,7 +1366,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=94,
@@ -1037,7 +1384,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=95,
@@ -1061,7 +1408,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=96,
@@ -1077,7 +1424,7 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=97,
@@ -1095,7 +1442,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=98,
@@ -1105,7 +1452,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=99,
@@ -1115,7 +1462,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=100,
@@ -1125,7 +1472,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=101,
@@ -1135,7 +1482,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=102,
@@ -1145,7 +1492,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=103,
@@ -1155,7 +1502,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=104,
@@ -1173,7 +1520,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=105,
@@ -1185,7 +1532,7 @@ ECS.Relics = {
 		action=function()
 		--TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=106,
@@ -1195,7 +1542,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=107,
@@ -1207,7 +1554,7 @@ ECS.Relics = {
 		action=function()
 		-- TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=108,
@@ -1217,7 +1564,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 	{
 		id=109,
@@ -1227,7 +1574,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end
+		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
 	},
 }
 
@@ -4456,8 +4803,10 @@ ECS.Players["Rust"] = {
 	level=100,
 	exp=4501575,
 	relics = {},
-	tier_skill = {},
+	tier_skill = {[120]=1, [130]=1, [140]=1, [150]=1, [160]=1, [170]=1, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
+	lifetime_song_gold = 0,
+	lifetime_jp = 0,
 }
 
 ECS.Players["teejusb"] = {
@@ -4466,8 +4815,10 @@ ECS.Players["teejusb"] = {
 	level=50,
 	exp=90,
 	relics = {},
-	tier_skill = {},
+	tier_skill = {[120]=1, [130]=1, [140]=1, [150]=1, [160]=1, [170]=1, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
+	lifetime_song_gold = 0,
+	lifetime_jp = 0,
 }
 
 
@@ -4491,7 +4842,7 @@ end
 -- ------------------------------------------------------
 -- Score Calculations
 
-CalculateScore = function(ecs_player, song_name, score, relics_used, failed)
+CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
 	local FindSong = function(song_name, song_list)
 		for _, data in ipairs(song_list) do
 			if data.name == song_name then
