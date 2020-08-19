@@ -5665,16 +5665,16 @@ end
 -- ------------------------------------------------------
 -- Score Calculations
 
-CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
-	local FindSong = function(song_name, song_list)
-		for _, data in ipairs(song_list) do
-			if data.name == song_name then
-				return data
-			end
+FindEcsSong = function(song_name, song_list)
+	for _, data in ipairs(song_list) do
+		if data.name == song_name then
+			return data
 		end
-		return nil
 	end
+	return nil
+end
 
+local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
 	local AP = function(score)
 		return math.ceil((score^4) * 1000)
 	end
@@ -5716,8 +5716,8 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 
 	score = 0
 
-	song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
-	song_data = FindSong(song_name, song_info)
+	local song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
+	local song_data = FindEcsSong(song_name, song_info)
 	if song_data == nil then return 0, nil end
 
 	if failed then

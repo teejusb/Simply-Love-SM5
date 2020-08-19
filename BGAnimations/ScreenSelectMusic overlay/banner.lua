@@ -68,4 +68,51 @@ t[#t+1] = Def.ActorFrame{
 	}
 }
 
+-- ECS Information
+t[#t+1] = Def.ActorFrame{
+	InitCommand=function(self)
+		self:addx(-170):addy(-60)
+		if ECS.Mode ~= "ECS" and ECS.Mode ~= "Marathon" then
+			self:visible(false)
+		end
+	end,
+	Def.Quad{
+		InitCommand=function(self) self:diffuse(color("#000000AA")):zoomto(300, 80):addx(140):addy(20) end
+	},
+	LoadFont("Common Normal")..{
+		InitCommand=function(self) self:shadowlength(1):zoom(2):horizalign(left) end,
+		OnCommand=function(self)
+			self:settext("Total Set Points:"):strokecolor(color("Black"))
+		end
+	},
+	LoadFont("Common Normal")..{
+		InitCommand=function(self) self:shadowlength(1):zoom(2):addy(30):horizalign(left) end,
+		OnCommand=function(self)
+			self:settext("Song Points:")
+		end,
+		CurrentSongChangedMessageCommand=function(self)
+			local song = GAMESTATE:GetCurrentSong()
+			if song == nil then
+				self:settext("Song Points:")
+				return
+			end
+			local group_name = song:GetGroupName()
+			if (group_name ~= "ECS9 - Upper" and
+				group_name ~= "ECS9 - Lower" and 
+				group_name ~= "ECS9 - Upper Marathon") then
+				self:settext("Song Points:")
+				return
+			end
+			local song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
+			local song_name = song:GetDisplayFullTitle()
+			local song_data = FindEcsSong(song_name, song_info)
+			if song_data == nil then
+				self:settext("Song Points:")
+				return
+			end
+			self:settext("Song Points: " .. tostring(song_data.dp + song_data.ep + song_data.rp))
+		end,
+	}
+
+}
 return t
