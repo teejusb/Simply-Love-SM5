@@ -8,7 +8,9 @@ InitializeECS = function()
 	ECS.Player = {
 		Profile=nil,
 		Relics={},
-		PointsPerSong={},
+		-- Use AddPlayedSongs to append to this table which will keep this table
+		-- sorted in descending order of points.
+		SongsPlayed={},
 		TotalMarathonPoints=0,
 	}
 end
@@ -5716,7 +5718,7 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 
 	song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
 	song_data = FindSong(song_name, song_info)
-	if not song_data then return 0 end
+	if song_data == nil then return 0, nil end
 
 	if failed then
 		return FailedScore(ecs_player, song_data, song_info)
@@ -5726,8 +5728,25 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		local rp = song_data.rp
 		local ap = AP(score)
 		local bp = BP(ecs_player, song_data, relics_used, ap, song_info)
-		return dp + ep + rp + ap + bp
+		return (dp + ep + rp + ap + bp), song_data
 	end
 
-	return 0
+	return 0, song_data
+end
+
+AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
+	local points, song_data = CalculateScoreForSong(ecs_player, song_name, score, relics_used, failed)
+	ECS.Player.SongsPlayed[#ECS.Player.SongsPlayed + 1] = {
+		name=song_data.name,
+		points=points,
+		steps=song_data.steps,
+		bpm=song_data.bpm,
+		bpm_tier=song_data.bpm_tier,
+		failed=failed,
+	}
+	local SortByPointsDesc = function(a, b)
+		return a.points > b.points
+	end
+
+	table.sort(ECS.Player.SongsPlayed, SortByPointsDesc)
 end
