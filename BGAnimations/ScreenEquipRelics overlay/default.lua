@@ -11,6 +11,7 @@ local Rows = {
 }
 
 local active_relics = {}
+local is_going_back = false
 
 local IsActiveRelic = function(relic)
 	for _relic in ivalues(active_relics) do
@@ -96,6 +97,7 @@ local InputHandler = function(event)
 	end
 
 	if event.type == "InputEventType_FirstPress" and event.button == "Back" then
+		is_going_back = true
 		SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand("Off")
 								:sleep(0.85):queuecommand("TransitionBack")
 	end
@@ -259,13 +261,15 @@ local t = Def.ActorFrame{
 		SOUND:PlayMusicPart(path, preview_start, preview_length, 0, 1, true, true, true)
 	end,
 	OffCommand=function(self)
-		-- reset player relics table now
-		ECS.Player.Relics = {}
+		if not is_going_back then
+			-- reset player relics table now
+			ECS.Player.Relics = {}
 
-		for active_relic in ivalues(active_relics) do
-			if active_relic.name ~= "(nothing)" then
-				table.insert(ECS.Player.Relics, active_relic)
-				active_relic.action()
+			for active_relic in ivalues(active_relics) do
+				if active_relic.name ~= "(nothing)" then
+					table.insert(ECS.Player.Relics, active_relic)
+					active_relic.action()
+				end
 			end
 		end
 	end,

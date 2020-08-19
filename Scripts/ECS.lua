@@ -24,6 +24,7 @@ ECS.Relics = {
 		effect="Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="stoneblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.1)
@@ -36,6 +37,7 @@ ECS.Relics = {
 		effect="Lv. 1 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="stoneknife.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.dp * 0.1)
@@ -48,6 +50,7 @@ ECS.Relics = {
 		effect="Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="stoneaxe.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.ep * 0.1)
@@ -60,6 +63,7 @@ ECS.Relics = {
 		effect="+150 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
+		img="stonearrow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
@@ -84,6 +88,7 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="bronzeblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.2)
@@ -96,6 +101,7 @@ ECS.Relics = {
 		effect="Lv. 2 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="bronzeknife.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.dp * 0.2)
@@ -108,6 +114,7 @@ ECS.Relics = {
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="bronzeaxe.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) 
 			return math.floor(song_data.ep * 0.2)
@@ -120,6 +127,7 @@ ECS.Relics = {
 		effect="+350 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
+		img="bronzearrow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
@@ -144,6 +152,7 @@ ECS.Relics = {
 		effect="Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="mythrilblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.3)
@@ -156,6 +165,7 @@ ECS.Relics = {
 		effect="Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="mythrilknife.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.dp * 0.3)
@@ -168,6 +178,7 @@ ECS.Relics = {
 		effect="Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="mythrilaxe.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.ep * 0.3)
@@ -180,6 +191,7 @@ ECS.Relics = {
 		effect="+650 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
+		img="mythrilarrow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
@@ -204,6 +216,7 @@ ECS.Relics = {
 		effect="Lv. 4 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="crystalsword.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.4)
@@ -216,6 +229,7 @@ ECS.Relics = {
 		effect="Lv. 5 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="diamondsword.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.5)
@@ -228,6 +242,7 @@ ECS.Relics = {
 		effect="+250 BP",
 		is_consumable=true,
 		is_marathon=false,
+		img="shuriken.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return 250
@@ -240,6 +255,7 @@ ECS.Relics = {
 		effect="Decents/WayOffs Off",
 		is_consumable=true,
 		is_marathon=false,
+		img="astralearring.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
@@ -256,6 +272,7 @@ ECS.Relics = {
 		effect="45 seconds added to break timer",
 		is_consumable=true,
 		is_marathon=false,
+		img="silverstopwatch.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -274,6 +291,7 @@ ECS.Relics = {
 		effect="+300 BP with Scythe of Vitur equipped|45 seconds added to break timer with Scythe of Vitur equipped",
 		is_consumable=true,
 		is_marathon=false,
+		img="bloodrune.png",
 		action=function() 
 		--TODO(teejusb)
 		end,
@@ -294,6 +312,7 @@ ECS.Relics = {
 		effect="+3000 MP",
 		is_consumable=false,
 		is_marathon=true,
+		img="lanceoflonginus.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle MP
@@ -307,6 +326,7 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime Song Gold|+BP based on Lifetime Song Gold for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
+		img="mammon.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- Determine Rank 1 gold by checking every player
@@ -344,6 +364,7 @@ ECS.Relics = {
 		effect="At end of set, +BP equal to (average BPM of passed songs-120)^1.3",
 		is_consumable=true,
 		is_marathon=false,
+		img="agilitypotion.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle end of set relics
@@ -357,6 +378,7 @@ ECS.Relics = {
 		effect="Lv. 3 DP Bonus with bow equipped|+500 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
+		img="dragonarrow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
@@ -381,6 +403,7 @@ ECS.Relics = {
 		effect="Lv. 4 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="crystaldagger.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.dp * 0.4)
@@ -393,6 +416,7 @@ ECS.Relics = {
 		effect="Lv. 5 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="diamonddagger.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.dp * 0.5)
@@ -405,6 +429,7 @@ ECS.Relics = {
 		effect="Lv. 5 RP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="twistedbow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
@@ -429,6 +454,7 @@ ECS.Relics = {
 		effect="+150 BP for tiers 270 and over|Lv. 6 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="maleficadumbration.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -445,6 +471,7 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime JP|+BP based on Lifetime JP for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
+		img="ivorytower.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- Determine Rank 1 JP by checking every player
@@ -482,6 +509,7 @@ ECS.Relics = {
 		effect="+150 BP for 130 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="dirk.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 130 then
@@ -498,6 +526,7 @@ ECS.Relics = {
 		effect="+150 BP for 140 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="spikeknuckles.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 140 then
@@ -514,6 +543,7 @@ ECS.Relics = {
 		effect="+150 BP for 150 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="shashka.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 150 then
@@ -530,6 +560,7 @@ ECS.Relics = {
 		effect="+150 BP for 160 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="barbedlariat.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 160 then
@@ -546,6 +577,7 @@ ECS.Relics = {
 		effect="+150 BP for 170 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="zweihander.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 170 then
@@ -562,6 +594,7 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|+50 BP with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="longbow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
@@ -589,6 +622,7 @@ ECS.Relics = {
 		effect="+150 BP for 190 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="epee.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 190 then
@@ -605,6 +639,7 @@ ECS.Relics = {
 		effect="+150 BP for 200 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="carolingiansword.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 200 then
@@ -621,6 +656,7 @@ ECS.Relics = {
 		effect="+200 BP for 210 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="regalcutlass.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 210 then
@@ -637,6 +673,7 @@ ECS.Relics = {
 		effect="+200 BP for 220 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="scythe.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 220 then
@@ -653,6 +690,7 @@ ECS.Relics = {
 		effect="+200 BP for 230 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="jaggedgreataxe.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 230 then
@@ -669,6 +707,7 @@ ECS.Relics = {
 		effect="+200 BP for 240 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="sakabato.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 240 then
@@ -685,6 +724,7 @@ ECS.Relics = {
 		effect="+200 BP for 250 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="heavyglaive.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 250 then
@@ -701,6 +741,7 @@ ECS.Relics = {
 		effect="+200 BP for 260 BPM songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="doublewarblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 260 then
@@ -717,6 +758,7 @@ ECS.Relics = {
 		effect="+100 BP for 270 BPM songs|Lv. 4 DP Bonus|+100 BP for tiers 280 and over with Laevitas equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="leavitas.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_laevitas = false
@@ -744,6 +786,7 @@ ECS.Relics = {
 		effect="+BP equal to your skill in the speed tier",
 		is_consumable=false,
 		is_marathon=false,
+		img="tizona.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return ecs_player.tier_skill[song_data.bpm_tier]
@@ -756,6 +799,7 @@ ECS.Relics = {
 		effect="+100 BP for 130 BPM songs|Lv. 1 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="zorlinshape.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -773,6 +817,7 @@ ECS.Relics = {
 		effect="+100 BP for 140 BPM songs|Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="catsclaws.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -790,6 +835,7 @@ ECS.Relics = {
 		effect="+100 BP for 150 BPM songs|Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="samosek.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -807,6 +853,7 @@ ECS.Relics = {
 		effect="+100 BP for 160 BPM songs|Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="firelash.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -824,6 +871,7 @@ ECS.Relics = {
 		effect="+100 BP for 170 BPM songs|Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="flamberge.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -841,6 +889,7 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|Lv. 2 DP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="eurytusbow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
@@ -868,6 +917,7 @@ ECS.Relics = {
 		effect="+100 BP for 190 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="hauteclere.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -885,6 +935,7 @@ ECS.Relics = {
 		effect="+100 BP for 200 BPM songs|Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="gram.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -902,6 +953,7 @@ ECS.Relics = {
 		effect="+100 BP for 210 BPM songs|Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="caliburn.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -919,6 +971,7 @@ ECS.Relics = {
 		effect="+100 BP for 220 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="doomsickle.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -936,6 +989,7 @@ ECS.Relics = {
 		effect="+100 BP for 230 BPM songs|Lv. 4 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="bravura.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -953,6 +1007,7 @@ ECS.Relics = {
 		effect="+100 BP for 240 BPM songs|Lv. 4 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="kusanagi.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -970,6 +1025,7 @@ ECS.Relics = {
 		effect="+100 BP for 250 BPM songs|Lv. 5 EP Bonus|Lv. 1 AP Bonus if Gae Derg is equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="gaebuide.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -993,6 +1049,7 @@ ECS.Relics = {
 		effect="+100 BP for 260 BPM songs|Lv. 5 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="endurend.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1010,6 +1067,7 @@ ECS.Relics = {
 		effect="+100 BP for 270 BPM songs|Lv. 5 DP Bonus|+100 BP for tiers 280 and over with Leavitas equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="laevitas.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_leavitas = false
@@ -1037,6 +1095,7 @@ ECS.Relics = {
 		effect="+700 BP|30 seconds removed from break timer",
 		is_consumable=false,
 		is_marathon=false,
+		img="armajejjon.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				ECS.BreakTimer = ECS.BreakTimer - 30
@@ -1053,6 +1112,7 @@ ECS.Relics = {
 		effect="+150 BP for 140 BPM songs|Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="tigerfangs.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1070,6 +1130,7 @@ ECS.Relics = {
 		effect="+100 BP for 150 BPM songs|Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="kladenets.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1087,6 +1148,7 @@ ECS.Relics = {
 		effect="+150 BP for 160 BPM songs|Lv. 2 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="vampirekiller.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1104,6 +1166,7 @@ ECS.Relics = {
 		effect="+100 BP for 170 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="pandemonium.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1121,6 +1184,7 @@ ECS.Relics = {
 		effect="+100 BP for 180 BPM songs with arrow equipped|Lv. 3 AP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="artemisbow.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
@@ -1148,6 +1212,7 @@ ECS.Relics = {
 		effect="+150 BP for 190 BPM songs|Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="durandal.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1165,6 +1230,7 @@ ECS.Relics = {
 		effect="+150 BP for 200 BPM songs|Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="skofnung.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1182,6 +1248,7 @@ ECS.Relics = {
 		effect="+100 BP for 210 BPM songs|Lv. 4 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="clarent.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1199,6 +1266,7 @@ ECS.Relics = {
 		effect="+200 BP for 220 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="scytheofvitur.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1216,6 +1284,7 @@ ECS.Relics = {
 		effect="+200 BP for 230 BPM songs|Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="wuuthrad.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1233,6 +1302,7 @@ ECS.Relics = {
 		effect="+200 BP for 240 BPM songs|Lv. 4 DP/EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="masamune.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1250,6 +1320,7 @@ ECS.Relics = {
 		effect="+200 BP for 250 BPM songs|Lv. 5 EP Bonus|Lv. 1 RP Bonus if Gae Buide is equipped",
 		is_consumable=false,
 		is_marathon=false,
+		img="gaederg.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1273,6 +1344,7 @@ ECS.Relics = {
 		effect="+150 BP for tiers 260 and under|Lv. 6 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="endlessriver.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
@@ -1290,6 +1362,7 @@ ECS.Relics = {
 		effect="+100 BP",
 		is_consumable=false,
 		is_marathon=false,
+		img="swordmadeofsteel.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return 100
@@ -1302,6 +1375,7 @@ ECS.Relics = {
 		effect="+200 BP|Lv. 4 RP Bonus|Forces life 5",
 		is_consumable=false,
 		is_marathon=false,
+		img="pendulumblade.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1322,6 +1396,7 @@ ECS.Relics = {
 		effect="Lv. 4 RP Bonus on any French Coast Stamina/BaguetteStreamz songs",
 		is_consumable=true,
 		is_marathon=false,
+		img="baguette.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.pack:lower():find("baguettestreamz") ~= nil or song_data.pack:lower():find("french coast stamina") then
@@ -1338,6 +1413,7 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
+		img="steelwheatbun.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1348,6 +1424,7 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
+		img="lonloncheese.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1356,6 +1433,7 @@ ECS.Relics = {
 		name="Mandragora Lettuce",
 		desc="Valued for its unique taste, this lettuce is considered to have the best flavor when it's harvested from a live mandragora. Considering how dangerous Mandragora are, that presents quite a bit of a problem for any would-be collectors.",
 		effect="None",
+		img="mandragoralettuce.png",
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
@@ -1368,6 +1446,7 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
+		img="maximtomato.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1378,6 +1457,7 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=true,
 		is_marathon=false,
+		img="direkangaroopatty.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1388,6 +1468,7 @@ ECS.Relics = {
 		effect="+1000 BP|The BP here stands for Burger Points|The Burger Points don't do anything",
 		is_consumable=true,
 		is_marathon=false,
+		img="burger.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1398,6 +1479,7 @@ ECS.Relics = {
 		effect="Lv. 1 EP Bonus|Lv. 1 DP Bonus|Lv. 1 RP Bonus|Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="fursuit.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.ep * 0.1) + math.floor(song_data.dp * 0.1) + math.floor(song_data.rp * 0.1) + math.floor(ap * 0.1)
@@ -1410,6 +1492,7 @@ ECS.Relics = {
 		effect="None",
 		is_consumable=false,
 		is_marathon=false,
+		img="cowboyhat.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1420,15 +1503,17 @@ ECS.Relics = {
 		effect="Lv. 4 DP Bonus|1/2 chance of forced life 3",
 		is_consumable=true,
 		is_marathon=false,
+		img="gungnir.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				math.randomseed(os.time())
 				if math.random() < 1.0/2.0 then
 					local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 					if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
 						PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
 						SM("Set to Life 3")
 					end
+				else
+					SM("No Effect")
 				end
 			end
 		end,
@@ -1443,6 +1528,7 @@ ECS.Relics = {
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="ryukosscissorblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(song_data.ep * 0.2)
@@ -1455,6 +1541,7 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="nuisscissorblade.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.2)
@@ -1467,6 +1554,7 @@ ECS.Relics = {
 		effect="Lv. 2 AP Bonus|Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="rendingscissors.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.2) + math.floor(song_data.ep * 0.2)
@@ -1479,6 +1567,7 @@ ECS.Relics = {
 		effect="+77 BP",
 		is_consumable=false,
 		is_marathon=false,
+		img="bustersword.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return 77
@@ -1491,6 +1580,7 @@ ECS.Relics = {
 		effect="+50 BP per minute of song length|18% of song length added to break timer",
 		is_consumable=false,
 		is_marathon=false,
+		img="vampiriclongsword.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -1512,6 +1602,7 @@ ECS.Relics = {
 		effect="Lv. 4 AP Bonus",
 		is_consumable=true,
 		is_marathon=false,
+		img="shardsofnarsil.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.4)
@@ -1524,6 +1615,7 @@ ECS.Relics = {
 		effect="Lv. 6 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="anduril.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(rp * 0.6)
@@ -1536,6 +1628,7 @@ ECS.Relics = {
 		effect="+700 BP|Forces life 5",
 		is_consumable=false,
 		is_marathon=false,
+		img="perish.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1556,6 +1649,7 @@ ECS.Relics = {
 		effect="+2000 MP",
 		is_consumable=false,
 		is_marathon=true,
+		img="claiomhsolais.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle MP
@@ -1569,6 +1663,7 @@ ECS.Relics = {
 		effect="Forces life 3",
 		is_consumable=true,
 		is_marathon=false,
+		img="aegis.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1587,6 +1682,7 @@ ECS.Relics = {
 		effect="Forces life 3",
 		is_consumable=true,
 		is_marathon=true,
+		img="throne.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1605,6 +1701,7 @@ ECS.Relics = {
 		effect="Adds 60 seconds to the break timer|Forces life 5",
 		is_consumable=true,
 		is_marathon=false,
+		img="skullring.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1629,6 +1726,7 @@ ECS.Relics = {
 		effect="Decents/WayOffs Off",
 		is_consumable=true,
 		is_marathon=true,
+		img="astralring.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
@@ -1645,6 +1743,7 @@ ECS.Relics = {
 		effect="Forces life 1",
 		is_consumable=true,
 		is_marathon=false,
+		img="protectring.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1663,6 +1762,7 @@ ECS.Relics = {
 		effect="+100 BP|Allows user to equip one additional relic",
 		is_consumable=true,
 		is_marathon=false,
+		img="championbelt.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return 100
@@ -1675,6 +1775,7 @@ ECS.Relics = {
 		effect="Access to #bronze-bistro on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
+		img="bronzetrophy.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1685,6 +1786,7 @@ ECS.Relics = {
 		effect="Access to #mythril-lounge on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
+		img="mythriltrophy.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1695,6 +1797,7 @@ ECS.Relics = {
 		effect="Access to #crystal-cafe on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
+		img="crystaltrophy.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -1705,6 +1808,7 @@ ECS.Relics = {
 		effect="At end of set, +100 BP for each song with a different speed tier",
 		is_consumable=true,
 		is_marathon=false,
+		img="slimebadge.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle end of set relics
@@ -1718,6 +1822,7 @@ ECS.Relics = {
 		effect="At end of set, +BP equal to total steps of passed songs divided by 75",
 		is_consumable=true,
 		is_marathon=false,
+		img="staminapotion.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle end of set relics
@@ -1731,6 +1836,7 @@ ECS.Relics = {
 		effect="90 seconds added to break timer",
 		is_consumable=true,
 		is_marathon=false,
+		img="goldenstopwatch.png",
 		action=function()
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -1749,6 +1855,7 @@ ECS.Relics = {
 		effect="If equipped, and you fail the marathon, you may reattempt it immediately with up to 20 additional minutes to warm up/fix the pads.",
 		is_consumable=true,
 		is_marathon=true,
+		img="arvinsgambit.png",
 		action=function()
 		--TODO(teejusb)
 		end,
@@ -1761,6 +1868,7 @@ ECS.Relics = {
 		effect="+600 BP for Rank 1 on Lifetime EXP|+BP based on Lifetime EXP for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
+		img="pandemoniumzero.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			-- Determine Rank 1 EXP by checking every player
@@ -1798,6 +1906,7 @@ ECS.Relics = {
 		effect="If equipped, the marathon is split into two parts, and you may take up to five minutes of break between them.",
 		is_consumable=true,
 		is_marathon=true,
+		img="faustsscalpel.png",
 		action=function()
 		-- TODO(teejusb)
 		end,
@@ -1810,6 +1919,7 @@ ECS.Relics = {
 		effect="Lv. 6 RP Bonus",
 		is_consumable=false,
 		is_marathon=false,
+		img="reid.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(rp * 0.6)
@@ -1822,6 +1932,7 @@ ECS.Relics = {
 		effect="Allows user to equip an additional two relics",
 		is_consumable=true,
 		is_marathon=false,
+		img="orderofambrosia.png",
 		action=function() end,
 		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
@@ -5600,7 +5711,7 @@ ECS.SongInfo.Upper = {
 }
 
 local InitializeSongStats = function(SongInfo)
-	for _, song_data in ipairs(SongInfo.Songs) do
+	for song_data in ivalues(SongInfo.Songs) do
 		SongInfo.MinBpm = SongInfo.MinBpm == 0 and song_data.bpm or math.min(SongInfo.MinBpm, song_data.bpm)
 		SongInfo.MaxBpm = SongInfo.MaxBpm == 0 and song_data.bpm or math.max(SongInfo.MaxBpm, song_data.bpm)
 		SongInfo.MinScaled16ths = SongInfo.MinScaled16ths == 0 and song_data.measures or math.min(SongInfo.MinScaled16ths, song_data.measures)
@@ -5637,7 +5748,9 @@ ECS.Players["teejusb"] = {
 	country="U.S.A.",
 	level=50,
 	exp=90,
-	relics = {},
+	relics = {
+		{name="GUNgnir",	quantity=1},
+	},
 	tier_skill = {[120]=1, [130]=1, [140]=1, [150]=1, [160]=1, [170]=1, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
 	lifetime_song_gold = 0,
@@ -5665,7 +5778,7 @@ end
 -- Score Calculations
 
 FindEcsSong = function(song_name, SongInfo)
-	for _, data in ipairs(SongInfo.Songs) do
+	for data in ivalues(SongInfo.Songs) do
 		if data.name == song_name then
 			return data
 		end
@@ -5687,7 +5800,7 @@ local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used
 	local BP = function(ecs_player, song_data, relics_used, ap, song_info)
 		local bp = 0
 		-- Handle relics first
-		for _, relic in ipairs(relics_used) do
+		for relic in ivalues(relics_used) do
 			bp = bp + relic.score(ecs_player, song_data, relics_used, ap)()
 		end
 

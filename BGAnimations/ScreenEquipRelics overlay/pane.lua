@@ -34,7 +34,7 @@ for i=1,5 do
 		InitCommand=function(self)
 			self:zoomto(pane_width, pane_height-2)
 				:diffuse(color("#666666"))
-				:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+				:diffusealpha( DarkUI() and 0.95 or 0.75)
 		end,
 	}
 
@@ -43,10 +43,9 @@ for i=1,5 do
 		InitCommand=function(self)
 			self:zoomto(pane_height+10, pane_height-2):halign(0):x(-120)
 				:diffuse(color("#111111"))
-				:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+				:diffusealpha( DarkUI() and 0.95 or 0.75)
 		end,
 	}
-
 
 	-- relic image
 	for relic in ivalues(ECS.Relics) do
@@ -54,7 +53,7 @@ for i=1,5 do
 			Texture=THEME:GetPathG("", "_relics/" .. relic.img),
 			InitCommand=function(self)
 				self:xy(-106, -33)
-				self:visible(false):zoom(0.5):align(0,0)
+				self:visible(false):zoom(0.25):align(0,0)
 			end,
 			["Relic"..i.."SelectedCommand"]=function(self, params)
 				self:visible(false)

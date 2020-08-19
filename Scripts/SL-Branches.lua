@@ -187,10 +187,10 @@ Branch.AfterSelectMusic = function()
 				end
 
 				if (PlayerIsUpper() and
-						((ECS.Mode == "ECS" and group_name == "ECS - Upper") or
-						(ECS.Mode == "Marathon" and group_name == "ECS - Upper Marathon")) or
+						((ECS.Mode == "ECS" and group_name == "ECS9 - Upper") or
+						(ECS.Mode == "Marathon" and group_name == "ECS9 - Upper Marathon")) or
 					(not PlayerIsUpper() and
-						group_name == "ECS - Lower")) then
+						group_name == "ECS9 - Lower")) then
 					-- Only go to ScreenEquipRelics if it's a valid song for the player.
 					return "ScreenEquipRelics"
 				else
