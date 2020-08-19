@@ -23,7 +23,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.1)
 		end
 	},
@@ -35,8 +35,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(dp * 0.1)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.1)
 		end
 	},
 	{
@@ -47,8 +47,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(ep * 0.1)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.1)
 		end
 	},
 	{
@@ -59,7 +59,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -83,7 +83,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.2)
 		end
 	},
@@ -95,8 +95,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(dp * 0.2)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.2)
 		end
 	},
 	{
@@ -107,8 +107,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) 
-			return math.floor(ep * 0.2)
+		score=function(ecs_player, song_data, relics_used, ap) 
+			return math.floor(song_data.ep * 0.2)
 		end
 	},
 	{
@@ -119,7 +119,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -143,7 +143,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.3)
 		end
 	},
@@ -155,8 +155,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(dp * 0.3)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.3)
 		end
 	},
 	{
@@ -167,8 +167,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(ep * 0.3)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.3)
 		end
 	},
 	{
@@ -179,7 +179,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -203,7 +203,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.4)
 		end
 	},
@@ -215,7 +215,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return math.floor(ap * 0.5)
 		end
 	},
@@ -227,7 +227,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return 250
 		end
 	},
@@ -245,7 +245,7 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=16,
@@ -263,7 +263,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=17,
@@ -275,7 +275,7 @@ ECS.Relics = {
 		action=function() 
 		--TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			for _, relic in relics_used do
 				local name = relic.name
 				if name == "Scythe of Vitur" then 
@@ -293,7 +293,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle MP
 			return 0
 		end
@@ -306,15 +306,26 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- Determine Rank 1 gold by checking every player
 			local all_gold_amounts = {}
 			for name, player in ECS.Players do
-				all_gold_amounts[#all_gold_amounts + 1] = player.lifetime_song_gold
+				all_gold_amounts[#all_gold_amounts + 1] = ecs_player.lifetime_song_gold
 			end
 			table.sort(all_gold_amounts)
 
 			local max_gold = all_gold_amounts[#all_gold_amounts]
 			if max_gold == nil then return 0 end
+
+			-- We need the 2nd highest as well for those that weren't rank 1
+			local second_highest = nil
+			for i = #all_gold_amounts, 1, -1 do
+				if all_gold_amounts[i] < max_gold then
+					second_highest = all_gold_amounts[i]
+					break
+				end
+			end
+
 			if max_gold == ecs_player.lifetime_song_gold then
 				return 600
 			else
@@ -332,7 +343,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			-- TODO(teejusb): Handle end of set relics
 			return 0
 		end
@@ -345,7 +356,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_bow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -355,7 +366,7 @@ ECS.Relics = {
 				end
 			end
 			if has_bow then
-				return 500 + math.floor(dp * 0.3)
+				return 500 + math.floor(song_data.dp * 0.3)
 			else
 				return 0
 			end
@@ -369,8 +380,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(dp * 0.4)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.4)
 		end
 	},
 	{
@@ -381,8 +392,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			return math.floor(dp * 0.5)
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.5)
 		end
 	},
 	{
@@ -393,7 +404,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -403,7 +414,7 @@ ECS.Relics = {
 			end
 			if has_arrow then
 				-- TODO(teejusb): need max rp for division or max block level for division
-				return math.floor(rp/(max_rp_for_division/1000)*0.5)
+				return math.floor(song_data.rp/(max_rp_for_division/1000)*0.5)
 			else
 				return 0
 			end
@@ -417,12 +428,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier >= 270 then
 				bp = bp + 150
 			end
-			return bp + math.floor(dp * 0.6)
+			return bp + math.floor(song_data.dp * 0.6)
 		end
 	},
 	{
@@ -433,15 +444,26 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- Determine Rank 1 JP by checking every player
 			local all_jp_amounts = {}
 			for name, player in ECS.Players do
-				all_jp_amounts[#all_jp_amounts + 1] = player.lifetime_jp
+				all_jp_amounts[#all_jp_amounts + 1] = ecs_player.lifetime_jp
 			end
 			table.sort(all_jp_amounts)
 
 			local max_jp = all_jp_amounts[#all_jp_amounts]
 			if max_jp == nil then return 0 end
+
+			-- We need the 2nd highest as well for those that weren't rank 1
+			local second_highest = nil
+			for i = #all_jp_amounts, 1, -1 do
+				if all_jp_amounts[i] < max_jp then
+					second_highest = all_jp_amounts[i]
+					break
+				end
+			end
+
 			if max_jp == ecs_player.lifetime_jp then
 				return 600
 			else
@@ -459,7 +481,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 130 then
 				return 150
 			else
@@ -475,7 +497,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 140 then
 				return 150
 			else
@@ -491,7 +513,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 150 then
 				return 150
 			else
@@ -507,7 +529,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 160 then
 				return 150
 			else
@@ -523,7 +545,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 170 then
 				return 150
 			else
@@ -539,7 +561,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -566,7 +588,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 190 then
 				return 150
 			else
@@ -582,7 +604,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 200 then
 				return 150
 			else
@@ -598,7 +620,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 210 then
 				return 200
 			else
@@ -614,7 +636,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 220 then
 				return 200
 			else
@@ -630,7 +652,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 230 then
 				return 200
 			else
@@ -646,7 +668,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 240 then
 				return 200
 			else
@@ -662,7 +684,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 250 then
 				return 200
 			else
@@ -678,7 +700,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			if song_data.bpm_tier == 260 then
 				return 200
 			else
@@ -694,7 +716,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_laevitas = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -706,7 +728,7 @@ ECS.Relics = {
 			if song_data.bpm_tier == 270 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(dp * 0.4)
+			bp = bp + math.floor(song_data.dp * 0.4)
 			if has_laevitas and song_data.bpm_tier >= 280 then
 				bp = bp + 100
 			end
@@ -721,7 +743,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			return ecs_player.tier_skill[song_data.bpm_tier]
 		end
 	},
@@ -733,12 +755,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 130 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(dp * 0.1)
+			bp = bp + math.floor(song_data.dp * 0.1)
 			return bp
 		end
 	},
@@ -750,7 +772,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 140 then
 				bp = bp + 100
@@ -767,12 +789,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 150 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(ep * 0.1)
+			bp = bp + math.floor(song_data.ep * 0.1)
 			return bp
 		end
 	},
@@ -784,12 +806,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 160 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(ep * 0.2)
+			bp = bp + math.floor(song_data.ep * 0.2)
 			return bp
 		end
 	},
@@ -801,7 +823,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 170 then
 				bp = bp + 100
@@ -818,7 +840,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
@@ -828,9 +850,9 @@ ECS.Relics = {
 			end
 			if has_arrow then
 				if song_data.bpm_tier == 180 then
-					return 100 + math.floor(dp * 0.2)
+					return 100 + math.floor(song_data.dp * 0.2)
 				else
-					return math.floor(dp * 0.2)
+					return math.floor(song_data.dp * 0.2)
 				end
 			else
 				return 0
@@ -845,12 +867,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 190 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(ep * 0.3)
+			bp = bp + math.floor(song_data.ep * 0.3)
 			return bp
 		end
 	},
@@ -862,12 +884,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 200 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(dp * 0.3)
+			bp = bp + math.floor(song_data.dp * 0.3)
 			return bp
 		end
 	},
@@ -879,7 +901,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 210 then
 				bp = bp + 100
@@ -896,12 +918,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
+		score=function(ecs_player, song_data, relics_used, ap)
 			local bp = 0
 			if song_data.bpm_tier == 220 then
 				bp = bp + 100
 			end
-			bp = bp + math.floor(ep * 0.4)
+			bp = bp + math.floor(song_data.ep * 0.4)
 			return bp
 		end
 	},
@@ -913,9 +935,13 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap)
-			-- TODO(teejusb): DP/EP things
-			return 0
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 230 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.dp_ep * 0.4)
+			return bp
 		end
 	},
 	{
@@ -926,7 +952,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 240 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.dp * 0.4)
+			return bp
+		end
 	},
 	{
 		id=55,
@@ -936,7 +969,20 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 250 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.ep * 0.5)
+			for _, relic in relics_used do
+				local name = relic.name
+				if name == "Gae Derg" then
+					bp = bp + math.floor(ap * 0.1)
+				end
+			end
+			return bp
+		end
 	},
 	{
 		id=56,
@@ -946,7 +992,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 260 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.dp_ep * 0.5)
+			return bp
+		end
 	},
 	{
 		id=57,
@@ -956,7 +1009,24 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local has_leavitas = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if name == "Leavitas" then
+					has_leavitas = true
+				end
+			end
+			local bp = 0
+			if song_data.bpm_tier == 270 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.dp * 0.5)
+			if has_leavitas and song_data.bpm_tier >= 280 then
+				bp = bp + 100
+			end
+			return bp
+		end
 	},
 	{
 		id=58,
@@ -970,7 +1040,9 @@ ECS.Relics = {
 				ECS.BreakTimer = ECS.BreakTimer - 30
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 700
+		end
 	},
 	{
 		id=59,
@@ -980,7 +1052,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 140 then
+				bp = bp + 150
+			end
+			bp = bp + math.floor(song_data.ep * 0.4)
+			return bp
+		end
 	},
 	{
 		id=60,
@@ -990,7 +1069,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 150 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ap * 0.2)
+			return bp
+		end
 	},
 	{
 		id=61,
@@ -1000,7 +1086,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 160 then
+				bp = bp + 150
+			end
+			bp = bp + math.floor(song_data.dp * 0.2)
+			return bp
+		end
 	},
 	{
 		id=62,
@@ -1010,7 +1103,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 170 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(song_data.ep * 0.3)
+			return bp
+		end
 	},
 	{
 		id=63,
@@ -1020,7 +1120,24 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local has_arrow = false
+			for _, relic in relics_used do
+				local name = relic.name
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+					has_arrow = true
+				end
+			end
+			if has_arrow then
+				if song_data.bpm_tier == 180 then
+					return 100 + math.floor(ap * 0.3)
+				else
+					return math.floor(ap * 0.3)
+				end
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=64,
@@ -1030,7 +1147,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 190 then
+				bp = bp + 150
+			end
+			bp = bp + math.floor(song_data.dp * 0.3)
+			return bp
+		end
 	},
 	{
 		id=65,
@@ -1040,7 +1164,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 200 then
+				bp = bp + 150
+			end
+			bp = bp + math.floor(song_data.ep * 0.3)
+			return bp
+		end
 	},
 	{
 		id=66,
@@ -1050,7 +1181,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 210 then
+				bp = bp + 100
+			end
+			bp = bp + math.floor(ap * 0.4)
+			return bp
+		end
 	},
 	{
 		id=67,
@@ -1060,7 +1198,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 220 then
+				bp = bp + 200
+			end
+			bp = bp + math.floor(song_data.ep * 0.4)
+			return bp
+		end
 	},
 	{
 		id=68,
@@ -1070,7 +1215,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 230 then
+				bp = bp + 200
+			end
+			bp = bp + math.floor(song_data.ep * 0.4)
+			return bp
+		end
 	},
 	{
 		id=69,
@@ -1080,7 +1232,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 240 then
+				bp = bp + 200
+			end
+			bp = bp + math.floor(song_data.dp_ep * 0.4)
+			return bp
+		end
 	},
 	{
 		id=70,
@@ -1090,7 +1249,20 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 250 then
+				bp = bp + 200
+			end
+			bp = bp + math.floor(song_data.ep * 0.5)
+			for _, relic in relics_used do
+				local name = relic.name
+				if name == "Gae Buide" then
+					bp = bp + math.floor(song_data.rp * 0.1)
+				end
+			end
+			return bp
+		end
 	},
 	{
 		id=71,
@@ -1100,7 +1272,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier <= 260 then
+				bp = bp + 150
+			end
+			bp = bp + math.floor(song_data.ep * 0.6)
+			return bp
+		end
 	},
 	{
 		id=72,
@@ -1110,7 +1289,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 100
+		end
 	},
 	{
 		id=73,
@@ -1128,7 +1309,9 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 200 + math.floor(song_data.rp * 0.4)
+		end
 	},
 	{
 		id=74,
@@ -1138,7 +1321,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			if song_data.pack:lower():find("baguettestreamz") ~= nil or song_data.pack:lower():find("french coast stamina") then
+				return math.floor(song_data.rp * 0.4)
+			else
+				return 0
+			end
+		end
 	},
 	{
 		id=75,
@@ -1148,7 +1337,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=76,
@@ -1158,7 +1347,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=77,
@@ -1168,7 +1357,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=78,
@@ -1178,7 +1367,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=79,
@@ -1188,7 +1377,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=80,
@@ -1198,7 +1387,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=81,
@@ -1208,7 +1397,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.1) + math.floor(song_data.dp * 0.1) + math.floor(song_data.rp * 0.1) + math.floor(ap * 0.1)
+		end
 	},
 	{
 		id=82,
@@ -1218,7 +1409,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=83,
@@ -1239,7 +1430,9 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.4)
+		end
 	},
 	{
 		id=84,
@@ -1249,7 +1442,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.2)
+		end
 	},
 	{
 		id=85,
@@ -1259,7 +1454,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(ap * 0.2)
+		end
 	},
 	{
 		id=86,
@@ -1269,7 +1466,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(ap * 0.2) + math.floor(song_data.ep * 0.2)
+		end
 	},
 	{
 		id=87,
@@ -1279,7 +1478,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 77
+		end
 	},
 	{
 		id=88,
@@ -1293,14 +1494,14 @@ ECS.Relics = {
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
 				local failed = pss:GetFailed()
 				if not failed then
-					local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
-					if length then
-						ECS.BreakTimer = ECS.BreakTimer + (length * 0.18)
-					end
+					-- BreakTimer is in seconds.
+					ECS.BreakTimer = ECS.BreakTimer + (song_data.length * 60 * 0.18)
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 50 * math.floor(song_data.length)
+		end
 	},
 	{
 		id=89,
@@ -1310,7 +1511,9 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(ap * 0.4)
+		end
 	},
 	{
 		id=90,
@@ -1320,7 +1523,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(rp * 0.6)
+		end
 	},
 	{
 		id=91,
@@ -1338,7 +1543,9 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 700
+		end
 	},
 	{
 		id=92,
@@ -1348,7 +1555,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- TODO(teejusb): Handle MP
+			return 0
+		end
 	},
 	{
 		id=93,
@@ -1366,7 +1576,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=94,
@@ -1384,7 +1594,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=95,
@@ -1408,7 +1618,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=96,
@@ -1424,7 +1634,7 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.Competitive.TimingWindowSecondsW3)
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=97,
@@ -1442,7 +1652,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=98,
@@ -1452,7 +1662,9 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return 100
+		end
 	},
 	{
 		id=99,
@@ -1462,7 +1674,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=100,
@@ -1472,7 +1684,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=101,
@@ -1482,7 +1694,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=102,
@@ -1492,7 +1704,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- TODO(teejusb): Handle end of set relics
+			return 0
+		end
 	},
 	{
 		id=103,
@@ -1502,7 +1717,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- TODO(teejusb): Handle end of set relics
+			return 0
+		end
 	},
 	{
 		id=104,
@@ -1520,7 +1738,7 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=105,
@@ -1532,7 +1750,7 @@ ECS.Relics = {
 		action=function()
 		--TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=106,
@@ -1542,7 +1760,34 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			-- Determine Rank 1 EXP by checking every player
+			local all_exp_amounts = {}
+			for name, player in ECS.Players do
+				all_exp_amounts[#all_exp_amounts + 1] = ecs_player.exp
+			end
+			table.sort(all_exp_amounts)
+
+			local max_exp = all_exp_amounts[#all_exp_amounts]
+			if max_exp == nil then return 0 end
+
+			-- We need the 2nd highest as well for those that weren't rank 1
+			local second_highest = nil
+			for i = #all_exp_amounts, 1, -1 do
+				if all_exp_amounts[i] < max_exp then
+					second_highest = all_exp_amounts[i]
+					break
+				end
+			end
+
+			if max_exp == ecs_player.exp then
+				return 600
+			else
+				local second_highest = all_exp_amounts[#all_exp_amounts-1]
+				if second_highest == nil then return 0 end
+				return math.floor(400*(ecs_player.exp / second_highest))
+			end
+		end
 	},
 	{
 		id=107,
@@ -1554,7 +1799,7 @@ ECS.Relics = {
 		action=function()
 		-- TODO(teejusb)
 		end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 	{
 		id=108,
@@ -1564,7 +1809,9 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap)
+			return math.floor(rp * 0.6)
+		end
 	},
 	{
 		id=109,
@@ -1574,7 +1821,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) return 0 end
+		score=function(ecs_player, song_data, relics_used, ap) return 0 end
 	},
 }
 
@@ -1613,6 +1860,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7424,
 			bpm=130,
 			length=4.4,
+			dp=0, ep=934, dp_ep=200, rp=1000,
 		},
 		{
 			id=2,
@@ -1624,6 +1872,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7971,
 			bpm=130,
 			length=4.4,
+			dp=0, ep=1000, dp_ep=299, rp=1000,
 		},
 		{
 			id=3,
@@ -1635,6 +1884,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7664,
 			bpm=133,
 			length=3.55,
+			dp=100, ep=800, dp_ep=149, rp=1000,
 		},
 		{
 			id=4,
@@ -1646,6 +1896,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6772,
 			bpm=136,
 			length=4.94,
+			dp=200, ep=667, dp_ep=100, rp=1000,
 		},
 		{
 			id=5,
@@ -1657,6 +1908,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6688,
 			bpm=140,
 			length=4.63,
+			dp=334, ep=867, dp_ep=601, rp=1000,
 		},
 		{
 			id=6,
@@ -1668,6 +1920,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7476,
 			bpm=140,
 			length=3.29,
+			dp=334, ep=734, dp_ep=401, rp=1000,
 		},
 		{
 			id=7,
@@ -1679,6 +1932,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5316,
 			bpm=145,
 			length=5.6,
+			dp=500, ep=534, dp_ep=350, rp=1000,
 		},
 		{
 			id=8,
@@ -1690,6 +1944,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6165,
 			bpm=146,
 			length=4.55,
+			dp=534, ep=600, dp_ep=500, rp=1000,
 		},
 		{
 			id=9,
@@ -1701,6 +1956,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4388,
 			bpm=150,
 			length=4,
+			dp=667, ep=400, dp_ep=400, rp=1000,
 		},
 		{
 			id=10,
@@ -1712,6 +1968,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.3596,
 			bpm=150,
 			length=5.12,
+			dp=667, ep=334, dp_ep=301, rp=1000,
 		},
 		{
 			id=11,
@@ -1723,6 +1980,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.3063,
 			bpm=150,
 			length=5.52,
+			dp=667, ep=134, dp_ep=0, rp=1000,
 		},
 		{
 			id=12,
@@ -1734,6 +1992,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.3094,
 			bpm=156,
 			length=3.77,
+			dp=867, ep=67, dp_ep=200, rp=1000,
 		},
 		{
 			id=13,
@@ -1745,6 +2004,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.2866,
 			bpm=160,
 			length=4.13,
+			dp=1000, ep=0, dp_ep=299, rp=1000,
 		},
 		{
 			id=14,
@@ -1756,6 +2016,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4123,
 			bpm=160,
 			length=3.4,
+			dp=1000, ep=200, dp_ep=600, rp=1000,
 		},
 		{
 			id=15,
@@ -1767,6 +2028,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4015,
 			bpm=160,
 			length=4.35,
+			dp=1000, ep=267, dp_ep=700, rp=1000,
 		},
 		{
 			id=16,
@@ -1778,6 +2040,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5536,
 			bpm=160,
 			length=3.32,
+			dp=1000, ep=467, dp_ep=1000, rp=1000,
 		},
 		{
 			id=17,
@@ -1789,6 +2052,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8766,
 			bpm=132,
 			length=5.21,
+			dp=0, ep=895, dp_ep=335, rp=2000,
 		},
 		{
 			id=18,
@@ -1800,6 +2064,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9902,
 			bpm=134,
 			length=3.43,
+			dp=47, ep=790, dp_ep=244, rp=2000,
 		},
 		{
 			id=19,
@@ -1811,6 +2076,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.819,
 			bpm=138,
 			length=7.33,
+			dp=140, ep=1000, dp_ep=722, rp=2000,
 		},
 		{
 			id=20,
@@ -1822,6 +2088,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7576,
 			bpm=138,
 			length=7.8,
+			dp=140, ep=948, dp_ep=640, rp=2000,
 		},
 		{
 			id=21,
@@ -1833,6 +2100,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7905,
 			bpm=140,
 			length=5.03,
+			dp=187, ep=632, dp_ep=215, rp=2000,
 		},
 		{
 			id=22,
@@ -1844,6 +2112,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8686,
 			bpm=140,
 			length=4.23,
+			dp=187, ep=737, dp_ep=381, rp=2000,
 		},
 		{
 			id=23,
@@ -1855,6 +2124,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8402,
 			bpm=140,
 			length=5.09,
+			dp=187, ep=843, dp_ep=549, rp=2000,
 		},
 		{
 			id=24,
@@ -1866,6 +2136,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6955,
 			bpm=145,
 			length=6.62,
+			dp=303, ep=685, dp_ep=482, rp=2000,
 		},
 		{
 			id=25,
@@ -1877,6 +2148,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5772,
 			bpm=150,
 			length=4.4,
+			dp=419, ep=264, dp_ep=0, rp=2000,
 		},
 		{
 			id=26,
@@ -1888,6 +2160,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6853,
 			bpm=150,
 			length=4.11,
+			dp=419, ep=579, dp_ep=498, rp=2000,
 		},
 		{
 			id=27,
@@ -1899,6 +2172,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6763,
 			bpm=154,
 			length=4.13,
+			dp=512, ep=474, dp_ep=479, rp=2000,
 		},
 		{
 			id=28,
@@ -1910,6 +2184,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6736,
 			bpm=155,
 			length=3.98,
+			dp=535, ep=527, dp_ep=599, rp=2000,
 		},
 		{
 			id=29,
@@ -1921,6 +2196,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6019,
 			bpm=160,
 			length=3.22,
+			dp=652, ep=106, dp_ep=119, rp=2000,
 		},
 		{
 			id=30,
@@ -1932,6 +2208,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5868,
 			bpm=160,
 			length=3.7,
+			dp=652, ep=158, dp_ep=201, rp=2000,
 		},
 		{
 			id=31,
@@ -1943,6 +2220,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6408,
 			bpm=162,
 			length=3.78,
+			dp=698, ep=422, dp_ep=691, rp=2000,
 		},
 		{
 			id=32,
@@ -1954,6 +2232,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6505,
 			bpm=165,
 			length=3.42,
+			dp=768, ep=211, dp_ep=468, rp=2000,
 		},
 		{
 			id=33,
@@ -1965,6 +2244,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6232,
 			bpm=165,
 			length=4.23,
+			dp=768, ep=369, dp_ep=718, rp=2000,
 		},
 		{
 			id=34,
@@ -1976,6 +2256,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4602,
 			bpm=170,
 			length=3.79,
+			dp=884, ep=0, dp_ep=318, rp=2000,
 		},
 		{
 			id=35,
@@ -1987,6 +2268,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5534,
 			bpm=174,
 			length=3.03,
+			dp=977, ep=53, dp_ep=549, rp=2000,
 		},
 		{
 			id=36,
@@ -1998,6 +2280,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7159,
 			bpm=175,
 			length=2.83,
+			dp=1000, ep=316, dp_ep=1000, rp=2000,
 		},
 		{
 			id=37,
@@ -2009,6 +2292,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8602,
 			bpm=140,
 			length=9.37,
+			dp=0, ep=1000, dp_ep=415, rp=3000,
 		},
 		{
 			id=38,
@@ -2020,6 +2304,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7727,
 			bpm=140,
 			length=11.37,
+			dp=0, ep=895, dp_ep=115, rp=3000,
 		},
 		{
 			id=39,
@@ -2031,6 +2316,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9048,
 			bpm=145,
 			length=7.37,
+			dp=112, ep=843, dp_ep=286, rp=3000,
 		},
 		{
 			id=40,
@@ -2042,6 +2328,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9055,
 			bpm=147,
 			length=7.97,
+			dp=156, ep=948, dp_ep=712, rp=3000,
 		},
 		{
 			id=41,
@@ -2053,6 +2340,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8741,
 			bpm=150,
 			length=4.03,
+			dp=223, ep=632, dp_ep=0, rp=3000,
 		},
 		{
 			id=42,
@@ -2064,6 +2352,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8963,
 			bpm=150,
 			length=4.16,
+			dp=223, ep=685, dp_ep=152, rp=3000,
 		},
 		{
 			id=43,
@@ -2075,6 +2364,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8363,
 			bpm=154,
 			length=4.52,
+			dp=312, ep=790, dp_ep=706, rp=3000,
 		},
 		{
 			id=44,
@@ -2086,6 +2376,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.719,
 			bpm=158,
 			length=7.44,
+			dp=400, ep=737, dp_ep=806, rp=3000,
 		},
 		{
 			id=45,
@@ -2097,6 +2388,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7343,
 			bpm=160,
 			length=4.08,
+			dp=445, ep=422, dp_ep=35, rp=3000,
 		},
 		{
 			id=46,
@@ -2108,6 +2400,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.682,
 			bpm=160,
 			length=5.88,
+			dp=445, ep=579, dp_ep=483, rp=3000,
 		},
 		{
 			id=47,
@@ -2119,6 +2412,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7812,
 			bpm=161,
 			length=3.23,
+			dp=467, ep=474, dp_ep=246, rp=3000,
 		},
 		{
 			id=48,
@@ -2130,6 +2424,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7453,
 			bpm=165,
 			length=4.15,
+			dp=556, ep=527, dp_ep=652, rp=3000,
 		},
 		{
 			id=49,
@@ -2141,6 +2436,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6593,
 			bpm=174,
 			length=4.8,
+			dp=756, ep=158, dp_ep=169, rp=3000,
 		},
 		{
 			id=50,
@@ -2152,6 +2448,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6644,
 			bpm=174,
 			length=4.18,
+			dp=756, ep=264, dp_ep=472, rp=3000,
 		},
 		{
 			id=51,
@@ -2163,6 +2460,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7273,
 			bpm=174,
 			length=4.09,
+			dp=756, ep=369, dp_ep=772, rp=3000,
 		},
 		{
 			id=52,
@@ -2174,6 +2472,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5812,
 			bpm=175,
 			length=5.05,
+			dp=778, ep=211, dp_ep=383, rp=3000,
 		},
 		{
 			id=53,
@@ -2185,6 +2484,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5437,
 			bpm=180,
 			length=4.8,
+			dp=889, ep=106, dp_ep=400, rp=3000,
 		},
 		{
 			id=54,
@@ -2196,6 +2496,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6738,
 			bpm=180,
 			length=3.38,
+			dp=889, ep=316, dp_ep=1000, rp=3000,
 		},
 		{
 			id=55,
@@ -2207,6 +2508,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5102,
 			bpm=180,
 			length=4.07,
+			dp=889, ep=53, dp_ep=249, rp=3000,
 		},
 		{
 			id=56,
@@ -2218,6 +2520,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4196,
 			bpm=185,
 			length=3.61,
+			dp=1000, ep=0, dp_ep=415, rp=3000,
 		},
 		{
 			id=57,
@@ -2229,6 +2532,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9041,
 			bpm=150,
 			length=10.13,
+			dp=0, ep=1000, dp_ep=510, rp=4000,
 		},
 		{
 			id=58,
@@ -2240,6 +2544,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9728,
 			bpm=155,
 			length=4.85,
+			dp=122, ep=895, dp_ep=531, rp=4000,
 		},
 		{
 			id=59,
@@ -2251,6 +2556,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.934,
 			bpm=155,
 			length=8.03,
+			dp=122, ep=948, dp_ep=597, rp=4000,
 		},
 		{
 			id=60,
@@ -2262,6 +2568,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9141,
 			bpm=159,
 			length=4.58,
+			dp=220, ep=790, dp_ep=523, rp=4000,
 		},
 		{
 			id=61,
@@ -2273,6 +2580,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8438,
 			bpm=160,
 			length=5.18,
+			dp=244, ep=685, dp_ep=423, rp=4000,
 		},
 		{
 			id=62,
@@ -2284,6 +2592,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9493,
 			bpm=165,
 			length=4.02,
+			dp=366, ep=632, dp_ep=508, rp=4000,
 		},
 		{
 			id=63,
@@ -2295,6 +2604,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8102,
 			bpm=165,
 			length=5.79,
+			dp=366, ep=737, dp_ep=637, rp=4000,
 		},
 		{
 			id=64,
@@ -2306,6 +2616,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7782,
 			bpm=168,
 			length=6,
+			dp=440, ep=843, dp_ep=859, rp=4000,
 		},
 		{
 			id=65,
@@ -2317,6 +2628,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4785,
 			bpm=174,
 			length=4.9,
+			dp=586, ep=0, dp_ep=0, rp=4000,
 		},
 		{
 			id=66,
@@ -2328,6 +2640,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6589,
 			bpm=174,
 			length=6.38,
+			dp=586, ep=527, dp_ep=650, rp=4000,
 		},
 		{
 			id=67,
@@ -2339,6 +2652,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5679,
 			bpm=175,
 			length=6.72,
+			dp=610, ep=369, dp_ep=484, rp=4000,
 		},
 		{
 			id=68,
@@ -2350,6 +2664,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6575,
 			bpm=175,
 			length=6.1,
+			dp=610, ep=579, dp_ep=743, rp=4000,
 		},
 		{
 			id=69,
@@ -2361,6 +2676,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7054,
 			bpm=180,
 			length=3.36,
+			dp=732, ep=211, dp_ep=440, rp=4000,
 		},
 		{
 			id=70,
@@ -2372,6 +2688,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7188,
 			bpm=180,
 			length=3.91,
+			dp=732, ep=474, dp_ep=764, rp=4000,
 		},
 		{
 			id=71,
@@ -2383,6 +2700,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6912,
 			bpm=180,
 			length=3.51,
+			dp=732, ep=158, dp_ep=375, rp=4000,
 		},
 		{
 			id=72,
@@ -2394,6 +2712,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6776,
 			bpm=188,
 			length=3.55,
+			dp=927, ep=316, dp_ep=810, rp=4000,
 		},
 		{
 			id=73,
@@ -2405,6 +2724,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5464,
 			bpm=190,
 			length=4.23,
+			dp=976, ep=106, dp_ep=611, rp=4000,
 		},
 		{
 			id=74,
@@ -2416,6 +2736,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6238,
 			bpm=190,
 			length=4.72,
+			dp=976, ep=422, dp_ep=1000, rp=4000,
 		},
 		{
 			id=75,
@@ -2427,6 +2748,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8608,
 			bpm=190,
 			length=2.61,
+			dp=976, ep=264, dp_ep=806, rp=4000,
 		},
 		{
 			id=76,
@@ -2438,6 +2760,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6667,
 			bpm=191,
 			length=3.56,
+			dp=1000, ep=53, dp_ep=576, rp=4000,
 		},
 		{
 			id=77,
@@ -2449,6 +2772,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8684,
 			bpm=160,
 			length=9.82,
+			dp=0, ep=948, dp_ep=373, rp=5000,
 		},
 		{
 			id=78,
@@ -2460,6 +2784,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9238,
 			bpm=162,
 			length=7.93,
+			dp=42, ep=895, dp_ep=342, rp=5000,
 		},
 		{
 			id=79,
@@ -2471,6 +2796,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.76,
 			bpm=165,
 			length=20.02,
+			dp=105, ep=1000, dp_ep=827, rp=5000,
 		},
 		{
 			id=80,
@@ -2482,6 +2808,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8438,
 			bpm=165,
 			length=10.33,
+			dp=105, ep=843, dp_ep=373, rp=5000,
 		},
 		{
 			id=81,
@@ -2493,6 +2820,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9013,
 			bpm=173,
 			length=5.46,
+			dp=271, ep=685, dp_ep=396, rp=5000,
 		},
 		{
 			id=82,
@@ -2504,6 +2832,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=1,
 			bpm=174,
 			length=3.06,
+			dp=292, ep=527, dp_ep=0, rp=5000,
 		},
 		{
 			id=83,
@@ -2515,6 +2844,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.875,
 			bpm=174,
 			length=5.98,
+			dp=292, ep=737, dp_ep=607, rp=5000,
 		},
 		{
 			id=84,
@@ -2526,6 +2856,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9118,
 			bpm=178,
 			length=6.43,
+			dp=375, ep=790, dp_ep=1000, rp=5000,
 		},
 		{
 			id=85,
@@ -2537,6 +2868,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8583,
 			bpm=180,
 			length=5.78,
+			dp=417, ep=632, dp_ep=665, rp=5000,
 		},
 		{
 			id=86,
@@ -2548,6 +2880,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9925,
 			bpm=184,
 			length=3.06,
+			dp=500, ep=579, dp_ep=752, rp=5000,
 		},
 		{
 			id=87,
@@ -2559,6 +2892,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7797,
 			bpm=184,
 			length=4.59,
+			dp=500, ep=369, dp_ep=145, rp=5000,
 		},
 		{
 			id=88,
@@ -2570,6 +2904,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8375,
 			bpm=186,
 			length=3.48,
+			dp=542, ep=474, dp_ep=570, rp=5000,
 		},
 		{
 			id=89,
@@ -2581,6 +2916,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6475,
 			bpm=190,
 			length=5.24,
+			dp=625, ep=316, dp_ep=353, rp=5000,
 		},
 		{
 			id=90,
@@ -2592,6 +2928,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6318,
 			bpm=192,
 			length=4.56,
+			dp=667, ep=158, dp_ep=18, rp=5000,
 		},
 		{
 			id=91,
@@ -2603,6 +2940,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7668,
 			bpm=192,
 			length=4.44,
+			dp=667, ep=422, dp_ep=781, rp=5000,
 		},
 		{
 			id=92,
@@ -2614,6 +2952,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6373,
 			bpm=192,
 			length=4.92,
+			dp=667, ep=211, dp_ep=171, rp=5000,
 		},
 		{
 			id=93,
@@ -2625,6 +2964,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7483,
 			bpm=200,
 			length=4.52,
+			dp=834, ep=264, dp_ep=807, rp=5000,
 		},
 		{
 			id=94,
@@ -2636,6 +2976,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6287,
 			bpm=200,
 			length=4.24,
+			dp=834, ep=106, dp_ep=350, rp=5000,
 		},
 		{
 			id=95,
@@ -2647,6 +2988,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6903,
 			bpm=200,
 			length=3.56,
+			dp=834, ep=0, dp_ep=44, rp=5000,
 		},
 		{
 			id=96,
@@ -2658,6 +3000,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6541,
 			bpm=208,
 			length=2.94,
+			dp=1000, ep=53, dp_ep=677, rp=5000,
 		},
 		{
 			id=97,
@@ -2669,6 +3012,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6191,
 			bpm=174,
 			length=23.28,
+			dp=0, ep=948, dp_ep=375, rp=6000,
 		},
 		{
 			id=98,
@@ -2680,6 +3024,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8557,
 			bpm=175,
 			length=15.86,
+			dp=27, ep=1000, dp_ep=562, rp=6000,
 		},
 		{
 			id=99,
@@ -2691,6 +3036,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7636,
 			bpm=179,
 			length=10.3,
+			dp=132, ep=843, dp_ep=439, rp=6000,
 		},
 		{
 			id=100,
@@ -2702,6 +3048,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9555,
 			bpm=179,
 			length=7.24,
+			dp=132, ep=895, dp_ep=562, rp=6000,
 		},
 		{
 			id=101,
@@ -2713,6 +3060,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8621,
 			bpm=180,
 			length=6.87,
+			dp=158, ep=632, dp_ep=0, rp=6000,
 		},
 		{
 			id=102,
@@ -2724,6 +3072,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9111,
 			bpm=185,
 			length=6.1,
+			dp=290, ep=790, dp_ep=688, rp=6000,
 		},
 		{
 			id=103,
@@ -2735,6 +3084,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9858,
 			bpm=185,
 			length=4.67,
+			dp=290, ep=737, dp_ep=562, rp=6000,
 		},
 		{
 			id=104,
@@ -2746,6 +3096,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8157,
 			bpm=187,
 			length=7.47,
+			dp=343, ep=579, dp_ep=313, rp=6000,
 		},
 		{
 			id=105,
@@ -2757,6 +3108,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.917,
 			bpm=190,
 			length=5.37,
+			dp=422, ep=685, dp_ep=752, rp=6000,
 		},
 		{
 			id=106,
@@ -2768,6 +3120,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7841,
 			bpm=190,
 			length=6.08,
+			dp=422, ep=527, dp_ep=377, rp=6000,
 		},
 		{
 			id=107,
@@ -2779,6 +3132,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8393,
 			bpm=191,
 			length=4.24,
+			dp=448, ep=369, dp_ep=64, rp=6000,
 		},
 		{
 			id=108,
@@ -2790,6 +3144,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7706,
 			bpm=195,
 			length=4.8,
+			dp=553, ep=474, dp_ep=562, rp=6000,
 		},
 		{
 			id=109,
@@ -2801,6 +3156,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6082,
 			bpm=200,
 			length=5.08,
+			dp=685, ep=106, dp_ep=3, rp=6000,
 		},
 		{
 			id=110,
@@ -2812,6 +3168,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7788,
 			bpm=204,
 			length=4.75,
+			dp=790, ep=422, dp_ep=1000, rp=6000,
 		},
 		{
 			id=111,
@@ -2823,6 +3180,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6815,
 			bpm=205,
 			length=5.4,
+			dp=816, ep=316, dp_ep=811, rp=6000,
 		},
 		{
 			id=112,
@@ -2834,6 +3192,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6189,
 			bpm=208,
 			length=5.51,
+			dp=895, ep=158, dp_ep=624, rp=6000,
 		},
 		{
 			id=113,
@@ -2845,6 +3204,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6126,
 			bpm=210,
 			length=4.3,
+			dp=948, ep=0, dp_ep=375, rp=6000,
 		},
 		{
 			id=114,
@@ -2856,6 +3216,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7764,
 			bpm=210,
 			length=3.56,
+			dp=948, ep=264, dp_ep=1000, rp=6000,
 		},
 		{
 			id=115,
@@ -2867,6 +3228,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7834,
 			bpm=210,
 			length=3.83,
+			dp=948, ep=211, dp_ep=875, rp=6000,
 		},
 		{
 			id=116,
@@ -2878,6 +3240,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6859,
 			bpm=212,
 			length=3.15,
+			dp=1000, ep=53, dp_ep=624, rp=6000,
 		},
 		{
 			id=117,
@@ -2889,6 +3252,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=1,
 			bpm=180,
 			length=12.84,
+			dp=0, ep=1000, dp_ep=436, rp=7000,
 		},
 		{
 			id=118,
@@ -2900,6 +3264,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9894,
 			bpm=185,
 			length=8.32,
+			dp=112, ep=895, dp_ep=452, rp=7000,
 		},
 		{
 			id=119,
@@ -2911,6 +3276,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.97,
 			bpm=185,
 			length=9.45,
+			dp=112, ep=948, dp_ep=572, rp=7000,
 		},
 		{
 			id=120,
@@ -2922,6 +3288,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9198,
 			bpm=188,
 			length=7.34,
+			dp=178, ep=843, dp_ep=483, rp=7000,
 		},
 		{
 			id=121,
@@ -2933,6 +3300,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9327,
 			bpm=190,
 			length=6.8,
+			dp=223, ep=790, dp_ep=465, rp=7000,
 		},
 		{
 			id=122,
@@ -2944,6 +3312,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8833,
 			bpm=195,
 			length=5.35,
+			dp=334, ep=474, dp_ep=0, rp=7000,
 		},
 		{
 			id=123,
@@ -2955,6 +3324,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9112,
 			bpm=197,
 			length=5.5,
+			dp=378, ep=632, dp_ep=459, rp=7000,
 		},
 		{
 			id=124,
@@ -2966,6 +3336,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.854,
 			bpm=198,
 			length=6.61,
+			dp=400, ep=685, dp_ep=629, rp=7000,
 		},
 		{
 			id=125,
@@ -2977,6 +3348,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9202,
 			bpm=200,
 			length=4.71,
+			dp=445, ep=422, dp_ep=134, rp=7000,
 		},
 		{
 			id=126,
@@ -2988,6 +3360,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9301,
 			bpm=200,
 			length=5.08,
+			dp=445, ep=527, dp_ep=372, rp=7000,
 		},
 		{
 			id=127,
@@ -2999,6 +3372,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8208,
 			bpm=200,
 			length=6.74,
+			dp=445, ep=579, dp_ep=490, rp=7000,
 		},
 		{
 			id=128,
@@ -3010,6 +3384,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8271,
 			bpm=203,
 			length=8.75,
+			dp=512, ep=737, dp_ep=1000, rp=7000,
 		},
 		{
 			id=129,
@@ -3021,6 +3396,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6743,
 			bpm=210,
 			length=5.45,
+			dp=667, ep=264, dp_ep=279, rp=7000,
 		},
 		{
 			id=130,
@@ -3032,6 +3408,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8393,
 			bpm=210,
 			length=4.3,
+			dp=667, ep=369, dp_ep=518, rp=7000,
 		},
 		{
 			id=131,
@@ -3043,6 +3420,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7511,
 			bpm=213,
 			length=4.69,
+			dp=734, ep=316, dp_ep=549, rp=7000,
 		},
 		{
 			id=132,
@@ -3054,6 +3432,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8561,
 			bpm=218,
 			length=3.17,
+			dp=845, ep=211, dp_ep=563, rp=7000,
 		},
 		{
 			id=133,
@@ -3065,6 +3444,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6235,
 			bpm=220,
 			length=3.29,
+			dp=889, ep=53, dp_ep=304, rp=7000,
 		},
 		{
 			id=134,
@@ -3076,6 +3456,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6604,
 			bpm=220,
 			length=3.82,
+			dp=889, ep=106, dp_ep=425, rp=7000,
 		},
 		{
 			id=135,
@@ -3087,6 +3468,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6554,
 			bpm=222,
 			length=3.57,
+			dp=934, ep=158, dp_ep=644, rp=7000,
 		},
 		{
 			id=136,
@@ -3098,6 +3480,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.575,
 			bpm=225,
 			length=3.24,
+			dp=1000, ep=0, dp_ep=436, rp=7000,
 		},
 		{
 			id=137,
@@ -3109,6 +3492,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9914,
 			bpm=193,
 			length=12.64,
+			dp=174, ep=843, dp_ep=430, rp=8000,
 		},
 		{
 			id=138,
@@ -3120,6 +3504,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9858,
 			bpm=193,
 			length=13.28,
+			dp=174, ep=948, dp_ep=1000, rp=8000,
 		},
 		{
 			id=139,
@@ -3131,6 +3516,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8235,
 			bpm=195,
 			length=20.18,
+			dp=212, ep=895, dp_ep=919, rp=8000,
 		},
 		{
 			id=140,
@@ -3142,6 +3528,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9291,
 			bpm=197,
 			length=9.71,
+			dp=250, ep=790, dp_ep=555, rp=8000,
 		},
 		{
 			id=141,
@@ -3153,6 +3540,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8932,
 			bpm=184,
 			length=22.29,
+			dp=0, ep=1000, dp_ep=337, rp=8000,
 		},
 		{
 			id=142,
@@ -3164,6 +3552,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9004,
 			bpm=200,
 			length=9.1,
+			dp=308, ep=737, dp_ep=582, rp=8000,
 		},
 		{
 			id=143,
@@ -3175,6 +3564,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9583,
 			bpm=204,
 			length=7.75,
+			dp=385, ep=685, dp_ep=718, rp=8000,
 		},
 		{
 			id=144,
@@ -3186,6 +3576,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.922,
 			bpm=207,
 			length=7.05,
+			dp=443, ep=632, dp_ep=745, rp=8000,
 		},
 		{
 			id=145,
@@ -3197,6 +3588,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8378,
 			bpm=210,
 			length=7.26,
+			dp=500, ep=527, dp_ep=484, rp=8000,
 		},
 		{
 			id=146,
@@ -3208,6 +3600,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8883,
 			bpm=210,
 			length=4.17,
+			dp=500, ep=474, dp_ep=196, rp=8000,
 		},
 		{
 			id=147,
@@ -3219,6 +3612,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8838,
 			bpm=212,
 			length=6.51,
+			dp=539, ep=579, dp_ep=979, rp=8000,
 		},
 		{
 			id=148,
@@ -3230,6 +3624,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7525,
 			bpm=218,
 			length=6.09,
+			dp=654, ep=422, dp_ep=750, rp=8000,
 		},
 		{
 			id=149,
@@ -3241,6 +3636,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.85,
 			bpm=220,
 			length=3.85,
+			dp=693, ep=369, dp_ep=674, rp=8000,
 		},
 		{
 			id=150,
@@ -3252,6 +3648,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8261,
 			bpm=220,
 			length=4.11,
+			dp=693, ep=316, dp_ep=386, rp=8000,
 		},
 		{
 			id=151,
@@ -3263,6 +3660,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7109,
 			bpm=224,
 			length=3.91,
+			dp=770, ep=211, dp_ep=234, rp=8000,
 		},
 		{
 			id=152,
@@ -3274,6 +3672,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7937,
 			bpm=225,
 			length=3.2,
+			dp=789, ep=264, dp_ep=625, rp=8000,
 		},
 		{
 			id=153,
@@ -3285,6 +3684,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8015,
 			bpm=230,
 			length=3.5,
+			dp=885, ep=158, dp_ep=571, rp=8000,
 		},
 		{
 			id=154,
@@ -3296,6 +3696,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5685,
 			bpm=230,
 			length=3.72,
+			dp=885, ep=53, dp_ep=0, rp=8000,
 		},
 		{
 			id=155,
@@ -3307,6 +3708,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5838,
 			bpm=230,
 			length=3.57,
+			dp=885, ep=106, dp_ep=289, rp=8000,
 		},
 		{
 			id=156,
@@ -3318,6 +3720,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7054,
 			bpm=236,
 			length=2.03,
+			dp=1000, ep=0, dp_ep=337, rp=8000,
 		},
 		{
 			id=157,
@@ -3329,6 +3732,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=1,
 			bpm=200,
 			length=10.8,
+			dp=0, ep=1000, dp_ep=123, rp=9000,
 		},
 		{
 			id=158,
@@ -3340,6 +3744,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8675,
 			bpm=205,
 			length=11.47,
+			dp=122, ep=948, dp_ep=451, rp=9000,
 		},
 		{
 			id=159,
@@ -3351,6 +3756,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9291,
 			bpm=208,
 			length=9.19,
+			dp=196, ep=895, dp_ep=550, rp=9000,
 		},
 		{
 			id=160,
@@ -3362,6 +3768,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9182,
 			bpm=208,
 			length=8.71,
+			dp=196, ep=843, dp_ep=306, rp=9000,
 		},
 		{
 			id=161,
@@ -3373,6 +3780,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8368,
 			bpm=210,
 			length=9.55,
+			dp=244, ep=737, dp_ep=33, rp=9000,
 		},
 		{
 			id=162,
@@ -3384,6 +3792,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9323,
 			bpm=212,
 			length=8.28,
+			dp=293, ep=790, dp_ep=512, rp=9000,
 		},
 		{
 			id=163,
@@ -3395,6 +3804,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9444,
 			bpm=214,
 			length=6,
+			dp=342, ep=632, dp_ep=0, rp=9000,
 		},
 		{
 			id=164,
@@ -3406,6 +3816,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9093,
 			bpm=215,
 			length=6.88,
+			dp=366, ep=685, dp_ep=362, rp=9000,
 		},
 		{
 			id=165,
@@ -3417,6 +3828,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8444,
 			bpm=220,
 			length=5.84,
+			dp=488, ep=579, dp_ep=437, rp=9000,
 		},
 		{
 			id=166,
@@ -3428,6 +3840,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.988,
 			bpm=224,
 			length=3.87,
+			dp=586, ep=527, dp_ep=653, rp=9000,
 		},
 		{
 			id=167,
@@ -3439,6 +3852,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8451,
 			bpm=226,
 			length=4.08,
+			dp=635, ep=422, dp_ep=390, rp=9000,
 		},
 		{
 			id=168,
@@ -3450,6 +3864,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.836,
 			bpm=226,
 			length=4.78,
+			dp=635, ep=474, dp_ep=634, rp=9000,
 		},
 		{
 			id=169,
@@ -3461,6 +3876,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8333,
 			bpm=230,
 			length=2.82,
+			dp=732, ep=316, dp_ep=348, rp=9000,
 		},
 		{
 			id=170,
@@ -3472,6 +3888,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6546,
 			bpm=230,
 			length=4.45,
+			dp=732, ep=264, dp_ep=104, rp=9000,
 		},
 		{
 			id=171,
@@ -3483,6 +3900,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.801,
 			bpm=232,
 			length=3.93,
+			dp=781, ep=369, dp_ep=827, rp=9000,
 		},
 		{
 			id=172,
@@ -3494,6 +3912,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5966,
 			bpm=234,
 			length=4.76,
+			dp=830, ep=158, dp_ep=66, rp=9000,
 		},
 		{
 			id=173,
@@ -3505,6 +3924,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5311,
 			bpm=240,
 			length=4.13,
+			dp=976, ep=0, dp_ep=10, rp=9000,
 		},
 		{
 			id=174,
@@ -3516,6 +3936,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7099,
 			bpm=240,
 			length=2.87,
+			dp=976, ep=211, dp_ep=1000, rp=9000,
 		},
 		{
 			id=175,
@@ -3527,6 +3948,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6583,
 			bpm=240,
 			length=2.05,
+			dp=976, ep=53, dp_ep=259, rp=9000,
 		},
 		{
 			id=176,
@@ -3538,6 +3960,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.638,
 			bpm=241,
 			length=2.92,
+			dp=1000, ep=106, dp_ep=620, rp=9000,
 		},
 		{
 			id=177,
@@ -3549,6 +3972,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9382,
 			bpm=202,
 			length=30.44,
+			dp=0, ep=1000, dp_ep=118, rp=10000,
 		},
 		{
 			id=178,
@@ -3560,6 +3984,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9265,
 			bpm=208,
 			length=16.03,
+			dp=120, ep=948, dp_ep=414, rp=10000,
 		},
 		{
 			id=179,
@@ -3571,6 +3996,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9445,
 			bpm=210,
 			length=13.09,
+			dp=160, ep=895, dp_ep=357, rp=10000,
 		},
 		{
 			id=180,
@@ -3582,6 +4008,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9583,
 			bpm=219,
 			length=7.49,
+			dp=340, ep=790, dp_ep=683, rp=10000,
 		},
 		{
 			id=181,
@@ -3593,6 +4020,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9698,
 			bpm=220,
 			length=6.64,
+			dp=360, ep=737, dp_ep=540, rp=10000,
 		},
 		{
 			id=182,
@@ -3604,6 +4032,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8526,
 			bpm=220,
 			length=12.49,
+			dp=360, ep=843, dp_ep=1000, rp=10000,
 		},
 		{
 			id=183,
@@ -3615,6 +4044,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8762,
 			bpm=226,
 			length=5.89,
+			dp=480, ep=632, dp_ep=605, rp=10000,
 		},
 		{
 			id=184,
@@ -3626,6 +4056,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8457,
 			bpm=228,
 			length=6.09,
+			dp=520, ep=579, dp_ep=548, rp=10000,
 		},
 		{
 			id=185,
@@ -3637,6 +4068,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.9736,
 			bpm=218,
 			length=5.04,
+			dp=320, ep=685, dp_ep=140, rp=10000,
 		},
 		{
 			id=186,
@@ -3648,6 +4080,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.753,
 			bpm=230,
 			length=7.08,
+			dp=560, ep=474, dp_ep=266, rp=10000,
 		},
 		{
 			id=187,
@@ -3659,6 +4092,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.931,
 			bpm=232,
 			length=4.17,
+			dp=600, ep=527, dp_ep=670, rp=10000,
 		},
 		{
 			id=188,
@@ -3670,6 +4104,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.8924,
 			bpm=235,
 			length=3.01,
+			dp=660, ep=422, dp_ep=474, rp=10000,
 		},
 		{
 			id=189,
@@ -3681,6 +4116,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.876,
 			bpm=240,
 			length=2.68,
+			dp=760, ep=369, dp_ep=679, rp=10000,
 		},
 		{
 			id=190,
@@ -3692,6 +4128,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.73,
 			bpm=240,
 			length=3.5,
+			dp=760, ep=316, dp_ep=448, rp=10000,
 		},
 		{
 			id=191,
@@ -3703,6 +4140,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.7371,
 			bpm=246,
 			length=3.28,
+			dp=880, ep=264, dp_ep=744, rp=10000,
 		},
 		{
 			id=192,
@@ -3714,6 +4152,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5583,
 			bpm=248,
 			length=3.29,
+			dp=920, ep=53, dp_ep=0, rp=10000,
 		},
 		{
 			id=193,
@@ -3725,6 +4164,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6316,
 			bpm=250,
 			length=3.79,
+			dp=960, ep=106, dp_ep=405, rp=10000,
 		},
 		{
 			id=194,
@@ -3736,6 +4176,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.6957,
 			bpm=250,
 			length=2.76,
+			dp=960, ep=211, dp_ep=861, rp=10000,
 		},
 		{
 			id=195,
@@ -3747,6 +4188,7 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.5265,
 			bpm=250,
 			length=4.37,
+			dp=960, ep=158, dp_ep=631, rp=10000,
 		},
 		{
 			id=196,
@@ -3758,7 +4200,9 @@ ECS.SongInfo.Lower = {
 			adj_stream=0.4905,
 			bpm=252,
 			length=4.17,
+			dp=1000, ep=0, dp_ep=118, rp=10000,
 		},
+
 	}
 }
 
@@ -3782,6 +4226,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9917,
 			bpm=186,
 			length=8.56,
+			dp=0, ep=917, dp_ep=286, rp=1000,
 		},
 		{
 			id=2,
@@ -3793,6 +4238,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9309,
 			bpm=187,
 			length=9.43,
+			dp=28, ep=1000, dp_ep=571, rp=1000,
 		},
 		{
 			id=3,
@@ -3804,6 +4250,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8621,
 			bpm=197,
 			length=5.46,
+			dp=306, ep=500, dp_ep=0, rp=1000,
 		},
 		{
 			id=4,
@@ -3815,6 +4262,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8759,
 			bpm=198,
 			length=6.42,
+			dp=334, ep=584, dp_ep=288, rp=1000,
 		},
 		{
 			id=5,
@@ -3826,6 +4274,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9213,
 			bpm=190,
 			length=8.17,
+			dp=112, ep=834, dp_ep=360, rp=1000,
 		},
 		{
 			id=6,
@@ -3837,6 +4286,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8204,
 			bpm=208,
 			length=5.62,
+			dp=612, ep=417, dp_ep=574, rp=1000,
 		},
 		{
 			id=7,
@@ -3848,6 +4298,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8757,
 			bpm=200,
 			length=7.92,
+			dp=389, ep=667, dp_ep=643, rp=1000,
 		},
 		{
 			id=8,
@@ -3859,6 +4310,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9005,
 			bpm=202,
 			length=7.41,
+			dp=445, ep=750, dp_ep=1000, rp=1000,
 		},
 		{
 			id=9,
@@ -3870,6 +4322,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8472,
 			bpm=215,
 			length=3.11,
+			dp=806, ep=167, dp_ep=430, rp=1000,
 		},
 		{
 			id=10,
@@ -3881,6 +4334,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8571,
 			bpm=210,
 			length=3.49,
+			dp=667, ep=334, dp_ep=502, rp=1000,
 		},
 		{
 			id=11,
@@ -3892,6 +4346,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7602,
 			bpm=210,
 			length=3.87,
+			dp=667, ep=250, dp_ep=286, rp=1000,
 		},
 		{
 			id=12,
@@ -3903,6 +4358,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7185,
 			bpm=222,
 			length=2.67,
+			dp=1000, ep=0, dp_ep=499, rp=1000,
 		},
 		{
 			id=13,
@@ -3914,6 +4370,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.6562,
 			bpm=220,
 			length=4.35,
+			dp=945, ep=84, dp_ep=574, rp=1000,
 		},
 		{
 			id=14,
@@ -3925,6 +4382,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9488,
 			bpm=197,
 			length=9.42,
+			dp=156, ep=847, dp_ep=324, rp=2000,
 		},
 		{
 			id=15,
@@ -3936,6 +4394,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=1,
 			bpm=190,
 			length=12.17,
+			dp=0, ep=924, dp_ep=80, rp=2000,
 		},
 		{
 			id=16,
@@ -3947,6 +4406,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9655,
 			bpm=208,
 			length=5.69,
+			dp=400, ep=616, dp_ep=364, rp=2000,
 		},
 		{
 			id=17,
@@ -3958,6 +4418,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.989,
 			bpm=204,
 			length=7.31,
+			dp=312, ep=770, dp_ep=567, rp=2000,
 		},
 		{
 			id=18,
@@ -3969,6 +4430,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9316,
 			bpm=200,
 			length=9.04,
+			dp=223, ep=693, dp_ep=56, rp=2000,
 		},
 		{
 			id=19,
@@ -3980,6 +4442,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7298,
 			bpm=200,
 			length=24.02,
+			dp=223, ep=1000, dp_ep=1000, rp=2000,
 		},
 		{
 			id=20,
@@ -3991,6 +4454,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9643,
 			bpm=210,
 			length=4.59,
+			dp=445, ep=539, dp_ep=265, rp=2000,
 		},
 		{
 			id=21,
@@ -4002,6 +4466,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.848,
 			bpm=217,
 			length=6.08,
+			dp=600, ep=462, dp_ep=505, rp=2000,
 		},
 		{
 			id=22,
@@ -4013,6 +4478,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7808,
 			bpm=218,
 			length=6.35,
+			dp=623, ep=385, dp_ep=339, rp=2000,
 		},
 		{
 			id=23,
@@ -4024,6 +4490,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8025,
 			bpm=225,
 			length=3.16,
+			dp=778, ep=154, dp_ep=105, rp=2000,
 		},
 		{
 			id=24,
@@ -4035,6 +4502,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8875,
 			bpm=220,
 			length=3.09,
+			dp=667, ep=308, dp_ep=237, rp=2000,
 		},
 		{
 			id=25,
@@ -4046,6 +4514,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7336,
 			bpm=220,
 			length=4.53,
+			dp=667, ep=231, dp_ep=0, rp=2000,
 		},
 		{
 			id=26,
@@ -4057,6 +4526,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.6294,
 			bpm=235,
 			length=3.54,
+			dp=1000, ep=77, dp_ep=551, rp=2000,
 		},
 		{
 			id=27,
@@ -4068,6 +4538,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.5565,
 			bpm=232,
 			length=4.45,
+			dp=934, ep=0, dp_ep=111, rp=2000,
 		},
 		{
 			id=28,
@@ -4079,6 +4550,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9332,
 			bpm=208,
 			length=9.62,
+			dp=0, ep=917, dp_ep=227, rp=3000,
 		},
 		{
 			id=29,
@@ -4090,6 +4562,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8221,
 			bpm=209,
 			length=14.51,
+			dp=30, ep=1000, dp_ep=750, rp=3000,
 		},
 		{
 			id=30,
@@ -4101,6 +4574,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9954,
 			bpm=217,
 			length=4.13,
+			dp=265, ep=667, dp_ep=297, rp=3000,
 		},
 		{
 			id=31,
@@ -4112,6 +4586,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9595,
 			bpm=214,
 			length=7.55,
+			dp=177, ep=834, dp_ep=663, rp=3000,
 		},
 		{
 			id=32,
@@ -4123,6 +4598,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.905,
 			bpm=212,
 			length=8.19,
+			dp=118, ep=750, dp_ep=0, rp=3000,
 		},
 		{
 			id=33,
@@ -4134,6 +4610,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=1,
 			bpm=227,
 			length=2.85,
+			dp=559, ep=417, dp_ep=500, rp=3000,
 		},
 		{
 			id=34,
@@ -4145,6 +4622,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8559,
 			bpm=222,
 			length=4.43,
+			dp=412, ep=584, dp_ep=593, rp=3000,
 		},
 		{
 			id=35,
@@ -4156,6 +4634,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7204,
 			bpm=225,
 			length=6.4,
+			dp=500, ep=500, dp_ep=612, rp=3000,
 		},
 		{
 			id=36,
@@ -4167,6 +4646,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7981,
 			bpm=234,
 			length=2.02,
+			dp=765, ep=167, dp_ep=297, rp=3000,
 		},
 		{
 			id=37,
@@ -4178,6 +4658,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7778,
 			bpm=230,
 			length=3.74,
+			dp=648, ep=250, dp_ep=139, rp=3000,
 		},
 		{
 			id=38,
@@ -4189,6 +4670,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8069,
 			bpm=230,
 			length=3.81,
+			dp=648, ep=334, dp_ep=528, rp=3000,
 		},
 		{
 			id=39,
@@ -4200,6 +4682,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8041,
 			bpm=240,
 			length=1.82,
+			dp=942, ep=0, dp_ep=343, rp=3000,
 		},
 		{
 			id=40,
@@ -4211,6 +4694,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.5045,
 			bpm=242,
 			length=6.02,
+			dp=1000, ep=84, dp_ep=1000, rp=3000,
 		},
 		{
 			id=41,
@@ -4222,6 +4706,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8878,
 			bpm=217,
 			length=9.81,
+			dp=171, ep=770, dp_ep=413, rp=4000,
 		},
 		{
 			id=42,
@@ -4233,6 +4718,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9257,
 			bpm=213,
 			length=10.76,
+			dp=86, ep=924, dp_ep=637, rp=4000,
 		},
 		{
 			id=43,
@@ -4244,6 +4730,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.858,
 			bpm=209,
 			length=33.49,
+			dp=0, ep=1000, dp_ep=604, rp=4000,
 		},
 		{
 			id=44,
@@ -4255,6 +4742,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9048,
 			bpm=228,
 			length=5.05,
+			dp=405, ep=539, dp_ep=423, rp=4000,
 		},
 		{
 			id=45,
@@ -4266,6 +4754,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8109,
 			bpm=219,
 			length=10.25,
+			dp=213, ep=693, dp_ep=299, rp=4000,
 		},
 		{
 			id=46,
@@ -4277,6 +4766,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8526,
 			bpm=220,
 			length=12.49,
+			dp=235, ep=847, dp_ep=871, rp=4000,
 		},
 		{
 			id=47,
@@ -4288,6 +4778,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.859,
 			bpm=236,
 			length=2.76,
+			dp=575, ep=308, dp_ep=225, rp=4000,
 		},
 		{
 			id=48,
@@ -4299,6 +4790,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9156,
 			bpm=234,
 			length=2.8,
+			dp=532, ep=385, dp_ep=335, rp=4000,
 		},
 		{
 			id=49,
@@ -4310,6 +4802,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9909,
 			bpm=230,
 			length=3.9,
+			dp=447, ep=616, dp_ep=809, rp=4000,
 		},
 		{
 			id=50,
@@ -4321,6 +4814,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7898,
 			bpm=240,
 			length=3.1,
+			dp=660, ep=231, dp_ep=250, rp=4000,
 		},
 		{
 			id=51,
@@ -4332,6 +4826,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7217,
 			bpm=240,
 			length=3.73,
+			dp=660, ep=154, dp_ep=0, rp=4000,
 		},
 		{
 			id=52,
@@ -4343,6 +4838,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8206,
 			bpm=240,
 			length=4.05,
+			dp=660, ep=462, dp_ep=1000, rp=4000,
 		},
 		{
 			id=53,
@@ -4354,6 +4850,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.5,
 			bpm=256,
 			length=2.77,
+			dp=1000, ep=0, dp_ep=604, rp=4000,
 		},
 		{
 			id=54,
@@ -4365,6 +4862,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.4892,
 			bpm=250,
 			length=3.3,
+			dp=873, ep=77, dp_ep=442, rp=4000,
 		},
 		{
 			id=55,
@@ -4376,6 +4874,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8474,
 			bpm=224,
 			length=13.91,
+			dp=0, ep=875, dp_ep=128, rp=5000,
 		},
 		{
 			id=56,
@@ -4387,6 +4886,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7906,
 			bpm=225,
 			length=18.08,
+			dp=28, ep=1000, dp_ep=484, rp=5000,
 		},
 		{
 			id=57,
@@ -4398,6 +4898,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9328,
 			bpm=237,
 			length=4.1,
+			dp=362, ep=625, dp_ep=389, rp=5000,
 		},
 		{
 			id=58,
@@ -4409,6 +4910,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9208,
 			bpm=234,
 			length=4.6,
+			dp=278, ep=750, dp_ep=484, rp=5000,
 		},
 		{
 			id=59,
@@ -4420,6 +4922,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=1,
 			bpm=240,
 			length=2.53,
+			dp=445, ep=375, dp_ep=0, rp=5000,
 		},
 		{
 			id=60,
@@ -4431,6 +4934,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8421,
 			bpm=244,
 			length=4.43,
+			dp=556, ep=500, dp_ep=549, rp=5000,
 		},
 		{
 			id=61,
@@ -4442,6 +4946,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7238,
 			bpm=258,
 			length=1.84,
+			dp=945, ep=0, dp_ep=291, rp=5000,
 		},
 		{
 			id=62,
@@ -4453,6 +4958,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.5714,
 			bpm=252,
 			length=4.17,
+			dp=778, ep=125, dp_ep=194, rp=5000,
 		},
 		{
 			id=63,
@@ -4464,6 +4970,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8161,
 			bpm=260,
 			length=1.88,
+			dp=1000, ep=250, dp_ep=1000, rp=5000,
 		},
 		{
 			id=64,
@@ -4475,6 +4982,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9172,
 			bpm=238,
 			length=5.6,
+			dp=200, ep=875, dp_ep=667, rp=6000,
 		},
 		{
 			id=65,
@@ -4486,6 +4994,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8034,
 			bpm=230,
 			length=16.63,
+			dp=0, ep=1000, dp_ep=167, rp=6000,
 		},
 		{
 			id=66,
@@ -4497,6 +5006,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7974,
 			bpm=249,
 			length=4.34,
+			dp=475, ep=500, dp_ep=0, rp=6000,
 		},
 		{
 			id=67,
@@ -4508,6 +5018,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9046,
 			bpm=240,
 			length=5.85,
+			dp=250, ep=750, dp_ep=167, rp=6000,
 		},
 		{
 			id=68,
@@ -4519,6 +5030,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9157,
 			bpm=250,
 			length=3.15,
+			dp=500, ep=625, dp_ep=1000, rp=6000,
 		},
 		{
 			id=69,
@@ -4530,6 +5042,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8057,
 			bpm=255,
 			length=3.84,
+			dp=625, ep=375, dp_ep=167, rp=6000,
 		},
 		{
 			id=70,
@@ -4541,6 +5054,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7411,
 			bpm=266,
 			length=2.26,
+			dp=900, ep=125, dp_ep=334, rp=6000,
 		},
 		{
 			id=71,
@@ -4552,6 +5066,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.76,
 			bpm=260,
 			length=2.45,
+			dp=750, ep=250, dp_ep=167, rp=6000,
 		},
 		{
 			id=72,
@@ -4563,6 +5078,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.566,
 			bpm=270,
 			length=2.21,
+			dp=1000, ep=0, dp_ep=167, rp=6000,
 		},
 		{
 			id=73,
@@ -4574,6 +5090,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9801,
 			bpm=244,
 			length=8.16,
+			dp=0, ep=1000, dp_ep=293, rp=7000,
 		},
 		{
 			id=74,
@@ -4585,6 +5102,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9845,
 			bpm=250,
 			length=3.55,
+			dp=167, ep=858, dp_ep=403, rp=7000,
 		},
 		{
 			id=75,
@@ -4596,6 +5114,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7153,
 			bpm=257,
 			length=4.87,
+			dp=362, ep=572, dp_ep=0, rp=7000,
 		},
 		{
 			id=76,
@@ -4607,6 +5126,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9769,
 			bpm=264,
 			length=2.27,
+			dp=556, ep=429, dp_ep=226, rp=7000,
 		},
 		{
 			id=77,
@@ -4618,6 +5138,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8416,
 			bpm=260,
 			length=3.54,
+			dp=445, ep=715, dp_ep=1000, rp=7000,
 		},
 		{
 			id=78,
@@ -4629,6 +5150,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=1,
 			bpm=270,
 			length=2.69,
+			dp=723, ep=286, dp_ep=332, rp=7000,
 		},
 		{
 			id=79,
@@ -4640,6 +5162,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8091,
 			bpm=275,
 			length=1.66,
+			dp=862, ep=143, dp_ep=315, rp=7000,
 		},
 		{
 			id=80,
@@ -4651,6 +5174,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.597,
 			bpm=280,
 			length=2.5,
+			dp=1000, ep=0, dp_ep=293, rp=7000,
 		},
 		{
 			id=81,
@@ -4662,6 +5186,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9856,
 			bpm=256,
 			length=4.77,
+			dp=0, ep=834, dp_ep=0, rp=8000,
 		},
 		{
 			id=82,
@@ -4673,6 +5198,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8939,
 			bpm=268,
 			length=4.09,
+			dp=500, ep=667, dp_ep=1000, rp=8000,
 		},
 		{
 			id=83,
@@ -4684,6 +5210,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8737,
 			bpm=260,
 			length=6.28,
+			dp=167, ep=1000, dp_ep=1000, rp=8000,
 		},
 		{
 			id=84,
@@ -4695,6 +5222,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8542,
 			bpm=270,
 			length=2.53,
+			dp=584, ep=334, dp_ep=253, rp=8000,
 		},
 		{
 			id=85,
@@ -4706,6 +5234,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7538,
 			bpm=270,
 			length=4.53,
+			dp=584, ep=500, dp_ep=751, rp=8000,
 		},
 		{
 			id=86,
@@ -4717,6 +5246,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8376,
 			bpm=280,
 			length=1.83,
+			dp=1000, ep=167, dp_ep=1000, rp=8000,
 		},
 		{
 			id=87,
@@ -4728,6 +5258,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7091,
 			bpm=280,
 			length=2.73,
+			dp=1000, ep=0, dp_ep=499, rp=8000,
 		},
 		{
 			id=88,
@@ -4739,6 +5270,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8854,
 			bpm=250,
 			length=21.97,
+			dp=0, ep=1000, dp_ep=0, rp=9000,
 		},
 		{
 			id=89,
@@ -4750,6 +5282,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.9118,
 			bpm=262,
 			length=5.71,
+			dp=375, ep=667, dp_ep=1000, rp=9000,
 		},
 		{
 			id=90,
@@ -4761,6 +5294,7 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.8605,
 			bpm=272,
 			length=4.09,
+			dp=688, ep=334, dp_ep=524, rp=9000,
 		},
 		{
 			id=91,
@@ -4772,7 +5306,8 @@ ECS.SongInfo.Upper = {
 			adj_stream=0.7826,
 			bpm=282,
 			length=3.76,
-		},
+			dp=1000, ep=0, dp_ep=0, rp=9000,
+		}
 	}
 }
 
@@ -4852,32 +5387,22 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		return nil
 	end
 
-	local DP = function(song_data, song_info)
-		return math.ceil(1000 * (1 - (song_data.MaxBpm-song_data.bpm) / (song_data.MaxBpm-song_data.MinBpm)))
-	end
-
-	local EP = function(song_data, song_info)
-		local scaled_16ths = song_data.measures * song_data.adj_stream^1.6
-		return math.ceil(1000 * (1 - (song_info.MaxScaled16ths-scaled_16ths) / (song_info.MaxScaled16ths - song_info.MinScaled16ths)))
-	end
-
-	local RP = function(song_data, song_info) 
-		return 1000 * (1 + (song_data.difficulty-song_info.MinBlockLevel))
-	end
-
 	local AP = function(score)
 		return math.ceil((score^4) * 1000)
 	end
 
-	local BP = function(ecs_player, song_data, relics_used, dp, ep, rp, ap, song_info)
+	local BP = function(ecs_player, song_data, relics_used, ap, song_info)
 		local bp = 0
 		-- Handle relics first
 		for _, relic in ipairs(relics_used) do
-			bp = bp + relic.score(ecs_player, song_data, relics_used, dp, ep, rp, ap)()
+			bp = bp + relic.score(ecs_player, song_data, relics_used, ap)()
 		end
 
 		-- Then affinities
-		max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+		local dp = song_data.dp
+		local ep = song_data.ep
+		local rp = song_data.rp
+		local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
 		bp = bp + math.floor((ecs_player.affinities.dp/2000)*dp +
 						 (ecs_player.affinities.ep/2000)*ep +
 						 (ecs_player.affinities.ap/2000)*ap +
@@ -4889,9 +5414,9 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		local tier_skill = ecs_player.tier_skill[song_data.bpm_tier]
 		if not tier_skill then tier_skill = 1 end
 
-		local dp = DP(song_data, song_info)
-		local ep = EP(song_data, song_info)
-		local rp = RP(song_data, song_info)
+		local dp = song_data.dp
+		local ep = song_data.ep
+		local rp = song_data.rp
 		local ap = AP(score)
 
 		if song_data.length < 8 then
@@ -4910,11 +5435,11 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 	if failed then
 		return FailedScore(ecs_player, song_data, song_info)
 	else
-		local dp = DP(song_data, song_info)
-		local ep = EP(song_data, song_info)
-		local rp = RP(song_data, song_info)
+		local dp = song_data.dp
+		local ep = song_data.ep
+		local rp = song_data.rp
 		local ap = AP(score)
-		local bp = BP(ecs_player, song_data, relics_used, dp, ep, rp, ap, song_info)
+		local bp = BP(ecs_player, song_data, relics_used, ap, song_info)
 		return dp + ep + rp + ap + bp
 	end
 
