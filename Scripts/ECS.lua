@@ -5600,14 +5600,14 @@ ECS.SongInfo.Upper = {
 }
 
 local InitializeSongStats = function(SongInfo)
-	for _, song_info in ipairs(SongInfo.Songs) do
-		SongInfo.MinBpm = SongInfo.MinBpm == 0 and song_info.bpm or math.min(SongInfo.MinBpm, song_info.bpm)
-		SongInfo.MaxBpm = SongInfo.MaxBpm == 0 and song_info.bpm or math.max(SongInfo.MaxBpm, song_info.bpm)
-		SongInfo.MinScaled16ths = SongInfo.MinScaled16ths == 0 and song_info.measures or math.min(SongInfo.MinScaled16ths, song_info.measures)
-		SongInfo.MaxScaled16ths = SongInfo.MaxScaled16ths == 0 and song_info.measures or math.max(SongInfo.MaxScaled16ths, song_info.measures)
-		SongInfo.MinBlockLevel = SongInfo.MinBlockLevel == 0 and song_info.difficulty or math.min(SongInfo.MinBlockLevel, song_info.difficulty)
-		SongInfo.MaxBlockLevel = SongInfo.MaxBlockLevel == 0 and song_info.difficulty or math.max(SongInfo.MaxBlockLevel, song_info.difficulty)
-		SongInfo.MinLength = SongInfo.MinLength == 0 and song_info.length or math.min(SongInfo.MinLength, song_info.length)
+	for _, song_data in ipairs(SongInfo.Songs) do
+		SongInfo.MinBpm = SongInfo.MinBpm == 0 and song_data.bpm or math.min(SongInfo.MinBpm, song_data.bpm)
+		SongInfo.MaxBpm = SongInfo.MaxBpm == 0 and song_data.bpm or math.max(SongInfo.MaxBpm, song_data.bpm)
+		SongInfo.MinScaled16ths = SongInfo.MinScaled16ths == 0 and song_data.measures or math.min(SongInfo.MinScaled16ths, song_data.measures)
+		SongInfo.MaxScaled16ths = SongInfo.MaxScaled16ths == 0 and song_data.measures or math.max(SongInfo.MaxScaled16ths, song_data.measures)
+		SongInfo.MinBlockLevel = SongInfo.MinBlockLevel == 0 and song_data.difficulty or math.min(SongInfo.MinBlockLevel, song_data.difficulty)
+		SongInfo.MaxBlockLevel = SongInfo.MaxBlockLevel == 0 and song_data.difficulty or math.max(SongInfo.MaxBlockLevel, song_data.difficulty)
+		SongInfo.MinLength = SongInfo.MinLength == 0 and song_data.length or math.min(SongInfo.MinLength, song_data.length)
 	end
 end
 
@@ -5658,15 +5658,14 @@ PlayerIsUpper = function()
 	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].isupper ~= nil then
 		return ECS.Players[profile_name].isupper
 	end
-	-- default to IsUpper = true
 	return nil
 end
 
 -- ------------------------------------------------------
 -- Score Calculations
 
-FindEcsSong = function(song_name, song_list)
-	for _, data in ipairs(song_list) do
+FindEcsSong = function(song_name, SongInfo)
+	for _, data in ipairs(SongInfo.Songs) do
 		if data.name == song_name then
 			return data
 		end
@@ -5675,6 +5674,12 @@ FindEcsSong = function(song_name, song_list)
 end
 
 local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
+	if ecs_player == nil then SM("NO ECS PLAYER") return 0,nil end
+	if song_name == nil then SM("NO SONG NAME") return 0,nil end
+	if score == nil then SM("NO SCORE") return 0,nil end
+	if relics_used == nil then SM("NO RELICS USED") return 0,nil end
+	if failed == nil then SM("NO FAILED") return 0,nil end
+
 	local AP = function(score)
 		return math.ceil((score^4) * 1000)
 	end
@@ -5714,14 +5719,12 @@ local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used
 		end
 	end
 
-	score = 0
-
-	local song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
+	local song_info = PlayerIsUpper() and ECS.SongInfo.Upper or ECS.SongInfo.Lower
 	local song_data = FindEcsSong(song_name, song_info)
 	if song_data == nil then return 0, nil end
 
 	if failed then
-		return FailedScore(ecs_player, song_data, song_info)
+		return FailedScore(ecs_player, song_data, song_info, score)
 	else
 		local dp = song_data.dp
 		local ep = song_data.ep
@@ -5736,7 +5739,18 @@ end
 
 AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	local points, song_data = CalculateScoreForSong(ecs_player, song_name, score, relics_used, failed)
-	ECS.Player.SongsPlayed[#ECS.Player.SongsPlayed + 1] = {
+	if song_data == nil then return end
+
+	local index = #ECS.Player.SongsPlayed + 1
+	for i=1,#ECS.Player.SongsPlayed do
+		if ECS.Player.SongsPlayed[i].name == song_name then
+			if score > ECS.Player.SongsPlayed[i].score then
+				index = i
+			end
+		end
+	end
+
+	ECS.Player.SongsPlayed[index] = {
 		name=song_data.name,
 		points=points,
 		steps=song_data.steps,

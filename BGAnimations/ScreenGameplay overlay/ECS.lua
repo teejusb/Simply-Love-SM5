@@ -187,7 +187,6 @@ return Def.Actor{
 			CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 			CreateRelicFile(day, month_string, year, seconds)
 			WriteRelicDataToDisk()
-			-- WriteOutSongDataToDisk()
 		end
 	end
 }

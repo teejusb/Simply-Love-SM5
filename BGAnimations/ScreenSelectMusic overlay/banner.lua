@@ -68,6 +68,29 @@ t[#t+1] = Def.ActorFrame{
 	}
 }
 
+local SetSongPointText = function(self)
+	local song = GAMESTATE:GetCurrentSong()
+	if song == nil then
+		self:settext("Min Song Points:")
+		return
+	end
+	local group_name = song:GetGroupName()
+	if (group_name ~= "ECS9 - Upper" and
+		group_name ~= "ECS9 - Lower" and 
+		group_name ~= "ECS9 - Upper Marathon") then
+		self:settext("Min Song Points:")
+		return
+	end
+	local song_info = PlayerIsUpper() and ECS.SongInfo.Upper or ECS.SongInfo.Lower
+	local song_name = song:GetDisplayFullTitle()
+	local song_data = FindEcsSong(song_name, song_info)
+	if song_data == nil then
+		self:settext("Min Song Points:")
+		return
+	end
+	self:settext("Min Song Points: " .. tostring(song_data.dp + song_data.ep + song_data.rp))
+end
+
 -- ECS Information
 t[#t+1] = Def.ActorFrame{
 	InitCommand=function(self)
@@ -82,37 +105,20 @@ t[#t+1] = Def.ActorFrame{
 	LoadFont("Common Normal")..{
 		InitCommand=function(self) self:shadowlength(1):zoom(2):horizalign(left) end,
 		OnCommand=function(self)
-			self:settext("Total Set Points:"):strokecolor(color("Black"))
+			local total_points = 0
+			for i=1,7 do
+				if ECS.Player.SongsPlayed[i] == nil then
+					break
+				end
+				total_points = total_points + ECS.Player.SongsPlayed[i].points
+			end
+			self:settext("Total Set Points: " .. tostring(total_points))
 		end
 	},
 	LoadFont("Common Normal")..{
 		InitCommand=function(self) self:shadowlength(1):zoom(2):addy(30):horizalign(left) end,
-		OnCommand=function(self)
-			self:settext("Song Points:")
-		end,
-		CurrentSongChangedMessageCommand=function(self)
-			local song = GAMESTATE:GetCurrentSong()
-			if song == nil then
-				self:settext("Song Points:")
-				return
-			end
-			local group_name = song:GetGroupName()
-			if (group_name ~= "ECS9 - Upper" and
-				group_name ~= "ECS9 - Lower" and 
-				group_name ~= "ECS9 - Upper Marathon") then
-				self:settext("Song Points:")
-				return
-			end
-			local song_info = PlayerIsUpper() and ECS.SongInfo.Upper.Songs or ECS.SongInfo.Lower.Songs
-			local song_name = song:GetDisplayFullTitle()
-			local song_data = FindEcsSong(song_name, song_info)
-			if song_data == nil then
-				self:settext("Song Points:")
-				return
-			end
-			self:settext("Song Points: " .. tostring(song_data.dp + song_data.ep + song_data.rp))
-		end,
+		OnCommand=SetSongPointText,
+		CurrentSongChangedMessageCommand=SetSongPointText,
 	}
-
 }
 return t
