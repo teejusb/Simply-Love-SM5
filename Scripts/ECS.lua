@@ -435,7 +435,7 @@ ECS.Relics = {
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
-				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow" or name == "Dragon Arrow") then
 					has_arrow = true
 				end
 			end
@@ -600,7 +600,7 @@ ECS.Relics = {
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
-				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow"or name == "Dragon Arrow") then
 					has_arrow = true
 				end
 			end
@@ -895,7 +895,7 @@ ECS.Relics = {
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
-				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow" or name == "Dragon Arrow") then
 					has_arrow = true
 				end
 			end
@@ -1190,7 +1190,7 @@ ECS.Relics = {
 			local has_arrow = false
 			for _, relic in relics_used do
 				local name = relic.name
-				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow") then
+				if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow" or name == "Dragon Arrow") then
 					has_arrow = true
 				end
 			end
@@ -5870,6 +5870,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		bpm=song_data.bpm,
 		bpm_tier=song_data.bpm_tier,
 		failed=failed,
+		relics_used=DeepCopy(relics_used)
 	}
 	local SortByPointsDesc = function(a, b)
 		return a.points > b.points
