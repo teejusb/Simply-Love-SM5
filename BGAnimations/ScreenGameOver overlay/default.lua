@@ -28,8 +28,76 @@ local t = Def.ActorFrame{
 			self:zoomto(160,_screen.h):xy(_screen.w-80, _screen.h/2):diffuse(color("#00000099"))
 			if ThemePrefs.Get("RainbowMode") then self:diffuse(color("#000000dd")) end
 		end,
-	}
+	},
 }
+
+if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
+		Text="Final Set Points",
+		InitCommand=function(self) self:xy(_screen.cx,_screen.cy-200):croptop(1):fadetop(1):zoom(0.3):shadowlength(1) end,
+		OnCommand=function(self) self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1) end,
+		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
+	}
+
+	t[#t+1] = LoadFont("Wendy/_wendy white")..{
+		InitCommand=function(self) self:xy(_screen.cx,_screen.cy-150):croptop(1):fadetop(1):zoom(0.8):shadowlength(1) end,
+		OnCommand=function(self)
+			self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1)
+
+			-- NOTE(teejusb): The code below also works for marathons. The SongsPlayed table would only
+			-- contain the marathon, and any MP giving relics are alread accounted for. The End-of-set
+			-- relics won't be active as they're not selectable during the marathon.
+
+			-- First add best 7 scores
+			local total_points = 0
+			for i=1,7 do
+				if ECS.Player.SongsPlayed[i] ~= nil then
+					total_points = total_points + ECS.Player.SongsPlayed[i].points
+				end
+			end
+
+			-- Then handle end of set relics
+			-- First check which end of set relics were active.
+			local slime_badge, agility_potion, stamina_potion = false, false, false
+			for song_played in ivalues(ECS.Player.SongsPlayed) do
+				if not song_played.failed then
+					for relic in song_played.relics_used do
+						if relic.name == "Slime Badge" then
+							slime_badge = true
+						end
+						if relic.name == "Agility Potion" then
+							agility_potion = true
+						end
+						if relic.name == "Stamina Potion" then
+							stamina_potion = true
+						end
+					end
+				end
+			end
+
+			-- Then add in the additional BPM from them
+			local songs_passed = 0
+			local total_bpm = 0
+			local tiers = {}
+			local total_steps = 0
+			for song_played in ivalues(ECS.Player.SongsPlayed) do
+				if not song_played.failed then
+					total_bpm = total_bpm + song_played.bpm
+					tiers[song_played.bpm_tier] = tiers[song_played.bpm_tier] + 1
+					total_steps = total_steps + song_played.steps
+					songs_passed = songs_passed + 1
+				end
+			end
+
+			if slime_badge then total_points = total_points + 100 * #tiers end
+			if agility_potion then total_points = total_points + math.floor(((total_bpm / songs_passed) - 120)^1.3) end
+			if stamina_potion then total_points = total_points + math.floor(total_steps / 75) end
+
+			self:settext(tostring(total_points))
+		end,
+		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
+	}
+end
 
 local line_height = 58
 local profilestats_y = 138
