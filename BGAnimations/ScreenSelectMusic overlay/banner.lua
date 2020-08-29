@@ -95,7 +95,7 @@ end
 t[#t+1] = Def.ActorFrame{
 	InitCommand=function(self)
 		self:addx(-170):addy(-60)
-		if ECS.Mode ~= "ECS" and ECS.Mode ~= "Marathon" then
+		if ECS.Mode ~= "ECS" then
 			self:visible(false)
 		end
 	end,

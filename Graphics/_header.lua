@@ -93,7 +93,7 @@ local Update = function(af, dt)
 		if SessionHasEnded() and (not endgame_warning_has_been_issued) then
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				if ECS.Mode == "Warmup" then
-					-- Force users out of screen gameplay if their set timer has ended.
+					-- Force users out of screen gameplay if their warmup timer has ended.
 					SCREENMAN:GetTopScreen():PostScreenMessage("SM_BeginFailed", 0)
 				end
 			elseif SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" then
