@@ -100,17 +100,16 @@ t[#t+1] = Def.ActorFrame{
 		end
 	end,
 	Def.Quad{
-		InitCommand=function(self) self:diffuse(color("#000000AA")):zoomto(300, 80):addx(140):addy(20) end
+		InitCommand=function(self) self:diffuse(color("#000000AA")):zoomto(370, 80):addx(175):addy(20) end
 	},
 	LoadFont("Common Normal")..{
 		InitCommand=function(self) self:shadowlength(1):zoom(2):horizalign(left) end,
 		OnCommand=function(self)
 			local total_points = 0
 			for i=1,7 do
-				if ECS.Player.SongsPlayed[i] == nil then
-					break
+				if ECS.Player.SongsPlayed[i] ~= nil then
+					total_points = total_points + ECS.Player.SongsPlayed[i].points
 				end
-				total_points = total_points + ECS.Player.SongsPlayed[i].points
 			end
 			self:settext("Total Set Points: " .. tostring(total_points))
 		end

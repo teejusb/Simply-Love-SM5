@@ -1921,9 +1921,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="faustsscalpel.png",
-		action=function()
-		-- TODO(teejusb)
-		end,
+		action=function() end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap) return 0 end
 	},
 	{
@@ -5746,6 +5744,7 @@ InitializeSongStats(ECS.SongInfo.Upper)
 ECS.Players = {}
 
 ECS.Players["Rust"] = {
+	id=0,
 	isupper=true,
 	country="U.S.A.",
 	level=100,
@@ -5760,12 +5759,14 @@ ECS.Players["Rust"] = {
 }
 
 ECS.Players["teejusb"] = {
+	id=1,
 	isupper=false,
 	country="U.S.A.",
 	level=50,
 	exp=90,
 	relics = {
-		{name="Faust's Scalpel",	quantity=1},
+		{name="Stone Axe"},
+		{name="Stone Knife"},
 	},
 	tier_skill = {[120]=1, [130]=1, [140]=1, [150]=1, [160]=1, [170]=1, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
@@ -5802,7 +5803,7 @@ FindEcsSong = function(song_name, SongInfo)
 	return nil
 end
 
-local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
+CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
 	if ecs_player == nil then SM("NO ECS PLAYER") return 0,nil end
 	if song_name == nil then SM("NO SONG NAME") return 0,nil end
 	if score == nil then SM("NO SCORE") return 0,nil end
@@ -5817,7 +5818,9 @@ local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used
 		local bp = 0
 		-- Handle relics first
 		for relic in ivalues(relics_used) do
-			bp = bp + relic.score(ecs_player, song_info, song_data, relics_used, ap)()
+			if relic.name ~= "(nothing)" then
+				bp = bp + relic.score(ecs_player, song_info, song_data, relics_used, ap)
+			end
 		end
 
 		-- Then affinities
@@ -5842,9 +5845,9 @@ local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used
 		local ap = AP(score)
 
 		if song_data.length < 8 then
-			return ((dp + ep + rp + ap) * (tier_skill / 99) * score) * ((song_data.length - song_info.MinLength + 0.1) / ( 8 - (song_info.MinLength)))
+			return math.floor(((dp + ep + rp + ap) * (tier_skill / 99) * score) * ((song_data.length - song_info.MinLength + 0.1) / ( 8 - (song_info.MinLength))))
 		else
-			return (dp + ep + rp + ap) * (tier_skill / 99) * score
+			return math.floor((dp + ep + rp + ap) * (tier_skill / 99) * score)
 		end
 	end
 
@@ -5853,7 +5856,7 @@ local CalculateScoreForSong = function(ecs_player, song_name, score, relics_used
 	if song_data == nil then return 0, nil end
 
 	if failed then
-		return FailedScore(ecs_player, song_data, song_info, score)
+		return FailedScore(ecs_player, song_data, song_info, score), song_data
 	else
 		local dp = song_data.dp
 		local ep = song_data.ep
@@ -5888,6 +5891,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		failed=failed,
 		relics_used=DeepCopy(relics_used)
 	}
+
 	local SortByPointsDesc = function(a, b)
 		return a.points > b.points
 	end
