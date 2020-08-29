@@ -5767,6 +5767,9 @@ ECS.Players["teejusb"] = {
 	relics = {
 		{name="Stone Axe"},
 		{name="Stone Knife"},
+		{name="Slime Badge",	quantity=1},
+		{name="Agility Potion",	quantity=1},
+		{name="Stamina Potion",	quantity=1},
 	},
 	tier_skill = {[120]=1, [130]=1, [140]=1, [150]=1, [160]=1, [170]=1, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},

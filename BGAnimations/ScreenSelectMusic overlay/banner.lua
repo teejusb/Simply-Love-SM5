@@ -99,6 +99,21 @@ t[#t+1] = Def.ActorFrame{
 			self:visible(false)
 		end
 	end,
+	CurrentSongChangedMessageCommand=function(self)
+		local song = GAMESTATE:GetCurrentSong()
+		if song == nil then
+			self:visible(false)
+			return
+		end
+		local group_name = song:GetGroupName()
+		if ((group_name == "ECS9 - Upper" and PlayerIsUpper()) or
+			(group_name == "ECS9 - Lower" and not PlayerIsUpper()) or
+			(group_name == "ECS9 - Upper Marathon" and PlayerIsUpper())) then
+			self:visible(true)
+		else
+			self:visible(false)
+		end
+	end,
 	Def.Quad{
 		InitCommand=function(self) self:diffuse(color("#000000AA")):zoomto(370, 80):addx(175):addy(20) end
 	},
@@ -118,6 +133,63 @@ t[#t+1] = Def.ActorFrame{
 		InitCommand=function(self) self:shadowlength(1):zoom(2):addy(30):horizalign(left) end,
 		OnCommand=SetSongPointText,
 		CurrentSongChangedMessageCommand=SetSongPointText,
-	}
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/slimebadge.png"),
+		InitCommand=function(self)
+			self:zoom(0.4):addx(320):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for song_played in ivalues(ECS.Player.SongsPlayed) do
+				if not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Slime Badge" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/agilitypotion.png"),
+		InitCommand=function(self)
+			self:zoom(0.4):addx(170):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for song_played in ivalues(ECS.Player.SongsPlayed) do
+				if not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Agility Potion" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/staminapotion.png"),
+		InitCommand=function(self)
+			self:zoom(0.4):addx(20):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for song_played in ivalues(ECS.Player.SongsPlayed) do
+				if not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Stamina Potion" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			self:visible(relic_used)
+		end,
+	},
 }
 return t

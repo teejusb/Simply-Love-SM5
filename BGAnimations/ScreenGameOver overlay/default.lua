@@ -61,7 +61,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			local slime_badge, agility_potion, stamina_potion = false, false, false
 			for song_played in ivalues(ECS.Player.SongsPlayed) do
 				if not song_played.failed then
-					for relic in song_played.relics_used do
+					for relic in ivalues(song_played.relics_used) do
 						if relic.name == "Slime Badge" then
 							slime_badge = true
 						end
@@ -83,13 +83,18 @@ if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			for song_played in ivalues(ECS.Player.SongsPlayed) do
 				if not song_played.failed then
 					total_bpm = total_bpm + song_played.bpm
+					if tiers[song_played.bpm_tier] == nil then
+						tiers[song_played.bpm_tier] = 0
+					end
 					tiers[song_played.bpm_tier] = tiers[song_played.bpm_tier] + 1
 					total_steps = total_steps + song_played.steps
 					songs_passed = songs_passed + 1
 				end
 			end
+			local total_tiers = 0
+			for _ in pairs(tiers) do total_tiers = total_tiers + 1 end
 
-			if slime_badge then total_points = total_points + 100 * #tiers end
+			if slime_badge then total_points = total_points + 100 * total_tiers end
 			if agility_potion then total_points = total_points + math.floor(((total_bpm / songs_passed) - 120)^1.3) end
 			if stamina_potion then total_points = total_points + math.floor(total_steps / 75) end
 
