@@ -380,7 +380,7 @@ ECS.Relics = {
 		img="agilitypotion.png",
 		action=function() end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap)
-			-- TODO(teejusb): Handle end of set relics
+			-- End of set relics are handled in ScreenGameOver
 			return 0
 		end
 	},
@@ -1825,7 +1825,7 @@ ECS.Relics = {
 		img="slimebadge.png",
 		action=function() end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap)
-			-- TODO(teejusb): Handle end of set relics
+			-- End of set relics are handled in ScreenGameOver
 			return 0
 		end
 	},
@@ -1839,7 +1839,7 @@ ECS.Relics = {
 		img="staminapotion.png",
 		action=function() end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap)
-			-- TODO(teejusb): Handle end of set relics
+			-- End of set relics are handled in ScreenGameOver
 			return 0
 		end
 	},
