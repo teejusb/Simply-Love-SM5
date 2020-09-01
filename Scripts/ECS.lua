@@ -9241,7 +9241,7 @@ ECS.Players["Badjas"] = {
 	lifetime_jp = 0,
 }
 
-ECS.Players["Teejusb"] = {
+ECS.Players["teejusb"] = {
 	id=50287,
 	isupper=false,
 	country="U.S.A.",
