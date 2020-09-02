@@ -74,16 +74,9 @@ local af = Def.ActorFrame{
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
 }
 
--- decorative arrows
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
-	InitCommand=function(self)
-		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
-	end
-}
-
 -- SIMPLY [something]
-af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
+af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/ecs (doubleres).png"))..{
+	InitCommand=function(self) self:x(2):zoom(0.5):shadowlength(0.75) end,
 	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
 }
 
@@ -102,21 +95,12 @@ af[#af+1] = Def.ActorFrame{
 	},
 }
 
-af[#af+1] = Def.ActorFrame{
-	LoadFont("Wendy/_wendy small")..{
-		Text="9",
-		InitCommand=function(self)
-			self:addy(85)
-		end,
-	}
-}
-
 -- the best way to spread holiday cheer is singing loud for all to hear
 if HolidayCheer() then
 	af[#af+1] = Def.Sprite{
 		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
-		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
-		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
+		InitCommand=function(self) self:zoom(0.18):xy(240, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
+		DropCommand=function(self) self:decelerate(0.3):y(-60) end,
 	}
 end
 
