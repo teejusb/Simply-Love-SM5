@@ -140,8 +140,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 		OnCommand=function(self)
 			local relic_used = false
-			for song_played in ivalues(ECS.Player.SongsPlayed) do
-				if not song_played.failed then
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
 						if relic.name == "Slime Badge" then
 							relic_used = true
@@ -149,6 +150,7 @@ t[#t+1] = Def.ActorFrame{
 					end
 				end
 			end
+
 			self:visible(relic_used)
 		end,
 	},
@@ -159,8 +161,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 		OnCommand=function(self)
 			local relic_used = false
-			for song_played in ivalues(ECS.Player.SongsPlayed) do
-				if not song_played.failed then
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
 						if relic.name == "Agility Potion" then
 							relic_used = true
@@ -178,10 +181,11 @@ t[#t+1] = Def.ActorFrame{
 		end,
 		OnCommand=function(self)
 			local relic_used = false
-			for song_played in ivalues(ECS.Player.SongsPlayed) do
-				if not song_played.failed then
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Stamina Potion" then
+						if relic.name == "Stamina  Potion" then
 							relic_used = true
 						end
 					end
