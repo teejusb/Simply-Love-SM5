@@ -13,6 +13,9 @@ local Rows = {
 local active_relics = {}
 local is_going_back = false
 
+local OnlyDedicatedMenuButtons = PREFSMAN:GetPreference("OnlyDedicatedMenuButtons")
+local ThreeKeyNavigation = PREFSMAN:GetPreference("ThreeKeyNavigation")
+
 local IsActiveRelic = function(relic)
 	for _relic in ivalues(active_relics) do
 		if _relic and _relic.name == relic.name then return true end
@@ -89,7 +92,6 @@ end
 ---------------------------------------------------------------------
 
 local InputHandler = function(event)
-
 	----------------------------------------------------------------------------
 
 	-- if any of these, don't attempt to handle input
@@ -109,9 +111,13 @@ local InputHandler = function(event)
 
 	if event.type ~= "InputEventType_Release" then
 
-		if event.button == "Start" then
-			-- if we've reached the end of the list, don't wrap around
-			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] then
+		if (event.button == "Start" or
+			event.button == "MenuDown" or
+			(not OnlyDedicatedMenuButtons and event.button == "Down")) then
+
+			-- Require the player to press the start button so they don't accidentally leave the screen
+			-- during navigation.
+			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] and event.button == "Start" then
 				SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 				return false
 			end
@@ -129,7 +135,9 @@ local InputHandler = function(event)
 			-- broadcast this so that the relic panes to the right update
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
 
-		elseif event.button == "Select" then
+		elseif (event.button == "Select" or
+				event.button == "MenuUp" or
+				((not OnlyDedicatedMenuButtons or ThreeKeyNavigation) and event.button == "Up")) then
 			SOUND:PlayOnce(THEME:GetPathS("", "_prev row.ogg"))
 
 			OptionRowWheels[pn]:scroll_by_amount(-1)
@@ -141,7 +149,9 @@ local InputHandler = function(event)
 			local relic = OptionRowWheels[pn][row]:get_info_at_focus_pos()
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
 
-		elseif event.button == "MenuLeft" or event.button == "MenuRight" then
+		elseif (event.button == "MenuLeft" or
+				event.button == "MenuRight" or
+				(not OnlyDedicatedMenuButtons and (event.button == "Left" or event.button == "Right"))) then
 			local row = OptionRowWheels[pn]:get_info_at_focus_pos()
 
 			-- if not the exit row
