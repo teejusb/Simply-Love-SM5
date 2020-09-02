@@ -297,10 +297,11 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 
 		LoadFont("Common Normal")..{
 			InitCommand=function(self)
-				self:horizalign(left):xy(0, 40)
+				local w = SL_WideScale(310, 417)
+				self:horizalign(left):xy(_screen.cx + w/2 + 105, 20)
 			end,
 			LoopCommand=function(self)
-				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / rate
+				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
 				if cur_second > 0 then
 					if cur_second < second_to_pause then
 						self:settext(SecondsToMMSS(second_to_pause - cur_second + 1))
@@ -323,11 +324,12 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 		},
 		LoadFont("Common Normal")..{
 			InitCommand=function(self)
-				self:horizalign(right):xy(-6, 40):settext("Pausing in"):visible(true)
+				local w = SL_WideScale(310, 417)
+				self:horizalign(right):xy(_screen.cx + w/2 + 95, 20):settext("Pausing in:"):visible(true)
 			end,
 			WaitCommand=function(self)
 				self:horizalign(center):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-50)
-				self:settext("Unpausing in")
+				self:settext("Unpausing in:")
 			end,
 			UnpauseMarathonMessageCommand=function(self)
 				self:visible(false)

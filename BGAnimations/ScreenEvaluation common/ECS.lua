@@ -25,6 +25,7 @@ local af = Def.ActorFrame{
 			if not failed then
 				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 10000
 			end
+			-- Relics for marathons are always applied regarldess of pass/fail.
 			for relic in ivalues(ECS.Player.Relics) do
 				if relic.name ~= "(nothing)" then
 					-- All marathon relics return pure numeric values. We don't need to pass any real values to the score function.
