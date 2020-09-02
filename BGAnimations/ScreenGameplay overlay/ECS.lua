@@ -23,10 +23,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 
 	-- ----------------------------------------------------------
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."SCORE"..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE"..".txt"
 
 	local data = ""
-	data = data..ECS.Players[profile_name].id .."\n"
 	data = data..percent_score .."\n"
 	data = data..passed_song.."\n"
 	data = data..group_name.."\n"
@@ -62,7 +61,7 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	end
 
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..profile_name.."-".."RELIC"..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC"..".txt"
 	local data = ""
 
 	for i=1, 5 do
