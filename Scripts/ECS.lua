@@ -6911,7 +6911,7 @@ ECS.Players["Maxx-Storm"] = {
 
 ECS.Players["ITGAlex"] = {
 	id=46152,
-	isupper=false,
+	isupper=true,
 	country="U.S.A.",
 	level=86,
 	exp=1009338,
@@ -6961,7 +6961,7 @@ ECS.Players["ITGAlex"] = {
 
 ECS.Players["HISA"] = {
 	id=66727,
-	isupper=false,
+	isupper=true,
 	country="Japan",
 	level=72,
 	exp=308489,
