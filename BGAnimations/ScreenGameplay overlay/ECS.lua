@@ -212,12 +212,9 @@ local FaustsScalpelIsActive = function()
 	return false
 end
 
-local second_to_pause = 8
-local pause_duration_seconds = 10
+local second_to_pause = 1949.958374
+local pause_duration_seconds = 300
 local elapsed_seconds = 0
-
--- Hopefully no one ratemods the marathon but you never know.
-local rate = SL.Global.ActiveModifiers.MusicRate
 
 local InputHandler = function(event)
 	if not event.PlayerNumber or not event.button then return false end
@@ -242,7 +239,8 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 		OnCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback( InputHandler ) self:queuecommand("Loop") end,
 		LoopCommand=function(self)
 			if GAMESTATE:GetNumPlayersEnabled() == 1 then
-				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / rate
+				-- We don't need to divide by rate since we always want the break to happen in the same spot regardless.
+				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
 				if cur_second >= second_to_pause then
 					self:queuecommand("PauseMarathon")
 				else
