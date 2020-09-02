@@ -107,8 +107,7 @@ t[#t+1] = Def.ActorFrame{
 		end
 		local group_name = song:GetGroupName()
 		if ((group_name == "ECS9 - Upper" and PlayerIsUpper()) or
-			(group_name == "ECS9 - Lower" and not PlayerIsUpper()) or
-			(group_name == "ECS9 - Upper Marathon" and PlayerIsUpper())) then
+			(group_name == "ECS9 - Lower" and not PlayerIsUpper())) then
 			self:visible(true)
 		else
 			self:visible(false)
