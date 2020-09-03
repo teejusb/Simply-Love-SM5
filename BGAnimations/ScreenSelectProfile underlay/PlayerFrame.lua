@@ -56,7 +56,6 @@ local FrameBackground = function(c, player, w)
 		Def.Quad{
 			InitCommand=function(self)
 				self:cropbottom(1):zoomto(w+frame.border, frame.h+frame.border)
-				if ThemePrefs.Get("RainbowMode") then self:diffuse(Color.Black) end
 			end,
 		},
 		-- colored bg
@@ -215,7 +214,7 @@ return Def.ActorFrame{
 								self:align(0,0):zoomto(avatar_dim,avatar_dim):diffuse(color("#283239aa"))
 							end
 						},
-						LoadActor(THEME:GetPathG("", "_VisualStyles/".. ThemePrefs.Get("VisualTheme") .."/SelectColor"))..{
+						LoadActor(THEME:GetPathG("", "_Mario/silhouette"))..{
 							InitCommand=function(self)
 								self:align(0,0):zoom(0.09):diffusealpha(0.9):xy(13, 8)
 							end
@@ -387,7 +386,7 @@ return Def.ActorFrame{
 		Name='SelectedProfileText',
 		InitCommand=function(self)
 			self:settext(profile_data[1] and profile_data[1].displayname or "")
-			self:y(160):zoom(1.35):shadowlength(ThemePrefs.Get("RainbowMode") and 0.5 or 0):cropright(1)
+			self:y(160):zoom(1.35):shadowlength(0):cropright(1)
 		end,
 		OnCommand=function(self) self:sleep(0.2):smooth(0.2):cropright(0) end
 	}

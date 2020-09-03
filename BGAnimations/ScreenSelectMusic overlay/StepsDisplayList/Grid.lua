@@ -57,9 +57,6 @@ local t = Def.ActorFrame{
 		Name="Background",
 		InitCommand=function(self)
 			self:diffuse(color("#1e282f")):zoomto(320, 96)
-			if ThemePrefs.Get("RainbowMode") then
-				self:diffusealpha(0.9)
-			end
 		end
 	},
 }

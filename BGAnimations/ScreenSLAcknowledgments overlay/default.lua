@@ -34,7 +34,6 @@ if IsUsingWideScreen() then
 		InitCommand=function(self)
 			self:zoom(0.35):xy((22*PREFSMAN:GetPreference("DisplayAspectRatio")), (_screen.h-32)/2 + self:GetHeight()*self:GetZoom() + 6 )
 				:rotationz(180):visible(false)
-			if ThemePrefs.Get("RainbowMode") then self:diffuse(0,0,0,1)	end
 		end,
 		OnCommand=function(self) self:pulse():effectmagnitude(1.1,1,1):effectperiod(60/bgm_bpm) end
 	}
@@ -43,7 +42,6 @@ if IsUsingWideScreen() then
 		Name="RightArrow",
 		InitCommand=function(self)
 			self:zoom(0.35):xy(_screen.w-(22*PREFSMAN:GetPreference("DisplayAspectRatio")), (_screen.h-32)/2 + self:GetHeight()*self:GetZoom() + 6 )
-			if ThemePrefs.Get("RainbowMode") then self:diffuse(0,0,0,1)	end
 		end,
 		OnCommand=function(self) self:pulse():effectmagnitude(1.1,1,1):effectperiod(60/bgm_bpm) end
 	}

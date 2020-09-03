@@ -55,23 +55,7 @@ SelectMusicOrCourse = function()
 	end
 end
 
-Branch.AllowScreenSelectProfile = function()
-	if ThemePrefs.Get("AllowScreenSelectProfile") then
-		return "ScreenSelectProfile"
-	else
-		return Branch.AllowScreenSelectColor()
-	end
-end
-
-Branch.AllowScreenSelectColor = function()
-	if ThemePrefs.Get("AllowScreenSelectColor") and not ThemePrefs.Get("RainbowMode") then
-		return "ScreenSelectColor"
-	else
-		return Branch.AfterScreenSelectColor()
-	end
-end
-
-Branch.AfterScreenSelectColor = function()
+Branch.AfterScreenSelectProfile = function()
 	local preferred_style = ThemePrefs.Get("AutoStyle")
 
 	if preferred_style ~= "none"

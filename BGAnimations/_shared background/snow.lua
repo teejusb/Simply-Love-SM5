@@ -67,7 +67,6 @@ for i=1,num_particles do
 	af[#af+1] = Def.Sprite{
 		Texture=path_to_texture,
 		InitCommand=function(self)
-
 			-- initialize this particle's x-speed, y-speed, and size now
 			-- store this in the particles tables for retrieval within Update()
 			local _t = {
@@ -83,8 +82,6 @@ for i=1,num_particles do
 			self:x( math.random( -40, math.floor(_screen.w)+40 ) )
 			self:y( math.random( -40, math.floor(_screen.h)+40 ) )
 			self:zoomto( _t.size, _t.size )
-
-			if ThemePrefs.Get("VisualTheme") == "Gay" then self:effectoffset( math.random() ):rainbow() end
 		end
 	}
 end

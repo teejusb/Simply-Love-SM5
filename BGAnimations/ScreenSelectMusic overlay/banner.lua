@@ -1,5 +1,5 @@
-local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/"..ThemePrefs.Get("VisualTheme")
-local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Arrows")
+local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/Stars"
+local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Stars")
 
 local SongOrCourse, banner
 

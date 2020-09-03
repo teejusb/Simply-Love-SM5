@@ -94,8 +94,8 @@ local t = Def.ActorFrame {
 	end
 }
 
-local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/"..ThemePrefs.Get("VisualTheme")
-local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Arrows")
+local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/Stars"
+local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Stars")
 
 -- Things that are constantly on the screen (fallback banner + masks)
 t[#t+1] = Def.ActorFrame {

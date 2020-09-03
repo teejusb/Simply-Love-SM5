@@ -70,32 +70,6 @@ SL_CustomPrefs.Get = function()
 			},
 			Values 	= { "none", "single", "versus", "double" }
 		},
-		VisualTheme =
-		{
-			Default = "Hearts",
-			 -- emojis are our lingua franca for the 21st century
-			Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔" },
-			Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk" },
-		},
-		RainbowMode = {
-			Default = false,
-			Choices = {
-				THEME:GetString("ThemePrefs", "On"),
-				THEME:GetString("ThemePrefs", "Off")
-			},
-			Values 	= { true , false }
-		},
-		-- - - - - - - - - - - - - - - - - - - -
-		-- SimplyLoveColor saves the theme color for the next time
-		-- the StepMania application is started.
-		SimplyLoveColor =
-		{
-			-- a nice pinkish-purple, by default
-			Default = 3,
-			Choices = { 1,2,3,4,5,6,7,8,9,10,11,12 },
-			Values = { 1,2,3,4,5,6,7,8,9,10,11,12 }
-		},
-
 		-- - - - - - - - - - - - - - - - - - - -
 		-- MenuTimer values for various screens
 		ScreenSelectMusicMenuTimer =
@@ -137,18 +111,6 @@ SL_CustomPrefs.Get = function()
 
 		-- - - - - - - - - - - - - - - - - - - -
 		-- Enable/Disable Certain Screens
-		AllowScreenSelectProfile =
-		{
-			Default = false,
-			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
-			Values 	= { true, false }
-		},
-		AllowScreenSelectColor =
-		{
-			Default = true,
-			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
-			Values 	= { true, false }
-		},
 		AllowScreenEvalSummary =
 		{
 			Default = true,

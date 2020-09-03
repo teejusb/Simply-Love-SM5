@@ -17,7 +17,6 @@
   * improved MeasureCounter – Stepcharts can now be parsed ahead of time, so it is no longer necessary to play through a stepchart at least once to acquire a stream breakdown.
 
 ### Aesthetic Features
- * [RainbowMode](http://i.imgur.com/aKsvrcch.png) – add some color to Simply Love!
  * [NoteSkin and Judgment previews](https://i.imgur.com/Jk5A4LT.png) in the modifier menu
  * improved widescreen support
 

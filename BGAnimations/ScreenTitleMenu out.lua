@@ -1,6 +1,5 @@
 local color1 = GetHexColor(SL.Global.ActiveColorIndex-1, true)
 local color2 = GetHexColor(SL.Global.ActiveColorIndex, true)
-local style = ThemePrefs.Get("VisualTheme")
 
 local t = Def.ActorFrame{ OffCommand=function(self) self:linear(1) end }
 
@@ -13,14 +12,14 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--top center
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flycenter"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flycenter"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(50):zoom(1):diffusealpha(0.4)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flycenter"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flycenter"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-50):zoom(0.6):diffusealpha(0.6)
@@ -37,14 +36,14 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--bottom center
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flycenter"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flycenter"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(50):zoom(0.6):diffusealpha(0.6)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flycenter"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flycenter"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-50):zoom(1):diffusealpha(0.4)
@@ -62,7 +61,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--top left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(1):diffusealpha(0.6)
@@ -70,7 +69,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--top right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(1):diffusealpha(0.4)
@@ -88,14 +87,14 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--top left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(1.5):diffusealpha(0.3)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(0.8):diffusealpha(0.6)
@@ -103,14 +102,14 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--top right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(1.5):diffusealpha(0.2)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(0.8):diffusealpha(0.4)
@@ -128,7 +127,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--top left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-280):zoom(1.2):diffusealpha(0.6)
@@ -136,7 +135,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--top right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(280):zoom(1.2):diffusealpha(0.4)
@@ -154,7 +153,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--top left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-280):zoom(0.2):diffusealpha(0.3)
@@ -162,7 +161,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--top right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flytop"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flytop"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(280):zoom(0.2):diffusealpha(0.2)
@@ -180,7 +179,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--bottom left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(1):diffusealpha(0.3)
@@ -188,7 +187,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--bottom right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(1):diffusealpha(0.2)
@@ -206,14 +205,14 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	-- bottom left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(1.5):diffusealpha(0.6)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-200):zoom(0.8):diffusealpha(0.3)
@@ -221,14 +220,14 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	-- bottom right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(1.5):diffusealpha(0.4)
 			    :sleep(0):zoom(0)
 		end
 	},
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color2):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(200):zoom(0.8):diffusealpha(0.2)
@@ -246,7 +245,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--bottom left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-280):zoom(1.2):diffusealpha(0.3)
@@ -254,7 +253,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--bottom right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(280):zoom(1.2):diffusealpha(0.2)
@@ -272,7 +271,7 @@ t[#t+1] = Def.ActorFrame {
 	end,
 
 	--bottom left
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):rotationy(180):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(-280):zoom(0.2):diffusealpha(0.3)
@@ -280,7 +279,7 @@ t[#t+1] = Def.ActorFrame {
 		end
 	},
 	--bottom right
-	LoadActor(THEME:GetPathG("", "_VisualStyles/".. style .."/TitleMenu flybottom"))..{
+	LoadActor(THEME:GetPathG("", "_Mario/TitleMenu flybottom"))..{
 		InitCommand=function(self) self:diffuse(color1):diffusealpha(0):zoom(0) end,
 		OnCommand=function(self)
 			self:accelerate(0.8):addx(280):zoom(0.2):diffusealpha(0.2)

@@ -33,9 +33,6 @@ local OptionRow_mt = {
 				InitCommand=function(subself)
 					self.BGQuad = subself
 					subself:diffuse(color("#666666"))
-					if ThemePrefs.Get("RainbowMode") then
-						subself:diffuse(color("#222222"))
-					end
 					subself:zoomto(340, RowHeight-2):x(0)
 				end,
 

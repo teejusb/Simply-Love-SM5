@@ -1,4 +1,4 @@
-local TextColor = (ThemePrefs.Get("RainbowMode") and (not HolidayCheer()) and Color.Black) or Color.White
+local TextColor = Color.White
 
 -- generate a string like "7741 songs in 69 groups, 10 courses"
 local SongStats = ("%i %s %i %s, %i %s"):format(
@@ -53,13 +53,7 @@ if ProductVersion():find("git") then
 end
 
 -- - - - - - - - - - - - - - - - - - - - -
-local style = ThemePrefs.Get("VisualTheme")
 local image = "TitleMenu"
-
--- see: watch?v=wxBO6KX9qTA etc.
-if FILEMAN:DoesFileExist("/Themes/"..sl_name.."/Graphics/_VisualStyles/"..ThemePrefs.Get("VisualTheme").."/TitleMenuAlt (doubleres).png") then
-	if math.random(1,100) <= 10 then image="TitleMenuAlt" end
-end
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
@@ -74,7 +68,7 @@ local af = Def.ActorFrame{
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
 }
 
--- SIMPLY [something]
+-- ECS Logo
 af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/ecs (doubleres).png"))..{
 	InitCommand=function(self) self:x(2):zoom(0.5):shadowlength(0.75) end,
 	OffCommand=function(self) self:linear(0.5):shadowlength(0) end

@@ -65,7 +65,7 @@ for i=1, #people do
 		InitCommand=function(self)
 			self:zoomto(space.w-padding*2, box_height)
 				:valign(0)
-				:diffuse(ThemePrefs.Get("RainbowMode") and {0,0,0,0.9} or {0.25,0.25,0.25,0.75} )
+				:diffuse({0.25,0.25,0.25,0.75})
 				:y(quad_y)
 		end
 	}
