@@ -303,7 +303,7 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
 				if cur_second > 0 then
 					if cur_second < second_to_pause then
-						self:settext(SecondsToMMSS(second_to_pause - cur_second + 1))
+						self:settext(SecondsToMMSS((second_to_pause - cur_second + 1)/SL.Global.ActiveModifiers.MusicRate))
 					end
 				end
 			end,
