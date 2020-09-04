@@ -9,6 +9,8 @@ local Rows = {
 local mpn = GAMESTATE:GetMasterPlayerNumber()
 local profile_name = PROFILEMAN:GetPlayerName(mpn)
 
+local OnlyDedicatedMenuButtons = PREFSMAN:GetPreference("OnlyDedicatedMenuButtons")
+
 -- generate a table of possible/valid relics for the player to choose from
 local player_relics = {}
 local chosen_relics = {}
@@ -124,7 +126,9 @@ local InputHandler = function(event)
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
 
 
-		elseif event.button == "MenuLeft" or event.button == "MenuRight" then
+		elseif (event.button == "MenuLeft" or
+				event.button == "MenuRight" or
+				(not OnlyDedicatedMenuButtons and (event.button == "Left" or event.button == "Right"))) then
 
 			local row = OptionRowWheels[pn]:get_info_at_focus_pos()
 
