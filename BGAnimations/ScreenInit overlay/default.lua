@@ -1,13 +1,5 @@
 local quotes = {
 	{
-		{"In the race for success,\nspeed is less important\nthan stamina.", -100, -10},
-		{"- B. C. Forbes", 45, 36}
-	},
-	{
-		{"A stream is music and motion.", -100, -10},
-		{"- Nelson Bryant", 84, 12}
-	},
-	{
 		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed.", -150, -10},
 		{"- Zetorux, ECS1", 159, 25}
 	},
@@ -19,19 +11,20 @@ local quotes = {
 
 local body, author, picture
 local w = 310
-local quote_pics = 3
+local quote_pics = 4
+local rand_quote
 -- ---------------------------------------
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
 		self:Center()
-		local rand_quote = math.random(#quotes + quote_pics)
+		rand_quote = math.random(#quotes + quote_pics)
 		if rand_quote <= quote_pics then
 			picture:Load(THEME:GetPathG("", "_Mario/Quotes/" .. tostring(rand_quote)))
 			body:settext("")
 			author:settext("")
 		else
-			rand_quote = rand_quote - #quotes + 1
+			rand_quote = rand_quote - quote_pics
 			local quote = quotes[rand_quote]
 			body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
 			author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
@@ -102,9 +95,15 @@ af[#af+1] = Def.Sprite{
 		picture = self
 	end,
 	OnCommand=function(self)
-		self:zoom(128/self:GetHeight()):sleep(3):linear(0.25):diffusealpha(1)
+		local zoom_value = math.min(128/self:GetHeight(), 320/self:GetWidth())
+		self:zoom(zoom_value):sleep(3):linear(0.25):diffusealpha(1):queuecommand("MaybePlaySound")
 	end,
-	OffCommand=cmd(linear,0.25; diffusealpha,0)
+	MaybePlaySoundCommand=function(self)
+		if rand_quote == 4 then
+			SOUND:PlayOnce(THEME:GetPathS("", "mario_hey_stinky.ogg"))
+		end
+	end,
+	OffCommand=cmd(linear,0.25; zoomtoheight, 0; diffusealpha,0)
 }
 
 return af
