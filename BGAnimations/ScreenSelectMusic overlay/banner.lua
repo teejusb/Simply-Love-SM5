@@ -185,7 +185,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Stamina  Potion" then
+						if relic.name == "Stamina Potion" then
 							relic_used = true
 						end
 					end
