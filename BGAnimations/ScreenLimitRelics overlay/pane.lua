@@ -86,7 +86,7 @@ pane[#pane+1] = LoadFont("Miso/_miso")..{
 	InitCommand=function(self)
 		self:xy(-35, -32):vertspacing(-6)
 			:align(0,0):zoom(0.8)
-			:wrapwidthpixels(189)
+			:wrapwidthpixels(189):maxheight(55)
 	end,
 	RelicPreviewSelectedCommand=function(self, params)
 		if params and params.effect then
@@ -199,7 +199,7 @@ for i=1,10 do
 		InitCommand=function(self)
 			self:xy(-35, -32):vertspacing(-6)
 				:align(0,0):zoom(0.8)
-				:wrapwidthpixels(189)
+				:wrapwidthpixels(189):maxheight(55)
 		end,
 		["Relic"..i.."SelectedCommand"]=function(self, params)
 			if params and params.effect then

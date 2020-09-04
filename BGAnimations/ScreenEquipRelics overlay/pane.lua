@@ -87,7 +87,7 @@ for i=1,5 do
 		InitCommand=function(self)
 			self:xy(-35, -32):vertspacing(-6)
 				:align(0,0):zoom(0.8)
-				:wrapwidthpixels(189)
+				:wrapwidthpixels(189):maxheight(55)
 		end,
 		["Relic"..i.."SelectedCommand"]=function(self, params)
 			if params and params.effect then
