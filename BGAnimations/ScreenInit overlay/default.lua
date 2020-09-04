@@ -17,16 +17,26 @@ local quotes = {
 	},
 }
 
-local body, author
+local body, author, picture
 local w = 310
+local quote_pics = 3
 -- ---------------------------------------
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
 		self:Center()
-		local quote = quotes[math.random(#quotes)]
-		body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
-		author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
+		local rand_quote = math.random(#quotes + quote_pics)
+		if rand_quote <= quote_pics then
+			picture:Load(THEME:GetPathG("", "_Mario/Quotes/" .. tostring(rand_quote)))
+			body:settext("")
+			author:settext("")
+		else
+			rand_quote = rand_quote - #quotes + 1
+			local quote = quotes[rand_quote]
+			body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
+			author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
+			picture:Load(nil)
+		end
 	end
 }
 
@@ -83,6 +93,17 @@ af[#af+1] = LoadFont("Common Normal")..{
 		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(right)
 	end,
 	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(linear,0.25; diffusealpha,0)
+}
+
+af[#af+1] = Def.Sprite{
+	InitCommand=function(self)
+		self:diffusealpha(0)
+		picture = self
+	end,
+	OnCommand=function(self)
+		self:zoom(128/self:GetHeight()):sleep(3):linear(0.25):diffusealpha(1)
+	end,
 	OffCommand=cmd(linear,0.25; diffusealpha,0)
 }
 
