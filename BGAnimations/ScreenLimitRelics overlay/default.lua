@@ -153,7 +153,7 @@ local t = Def.ActorFrame{
 		-- queue the next command so that we can actually GetTopScreen()
 		self:queuecommand("Capture")
 
-		if IsUsingWideScreen() then self:x(110) end
+		self:x((SCREEN_WIDTH-640)/2 + 30)
 	end,
 	CaptureCommand=function(self)
 		-- attach our InputHandler to the TopScreen and pass it this ActorFrame
@@ -211,12 +211,11 @@ local t = Def.ActorFrame{
 		ECS.Players[profile_name].relics = all_relics
 	end,
 	TransitionBackCommand=function(self)
+		-- Reset chosen relics since if a player is "exiting" out of this screen
+		ECS.Players[profile_name].relics = {}
 		SCREENMAN:GetTopScreen():PostScreenMessage("SM_GoToPrevScreen",0)
 	end,
 	RelicActivatedMessageCommand=function(self, params)
-	end,
-	TransitionBackCommand=function(self)
-		SCREENMAN:GetTopScreen():PostScreenMessage("SM_GoToPrevScreen",0)
 	end,
 	-- fade out when exiting the screen
 	Def.Quad{
@@ -230,9 +229,9 @@ local t = Def.ActorFrame{
 
 -- add an OptionWheel for each available player
 for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+	-- Position of the box
 	local pn = ToEnumShortString(player)
-	-- local x_pos = _screen.cx-(_screen.w*160/640)
-	local x_pos = 118
+	local x_pos = 170
 
 	local OptionRow_mt = LoadActor("./OptionRowMT.lua", {NumRows=NumRowsToDraw, Player=player, Items=Rows, RowHeight=RowHeight})
 	t[#t+1] = OptionRowWheels[pn]:create_actors( "OptionRowWheel"..pn, #Rows, OptionRow_mt, x_pos, 10)
@@ -240,8 +239,9 @@ for player in ivalues(GAMESTATE:GetHumanPlayers()) do
 
 	-- add an OptionRowWheel for each Option for each available player
 	for k2, Row in ipairs(Rows) do
+		-- The position of the wheels inside the box
 		local OptionRowChoice_mt = LoadActor("./OptionRowChoiceMT.lua", {NumRows=7, Player=player, Row=Row})
-		x_pos = 138
+		x_pos = 190
 
 		local num_choices = 5
 

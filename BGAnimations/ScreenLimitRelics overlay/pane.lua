@@ -4,7 +4,7 @@ local padding = 10
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
-		self:xy(_screen.cx-360, _screen.cy + 130)
+		self:addx(68):addy(365)
 	end,
 }
 
@@ -12,7 +12,7 @@ local af = Def.ActorFrame{
 
 local pane = Def.ActorFrame{
 	Name="RelicPreviewPane",
-	InitCommand=function(self) self:xy((2 + pane_width)*1.5, 0*(pane_height) - 250) end,
+	InitCommand=function(self) self:xy((pane_width)*1.5+34, 0*(pane_height) - 250) end,
 	OffCommand=function(self)
 		self:sleep(0.04):linear(0.2):diffusealpha(0)
 	end,
@@ -32,7 +32,7 @@ pane[#pane+1] = Def.Quad{
 	InitCommand=function(self)
 		self:zoomto(pane_width, pane_height-2)
 			:diffuse(color("#666666"))
-			:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+			:diffusealpha(0.75)
 	end,
 }
 
@@ -41,7 +41,7 @@ pane[#pane+1] = Def.Quad{
 	InitCommand=function(self)
 		self:zoomto(pane_height+10, pane_height-2):halign(0):x(-120)
 			:diffuse(color("#111111"))
-			:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+			:diffusealpha(0.75)
 	end,
 }
 
@@ -52,7 +52,7 @@ for relic in ivalues(ECS.Relics) do
 		Texture=THEME:GetPathG("", "_relics/" .. relic.img),
 		InitCommand=function(self)
 			self:xy(-106, -33)
-			self:visible(false):zoom(0.5):align(0,0)
+			self:visible(false):zoom(0.25):align(0,0)
 		end,
 		RelicPreviewSelectedCommand=function(self, params)
 			self:visible(false)
@@ -127,7 +127,9 @@ for i=1,10 do
 
 	local pane = Def.ActorFrame{
 		Name="RelicPane"..i,
-		InitCommand=function(self) self:xy((2 + pane_width)*column, row*(pane_height) - 212) end,
+		InitCommand=function(self)
+			self:xy((2 + pane_width)*column*0.8 + 28, row*(pane_height)*0.8 - 180):zoom(0.8)
+		end,
 		OffCommand=function(self)
 			self:sleep(0.04 * column):linear(0.2):diffusealpha(0)
 		end,
@@ -143,7 +145,7 @@ for i=1,10 do
 		InitCommand=function(self)
 			self:zoomto(pane_width, pane_height-2)
 				:diffuse(color("#666666"))
-				:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+				:diffusealpha(0.75)
 		end,
 	}
 
@@ -152,7 +154,7 @@ for i=1,10 do
 		InitCommand=function(self)
 			self:zoomto(pane_height+10, pane_height-2):halign(0):x(-120)
 				:diffuse(color("#111111"))
-				:diffusealpha( BrighterOptionRows() and 0.95 or 0.75)
+				:diffusealpha(0.75)
 		end,
 	}
 
@@ -163,7 +165,7 @@ for i=1,10 do
 			Texture=THEME:GetPathG("", "_relics/" .. relic.img),
 			InitCommand=function(self)
 				self:xy(-106, -33)
-				self:visible(false):zoom(0.5):align(0,0)
+				self:visible(false):zoom(0.25):align(0,0)
 			end,
 			["Relic"..i.."SelectedCommand"]=function(self, params)
 				self:visible(false)
