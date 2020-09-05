@@ -1612,7 +1612,7 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap)
-			return 50 * math.floor(song_data.length)
+			return math.floor(song_data.length * 50)
 		end
 	},
 	{
