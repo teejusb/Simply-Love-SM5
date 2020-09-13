@@ -119,10 +119,11 @@ LoadProfileCustom = function(profile, dir)
 
 	local relic_file_path = dir .. "Player_Relic_Data.lua"	
 
-	if FILEMAN:DoesFileExist(relic_file_path) then	
-		local relic_data = LoadActor(relic_file_path)	
-		if relic_data and GAMESTATE:GetMasterPlayerNumber() ~= nil then	
-			ECS.Players[PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())].relics = relic_data	
+	if FILEMAN:DoesFileExist(relic_file_path) and GAMESTATE:GetMasterPlayerNumber() ~= nil then	
+		local relic_data = LoadActor(relic_file_path)
+		local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
+		if relic_data and ECS.Players[player_name] ~= nil then	
+			ECS.Players[player_name].relics = relic_data	
 		end	
 	end	
 
