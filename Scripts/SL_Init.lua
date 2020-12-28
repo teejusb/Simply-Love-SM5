@@ -378,13 +378,13 @@ SL = {
 			-- Empirically determine better values.
 			LifePercentChangeW1=0.008,
 			LifePercentChangeW2=0.008,
-			LifePercentChangeW3=0.008,
-			LifePercentChangeW4=0.004,
+			LifePercentChangeW3=0.004,
+			LifePercentChangeW4=0,
 			LifePercentChangeW5=0,
 			LifePercentChangeMiss=-0.1,
-			LifePercentChangeLetGo=-0.08,
+			LifePercentChangeLetGo=-0.1,
 			LifePercentChangeHeld=0.008,
-			LifePercentChangeHitMine=-0.05,
+			LifePercentChangeHitMine=-0.1,
 		},
 	}
 }
