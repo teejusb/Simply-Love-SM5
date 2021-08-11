@@ -1,4 +1,4 @@
-local player = ...
+local player, layout = ...
 local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 
@@ -27,11 +27,13 @@ local tns, hns
 
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
+-- -----------------------------------------------------------------------
 -- which font should we use for the BitmapText actor?
 local font = mods.ComboFont
 
 -- most ComboFonts have their own dedicated sprite sheets in ./Simply Love/Fonts/_Combo Fonts/
--- "Wendy" and "Wendy (Cursed)" are exceptions for the time being; reroute both to use "./Fonts/Wendy/_wendy small"
+-- "Wendy" and "Wendy (Cursed)" are exceptions for the time being
+-- reroute both to use "./Fonts/Wendy/_wendy small"
 if font == "Wendy" or font == "Wendy (Cursed)" then
 	font = "Wendy/_wendy small"
 else
@@ -50,13 +52,7 @@ bmt.InitCommand=function(self)
 	local width = GetNotefieldWidth()
 	local NumColumns = GAMESTATE:GetCurrentStyle():ColumnsPerPlayer()
 	-- mirror image of MeasureCounter.lua
-	self:xy( GetNotefieldX(player) + (width/NumColumns), _screen.cy )
-
-	-- Fix overlapping issue when MeasureCounter is enabled, not moved up, and displaying lookahead
-	-- since the lookaheads will overlap subtractive scoring.
-	if mods.MeasureCounter ~= "None" and not mods.MeasureCounterUp and not mods.HideLookahead then
-		self:addy(-55)
-	end
+	self:xy(GetNotefieldX(player) + (width/NumColumns), layout.y)
 
 	-- Fix overlap issues when MeasureCounter is centered
 	-- since in this case we don't need symmetry.

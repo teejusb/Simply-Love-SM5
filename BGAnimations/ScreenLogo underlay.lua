@@ -1,14 +1,3 @@
--- ECS Logo
-local af = Def.ActorFrame{
-	InitCommand=function(self)
-		self:Center()
-	end,
-	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
+return LoadActor( THEME:GetPathB("ScreenTitleMenu", "underlay/Logo.lua"))..{
+	InitCommand=function(self) self:Center() end
 }
-
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/ecs (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):zoom(0.5):shadowlength(0.75) end,
-	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
-}
-
-return af

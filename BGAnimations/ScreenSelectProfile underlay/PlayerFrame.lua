@@ -5,10 +5,6 @@ local avatars = args.Avatars
 local scroller = args.Scroller
 local scroller_item_mt = LoadActor("./ScrollerItemMT.lua")
 
-local LightenColor = function(c)
-	return { c[1]*1.25, c[2]*1.25, c[3]*1.25, c[4] }
-end
-
 -- -----------------------------------------------------------------------
 -- TODO: start over from scratch so that these numbers make sense in SL
 --       as-is, they are half-leftover from editing _fallback's code
@@ -51,6 +47,15 @@ local FrameBackground = function(c, player, w)
 				self:runcommandsonleaves(function(leaf) leaf:accelerate(0.25):cropbottom(1) end)
 			end
 		end,
+
+		-- top mask to hide scroller text
+		Def.Quad{
+			InitCommand=function(self) self:horizalign(left):vertalign(bottom):setsize(540,50):xy(-self:GetWidth()/2, -107):MaskSource() end
+		},
+		-- bottom mask to hide scroller text
+		Def.Quad{
+			InitCommand=function(self) self:horizalign(left):vertalign(top):setsize(540,120):xy(-self:GetWidth()/2, 107):MaskSource() end
+		},
 
 		-- border
 		Def.Quad{
@@ -156,7 +161,6 @@ return Def.ActorFrame{
 		Def.ActorFrame{
 			Name="DataFrame",
 			InitCommand=function(self)
-				-- FIXME
 				self:x(15.5)
 			end,
 			OnCommand=function(self) self:playcommand("Set", profile_data[1]) end,
@@ -202,7 +206,7 @@ return Def.ActorFrame{
 					Def.ActorFrame{
 						InitCommand=function(self) self:visible(false) end,
 						SetCommand=function(self, params)
-							if params and params.displayname and avatars[params.displayname] then
+							if params and params.index and avatars[params.index] then
 								self:visible(false)
 							else
 								self:visible(true)
@@ -214,7 +218,7 @@ return Def.ActorFrame{
 								self:align(0,0):zoomto(avatar_dim,avatar_dim):diffuse(color("#283239aa"))
 							end
 						},
-						LoadActor(THEME:GetPathG("", "_Mario/silhouette"))..{
+						LoadActor(THEME:GetPathG("", "_VisualStyles/".. ThemePrefs.Get("VisualStyle") .."/SelectColor"))..{
 							InitCommand=function(self)
 								self:align(0,0):zoom(0.09):diffusealpha(0.9):xy(13, 8)
 							end
@@ -241,8 +245,8 @@ return Def.ActorFrame{
 							self:align(0,0):scaletoclipped(avatar_dim,avatar_dim)
 						end,
 						SetCommand=function(self, params)
-							if params and params.displayname and avatars[params.displayname] then
-								self:SetTexture(avatars[params.displayname]):visible(true)
+							if params and params.index and avatars[params.index] then
+								self:Load(avatars[params.index]):visible(true)
 							else
 								self:visible(false)
 							end

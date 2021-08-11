@@ -11,13 +11,14 @@
 -- global utility functions (below) will depend on these
 ------------------------------------------------------------
 
--- TableToString_Recursive() function via:
+-- TableToString() function via:
 -- http://www.hpelbers.org/lua/print_r
 -- Copyright 2009: hans@hpelbers.org
-local TableToString_Recursive = function(t, name, indent)
+TableToString = function(t, name, indent)
 	local tableList = {}
+	local table_r
 
-	function table_r (t, name, indent, full)
+	table_r = function(t, name, indent, full)
 		local id = not full and name or type(name)~="number" and tostring(name) or '['..name..']'
 		local tag = indent .. id .. ' = '
 		local out = {}	-- result
@@ -58,7 +59,7 @@ end
 -- Shorthand for SCREENMAN:SystemMessage(), this is useful for rapid iterative
 -- testing by allowing us to pretty-print tables and variables to the screen.
 --
--- If the first argument is a table, SM() will use TableToString_Recursive (from above)
+-- If the first argument is a table, SM() will use TableToString (from above)
 -- to display children recursively.  Larger tables will spill offscreen, so
 -- rec_print_table() from the _fallback theme is good to know about and use when
 -- debugging.  That will recursively pretty-print table structures to ./Logs/Log.txt
@@ -72,7 +73,7 @@ SM = function( arg, duration )
 
 	-- if a table has been passed in, recursively stringify the table's keys and values
 	if type( arg ) == "table" then
-		msg = TableToString_Recursive(arg)
+		msg = TableToString(arg)
 
 	-- otherwise, Lua's standard tostring() should suffice
 	else
@@ -84,6 +85,7 @@ SM = function( arg, duration )
 	-- let's broadcast directly using MESSAGEMAN so that we can also pack in a duration
 	-- value (how long to display the SystemMessage for) if so desired
 	MESSAGEMAN:Broadcast("SystemMessage", {Message=msg, Duration=duration})
+	Trace(msg)
 end
 
 
@@ -125,20 +127,6 @@ range = function(start, stop, step)
 	end
 	return t
 end
-
--- pass in a range of time values in seconds and get back a table of stringified
--- values formatted as minutes and seconds.
---
--- for example usage, see the MenuTimer OptionRows defined in ./Scripts/99 SL-ThemePrefs.lua
-function SecondsToMMSS_range(start, stop, step)
-	local ret = {}
-	local r = range(start, stop, step)
-	for v in ivalues(r) do
-		ret[#ret+1] = SecondsToMMSS(v):gsub("^0*", "")
-	end
-	return ret
-end
-
 
 -- stringify() accepts an indexed table, applies tostring() to each element,
 -- and returns the results.  sprintf style format can be provided via an

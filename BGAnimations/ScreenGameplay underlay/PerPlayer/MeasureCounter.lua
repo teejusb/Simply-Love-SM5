@@ -1,4 +1,4 @@
-local player = ...
+local player, layout = ...
 local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 
@@ -29,6 +29,10 @@ local InitializeMeasureCounter = function()
 	streams = SL[pn].Streams
 	streamIndex = 1
 	prevMeasure = -1
+
+	for actor in ivalues(bmt) do
+		actor:visible(true)
+	end
 end
 
 -- Returns whether or not we've reached the end of this stream segment.
@@ -46,13 +50,27 @@ local IsEndOfStream = function(currMeasure, Measures, streamIndex)
 end
 
 local GetTextForMeasure = function(currMeasure, Measures, streamIndex, isLookAhead)
-	if Measures[streamIndex] == nil then return "" end
-	-- Don't display final count if it's a break.
-	if streamIndex == #Measures and Measures[streamIndex].isBreak then return "" end
-	-- currMeasure can be negative. If the first thing is a stream, then denote that "negative space" as a rest.
-	if streamIndex == 1 and currMeasure < 0 and not Measures[streamIndex].isBreak then
-		return "(" .. math.floor(currMeasure * -1) + 1 .. ")"
+	if currMeasure < 0 then
+		if not isLookAhead then
+			-- Measures[1] is guaranteed to exist as we check for non-empty tables at the start of Update() below.
+			if not Measures[1].isBreak then
+				-- currMeasure can be negative. If the first thing is a stream, then denote that "negative space" as a rest.
+				return "(" .. math.floor(currMeasure * -1) + 1 .. ")"
+			else
+				-- If the first thing is a break, then add the negative space to the existing break count
+				local segmentStart = Measures[1].streamStart
+				local segmentEnd   = Measures[1].streamEnd
+				local currStreamLength = segmentEnd - segmentStart
+				return "(" .. math.floor(currMeasure * -1) + 1 + currStreamLength .. ")"
+			end
+		else
+			if not Measures[1].isBreak then
+				-- Push all the stream segments back by one since we're adding an additional ephemeral break.
+				streamIndex = streamIndex - 1
+			end
+		end
 	end
+	if Measures[streamIndex] == nil then return "" end
 
 	-- A "segment" can be either stream or rest
 	local segmentStart = Measures[streamIndex].streamStart
@@ -74,7 +92,7 @@ local GetTextForMeasure = function(currMeasure, Measures, streamIndex, isLookAhe
 			end
 		end
 	else
-		if not isLookAhead then
+		if not isLookAhead and currCount ~= 0 then
 			text = tostring(currCount .. "/" .. currStreamLength)
 		else
 			text = tostring(currStreamLength)
@@ -126,7 +144,12 @@ local Update = function(self, delta)
 			else
 				-- Make stream lookaheads be lighter than active streams.
 				if not isLookAhead then
-					bmt[adjustedIndex]:diffuse(1, 1, 1, 1)
+					if string.find(text, "/") then
+						bmt[adjustedIndex]:diffuse(1, 1, 1, 1)
+					else
+						-- If this is a mini-break, make it lighter.
+						bmt[adjustedIndex]:diffuse(0.5, 0.5, 0.5 ,1)
+					end
 				else
 					bmt[adjustedIndex]:diffuse(0.45, 0.45, 0.45 ,1)
 				end
@@ -149,7 +172,10 @@ end
 -- -----------------------------------------------------------------------
 
 local af = Def.ActorFrame{
-	InitCommand=function(self) self:queuecommand("SetUpdate") end,
+	InitCommand=function(self)
+		self:xy(GetNotefieldX(player), layout.y)
+		self:queuecommand("SetUpdate")
+	end,
 	SetUpdateCommand=function(self) self:SetUpdateFunction( Update ) end,
 
 	CurrentSongChangedMessageCommand=function(self)
@@ -171,14 +197,10 @@ for i=lookAhead+1,1,-1 do
 
 			-- Have descending zoom sizes for each new BMT we add.
 			self:zoom(0.35 - 0.05 * (i-1)):shadowlength(1):horizalign(center)
-			self:xy(GetNotefieldX(player) + columnWidth * (0.7 * (i-1)), _screen.cy)
+			self:x(columnWidth * (0.7 * (i-1)))
 
 			if mods.MeasureCounterLeft then
 				self:addx(-columnWidth)
-			end
-
-			if mods.MeasureCounterUp then
-				self:addy(-55)
 			end
 		end
 	}

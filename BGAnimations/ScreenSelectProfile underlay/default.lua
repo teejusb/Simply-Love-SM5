@@ -247,17 +247,13 @@ local t = Def.ActorFrame {
 	}
 }
 
--- top mask
-t[#t+1] = Def.Quad{
-	InitCommand=function(self) self:horizalign(left):vertalign(bottom):setsize(540,50):xy(_screen.cx-self:GetWidth()/2, _screen.cy-107):MaskSource() end
-}
--- bottom mask
-t[#t+1] = Def.Quad{
-	InitCommand=function(self) self:horizalign(left):vertalign(top):setsize(540,120):xy(_screen.cx-self:GetWidth()/2, _screen.cy+107):MaskSource() end
-}
-
--- get table of player avatars (underlying RageTextures, not full Sprite actors)
-local avatars = LoadActor("./LoadAvatars.lua", {af=t, profile_data=profile_data})
+-- get table of player avatar paths
+local avatars = {}
+for profile in ivalues(profile_data) do
+	if profile.dir and profile.displayname then
+		avatars[profile.index] = GetAvatarPath(profile.dir, profile.displayname)
+	end
+end
 
 -- load PlayerFrames for both
 if AutoStyle=="none" or AutoStyle=="versus" then

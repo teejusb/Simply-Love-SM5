@@ -10,6 +10,14 @@ return Def.ActorFrame{
 			self:x(115 * (player==PLAYER_1 and -1 or 1))
 			self:halign(pn):zoom(0.7)
 
+			local textColor = Color.White
+			local shadowLength = 0
+			if ThemePrefs.Get("RainbowMode") and not HolidayCheer() then
+				textColor = Color.Black
+			end
+			self:diffuse(textColor)
+			self:shadowlength(shadowLength)
+
 			local style = GAMESTATE:GetCurrentStyle():GetName()
 			if style == "versus" then style = "single" end
 			style =  THEME:GetString("ScreenSelectMusic", style:gsub("^%l", string.upper))

@@ -1,5 +1,5 @@
-local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/Stars"
-local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Stars")
+local path = "/"..THEME:GetCurrentThemeDirectory().."Graphics/_FallbackBanners/"..ThemePrefs.Get("VisualStyle")
+local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("","_FallbackBanners/Arrows")
 
 local SongOrCourse, banner
 
@@ -7,10 +7,10 @@ local t = Def.ActorFrame{
 	OnCommand=function(self)
 		if IsUsingWideScreen() then
 			self:zoom(0.7655)
-			self:xy(_screen.cx - 170, 112)
+			self:xy(_screen.cx - 170, 96)
 		else
 			self:zoom(0.75)
-			self:xy(_screen.cx - 166, 112)
+			self:xy(_screen.cx - 166, 96)
 		end
 	end
 }
