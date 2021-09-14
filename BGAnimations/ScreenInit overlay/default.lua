@@ -83,4 +83,41 @@ for i=1,7 do
 	af[#af+1] = arrow
 end
 
+-- quote body
+af[#af+1] = LoadFont("Common Normal")..{
+	InitCommand=function(self)
+		body = self
+		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(left):vertspacing(-4)
+	end,
+	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(linear,0.25; diffusealpha,0)
+}
+
+-- quote author
+af[#af+1] = LoadFont("Common Normal")..{
+	InitCommand=function(self)
+		author = self
+		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(right)
+	end,
+	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(linear,0.25; diffusealpha,0)
+}
+
+af[#af+1] = Def.Sprite{
+	InitCommand=function(self)
+		self:diffusealpha(0)
+		picture = self
+	end,
+	OnCommand=function(self)
+		local zoom_value = math.min(128/self:GetHeight(), 320/self:GetWidth())
+		self:zoom(zoom_value):sleep(3):linear(0.25):diffusealpha(1):queuecommand("MaybePlaySound")
+	end,
+	MaybePlaySoundCommand=function(self)
+		if rand_quote == 4 then
+			SOUND:PlayOnce(THEME:GetPathS("", "mario_hey_stinky.ogg"))
+		end
+	end,
+	OffCommand=cmd(linear,0.25; zoomtoheight, 0; diffusealpha,0)
+}
+
 return af
