@@ -15,6 +15,27 @@ InitializeECS = function()
 	}
 end
 
+local BowEquipped = function(relics_used)
+	for relic in ivalues(relic_used) do
+		local name = relic.name
+		if (name == "Short Bow" or name == "Composite Bow" or name == "Long Bow" or name == "Twisted Bow" or
+			name == "Splintered Bow" or name == "Amos' Bow" or name == "Yoichi Bow") then
+			return true
+		end
+	end
+	return false
+end
+
+local ArrowEquipped = function(relics_used)
+	for relic in ivalues(relic_used) do
+		local name = relic.name
+		if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow" or name == "Dragon Arrow") then
+			return true
+		end
+	end
+	return false
+end
+
 -- the master list
 ECS.Relics = {
 	{
@@ -25,8 +46,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="stoneblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.1)
+		end,
 	},
 	{
 		id=1,
@@ -36,8 +59,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="stoneknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.1)
+		end,
 	},
 	{
 		id=2,
@@ -47,8 +72,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="stoneaxe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.1)
+		end,
 	},
 	{
 		id=3,
@@ -58,8 +85,11 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="shortbow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- Technically returns 0 if arrow is equpped or not.
+			return 0
+		end,
 	},
 	{
 		id=4,
@@ -69,8 +99,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="stonearrow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if BowEquipped(relics_used) then
+				return 125
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=5,
@@ -80,8 +116,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="bronzeblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.2)
+		end,
 	},
 	{
 		id=6,
@@ -91,8 +129,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="bronzeknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.2)
+		end,
 	},
 	{
 		id=7,
@@ -102,8 +142,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="bronzeaxe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.2)
+		end,
 	},
 	{
 		id=8,
@@ -113,8 +155,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="compositebow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) then
+				return 50
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=9,
@@ -124,8 +172,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="bronzearrow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if BowEquipped(relics_used) then
+				return 225
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=10,
@@ -135,8 +189,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mythrilblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.3)
+		end,
 	},
 	{
 		id=11,
@@ -146,8 +202,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mythrilknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.3)
+		end,
 	},
 	{
 		id=12,
@@ -157,8 +215,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mythrilaxe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.3)
+		end,
 	},
 	{
 		id=13,
@@ -168,8 +228,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="longbow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) then
+				return 100
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=14,
@@ -179,8 +245,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="mythrilarrow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if BowEquipped(relics_used) then
+				return 300
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=15,
@@ -190,8 +262,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="crystalsword.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.4)
+		end,
 	},
 	{
 		id=16,
@@ -201,8 +275,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="diamondsword.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.5)
+		end,
 	},
 	{
 		id=17,
@@ -212,8 +288,18 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="silverstopwatch.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 45
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=18,
@@ -223,8 +309,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="accuracypotion.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=19,
@@ -234,8 +323,35 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mammon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- Determine Rank 1 gold by checking every player
+			local all_gold_amounts = {}
+			for name, player in pairs(ECS.Players) do
+				all_gold_amounts[#all_gold_amounts + 1] = player.lifetime_song_gold
+			end
+			table.sort(all_gold_amounts)
+
+			local max_gold = all_gold_amounts[#all_gold_amounts]
+			if max_gold == nil then return 0 end
+
+			-- We need the 2nd highest as well for those that weren't rank 1
+			local second_highest = nil
+			for i = #all_gold_amounts, 1, -1 do
+				if all_gold_amounts[i] < max_gold then
+					second_highest = all_gold_amounts[i]
+					break
+				end
+			end
+
+			if max_gold == ecs_player.lifetime_song_gold then
+				return 500
+			else
+				local second_highest = all_gold_amounts[#all_gold_amounts-1]
+				if second_highest == nil then return 0 end
+				return math.floor(300*(ecs_player.lifetime_song_gold / second_highest))
+			end
+		end,
 	},
 	{
 		id=20,
@@ -245,8 +361,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="baguette.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(100 * (song_data.adj_stream ^ 3))
+		end,
 	},
 	{
 		id=21,
@@ -256,8 +374,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="painviennois.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(200 * (song_data.adj_stream ^ 3))
+		end,
 	},
 	{
 		id=22,
@@ -267,8 +387,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="painbrioche.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(300 * (song_data.adj_stream ^ 3))
+		end,
 	},
 	{
 		id=23,
@@ -278,8 +400,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="fougasse.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(400 * (song_data.adj_stream ^ 3))
+		end,
 	},
 	{
 		id=24,
@@ -289,8 +413,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="faluche.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(500 * (song_data.adj_stream ^ 3))
+		end,
 	},
 	{
 		id=25,
@@ -300,8 +426,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="burger.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=26,
@@ -311,8 +439,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="crystalaxe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.4)
+		end,
 	},
 	{
 		id=27,
@@ -322,8 +452,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="diamondaxe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.5)
+		end,
 	},
 	{
 		id=28,
@@ -333,8 +465,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		img="lanceoflonginus.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- NOTE(teejusb): MP Relics will only show up during the marathon so
+			-- returning the actual MP points is fine.
+			return 3000
+		end,
 	},
 	{
 		id=29,
@@ -344,8 +480,18 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="ornatehourglass.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 45
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=30,
@@ -355,8 +501,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="staminapotion.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=31,
@@ -366,8 +515,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="longboi.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.length * 45)
+		end,
 	},
 	{
 		id=32,
@@ -377,8 +528,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="crystaldagger.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.4)
+		end,
 	},
 	{
 		id=33,
@@ -388,8 +541,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="diamonddagger.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.5)
+		end,
 	},
 	{
 		id=34,
@@ -399,8 +554,15 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="twistedbow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) then
+				local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+				return math.floor(song_data.rp/(max_division_rp/1000)*0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=35,
@@ -410,8 +572,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="dragonarrow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if BowEquipped(relics_used) then
+				return math.floor(song_data.dp * 0.3) + 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=36,
@@ -421,8 +589,35 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="gildedgallows.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- Determine Rank 1 jp by checking every player
+			local all_jp_amounts = {}
+			for name, player in pairs(ECS.Players) do
+				all_jp_amounts[#all_jp_amounts + 1] = player.lifetime_jp
+			end
+			table.sort(all_jp_amounts)
+
+			local max_jp = all_jp_amounts[#all_jp_amounts]
+			if max_jp == nil then return 0 end
+
+			-- We need the 2nd highest as well for those that weren't rank 1
+			local second_highest = nil
+			for i = #all_jp_amounts, 1, -1 do
+				if all_jp_amounts[i] < max_gold then
+					second_highest = all_jp_amounts[i]
+					break
+				end
+			end
+
+			if max_jp == ecs_player.lifetime_song_jp then
+				return 600
+			else
+				local second_highest = all_jp_amounts[#all_jp_amounts-1]
+				if second_highest == nil then return 0 end
+				return math.floor(300*(ecs_player.lifetime_song_jp / second_highest))
+			end
+		end,
 	},
 	{
 		id=37,
@@ -432,8 +627,18 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="antiquesundial.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 45
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=38,
@@ -443,8 +648,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="agilitypotion.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=39,
@@ -454,8 +662,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="swiftabaddon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local bp = 0
+			if song_data.bpm_tier == 290 then
+				bp = bp + 150
+			end
+			return bp + math.floor(song_data.dp * 0.6)
+		end,
 	},
 	{
 		id=40,
@@ -465,8 +679,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="spiralheartmoonrod.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return ecs_player.tier_skill[song_data.bpm_tier]
+		end,
 	},
 	{
 		id=41,
@@ -476,8 +692,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="dryrottedstaff.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 130 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=42,
@@ -487,8 +709,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="princessguard.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 130 then
+				return 100 + math.floor(song_data.dp_ep * 0.1)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=43,
@@ -498,8 +726,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="claustrum.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 130 then
+				return 100 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=44,
@@ -509,8 +743,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="crappygloves.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 140 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=45,
@@ -520,8 +760,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="ehrgeiz.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 140 then
+				return 100 + math.floor(song_data.dp_ep * 0.1)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=46,
@@ -531,8 +777,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="godhands.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 140 then
+				return 100 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=47,
@@ -542,8 +794,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="fragileknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 150 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=48,
@@ -553,8 +811,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="magemasher.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 150 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=49,
@@ -564,8 +828,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mandau.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 150 then
+				return 150 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=50,
@@ -575,8 +845,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="frayedlasso.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 160 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=51,
@@ -586,8 +862,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="dragonwhip.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 160 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=52,
@@ -597,8 +879,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="vampirekiller.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 160 then
+				return 150 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=53,
@@ -608,8 +896,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="damagedzweihander.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 170 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=54,
@@ -619,8 +913,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="flamberge.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 170 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=55,
@@ -630,8 +930,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="pandemonium.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 170 then
+				return 100 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=56,
@@ -641,8 +947,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="splinteredbow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=57,
@@ -652,8 +964,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="amosbow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=58,
@@ -663,8 +981,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="yoichibow.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
+				return 100 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=59,
@@ -674,8 +998,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="faultyblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 190 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=60,
@@ -685,8 +1015,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="almace.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 190 then
+				return 100 + math.floor(song_data.dp_ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=61,
@@ -696,8 +1032,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="excalibur.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 190 then
+				return 150 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=62,
@@ -707,8 +1049,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="crackedzanbato.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 200 then
+				return 150
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=63,
@@ -718,8 +1066,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="dragonslayer.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 200 then
+				return 100 + math.floor(song_data.dp_ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=64,
@@ -729,8 +1083,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="yoru.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 200 then
+				return 150 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=65,
@@ -740,8 +1100,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="fracturedsword.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 210 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=66,
@@ -751,8 +1117,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="dainsleif.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 210 then
+				return 150 + math.floor(song_data.dp_ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=67,
@@ -762,8 +1134,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="ridill.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 210 then
+				return 200 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=68,
@@ -773,8 +1151,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="bustedscythe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 220 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=69,
@@ -784,8 +1168,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="vassalscythe.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 220 then
+				return 150 + math.floor(song_data.dp_ep * 0.3)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=70,
@@ -795,8 +1185,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="gracefuldahlia.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 220 then
+				return 150 + math.floor(song_data.ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=71,
@@ -806,8 +1202,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="loosehatchet.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 230 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=72,
@@ -817,8 +1219,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="kulutues.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 230 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=73,
@@ -828,8 +1236,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="divineaxerhitta.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 230 then
+				return 200 + math.floor(song_data.ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=74,
@@ -839,8 +1253,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="brokenkatana.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 240 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=75,
@@ -850,8 +1270,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="enma.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 240 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=76,
@@ -861,8 +1287,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="masamune.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 240 then
+				return 200 + math.floor(song_data.ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=77,
@@ -872,8 +1304,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="cleftspear.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 250 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=78,
@@ -883,8 +1321,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="silenceglaive.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 250 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=79,
@@ -894,8 +1338,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="murakumogiri.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 250 then
+				return 150 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=80,
@@ -905,8 +1355,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="wornkunai.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 260 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=81,
@@ -916,8 +1372,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="kikoku.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 260 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=82,
@@ -927,8 +1389,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="yagyudarkblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 260 then
+				return 150 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=83,
@@ -938,8 +1406,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="shatteredgreatsword.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 270 then
+				return 200
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=84,
@@ -949,8 +1423,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="atmaweapon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 270 then
+				return 150 + math.floor(song_data.dp_ep * 0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=85,
@@ -960,8 +1440,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="ultimaweapon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 270 then
+				return 200 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=86,
@@ -971,8 +1457,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="tauret.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 280 then
+				return 100 + math.floor(song_data.dp * 0.4)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=87,
@@ -982,8 +1474,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="twashtar.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			if song_data.bpm_tier == 280 then
+				return 150 + math.floor(song_data.dp_ep * 0.5)
+			else
+				return 0
+			end
+		end,
 	},
 	{
 		id=88,
@@ -993,8 +1491,14 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="armajejjon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				ECS.BreakTimer = ECS.BreakTimer - 30
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 700
+		end,
 	},
 	{
 		id=89,
@@ -1004,8 +1508,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="marioforpleasure.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=90,
@@ -1015,8 +1521,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="juicermario.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=91,
@@ -1026,8 +1534,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="anointedmario.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=92,
@@ -1037,8 +1547,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="momsknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 50
+		end,
 	},
 	{
 		id=93,
@@ -1048,8 +1560,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="chickenknife.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.rp/(max_division_rp/1000)*0.5)
+		end,
 	},
 	{
 		id=94,
@@ -1059,8 +1573,23 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="speedshoes.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+					SM("Set to Life 3")
+				end
+			end
+
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
+				songOptions:MusicRate(1.05)
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=95,
@@ -1070,8 +1599,19 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="pendulumblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
+					SM("Set to Life 5")
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return 200 + math.floor(song_data.rp/(max_division_rp/1000)*0.4)
+		end,
 	},
 	{
 		id=96,
@@ -1081,8 +1621,53 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="shieldrod.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			for relic in ivalues(relics_used) do
+				if name == "Alucard Shield" then
+					if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+						local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+						local failed = pss:GetFailed()
+						if not failed then
+							local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+							if length then
+								-- BreakTimer is in seconds.
+								ECS.BreakTimer = ECS.BreakTimer + (length * 0.18)
+							end
+						end
+					end
+				end
+				if name == "Aegis" then
+					if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+						local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+						if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
+							PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
+							SM("Set to Life 1")
+						end
+					end
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local bp = 100
+
+			for relic in ivalues(relics_used) do
+				local name = relic.name
+				if name == "Scrupulous Shield" then
+					bp = bp + math.floor(ap * 1.2)
+				end
+				if name == "Alacritous Aspis" then
+					bp = bp + math.floor(song_data.dp * 1.1)
+				end
+				if name == " Indefatigable Escutcheon" then
+					bp = bp + math.floor(song_data.ep * 1.2)
+				end
+				if name == "Alucard Shield" then
+					bp = bp + math.floor(song_data.length * 30)
+				end
+			end
+
+			return bp
+		end,
 	},
 	{
 		id=97,
@@ -1092,8 +1677,13 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="alucardshield.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+
+			return (math.floor(song_data.ep * 0.1) + math.floor(song_data.dp * 0.1) +
+					math.floor(song_data.rp/(max_division_rp/1000)*0.1) + math.floor(ap * 0.1))
+		end,
 	},
 	{
 		id=98,
@@ -1103,8 +1693,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="corpsknightuniform.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.1)
+		end,
 	},
 	{
 		id=99,
@@ -1114,8 +1707,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="corpscaptainuniform.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.2)
+		end,
 	},
 	{
 		id=100,
@@ -1125,8 +1721,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="corpsgeneraluniform.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.3)
+		end,
 	},
 	{
 		id=101,
@@ -1136,8 +1735,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="cultistrobes.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=102,
@@ -1147,8 +1749,12 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		img="claiomhsolais.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- NOTE(teejusb): MP Relics will only show up during the marathon so
+			-- returning the actual MP points is fine.
+			return 2000
+		end,
 	},
 	{
 		id=103,
@@ -1158,8 +1764,16 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="aegis.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+					SM("Set to Life 3")
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=104,
@@ -1169,8 +1783,16 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="throne.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
+					SM("Set to Life 3")
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=105,
@@ -1180,8 +1802,18 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="perish.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
+					SM("Set to Life 5")
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 700
+		end,
 	},
 	{
 		id=106,
@@ -1191,8 +1823,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="championbelt.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 100
+		end,
 	},
 	{
 		id=107,
@@ -1202,8 +1836,16 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="protectring.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
+					SM("Set to Life 1")
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=108,
@@ -1213,8 +1855,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="pandemoniumzero.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(250*(ecs_player.level / 100))
+		end,
 	},
 	{
 		id=109,
@@ -1224,8 +1868,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="bronzetrophy.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=110,
@@ -1235,8 +1881,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="mythriltrophy.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=111,
@@ -1246,8 +1894,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="crystaltrophy.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=112,
@@ -1257,8 +1907,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="ivorytrophy.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=113,
@@ -1268,8 +1920,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="tpastandard.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=114,
@@ -1279,8 +1934,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="scrupulousshield.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(ap * 0.2)
+		end,
 	},
 	{
 		id=115,
@@ -1290,8 +1947,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="virtueblade.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=116,
@@ -1301,8 +1958,14 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="astralring.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
+				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW3)
+				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW3)
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=117,
@@ -1312,8 +1975,8 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="flawlessiluvatar.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap) end,
 	},
 	{
 		id=118,
@@ -1323,8 +1986,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="memepeaceberet.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=119,
@@ -1334,8 +2000,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="alacritousaspis.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.dp * 0.3)
+		end,
 	},
 	{
 		id=120,
@@ -1345,8 +2013,15 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="principia.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
+				songOptions:MusicRate(1.02)
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 200 + math.floor(song_data.dp * 0.3)
+		end,
 	},
 	{
 		id=121,
@@ -1356,8 +2031,12 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="arvinsgambit.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			-- NOTE(teejusb): Handled in Graphics/_header.lua
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=122,
@@ -1367,8 +2046,15 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="almagest.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
+				songOptions:MusicRate(1.05)
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 500 + math.floor(song_data.dp * 0.7)
+		end,
 	},
 	{
 		id=123,
@@ -1378,8 +2064,11 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="slimebadge.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			-- End of set relics are handled in ScreenGameOver
+			return 0
+		end,
 	},
 	{
 		id=124,
@@ -1389,8 +2078,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="indefatigableescutcheon.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.ep * 0.2)
+		end,
 	},
 	{
 		id=125,
@@ -1400,8 +2091,22 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="vampiriclongsword.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+					if length then
+						-- BreakTimer is in seconds.
+						ECS.BreakTimer = ECS.BreakTimer + (length * 0.09)
+					end
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.length * 20)
+		end,
 	},
 	{
 		id=126,
@@ -1411,8 +2116,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="faustsscalpel.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=127,
@@ -1422,8 +2129,22 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="muramasa.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+					if length then
+						-- BreakTimer is in seconds.
+						ECS.BreakTimer = ECS.BreakTimer + (length * 0.18)
+					end
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return math.floor(song_data.length * 50)
+		end,
 	},
 	{
 		id=128,
@@ -1433,8 +2154,10 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="orderofambrosia.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 	{
 		id=129,
@@ -1444,8 +2167,10 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="godfatherstoken.png",
-		action=function() end,
-		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap)
+			return 0
+		end,
 	},
 }
 

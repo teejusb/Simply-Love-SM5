@@ -16,6 +16,6 @@ with open('relics.csv') as f:
 		print(r"""		is_marathon=%s,""" % ("false" if row["portion"] == "0" else "true"))
 		print(r"""		img="%s",""" % row["imageurl"])
 		print(r"""		action=function() end,""")
-		print(r"""		score=function(ecs_player, song_data, relics_used, dp, ep, rp, ap) end,""")
+		print(r"""		score=function(ecs_player, song_info, song_data, relics_used, ap) end,""")
 		print(r"""	},""")
 print(r"""}""")

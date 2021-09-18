@@ -161,7 +161,7 @@ end
 
 local ApplyRelicActions = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
-		active_relic.action()
+		active_relic.action(ECS.Player.Relics)
 	end
 end
 
