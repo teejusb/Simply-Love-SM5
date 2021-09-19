@@ -1635,7 +1635,7 @@ ECS.Relics = {
 							local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
 							if length then
 								-- BreakTimer is in seconds.
-								ECS.BreakTimer = ECS.BreakTimer + (length * 0.18)
+								ECS.BreakTimer = ECS.BreakTimer + (length * 0.13)
 							end
 						end
 					end
