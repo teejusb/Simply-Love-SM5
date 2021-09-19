@@ -3,6 +3,7 @@ ECS = {}
 -- call this to (re)initialize per-player settings
 InitializeECS = function()
 	ECS.Mode = "Warmup"
+	ECS.IsPracticeSet = false
 	ECS.BreakTimer=(15 * 60)
 
 	ECS.Player = {
@@ -16613,7 +16614,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		bpm=song_data.bpm,
 		bpm_tier=song_data.bpm_tier,
 		failed=failed,
-		relics_used=DeepCopy(relics_used)
+		relics_used=DeepCopy(relics_used),
 		score=score,
 	}
 

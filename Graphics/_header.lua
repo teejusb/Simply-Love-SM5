@@ -178,7 +178,7 @@ local af = Def.ActorFrame{
 		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end
 	},
 
-	-- Freeplay | Warmup | ECS | Marathon
+	-- Freeplay | Warmup | PracticeSet | ECS | Marathon
 	LoadFont("Wendy/_wendy small")..{
 		Name="GameModeText",
 		InitCommand=function(self)
