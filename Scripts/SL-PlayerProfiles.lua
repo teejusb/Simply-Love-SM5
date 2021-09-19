@@ -128,9 +128,9 @@ LoadProfileCustom = function(profile, dir)
 					GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred"):FailSetting( GetDefaultFailType() )
 				end
 
-				if k=="EvalPaneSecondary" and type(v)==permitted_profile_settings.EvalPaneSecondary then
+				if k == "EvalPaneSecondary" and type(v) == permitted_profile_settings.EvalPaneSecondary then
 					SL[pn].EvalPaneSecondary = v
-				elseif k=="EvalPanePrimary" and type(v)==permitted_profile_settings.EvalPanePrimary then
+				elseif k == "EvalPanePrimary" and type(v) == permitted_profile_settings.EvalPanePrimary then
 					SL[pn].EvalPanePrimary   = v
 				end
 			end

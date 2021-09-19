@@ -3,6 +3,9 @@ local profile_name = PROFILEMAN:GetPlayerName(player)
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
 local CreateScoreFile = function(day, month_string, year, seconds, hour, minute, second)
+	-- Don't write any files in a practice set.
+	if ECS.IsPracticeSet then return end
+
 	local passed_song = pss:GetFailed() and "Failed" or "Passed"
 
 	local dance_points = pss:GetPercentDancePoints()
@@ -52,6 +55,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 end
 
 local CreateRelicFile = function(day, month_string, year, seconds)
+	-- Don't write any files in a practice set.
+	if ECS.IsPracticeSet then return end
+
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 
@@ -95,6 +101,8 @@ end
 
 -- ----------------------------------------------------------
 local WriteRelicDataToDisk = function()
+	-- Don't write any files in a practice set.
+	if ECS.IsPracticeSet then return end
 
 	local p = PlayerNumber:Reverse()[GAMESTATE:GetMasterPlayerNumber()] + 1
 	local profile_dir = PROFILEMAN:GetProfileDir("ProfileSlot_Player"..p)
@@ -135,16 +143,6 @@ end
 -- If the screen's OffCommand occurs while START is being held, we assume they gave up early.
 -- It's certainly not foolproof, but I'm unsure how else to handle this.
 
-local start_is_being_held = false
-
-local InputHandler = function(event)
-	if not event.PlayerNumber or not event.button then return false	end
-
-	if event.GameButton == "Start" then
-		start_is_being_held = (not (event.type == "InputEventType_Release"))
-	end
-end
-
 -- ----------------------------------------------------------
 
 local ExpendChargesOnActiveRelics = function()
@@ -177,15 +175,8 @@ af[#af+1] = Def.Actor{
 
 			ExpendChargesOnActiveRelics()
 		end
- 
-		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 	end,
 	OffCommand=function(self)
-		if start_is_being_held then
-			pss:FailPlayer()
-			passed_song = "Failed"
-		end
-
 		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 			local year, month, day = Year(), MonthOfYear() + 1, DayOfMonth()
 			local hour, minute, second = Hour(), Minute(), Second()
