@@ -220,7 +220,12 @@ local FaustsScalpelIsActive = function()
 	return false
 end
 
-local second_to_pause = 1949.958374
+local second_to_pause = {
+	"lower" = 1699.301270,
+	"mid" = 1223.617676,
+	"upper" = 1953.137939,
+}
+
 local pause_duration_seconds = 300
 local elapsed_seconds = 0
 
@@ -255,7 +260,7 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 			if GAMESTATE:GetNumPlayersEnabled() == 1 then
 				-- We don't need to divide by rate since we always want the break to happen in the same spot regardless.
 				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
-				if cur_second >= second_to_pause then
+				if cur_second >= second_to_pause[GetDivision()] then
 					self:queuecommand("PauseMarathon")
 				else
 					self:sleep(0.1):queuecommand("Loop")
@@ -350,5 +355,64 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 		}
 	}
 end
+
+-- -----------------------------------------------------------------------
+local IsPlayingECS = function()
+	local song = GAMESTATE:GetCurrentSong()
+	local group_name = song:GetGroupName()
+	local song_name = song:GetMainTitle()
+	if GetDivision() == "upper" then
+		return group_name == "ECS10 - Upper"
+	elseif GetDivision() == "mid" then
+		return group_name == "ECS10 - Mid"
+	else
+		return group_name == "ECS10 - Lower"
+	end
+end
+
+local ChickenKnifeIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Chicken Knife" then
+			return true
+		end
+	end
+	return false
+end
+
+if ECS.Mode == "ECS" and ChickenKnifeIsActive() and IsPlayingECS() then
+	af[#af+1] = Def.ActorFrame{
+		InitCommand=function(self) end,
+		OnCommand=function(self)
+			self.backout_time = -1
+			if math.random(1, 100) <= 50 then
+				local song_length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+				self.backout_time = math.random(0, song_length)
+				self:queuecommand("Loop")
+			end
+		end,
+		LoopCommand=function(self)
+			if self.backout_time ~= -1 then
+				-- We don't need to divide by rate since we always want the backout time to happen in the predetermined spot.
+				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
+				if cur_second >= self.backout_time then
+					self:queuecommand("Backout")
+				else
+					self:sleep(0.1):queuecommand("Loop")
+				end
+			end
+		end,
+		BackoutCommand=function(self)
+			-- There shouldn't be multiple players enabled but anyways we can fail them both.
+			for player in ivalues( GAMESTATE:GetEnabledPlayers() ) do
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
+				pss:FailPlayer()
+			end
+
+			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenEvaluationStage"):StartTransitioningScreen("SM_GoToNextScreen")
+		end
+	}
+
+end
+
 
 return af
