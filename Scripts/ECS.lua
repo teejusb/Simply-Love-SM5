@@ -2670,7 +2670,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=33,
-			name="[13] [165] Timeleap",
+			name="[13] [175] Timeleap",
 			stepartist="Rems",
 			pack="Comiket 95",
 			difficulty=13,
@@ -8828,7 +8828,7 @@ ECS.Players["RD"] = {
 
 ECS.Players["teejusb"] = {
 	id=50287,
-	division="upper",
+	division="lower",
 	country="U.S.A.",
 	level=66,
 	exp=201157,
