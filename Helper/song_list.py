@@ -18,7 +18,7 @@ for tier in ["Lower", "Mid", "Upper"]:
 		for row in reader:
 			print(r"""		{""")
 			print(r"""			id=%s,""" % row['ID'])
-			print(r"""			name="%s",""" % row["Song"])
+			print(r"""			name="[%s] [%s] %s",""" % (row["Rating"], row["BPM"], row["Song"]))
 			print(r"""			stepartist="%s",""" % row["Stepartist"])
 			print(r"""			pack="%s",""" % row["Pack"])
 			print(r"""			difficulty=%s,""" % row["Rating"])

@@ -29,27 +29,34 @@ af[#af+1] = Def.Sprite{
 		self:playcommand("LoadImage")
 	end,
 	LoadImageCommand=function(self)
-		if ThemePrefs.Get("VisualStyle") == "SRPG5" then
-			self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG5.GetLogo()))
-			self:zoom(0.7):vertalign(top)
-			self:y(-120):shadowlength(0)
-		else
-			local style = ThemePrefs.Get("VisualStyle")
-			local image = THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu (doubleres).png")
-			local imageAlt = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_VisualStyles/"..style.."/TitleMenuAlt (doubleres).png"
-			if FILEMAN:DoesFileExist(imageAlt) and math.random(1,100) <= 10 then
-				self:Load(imageAlt)
-			else
-				self:Load(image)
-			end
-			self:zoom(0.7):vertalign(top)
-			self:y(-102):shadowlength(0.75)
-		end
+		self:Load(THEME:GetPathG("", "_ECSX/logo (doubleres).png"))
+		self:zoom(0.18)
+		self:addy(-15)
+
+		return
+
+
+		-- if ThemePrefs.Get("VisualStyle") == "SRPG5" then
+		-- 	self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG5.GetLogo()))
+		-- 	self:zoom(0.7):vertalign(top)
+		-- 	self:y(-120):shadowlength(0)
+		-- else
+		-- 	local style = ThemePrefs.Get("VisualStyle")
+		-- 	local image = THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu (doubleres).png")
+		-- 	local imageAlt = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_VisualStyles/"..style.."/TitleMenuAlt (doubleres).png"
+		-- 	if FILEMAN:DoesFileExist(imageAlt) and math.random(1,100) <= 10 then
+		-- 		self:Load(imageAlt)
+		-- 	else
+		-- 		self:Load(image)
+		-- 	end
+		-- 	self:zoom(0.7):vertalign(top)
+		-- 	self:y(-102):shadowlength(0.75)
+		-- end
 	end,
 }
 
 
-if ThemePrefs.Get("VisualStyle") ~= "SRPG5" then
+if false then
 	-- decorative arrows for current game (dance, pump, techno, etc.)
 	af[#af+1] = LoadActor(resolved_path)..{
 		InitCommand=function(self)

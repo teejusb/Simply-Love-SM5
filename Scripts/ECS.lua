@@ -17,7 +17,7 @@ InitializeECS = function()
 end
 
 local BowEquipped = function(relics_used)
-	for relic in ivalues(relic_used) do
+	for relic in ivalues(relics_used) do
 		local name = relic.name
 		if (name == "Short Bow" or name == "Composite Bow" or name == "Long Bow" or name == "Twisted Bow" or
 			name == "Splintered Bow" or name == "Amos' Bow" or name == "Yoichi Bow") then
@@ -28,7 +28,7 @@ local BowEquipped = function(relics_used)
 end
 
 local ArrowEquipped = function(relics_used)
-	for relic in ivalues(relic_used) do
+	for relic in ivalues(relics_used) do
 		local name = relic.name
 		if (name == "Stone Arrow" or name == "Bronze Arrow" or name == "Mythril Arrow" or name == "Dragon Arrow") then
 			return true
@@ -2222,7 +2222,7 @@ ECS.SongInfo.Lower = {
 	Songs = {
 		{
 			id=1,
-			name="Discovery",
+			name="[12] [130] Discovery",
 			stepartist="StoryTime",
 			pack="StoryTime Chapter 1",
 			difficulty=12,
@@ -2236,7 +2236,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=2,
-			name="The Ones We Loved (Dogzilla Remix)",
+			name="[12] [136] The Ones We Loved (Dogzilla Remix)",
 			stepartist="t0ni",
 			pack="TranceMania 3",
 			difficulty=12,
@@ -2250,7 +2250,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=3,
-			name="Crazy Loop (Mm Ma Ma)",
+			name="[12] [133] Crazy Loop (Mm Ma Ma)",
 			stepartist="Xynn",
 			pack="Xynn's LVTS 2",
 			difficulty=12,
@@ -2264,7 +2264,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=4,
-			name="I'm Coming",
+			name="[12] [135] I'm Coming",
 			stepartist="sorae",
 			pack="Big Waves",
 			difficulty=12,
@@ -2278,7 +2278,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=5,
-			name="Higanbana (Autobahn Remix)",
+			name="[12] [140] Higanbana (Autobahn Remix)",
 			stepartist="t3a",
 			pack="moimoimoimoimoi",
 			difficulty=12,
@@ -2292,7 +2292,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=6,
-			name="Pernicious Deed",
+			name="[12] [145] Pernicious Deed",
 			stepartist="Nav",
 			pack="Nav's Spicy Singles",
 			difficulty=12,
@@ -2306,7 +2306,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=7,
-			name="Wastelands",
+			name="[12] [146] Wastelands",
 			stepartist="Janus5k",
 			pack="Mozee Metal",
 			difficulty=12,
@@ -2320,7 +2320,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=8,
-			name="Zi-Zi's Journey",
+			name="[12] [140] Zi-Zi's Journey",
 			stepartist="Okami",
 			pack="Lindsey Stirling",
 			difficulty=12,
@@ -2334,7 +2334,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=9,
-			name="The Sampling Paradise (Extended)",
+			name="[12] [150] The Sampling Paradise (Extended)",
 			stepartist="Rems",
 			pack="SlowStreamz",
 			difficulty=12,
@@ -2348,7 +2348,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=10,
-			name="Lifelight (Camellia's Hardstyle Bootleg)",
+			name="[12] [150] Lifelight (Camellia's Hardstyle Bootleg)",
 			stepartist="Okami",
 			pack="StS",
 			difficulty=12,
@@ -2362,7 +2362,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=11,
-			name="Blood Is Pumpin' (Hard)",
+			name="[12] [150] Blood Is Pumpin' (Hard)",
 			stepartist="Rems",
 			pack="SlowStreamz",
 			difficulty=12,
@@ -2376,7 +2376,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=12,
-			name="Wheelpower & Go",
+			name="[12] [156] Wheelpower & Go",
 			stepartist="Zaia",
 			pack="Eurobeat Is Fantastic",
 			difficulty=12,
@@ -2390,7 +2390,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=13,
-			name="Drink",
+			name="[12] [160] Drink",
 			stepartist="Janus5k",
 			pack="Squirrel Metal II",
 			difficulty=12,
@@ -2404,7 +2404,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=14,
-			name="Gimme Your Desire (Hard)",
+			name="[12] [160] Gimme Your Desire (Hard)",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic - Second Stage",
 			difficulty=12,
@@ -2418,7 +2418,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=15,
-			name="When the Sun Goes Down (Medium)",
+			name="[12] [160] When the Sun Goes Down (Medium)",
 			stepartist="Arvin",
 			pack="Eurobeat Is Fantastic",
 			difficulty=12,
@@ -2432,7 +2432,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=16,
-			name="Stay Awake (Hard)",
+			name="[12] [160] Stay Awake (Hard)",
 			stepartist="ITGAlex",
 			pack="Hospitality",
 			difficulty=12,
@@ -2446,7 +2446,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=17,
-			name="Deep Jungle Walk",
+			name="[13] [138] Deep Jungle Walk",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=13,
@@ -2460,7 +2460,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=18,
-			name="Alone Tonight (Ronski Speed Remix)",
+			name="[13] [138] Alone Tonight (Ronski Speed Remix)",
 			stepartist="Rems",
 			pack="SlowStreamz",
 			difficulty=13,
@@ -2474,7 +2474,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=19,
-			name="No Shields",
+			name="[13] [132] No Shields",
 			stepartist="Fietsemaker",
 			pack="SlowStreamz",
 			difficulty=13,
@@ -2488,7 +2488,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=20,
-			name="March of the ants",
+			name="[13] [134] March of the ants",
 			stepartist="Tuuc",
 			pack="The Starter Pack of Stamina",
 			difficulty=13,
@@ -2502,7 +2502,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=21,
-			name="Sa'eed",
+			name="[13] [145] Sa'eed",
 			stepartist="Okami",
 			pack="SlowStreamz",
 			difficulty=13,
@@ -2516,7 +2516,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=22,
-			name="Set Me On Fire (Novice)",
+			name="[13] [140] Set Me On Fire (Novice)",
 			stepartist="Archi",
 			pack="Pendulum Act III",
 			difficulty=13,
@@ -2530,7 +2530,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=23,
-			name="Virtual Pilgrim",
+			name="[13] [148] Virtual Pilgrim",
 			stepartist="Okami",
 			pack="StS",
 			difficulty=13,
@@ -2544,7 +2544,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=24,
-			name="Switch !",
+			name="[13] [140] Switch !",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic",
 			difficulty=13,
@@ -2558,7 +2558,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=25,
-			name="Aphasia",
+			name="[13] [155] Aphasia",
 			stepartist="Okami",
 			pack="Team Grimoire",
 			difficulty=13,
@@ -2572,7 +2572,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=26,
-			name="Deja Vu",
+			name="[13] [154] Deja Vu",
 			stepartist="Arvin & Rems",
 			pack="Eurobeat Is Fantastic",
 			difficulty=13,
@@ -2586,7 +2586,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=27,
-			name="CHAOS",
+			name="[13] [150] CHAOS",
 			stepartist="Okami",
 			pack="Cytus II",
 			difficulty=13,
@@ -2600,7 +2600,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=28,
-			name="Louder",
+			name="[13] [150] Louder",
 			stepartist="Kyy",
 			pack="Hardbass Madness",
 			difficulty=13,
@@ -2614,7 +2614,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=29,
-			name="Uh...Man",
+			name="[13] [162] Uh...Man",
 			stepartist="StoryTime",
 			pack="Jayrocking",
 			difficulty=13,
@@ -2628,7 +2628,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=30,
-			name="Fright March",
+			name="[13] [160] Fright March",
 			stepartist="StarrySergal",
 			pack="itg! Rhythm is just a step away",
 			difficulty=13,
@@ -2642,7 +2642,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=31,
-			name="P.L.U.C.K. (Medium)",
+			name="[13] [165] P.L.U.C.K. (Medium)",
 			stepartist="Aoreo",
 			pack="System of a Down",
 			difficulty=13,
@@ -2656,7 +2656,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=32,
-			name="The Top",
+			name="[13] [160] The Top",
 			stepartist="Zaia",
 			pack="Eurobeat Is Fantastic",
 			difficulty=13,
@@ -2670,7 +2670,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=33,
-			name="Timeleap",
+			name="[13] [165] Timeleap",
 			stepartist="Rems",
 			pack="Comiket 95",
 			difficulty=13,
@@ -2684,7 +2684,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=34,
-			name="Alphaseeker",
+			name="[13] [170] Alphaseeker",
 			stepartist="ITGAlex",
 			pack="Bass Chasers",
 			difficulty=13,
@@ -2698,7 +2698,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=35,
-			name="Sakura Fubuki (Ata Remix)",
+			name="[13] [175] Sakura Fubuki (Ata Remix)",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=13,
@@ -2712,7 +2712,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=36,
-			name="Come & Get It",
+			name="[13] [174] Come & Get It",
 			stepartist="StoryTime",
 			pack="Hospitality",
 			difficulty=13,
@@ -2726,7 +2726,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=37,
-			name="Eskimo & Icebird Megamix",
+			name="[14] [143] Eskimo & Icebird Megamix",
 			stepartist="Xynn",
 			pack="Xynn's LVTS 2",
 			difficulty=14,
@@ -2740,7 +2740,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=38,
-			name="Dreamenddischarger",
+			name="[14] [140] Dreamenddischarger",
 			stepartist="Okami",
 			pack="SlowStreamz",
 			difficulty=14,
@@ -2754,7 +2754,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=39,
-			name="Dog Days Bliss (Album Edit)",
+			name="[14] [144] Dog Days Bliss (Album Edit)",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=14,
@@ -2768,7 +2768,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=40,
-			name="Moscow 3980",
+			name="[14] [147] Moscow 3980",
 			stepartist="Al_Isa",
 			pack="SlowStreamz",
 			difficulty=14,
@@ -2782,7 +2782,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=41,
-			name="Mala",
+			name="[14] [145] Mala",
 			stepartist="Rems",
 			pack="SlowStreamz",
 			difficulty=14,
@@ -2796,7 +2796,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=42,
-			name="Full Circle",
+			name="[14] [158] Full Circle",
 			stepartist="Fietsemaker",
 			pack="Big Waves",
 			difficulty=14,
@@ -2810,7 +2810,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=43,
-			name="Gas Gas Gas",
+			name="[14] [154] Gas Gas Gas",
 			stepartist="Honk",
 			pack="Eurobeat Is Fantastic",
 			difficulty=14,
@@ -2824,7 +2824,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=44,
-			name="Granblaze",
+			name="[14] [158] Granblaze",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Singles",
 			difficulty=14,
@@ -2838,7 +2838,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=45,
-			name="Grimoire of Blue",
+			name="[14] [155] Grimoire of Blue",
 			stepartist="Okami",
 			pack="Team Grimoire",
 			difficulty=14,
@@ -2852,7 +2852,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=46,
-			name="Katamari on the Rocks",
+			name="[14] [160] Katamari on the Rocks",
 			stepartist="Xynn",
 			pack="Xynn's LVTS 2",
 			difficulty=14,
@@ -2866,7 +2866,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=47,
-			name="Hooligans",
+			name="[14] [160] Hooligans",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic",
 			difficulty=14,
@@ -2880,7 +2880,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=48,
-			name="80808",
+			name="[14] [161] 80808",
 			stepartist="Loak",
 			pack="Death Grips",
 			difficulty=14,
@@ -2894,7 +2894,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=49,
-			name="Adrenaline",
+			name="[14] [163] Adrenaline",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic - Second Stage",
 			difficulty=14,
@@ -2908,7 +2908,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=50,
-			name="Akatsuki",
+			name="[14] [170] Akatsuki",
 			stepartist="Janus5k",
 			pack="Squirrel Metal II",
 			difficulty=14,
@@ -2922,7 +2922,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=51,
-			name="kagetsu",
+			name="[14] [175] kagetsu",
 			stepartist="Benpai",
 			pack="Stamina Showcase 2",
 			difficulty=14,
@@ -2936,7 +2936,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=52,
-			name="Black Church",
+			name="[14] [174] Black Church",
 			stepartist="Zaia",
 			pack="Cirque du Miura",
 			difficulty=14,
@@ -2950,7 +2950,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=53,
-			name="Tension",
+			name="[14] [174] Tension",
 			stepartist="StoryTime",
 			pack="Hospitality",
 			difficulty=14,
@@ -2964,7 +2964,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=54,
-			name="Way Away",
+			name="[14] [180] Way Away",
 			stepartist="Aoreo",
 			pack="Big Waves",
 			difficulty=14,
@@ -2978,7 +2978,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=55,
-			name="squartatrice",
+			name="[14] [180] squartatrice",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=14,
@@ -2992,7 +2992,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=56,
-			name="Digital Warrior",
+			name="[14] [180] Digital Warrior",
 			stepartist="ITGAlex",
 			pack="Bass Chasers",
 			difficulty=14,
@@ -3006,7 +3006,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=57,
-			name="Vertex ALPHA (Hard)",
+			name="[14] [180] Vertex ALPHA (Hard)",
 			stepartist="Rems",
 			pack="BaguetteStreamz 2",
 			difficulty=14,
@@ -3020,7 +3020,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=58,
-			name="Trance Trance Revolution",
+			name="[15] [140] Trance Trance Revolution",
 			stepartist="Implode & Rems & Zaia",
 			pack="Barber Cuts 3",
 			difficulty=15,
@@ -3034,7 +3034,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=59,
-			name="kunkka-kunkka",
+			name="[15] [150] kunkka-kunkka",
 			stepartist="Rikame",
 			pack="All The Rounds 4",
 			difficulty=15,
@@ -3048,7 +3048,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=60,
-			name="G e n g a o z o -Noize of Nocent-",
+			name="[15] [155] G e n g a o z o -Noize of Nocent-",
 			stepartist="Redzone",
 			pack="Stamina Secret Santa 2019",
 			difficulty=15,
@@ -3062,7 +3062,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=61,
-			name="Night Of Fire v2",
+			name="[15] [155] Night Of Fire v2",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic",
 			difficulty=15,
@@ -3076,7 +3076,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=62,
-			name="REASON for RED (Hard)",
+			name="[15] [159] REASON for RED (Hard)",
 			stepartist="Janus5k",
 			pack="Stamina Showcase 2",
 			difficulty=15,
@@ -3090,7 +3090,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=63,
-			name="GENE",
+			name="[15] [163] GENE",
 			stepartist="sorae",
 			pack="fsorae's fstamina ffuckeronis",
 			difficulty=15,
@@ -3104,7 +3104,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=64,
-			name="Ice Angel",
+			name="[15] [168] Ice Angel",
 			stepartist="StoryTime",
 			pack="StoryTime Chapter 1",
 			difficulty=15,
@@ -3118,7 +3118,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=65,
-			name="Zusammengehorigkeit Hommarju Remix",
+			name="[15] [165] Zusammengehorigkeit Hommarju Remix",
 			stepartist="Rems",
 			pack="BaguetteStreamz",
 			difficulty=15,
@@ -3132,7 +3132,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=66,
-			name="Battle Train -HOT SOTA MIX-",
+			name="[15] [160] Battle Train -HOT SOTA MIX-",
 			stepartist="Xynn",
 			pack="Xynn's LVTS 2",
 			difficulty=15,
@@ -3146,7 +3146,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=67,
-			name="Salt in the Wounds",
+			name="[15] [174] Salt in the Wounds",
 			stepartist="Archi",
 			pack="Pendulum Act III",
 			difficulty=15,
@@ -3160,7 +3160,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=68,
-			name="Wrong (Muzzy Remix)",
+			name="[15] [175] Wrong (Muzzy Remix)",
 			stepartist="Rems",
 			pack="Hospitality",
 			difficulty=15,
@@ -3174,7 +3174,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=69,
-			name="Dimension Ninja",
+			name="[15] [174] Dimension Ninja",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=15,
@@ -3188,7 +3188,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=70,
-			name="Satellite (Sewerslvt Edit)",
+			name="[15] [174] Satellite (Sewerslvt Edit)",
 			stepartist="ITGAlex",
 			pack="Bass Chasers",
 			difficulty=15,
@@ -3202,7 +3202,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=71,
-			name="Get Over the Barrier! (-Evolution!!-)",
+			name="[15] [180] Get Over the Barrier! (-Evolution!!-)",
 			stepartist="Arvin",
 			pack="Trails of Cold Stream II",
 			difficulty=15,
@@ -3216,7 +3216,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=72,
-			name="Epimedium",
+			name="[15] [180] Epimedium",
 			stepartist="ITGAlex",
 			pack="Bass Chasers",
 			difficulty=15,
@@ -3230,7 +3230,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=73,
-			name="A Town With An Ocean View (el Poco Maro Remix)",
+			name="[15] [180] A Town With An Ocean View (el Poco Maro Remix)",
 			stepartist="Rust",
 			pack="Hospitality",
 			difficulty=15,
@@ -3244,7 +3244,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=74,
-			name="Virtual Paradise",
+			name="[15] [188] Virtual Paradise",
 			stepartist="StarrySergal",
 			pack="The Joy of Streaming",
 			difficulty=15,
@@ -3258,7 +3258,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=75,
-			name="Dawn Of Victory",
+			name="[15] [190] Dawn Of Victory",
 			stepartist="Rems",
 			pack="BaguetteStreamz 2",
 			difficulty=15,
@@ -3272,7 +3272,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=76,
-			name="Wolves Standing Towards Enemies",
+			name="[15] [191] Wolves Standing Towards Enemies",
 			stepartist="sorae",
 			pack="The Joy of Streaming",
 			difficulty=15,
@@ -3286,7 +3286,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=77,
-			name="AO-INFINITY",
+			name="[15] [191] AO-INFINITY",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=15,
@@ -3300,7 +3300,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=78,
-			name="Unreliable Narrator",
+			name="[15] [190] Unreliable Narrator",
 			stepartist="Admiral M&Ms",
 			pack="Resistance Device",
 			difficulty=15,
@@ -3314,7 +3314,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=79,
-			name="The Epic of Zektbach",
+			name="[16] [165] The Epic of Zektbach",
 			stepartist="ITGAlex",
 			pack="Big Waves",
 			difficulty=16,
@@ -3328,7 +3328,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=80,
-			name="Eurobeat Is Fantastic ~Part 3~",
+			name="[16] [160] Eurobeat Is Fantastic ~Part 3~",
 			stepartist="Rems",
 			pack="Eurobeat Is Fantastic",
 			difficulty=16,
@@ -3342,7 +3342,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=81,
-			name="Eastern Dream",
+			name="[16] [165] Eastern Dream",
 			stepartist="Reyllyoc",
 			pack="Demetori ACT 1",
 			difficulty=16,
@@ -3356,7 +3356,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=82,
-			name="Entity",
+			name="[16] [162] Entity",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=16,
@@ -3370,7 +3370,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=83,
-			name="unnatural",
+			name="[16] [167] unnatural",
 			stepartist="ZoG- & StarrySergal",
 			pack="Goreshit 2020",
 			difficulty=16,
@@ -3384,7 +3384,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=84,
-			name="Meteor Shower",
+			name="[16] [174] Meteor Shower",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=16,
@@ -3398,7 +3398,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=85,
-			name="Just One Second",
+			name="[16] [173] Just One Second",
 			stepartist="Rems",
 			pack="Hospitality",
 			difficulty=16,
@@ -3412,7 +3412,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=86,
-			name="United (L.A.O.S. Remix)",
+			name="[16] [175] United (L.A.O.S. Remix)",
 			stepartist="StoryTime",
 			pack="Hospitality",
 			difficulty=16,
@@ -3426,7 +3426,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=87,
-			name="Crush",
+			name="[16] [174] Crush",
 			stepartist="Archi",
 			pack="Pendulum Act III",
 			difficulty=16,
@@ -3440,7 +3440,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=88,
-			name="I'm Not Crazy",
+			name="[16] [180] I'm Not Crazy",
 			stepartist="NAOKI",
 			pack="The Joy of Streaming 2",
 			difficulty=16,
@@ -3454,7 +3454,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=89,
-			name="Cybernecia Catharsis",
+			name="[16] [184] Cybernecia Catharsis",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Singles",
 			difficulty=16,
@@ -3468,7 +3468,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=90,
-			name="Fly Away",
+			name="[16] [186] Fly Away",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=16,
@@ -3482,7 +3482,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=91,
-			name="Heretic Witch",
+			name="[16] [184] Heretic Witch",
 			stepartist="Archi",
 			pack="SHARPNELSTREAMZ v3 Part 2",
 			difficulty=16,
@@ -3496,7 +3496,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=92,
-			name="Night sky",
+			name="[16] [192] Night sky",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=16,
@@ -3510,7 +3510,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=93,
-			name="Salvation",
+			name="[16] [192] Salvation",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=16,
@@ -3524,7 +3524,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=94,
-			name="Say Hello to HOLLOWood feat. Nene Akagawa",
+			name="[16] [192] Say Hello to HOLLOWood feat. Nene Akagawa",
 			stepartist="Okami",
 			pack="BaguetteStreamz 2",
 			difficulty=16,
@@ -3538,7 +3538,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=95,
-			name="Aragami",
+			name="[16] [196] Aragami",
 			stepartist="Zaia",
 			pack="xi preview",
 			difficulty=16,
@@ -3552,7 +3552,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=96,
-			name="Heaven's Fall 2016 Rebuild",
+			name="[16] [200] Heaven's Fall 2016 Rebuild",
 			stepartist="Zaia",
 			pack="Helblinde 2016",
 			difficulty=16,
@@ -3566,7 +3566,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=97,
-			name="BroGamer (Extended Mix)",
+			name="[16] [207] BroGamer (Extended Mix)",
 			stepartist="Okami",
 			pack="BaguetteStreamz 2.5",
 			difficulty=16,
@@ -3580,7 +3580,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=98,
-			name="Deus ex Machina",
+			name="[16] [208] Deus ex Machina",
 			stepartist="Zaia",
 			pack="Cirque du Enzo",
 			difficulty=16,
@@ -3594,7 +3594,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=99,
-			name="Liberator feat. blaxervant",
+			name="[16] [200] Liberator feat. blaxervant",
 			stepartist="Admiral M&Ms",
 			pack="Resistance Device",
 			difficulty=16,
@@ -3608,7 +3608,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=100,
-			name="Space Box",
+			name="[17] [175] Space Box",
 			stepartist="@@",
 			pack="Scrapyard Kent",
 			difficulty=17,
@@ -3622,7 +3622,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=101,
-			name="Bio Tunnel Magnetic Transport",
+			name="[17] [179] Bio Tunnel Magnetic Transport",
 			stepartist="Rems",
 			pack="Hospitality",
 			difficulty=17,
@@ -3636,7 +3636,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=102,
-			name="Toxic Shock (Novice)",
+			name="[17] [174] Toxic Shock (Novice)",
 			stepartist="Archi",
 			pack="Pendulum Act IV",
 			difficulty=17,
@@ -3650,7 +3650,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=103,
-			name="Lift Off FB 179",
+			name="[17] [179] Lift Off FB 179",
 			stepartist="@@",
 			pack="Scrapyard Kent",
 			difficulty=17,
@@ -3664,7 +3664,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=104,
-			name="Global Down",
+			name="[17] [180] Global Down",
 			stepartist="ITGAlex",
 			pack="Bass Chasers",
 			difficulty=17,
@@ -3678,7 +3678,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=105,
-			name="Destination Talos",
+			name="[17] [187] Destination Talos",
 			stepartist="Zaia",
 			pack="Cranked Pastry",
 			difficulty=17,
@@ -3692,7 +3692,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=106,
-			name="Signal (Girl's Vocal Mix)",
+			name="[17] [180] Signal (Girl's Vocal Mix)",
 			stepartist="Rems",
 			pack="BaguetteStreamz 2",
 			difficulty=17,
@@ -3706,7 +3706,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=107,
-			name="Asereje (Speed Mix)",
+			name="[17] [185] Asereje (Speed Mix)",
 			stepartist="Aoreo",
 			pack="Jimmy Jawns 4",
 			difficulty=17,
@@ -3720,7 +3720,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=108,
-			name="Denjin K Megamix (Restep)",
+			name="[17] [191] Denjin K Megamix (Restep)",
 			stepartist="Archi",
 			pack="Big Waves",
 			difficulty=17,
@@ -3734,7 +3734,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=109,
-			name="I Miss You",
+			name="[17] [190] I Miss You",
 			stepartist="Honk",
 			pack="Trails of Cold Stream",
 			difficulty=17,
@@ -3748,7 +3748,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=110,
-			name="Rebirth the end (Part I - Sasanqua)",
+			name="[17] [198] Rebirth the end (Part I - Sasanqua)",
 			stepartist="ITGAlex",
 			pack="Noah",
 			difficulty=17,
@@ -3762,7 +3762,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=111,
-			name="La Morale De La Fable",
+			name="[17] [190] La Morale De La Fable",
 			stepartist="ExJam09",
 			pack="ExJam09 Jams",
 			difficulty=17,
@@ -3776,7 +3776,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=112,
-			name="Difficulty-G",
+			name="[17] [191] Difficulty-G",
 			stepartist="TYLR",
 			pack="SHARPNELSTREAMZ v3 Part 2",
 			difficulty=17,
@@ -3790,7 +3790,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=113,
-			name="Whispers In The Dark",
+			name="[17] [203] Whispers In The Dark",
 			stepartist="Chief Skittles",
 			pack="Skittles Stream Collection",
 			difficulty=17,
@@ -3804,7 +3804,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=114,
-			name="Little Lies",
+			name="[17] [205] Little Lies",
 			stepartist="ITGAlex & Aoreo",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=17,
@@ -3818,7 +3818,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=115,
-			name="Yui & I",
+			name="[17] [208] Yui & I",
 			stepartist="Zaia",
 			pack="Helblinde PDTA",
 			difficulty=17,
@@ -3832,7 +3832,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=116,
-			name="New Odyssey",
+			name="[17] [204] New Odyssey",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=17,
@@ -3846,7 +3846,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=117,
-			name="Unsainted",
+			name="[17] [210] Unsainted",
 			stepartist="Aoreo",
 			pack="Jimmy Jawns 4",
 			difficulty=17,
@@ -3860,7 +3860,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=118,
-			name="Outbreak (P*Light & DJ Myosuke Remix)",
+			name="[17] [210] Outbreak (P*Light & DJ Myosuke Remix)",
 			stepartist="Okami",
 			pack="Stamina Selects",
 			difficulty=17,
@@ -3874,7 +3874,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=119,
-			name="Zap Your Channel",
+			name="[17] [212] Zap Your Channel",
 			stepartist="Zaia",
 			pack="Rebuild of Sharpnel",
 			difficulty=17,
@@ -3888,7 +3888,7 @@ ECS.SongInfo.Lower = {
 		},
 		{
 			id=120,
-			name="Goblin Humpa",
+			name="[17] [218] Goblin Humpa",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=17,
@@ -3915,7 +3915,7 @@ ECS.SongInfo.Mid = {
 	Songs = {
 		{
 			id=1,
-			name="Sukure",
+			name="[17] [175] Sukure",
 			stepartist="@@",
 			pack="Big Waves",
 			difficulty=17,
@@ -3929,7 +3929,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=2,
-			name="Exelion FB 178",
+			name="[17] [178] Exelion FB 178",
 			stepartist="Sefirot",
 			pack="The Joy of Streaming",
 			difficulty=17,
@@ -3943,7 +3943,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=3,
-			name="The Star of Collapse Acts I & II",
+			name="[17] [183] The Star of Collapse Acts I & II",
 			stepartist="Chief Skittles",
 			pack="Skittles Stream Collection",
 			difficulty=17,
@@ -3957,7 +3957,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=4,
-			name="Extends Levant",
+			name="[17] [180] Extends Levant",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Singles ep.1",
 			difficulty=17,
@@ -3971,7 +3971,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=5,
-			name="Terminal Slam",
+			name="[17] [180] Terminal Slam",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=17,
@@ -3985,7 +3985,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=6,
-			name="Denjin K Megamix (Restep)",
+			name="[17] [191] Denjin K Megamix (Restep)",
 			stepartist="Archi",
 			pack="Big Waves",
 			difficulty=17,
@@ -3999,7 +3999,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=7,
-			name="Strawberry Crisis !",
+			name="[17] [190] Strawberry Crisis !",
 			stepartist="Rems",
 			pack="BaguetteStreamz 2",
 			difficulty=17,
@@ -4013,7 +4013,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=8,
-			name="fleshbound",
+			name="[17] [197] fleshbound",
 			stepartist="StarrySergal",
 			pack="Goreshit 2020",
 			difficulty=17,
@@ -4027,7 +4027,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=9,
-			name="Orca",
+			name="[17] [195] Orca",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Safari",
 			difficulty=17,
@@ -4041,7 +4041,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=10,
-			name="The Story of Mob",
+			name="[17] [200] The Story of Mob",
 			stepartist="BasedHonk & ChasePines",
 			pack="The Joy of Streaming",
 			difficulty=17,
@@ -4055,7 +4055,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=11,
-			name="Brooklyn Underground",
+			name="[17] [200] Brooklyn Underground",
 			stepartist="Nav",
 			pack="Psychedelia 2",
 			difficulty=17,
@@ -4069,7 +4069,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=12,
-			name="Saikyo Stronger",
+			name="[17] [205] Saikyo Stronger",
 			stepartist="Mango",
 			pack="Mango's Microrave Samplur",
 			difficulty=17,
@@ -4083,7 +4083,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=13,
-			name="Midnight City",
+			name="[17] [210] Midnight City",
 			stepartist="StarrySergal",
 			pack="Enjou Stamina Package",
 			difficulty=17,
@@ -4097,7 +4097,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=14,
-			name="One Shot",
+			name="[17] [213] One Shot",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=17,
@@ -4111,7 +4111,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=15,
-			name="Colliding Skies - Dawn",
+			name="[18] [180] Colliding Skies - Dawn",
 			stepartist="Raijin",
 			pack="The Joy of Streaming 2",
 			difficulty=18,
@@ -4125,7 +4125,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=16,
-			name="Eurobeat Is Fantastic ~Part 2~ FB 183",
+			name="[18] [183] Eurobeat Is Fantastic ~Part 2~ FB 183",
 			stepartist="Zaia & ITGAlex & YourVinished",
 			pack="Eurobeat Is Fantastic - Second Stage",
 			difficulty=18,
@@ -4139,7 +4139,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=17,
-			name="Trails of Cold Stream SC (Part 1) FP 186",
+			name="[18] [186] Trails of Cold Stream SC (Part 1) FP 186",
 			stepartist="YourVinished & Janus5k",
 			pack="Trails of Cold Stream II",
 			difficulty=18,
@@ -4153,7 +4153,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=18,
-			name="ESCAPE",
+			name="[18] [195] ESCAPE",
 			stepartist="yutsi",
 			pack="Dark Psychungus",
 			difficulty=18,
@@ -4167,7 +4167,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=19,
-			name="Precious Song Dedicated to the Stars",
+			name="[18] [190] Precious Song Dedicated to the Stars",
 			stepartist="ITGAlex",
 			pack="ITGAlex's Stamina Singles ep.2",
 			difficulty=18,
@@ -4181,7 +4181,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=20,
-			name="Embrace the Endless Ocean",
+			name="[18] [195] Embrace the Endless Ocean",
 			stepartist="Janus5k",
 			pack="Squirrel Metal II",
 			difficulty=18,
@@ -4195,7 +4195,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=21,
-			name="Cheatreal Remake",
+			name="[18] [200] Cheatreal Remake",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=18,
@@ -4209,7 +4209,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=22,
-			name="Fly",
+			name="[18] [200] Fly",
 			stepartist="nv & yutsi",
 			pack="Chimichangas",
 			difficulty=18,
@@ -4223,7 +4223,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=23,
-			name="one way to hannover",
+			name="[18] [208] one way to hannover",
 			stepartist="StarrySergal",
 			pack="Goreshit 2020",
 			difficulty=18,
@@ -4237,7 +4237,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=24,
-			name="Aaron",
+			name="[18] [212] Aaron",
 			stepartist="StarrySergal",
 			pack="StarrySergal's Flamin Hot Munchies",
 			difficulty=18,
@@ -4251,7 +4251,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=25,
-			name="Rocking Bye",
+			name="[18] [210] Rocking Bye",
 			stepartist="StarrySergal",
 			pack="The Joy of Streaming",
 			difficulty=18,
@@ -4265,7 +4265,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=26,
-			name="What a Horrible Night to Have a Curse",
+			name="[18] [216] What a Horrible Night to Have a Curse",
 			stepartist="zaniel",
 			pack="Junts 2",
 			difficulty=18,
@@ -4279,7 +4279,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=27,
-			name="Go To Hell",
+			name="[18] [220] Go To Hell",
 			stepartist="ExJam09",
 			pack="ExJam09 Jams 2",
 			difficulty=18,
@@ -4293,7 +4293,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=28,
-			name="Usseewa (DJKurara Remix)",
+			name="[18] [225] Usseewa (DJKurara Remix)",
 			stepartist="Mango",
 			pack="Mango Showcase",
 			difficulty=18,
@@ -4307,7 +4307,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=29,
-			name="Enjoy The Flight (Side B) (Restep) FB 194",
+			name="[19] [194] Enjoy The Flight (Side B) (Restep) FB 194",
 			stepartist="Rems",
 			pack="Hospitality",
 			difficulty=19,
@@ -4321,7 +4321,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=30,
-			name="You Touched The Kore, and Now You're Going to Die",
+			name="[19] [192] You Touched The Kore, and Now You're Going to Die",
 			stepartist="Xynn",
 			pack="The Joy of Streaming 2",
 			difficulty=19,
@@ -4335,7 +4335,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=31,
-			name="After End Start Before FP 198",
+			name="[19] [198] After End Start Before FP 198",
 			stepartist="@@",
 			pack="Scrapyard Kent",
 			difficulty=19,
@@ -4349,7 +4349,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=32,
-			name="5H4D0W",
+			name="[19] [200] 5H4D0W",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=19,
@@ -4363,7 +4363,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=33,
-			name="Cold Fusion",
+			name="[19] [200] Cold Fusion",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=19,
@@ -4377,7 +4377,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=34,
-			name="Peyotech",
+			name="[19] [203] Peyotech",
 			stepartist="Nav",
 			pack="Psychedelia 2",
 			difficulty=19,
@@ -4391,7 +4391,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=35,
-			name="In my life, my mind (Restep)",
+			name="[19] [212] In my life, my mind (Restep)",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=19,
@@ -4405,7 +4405,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=36,
-			name="Yosakoi Rave Fuck That!!! (Overdrive)",
+			name="[19] [215] Yosakoi Rave Fuck That!!! (Overdrive)",
 			stepartist="Archi",
 			pack="Masochisma Mk 1",
 			difficulty=19,
@@ -4419,7 +4419,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=37,
-			name="Momentary Life",
+			name="[19] [216] Momentary Life",
 			stepartist="Zaia",
 			pack="Saitama's Ultimate Weapon",
 			difficulty=19,
@@ -4433,7 +4433,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=38,
-			name="Coffin Dance (Astronomia Frenchcore Remix)",
+			name="[19] [220] Coffin Dance (Astronomia Frenchcore Remix)",
 			stepartist="zaniel",
 			pack="Simfile Torah",
 			difficulty=19,
@@ -4447,7 +4447,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=39,
-			name="Big Blue",
+			name="[19] [228] Big Blue",
 			stepartist="Zaia",
 			pack="Saitama's Ultimate Weapon",
 			difficulty=19,
@@ -4461,7 +4461,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=40,
-			name="ENAMEL",
+			name="[19] [224] ENAMEL",
 			stepartist="StoryTime",
 			pack="Jayrocking",
 			difficulty=19,
@@ -4475,7 +4475,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=41,
-			name="BGM 04",
+			name="[19] [230] BGM 04",
 			stepartist="StarrySergal",
 			pack="Videogame Streamables 2",
 			difficulty=19,
@@ -4489,7 +4489,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=42,
-			name="Sky High",
+			name="[19] [230] Sky High",
 			stepartist="nv",
 			pack="streammania IIDX",
 			difficulty=19,
@@ -4503,7 +4503,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=43,
-			name="Ha(Ne)rdcore OTAKU Connectionz zane & feedbacker's OP",
+			name="[20] [200] Ha(Ne)rdcore OTAKU Connectionz zane & feedbacker's OP",
 			stepartist="zaniel & feedbacker",
 			pack="Junts 2",
 			difficulty=20,
@@ -4517,7 +4517,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=44,
-			name="Trails of Cold Stream FC (Part 1) FB 204",
+			name="[20] [204] Trails of Cold Stream FC (Part 1) FB 204",
 			stepartist="YourVinished",
 			pack="Trails of Cold Stream II",
 			difficulty=20,
@@ -4531,7 +4531,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=45,
-			name="Naruto RMX FP 208",
+			name="[20] [208] Naruto RMX FP 208",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=20,
@@ -4545,7 +4545,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=46,
-			name="Repeating Memories",
+			name="[20] [218] Repeating Memories",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=20,
@@ -4559,7 +4559,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=47,
-			name="Sounds of Life (Medium)",
+			name="[20] [218] Sounds of Life (Medium)",
 			stepartist="Aoreo",
 			pack="Pendulum Act III",
 			difficulty=20,
@@ -4573,7 +4573,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=48,
-			name="the end",
+			name="[20] [217] the end",
 			stepartist="StarrySergal",
 			pack="Goreshit 2020",
 			difficulty=20,
@@ -4587,7 +4587,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=49,
-			name="Suwa Foughten Field",
+			name="[20] [220] Suwa Foughten Field",
 			stepartist="Archi",
 			pack="Big Waves",
 			difficulty=20,
@@ -4601,7 +4601,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=50,
-			name="The Sound Of Hard",
+			name="[20] [220] The Sound Of Hard",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=20,
@@ -4615,7 +4615,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=51,
-			name="Counter Hunter Stage (Megaman X2)",
+			name="[20] [224] Counter Hunter Stage (Megaman X2)",
 			stepartist="StarrySergal",
 			pack="Enjou Stamina Package",
 			difficulty=20,
@@ -4629,7 +4629,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=52,
-			name="Lust SIN II",
+			name="[20] [230] Lust SIN II",
 			stepartist="Chief Skittles",
 			pack="Skittles Stream Collection",
 			difficulty=20,
@@ -4643,7 +4643,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=53,
-			name="Voltaic Black Knight",
+			name="[20] [230] Voltaic Black Knight",
 			stepartist="Mango",
 			pack="Mango Showcase",
 			difficulty=20,
@@ -4657,7 +4657,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=54,
-			name="Scarlet Tempest (Medium) Super Arrange",
+			name="[20] [232] Scarlet Tempest (Medium) Super Arrange",
 			stepartist="Chief Skittles",
 			pack="Trails of Cold Stream IV",
 			difficulty=20,
@@ -4671,7 +4671,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=55,
-			name="Heavenly caress",
+			name="[20] [241] Heavenly caress",
 			stepartist="ITGAlex",
 			pack="Noah",
 			difficulty=20,
@@ -4685,7 +4685,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=56,
-			name="Spirit Of Children",
+			name="[20] [240] Spirit Of Children",
 			stepartist="Kyy",
 			pack="Kyypakkaus",
 			difficulty=20,
@@ -4699,7 +4699,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=57,
-			name="stamina training",
+			name="[21] [210] stamina training",
 			stepartist="YUZU",
 			pack="Enjou Stamina Package",
 			difficulty=21,
@@ -4713,7 +4713,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=58,
-			name="goretrance x (serbian fuckboy edition) (Side A) FP 216",
+			name="[21] [216] goretrance x (serbian fuckboy edition) (Side A) FP 216",
 			stepartist="zaniel",
 			pack="Goreshit 2020",
 			difficulty=21,
@@ -4727,7 +4727,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=59,
-			name="Ride the Centaurus FB 218",
+			name="[21] [218] Ride the Centaurus FB 218",
 			stepartist="@@",
 			pack="Scrapyard Kent",
 			difficulty=21,
@@ -4741,7 +4741,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=60,
-			name="The Body Cosmic",
+			name="[21] [220] The Body Cosmic",
 			stepartist="Chief Skittles",
 			pack="Skittles Stream Collection",
 			difficulty=21,
@@ -4755,7 +4755,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=61,
-			name="Stay Safe",
+			name="[21] [220] Stay Safe",
 			stepartist="yutsi",
 			pack="Dark Psychungus",
 			difficulty=21,
@@ -4769,7 +4769,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=62,
-			name="Cyberware Factory",
+			name="[21] [229] Cyberware Factory",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=21,
@@ -4783,7 +4783,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=63,
-			name="Venus Fire (Hard)",
+			name="[21] [230] Venus Fire (Hard)",
 			stepartist="YourVinished",
 			pack="Saitama's Ultimate Weapon",
 			difficulty=21,
@@ -4797,7 +4797,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=64,
-			name="CAFO (Hard)",
+			name="[21] [233] CAFO (Hard)",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=21,
@@ -4811,7 +4811,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=65,
-			name="Cerveau (Pattern J Remix) FB 234",
+			name="[21] [234] Cerveau (Pattern J Remix) FB 234",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=21,
@@ -4825,7 +4825,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=66,
-			name="Murder Liner",
+			name="[21] [240] Murder Liner",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=21,
@@ -4839,7 +4839,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=67,
-			name="Jesus is the Answer",
+			name="[21] [240] Jesus is the Answer",
 			stepartist="zaniel",
 			pack="Junts 2",
 			difficulty=21,
@@ -4853,7 +4853,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=68,
-			name="Soul Surrender",
+			name="[21] [248] Soul Surrender",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=21,
@@ -4867,7 +4867,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=69,
-			name="The Morning After The Storm (Hard)",
+			name="[21] [250] The Morning After The Storm (Hard)",
 			stepartist="Chief Skittles",
 			pack="Trails of Cold Stream IV",
 			difficulty=21,
@@ -4881,7 +4881,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=70,
-			name="Witches Brew",
+			name="[21] [256] Witches Brew",
 			stepartist="Aoreo",
 			pack="Content Cop - Tachyon Epsilon",
 			difficulty=21,
@@ -4895,7 +4895,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=71,
-			name="Nachmancore",
+			name="[22] [225] Nachmancore",
 			stepartist="nv & ChasePines & StarrySergal",
 			pack="Big Waves",
 			difficulty=22,
@@ -4909,7 +4909,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=72,
-			name="Spacetime FB 220",
+			name="[22] [220] Spacetime FB 220",
 			stepartist="Nav",
 			pack="Big Waves",
 			difficulty=22,
@@ -4923,7 +4923,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=73,
-			name="Lunar Butterfly FB 227",
+			name="[22] [227] Lunar Butterfly FB 227",
 			stepartist="Nav",
 			pack="Big Waves",
 			difficulty=22,
@@ -4937,7 +4937,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=74,
-			name="Sujetjas Tanjec",
+			name="[22] [230] Sujetjas Tanjec",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=22,
@@ -4951,7 +4951,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=75,
-			name="Robot Brain Era FB 230",
+			name="[22] [230] Robot Brain Era FB 230",
 			stepartist="Zaia",
 			pack="Cirque du Huayra",
 			difficulty=22,
@@ -4965,7 +4965,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=76,
-			name="Ralph Wiggum",
+			name="[22] [237] Ralph Wiggum",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=22,
@@ -4979,7 +4979,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=77,
-			name="Plastic Love (Night Tempo 100% Pure Remastered)",
+			name="[22] [240] Plastic Love (Night Tempo 100% Pure Remastered)",
 			stepartist="Zaia",
 			pack="City Pop",
 			difficulty=22,
@@ -4993,7 +4993,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=78,
-			name="Nyan-Nyan Naughty Night",
+			name="[22] [242] Nyan-Nyan Naughty Night",
 			stepartist="nv",
 			pack="epic",
 			difficulty=22,
@@ -5007,7 +5007,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=79,
-			name="Tragedy",
+			name="[22] [248] Tragedy",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=22,
@@ -5021,7 +5021,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=80,
-			name="Musician (mitei bootleg)",
+			name="[22] [256] Musician (mitei bootleg)",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=22,
@@ -5035,7 +5035,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=81,
-			name="Truckers Delight (Hard)",
+			name="[22] [252] Truckers Delight (Hard)",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=22,
@@ -5049,7 +5049,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=82,
-			name="Yamada Stream",
+			name="[22] [255] Yamada Stream",
 			stepartist="Zaia",
 			pack="Content Cop - Tachyon Epsilon",
 			difficulty=22,
@@ -5063,7 +5063,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=83,
-			name="Fergalicious For Businalicious 261",
+			name="[22] [261] Fergalicious For Businalicious 261",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=22,
@@ -5077,7 +5077,7 @@ ECS.SongInfo.Mid = {
 		},
 		{
 			id=84,
-			name="Illegal Function Call (Hard)",
+			name="[22] [260] Illegal Function Call (Hard)",
 			stepartist="yutsi",
 			pack="streammania IIDX",
 			difficulty=22,
@@ -5104,7 +5104,7 @@ ECS.SongInfo.Upper = {
 	Songs = {
 		{
 			id=1,
-			name="Nachmancore",
+			name="[22] [225] Nachmancore",
 			stepartist="nv & ChasePines & StarrySergal",
 			pack="Big Waves",
 			difficulty=22,
@@ -5118,7 +5118,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=2,
-			name="Spacetime FB 220",
+			name="[22] [220] Spacetime FB 220",
 			stepartist="Nav",
 			pack="Big Waves",
 			difficulty=22,
@@ -5132,7 +5132,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=3,
-			name="Lunar Butterfly FB 227",
+			name="[22] [227] Lunar Butterfly FB 227",
 			stepartist="Nav",
 			pack="Big Waves",
 			difficulty=22,
@@ -5146,7 +5146,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=4,
-			name="Sujetjas Tanjec",
+			name="[22] [230] Sujetjas Tanjec",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=22,
@@ -5160,7 +5160,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=5,
-			name="Robot Brain Era FB 230",
+			name="[22] [230] Robot Brain Era FB 230",
 			stepartist="Zaia",
 			pack="Cirque du Huayra",
 			difficulty=22,
@@ -5174,7 +5174,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=6,
-			name="Ralph Wiggum",
+			name="[22] [237] Ralph Wiggum",
 			stepartist="yutsi",
 			pack="selected yutsi works",
 			difficulty=22,
@@ -5188,7 +5188,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=7,
-			name="Plastic Love (Night Tempo 100% Pure Remastered)",
+			name="[22] [240] Plastic Love (Night Tempo 100% Pure Remastered)",
 			stepartist="Zaia",
 			pack="City Pop",
 			difficulty=22,
@@ -5202,7 +5202,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=8,
-			name="Nyan-Nyan Naughty Night",
+			name="[22] [242] Nyan-Nyan Naughty Night",
 			stepartist="nv",
 			pack="epic",
 			difficulty=22,
@@ -5216,7 +5216,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=9,
-			name="Tragedy",
+			name="[22] [248] Tragedy",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=22,
@@ -5230,7 +5230,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=10,
-			name="Musician (mitei bootleg)",
+			name="[22] [256] Musician (mitei bootleg)",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=22,
@@ -5244,7 +5244,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=11,
-			name="Truckers Delight (Hard)",
+			name="[22] [252] Truckers Delight (Hard)",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=22,
@@ -5258,7 +5258,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=12,
-			name="Yamada Stream",
+			name="[22] [255] Yamada Stream",
 			stepartist="Zaia",
 			pack="Content Cop - Tachyon Epsilon",
 			difficulty=22,
@@ -5272,7 +5272,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=13,
-			name="Fergalicious For Businalicious 261",
+			name="[22] [261] Fergalicious For Businalicious 261",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=22,
@@ -5286,7 +5286,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=14,
-			name="Illegal Function Call (Hard)",
+			name="[22] [260] Illegal Function Call (Hard)",
 			stepartist="yutsi",
 			pack="streammania IIDX",
 			difficulty=22,
@@ -5300,7 +5300,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=15,
-			name="Animu Music Triad FB 230",
+			name="[23] [230] Animu Music Triad FB 230",
 			stepartist="Archi",
 			pack="Big Waves",
 			difficulty=23,
@@ -5314,7 +5314,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=16,
-			name="Stars FB 237",
+			name="[23] [237] Stars FB 237",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=23,
@@ -5328,7 +5328,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=17,
-			name="Nose Feeder",
+			name="[23] [240] Nose Feeder",
 			stepartist="yutsi",
 			pack="yutsi-type beats",
 			difficulty=23,
@@ -5342,7 +5342,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=18,
-			name="Descendant of Genos",
+			name="[23] [248] Descendant of Genos",
 			stepartist="ITGAlex",
 			pack="Trails of Cold Stream III",
 			difficulty=23,
@@ -5356,7 +5356,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=19,
-			name="Raven",
+			name="[23] [250] Raven",
 			stepartist="Kyy",
 			pack="Kyypakkaus 2",
 			difficulty=23,
@@ -5370,7 +5370,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=20,
-			name="Writhe in Pain",
+			name="[23] [258] Writhe in Pain",
 			stepartist="nv",
 			pack="epic",
 			difficulty=23,
@@ -5384,7 +5384,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=21,
-			name="Free Will",
+			name="[23] [260] Free Will",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=23,
@@ -5398,7 +5398,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=22,
-			name="Dear You",
+			name="[23] [261] Dear You",
 			stepartist="StarrySergal",
 			pack="itg! Rhythm is just a step away",
 			difficulty=23,
@@ -5412,7 +5412,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=23,
-			name="Bad Guy",
+			name="[23] [270] Bad Guy",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=23,
@@ -5426,7 +5426,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=24,
-			name="Accel Zero FB 245",
+			name="[24] [245] Accel Zero FB 245",
 			stepartist="Chief Skittles",
 			pack="Big Waves",
 			difficulty=24,
@@ -5440,7 +5440,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=25,
-			name="promise",
+			name="[24] [248] promise",
 			stepartist="nv",
 			pack="epic",
 			difficulty=24,
@@ -5454,7 +5454,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=26,
-			name="Over The Fullerene Acid Trip (mashup by glory limited)",
+			name="[24] [253] Over The Fullerene Acid Trip (mashup by glory limited)",
 			stepartist="Rust",
 			pack="Feelin' Rusty 4",
 			difficulty=24,
@@ -5468,7 +5468,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=27,
-			name="Molten Crater",
+			name="[24] [256] Molten Crater",
 			stepartist="yutsi",
 			pack="the",
 			difficulty=24,
@@ -5482,7 +5482,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=28,
-			name="Fuuga",
+			name="[24] [260] Fuuga",
 			stepartist="Zaia",
 			pack="Saitama's Ultimate Weapon",
 			difficulty=24,
@@ -5496,7 +5496,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=29,
-			name="Liquid (Hard) (Paul Rosenthal Remix)",
+			name="[24] [266] Liquid (Hard) (Paul Rosenthal Remix)",
 			stepartist="yutsi",
 			pack="itg! Rhythm is just a step away",
 			difficulty=24,
@@ -5510,7 +5510,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=30,
-			name="Fur and Claw",
+			name="[24] [270] Fur and Claw",
 			stepartist="Aoreo",
 			pack="Big Waves",
 			difficulty=24,
@@ -5524,7 +5524,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=31,
-			name="Amor de Verao",
+			name="[24] [276] Amor de Verao",
 			stepartist="nv",
 			pack="streammania IIDX",
 			difficulty=24,
@@ -5538,7 +5538,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=32,
-			name="Fire Hive (Hard)",
+			name="[24] [280] Fire Hive (Hard)",
 			stepartist="yutsi",
 			pack="itg! Rhythm is just a step away",
 			difficulty=24,
@@ -5552,7 +5552,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=33,
-			name="Get Deaded (Rerestep) FP 240",
+			name="[25] [240] Get Deaded (Rerestep) FP 240",
 			stepartist="Nav & Zaia & StarrySergal & Levitas",
 			pack="Big Waves",
 			difficulty=25,
@@ -5566,7 +5566,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=34,
-			name="Paranoid",
+			name="[25] [256] Paranoid",
 			stepartist="Levitas",
 			pack="Big Waves",
 			difficulty=25,
@@ -5580,7 +5580,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=35,
-			name="Image Material <Version 0>",
+			name="[25] [260] Image Material <Version 0>",
 			stepartist="nv",
 			pack="itg! Rhythm is just a step away",
 			difficulty=25,
@@ -5594,7 +5594,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=36,
-			name="Avid (Ayatori DnB Edit)",
+			name="[25] [266] Avid (Ayatori DnB Edit)",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=25,
@@ -5608,7 +5608,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=37,
-			name="Ashes on The Fire",
+			name="[25] [272] Ashes on The Fire",
 			stepartist="Zaia",
 			pack="Big Waves",
 			difficulty=25,
@@ -5622,7 +5622,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=38,
-			name="Scias",
+			name="[25] [274] Scias",
 			stepartist="Chief Skittles",
 			pack="Trails of Cold Stream IV",
 			difficulty=25,
@@ -5636,7 +5636,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=39,
-			name="Ruby Illusions",
+			name="[25] [280] Ruby Illusions",
 			stepartist="Zaia",
 			pack="The Sound of Speed",
 			difficulty=25,
@@ -5650,7 +5650,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=40,
-			name="Oblivion ~Rockin' Night Style~",
+			name="[25] [282] Oblivion ~Rockin' Night Style~",
 			stepartist="Zaia",
 			pack="fof 2",
 			difficulty=25,
@@ -5664,7 +5664,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=41,
-			name="PARANOIA survivor MAX",
+			name="[25] [290] PARANOIA survivor MAX",
 			stepartist="Zaia",
 			pack="Dump Dump Revolution",
 			difficulty=25,
@@ -5678,7 +5678,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=42,
-			name="Apocalyptic Dawn",
+			name="[26] [260] Apocalyptic Dawn",
 			stepartist="Zaia & Archi & StarrySergal",
 			pack="Big Waves",
 			difficulty=26,
@@ -5692,7 +5692,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=43,
-			name="Hunting For Your Dream",
+			name="[26] [267] Hunting For Your Dream",
 			stepartist="Levitas",
 			pack="Big Waves",
 			difficulty=26,
@@ -5706,7 +5706,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=44,
-			name="Scarlet Devil",
+			name="[26] [272] Scarlet Devil",
 			stepartist="Chief Skittles",
 			pack="Bigger Waves",
 			difficulty=26,
@@ -5720,7 +5720,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=45,
-			name="Gens d'Leges 5",
+			name="[26] [274] Gens d'Leges 5",
 			stepartist="Arvin",
 			pack="fof",
 			difficulty=26,
@@ -5734,7 +5734,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=46,
-			name="Doomsday Zone",
+			name="[26] [287] Doomsday Zone",
 			stepartist="StarrySergal",
 			pack="The Sound of Speed",
 			difficulty=26,
@@ -5748,7 +5748,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=47,
-			name="Soar ~Stay With Me~",
+			name="[26] [284] Soar ~Stay With Me~",
 			stepartist="Zaia",
 			pack="fof 2",
 			difficulty=26,
@@ -5762,7 +5762,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=48,
-			name="Southcoast Calling (Medium)",
+			name="[26] [299] Southcoast Calling (Medium)",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=26,
@@ -5776,7 +5776,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=49,
-			name="SpaceRage",
+			name="[26] [291] SpaceRage",
 			stepartist="Levitas",
 			pack="Theoretical Chiptune Pack",
 			difficulty=26,
@@ -5790,7 +5790,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=50,
-			name="untitled djkurara mix FB 265",
+			name="[27] [265] untitled djkurara mix FB 265",
 			stepartist="Rust & Zaia & Zaniel",
 			pack="Big Waves",
 			difficulty=27,
@@ -5804,7 +5804,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=51,
-			name="Lovelyteks FP 184",
+			name="[27] [276] Lovelyteks FP 184",
 			stepartist="Levitas",
 			pack="Theoretical Sharpnel Pack",
 			difficulty=27,
@@ -5818,7 +5818,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=52,
-			name="Pushing Onwards",
+			name="[27] [280] Pushing Onwards",
 			stepartist="Levitas",
 			pack="Theoretical Chiptune Pack",
 			difficulty=27,
@@ -5832,7 +5832,7 @@ ECS.SongInfo.Upper = {
 		},
 		{
 			id=53,
-			name="Bye Bye Baby Balloon",
+			name="[27] [290] Bye Bye Baby Balloon",
 			stepartist="Aoreo",
 			pack="BangerZ 3",
 			difficulty=27,
@@ -8828,7 +8828,7 @@ ECS.Players["RD"] = {
 
 ECS.Players["teejusb"] = {
 	id=50287,
-	division="lower",
+	division="upper",
 	country="U.S.A.",
 	level=66,
 	exp=201157,
