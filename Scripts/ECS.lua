@@ -1587,8 +1587,7 @@ ECS.Relics = {
 			end
 
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				songOptions:MusicRate(1.05)
+				GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -1627,6 +1626,7 @@ ECS.Relics = {
 		img="shieldrod.png",
 		action=function(relics_used)
 			for relic in ivalues(relics_used) do
+				local name = relic.name
 				if name == "Alucard Shield" then
 					if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 						local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -2035,8 +2035,7 @@ ECS.Relics = {
 		img="principia.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				songOptions:MusicRate(1.02)
+				GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -2069,7 +2068,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				songOptions:MusicRate(1.05)
+				GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
