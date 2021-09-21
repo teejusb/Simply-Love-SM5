@@ -6730,7 +6730,7 @@ ECS.Players["Krushrpants"] = {
 
 ECS.Players["Murd"] = {
 	id=66755,
-	division="mid",
+	division="upper",
 	country="Canada",
 	level=87,
 	exp=1127716,
@@ -6880,7 +6880,7 @@ ECS.Players["HISA"] = {
 
 ECS.Players["Cyxsound"] = {
 	id=129083,
-	division="mid",
+	division="upper",
 	country="Canada",
 	level=77,
 	exp=502141,
