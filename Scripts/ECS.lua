@@ -1566,6 +1566,7 @@ ECS.Relics = {
 		img="chickenknife.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
 			return math.floor(song_data.rp/(max_division_rp/1000) * 0.5)
 		end,
 	},
