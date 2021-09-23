@@ -116,7 +116,8 @@ local InputHandler = function(event)
 
 			-- if we've NOW reached the end of the list, don't try to update the pane
 			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] then return false end
-		elseif event.button == "Select" then
+		elseif event.button == "Select" or event.button == "MenuUp" or event.button == "MenuDown" or
+				(not OnlyDedicatedMenuButtons and (event.button == "Up" or event.button == "Down")) then
 			OptionRowWheels[pn]:scroll_by_amount(-1)
 			-- if we've NOW reached the end of the list, don't try to update the pane
 			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] then return false end
@@ -126,19 +127,17 @@ local InputHandler = function(event)
 			SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( row.."Selected", relic )
 
 
-		elseif (event.button == "MenuLeft" or
-				event.button == "MenuRight" or
+		elseif (event.button == "MenuLeft" or event.button == "MenuRight" or
 				(not OnlyDedicatedMenuButtons and (event.button == "Left" or event.button == "Right"))) then
-
 			local row = OptionRowWheels[pn]:get_info_at_focus_pos()
 
 			-- if not the exit row
 			if row ~= Rows[#Rows] then
 
 				-- handle menuleft and menu right
-				if event.button == "MenuLeft" then
+				if event.button == "MenuLeft" or event.button == "Left" then
 					OptionRowWheels[pn][row]:scroll_by_amount(-1)
-				elseif event.button == "MenuRight" then
+				elseif event.button == "MenuRight" or event.button == "Right" then
 					OptionRowWheels[pn][row]:scroll_by_amount(1)
 				end
 

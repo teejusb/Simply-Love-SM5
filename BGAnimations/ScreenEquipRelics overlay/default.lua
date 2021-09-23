@@ -158,9 +158,9 @@ local InputHandler = function(event)
 			if row ~= Rows[#Rows] then
 
 				-- handle menuleft and menu right
-				if event.button == "MenuLeft" then
+				if event.button == "MenuLeft" or event.button == "Left" then
 					OptionRowWheels[pn][row]:scroll_by_amount(-1)
-				elseif event.button == "MenuRight" then
+				elseif event.button == "MenuRight" or event.button == "Right" then
 					OptionRowWheels[pn][row]:scroll_by_amount(1)
 				end
 
