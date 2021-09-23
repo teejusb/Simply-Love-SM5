@@ -6563,7 +6563,7 @@ ECS.Players["Arvin"] = {
 
 ECS.Players["nico"] = {
 	id=35619,
-	division="mid",
+	division="upper",
 	country="U.S.A.",
 	level=80,
 	exp=656377,
@@ -8561,7 +8561,7 @@ ECS.Players["COLLETnm7"] = {
 
 ECS.Players["skateinmars"] = {
 	id=66545,
-	division="lower",
+	division="mid",
 	country="France",
 	level=74,
 	exp=382297,
@@ -8737,7 +8737,7 @@ ECS.Players["Badjas"] = {
 
 ECS.Players["PrawnSkunk"] = {
 	id=76070,
-	division="lower",
+	division="mid",
 	country="Canada",
 	level=74,
 	exp=386696,
@@ -8857,8 +8857,6 @@ ECS.Players["teejusb"] = {
 		{name="Memepeace Beret", quantity=1},
 		{name="Slime Badge", quantity=1},
 		{name="Godfather's Token", quantity=1},
-
-		{name="Chicken Knife", quantity=1}
 	},
 	tier_skill = {[120]=99, [130]=90, [140]=78, [150]=70, [160]=64, [170]=52, [180]=37, [190]=20, [200]=5, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1},
 	affinities = {dp=0, ep=0, rp=315, ap=0},
@@ -9025,7 +9023,7 @@ ECS.Players["gulu"] = {
 
 ECS.Players["DF.CaptainBlack"] = {
 	id=7737,
-	division="lower",
+	division="mid",
 	country="U.S.A.",
 	level=65,
 	exp=188304,
@@ -9055,7 +9053,7 @@ ECS.Players["DF.CaptainBlack"] = {
 
 ECS.Players["tommoda"] = {
 	id=132032,
-	division="lower",
+	division="mid",
 	country="United Kingdom",
 	level=67,
 	exp=222164,
@@ -9136,7 +9134,7 @@ ECS.Players["Jerros"] = {
 
 ECS.Players["Fieoner"] = {
 	id=66724,
-	division="lower",
+	division="mid",
 	country="Spain",
 	level=58,
 	exp=96304,
