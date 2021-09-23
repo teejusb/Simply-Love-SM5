@@ -143,7 +143,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 				if stamina_potion > 0 then total_points = total_points + (math.floor(total_steps / 75)) * accuracy_potion end
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-250), 0)) * stamina_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
-				if beret_tiers > 0 then total_points = total_points + (100 * beret_tiers) * beret_tiers end
+				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
 				if cultist_robes > 0 then total_points = total_points + (75 * cultist_songs) * cultist_robes end
 
 				self:settext(tostring(total_points))
