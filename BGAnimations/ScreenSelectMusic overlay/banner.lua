@@ -149,10 +149,14 @@ t[#t+1] = Def.ActorFrame{
 		OnCommand=SetSongPointText,
 		CurrentSongChangedMessageCommand=SetSongPointText,
 	},
+	Def.Quad{
+		Name="EndOfSetBg",
+		InitCommand=function(self) self:diffuse(color("#ffffffaa")):zoomto(400, 80):addx(175):addy(100):visible(false) end
+	},
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/slimebadge.png"),
 		InitCommand=function(self)
-			self:zoom(0.4):addx(320):addy(100)
+			self:zoom(0.3):addx(0):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -166,14 +170,14 @@ t[#t+1] = Def.ActorFrame{
 					end
 				end
 			end
-
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
 	},
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/agilitypotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.4):addx(170):addy(100)
+			self:zoom(0.3):addx(50):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -187,13 +191,14 @@ t[#t+1] = Def.ActorFrame{
 					end
 				end
 			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
 	},
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/staminapotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.4):addx(20):addy(100)
+			self:zoom(0.3):addx(100):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -207,6 +212,91 @@ t[#t+1] = Def.ActorFrame{
 					end
 				end
 			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/accuracypotion.png"),
+		InitCommand=function(self)
+			self:zoom(0.3):addx(150):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Accuracy Potion" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/tpastandard.png"),
+		InitCommand=function(self)
+			self:zoom(0.3):addx(200):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "TPA Standard" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/memepeaceberet.png"),
+		InitCommand=function(self)
+			self:zoom(0.3):addx(250):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Memepeace Beret" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/cultistrobes.png"),
+		InitCommand=function(self)
+			self:zoom(0.3):addx(320):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Cultist Robes" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
 	},
