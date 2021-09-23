@@ -216,7 +216,7 @@ local t = Def.ActorFrame{
 	end,
 	TransitionBackCommand=function(self)
 		-- Reset chosen relics since if a player is "exiting" out of this screen
-		ECS.Players[profile_name].relics = {}
+		ECS.Players[profile_name].relics = DeepCopy(ECS.Players[profile_name].default_relics)
 		SCREENMAN:GetTopScreen():PostScreenMessage("SM_GoToPrevScreen",0)
 	end,
 	RelicActivatedMessageCommand=function(self, params)

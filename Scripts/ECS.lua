@@ -1873,7 +1873,7 @@ ECS.Relics = {
 		id=109,
 		name="Bronze Trophy",
 		desc="The Stamina Corps awards these trophies to fledgling staminadventurers as thanks for their good deeds.",
-		effect="Access to #bronze-bistro on the <a href=http://www.staminanation.com/ target=_blank>Stamina Nation discord</a> (upon request)",
+		effect="Access to #bronze-bistro on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
 		img="bronzetrophy.png",
@@ -1886,7 +1886,7 @@ ECS.Relics = {
 		id=110,
 		name="Mythril Trophy",
 		desc="A trophy made from a rare metal.  Only given to those who have made substantial contributions to the Stamina Nation.",
-		effect="Access to #mythril-lounge on the <a href=http://www.staminanation.com/ target=_blank>Stamina Nation discord</a> (upon request)",
+		effect="Access to #mythril-lounge on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
 		img="mythriltrophy.png",
@@ -1899,7 +1899,7 @@ ECS.Relics = {
 		id=111,
 		name="Crystal Trophy",
 		desc="Awarded to high class staminadventurers for exceptional achievements.",
-		effect="Access to #crystal-cafe on the <a href=http://www.staminanation.com/ target=_blank>Stamina Nation discord</a> (upon request)",
+		effect="Access to #crystal-cafe on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
 		img="crystaltrophy.png",
@@ -1912,7 +1912,7 @@ ECS.Relics = {
 		id=112,
 		name="Ivory Trophy",
 		desc="Given only to the greatest staminadventurers across all the lands.",
-		effect="Access to #ivory-tower on the <a href=http://www.staminanation.com/ target=_blank>Stamina Nation discord</a> (upon request)",
+		effect="Access to #ivory-tower on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
 		img="ivorytrophy.png",
@@ -16490,6 +16490,15 @@ ECS.Players["Rius"] = {
 	lifetime_jp = 0,
 }
 
+InitializeDefaultRelics = function()
+	-- Keep a copy of the relics under its own field.
+	-- We'll need this to periodically reset relics.
+	for _, data in pairs(ECS.Players) do
+		data.default_relics = DeepCopy(data.relics)
+	end
+end
+
+InitializeDefaultRelics()
 InitializeECS()
 
 -- -----------------------------------------------------------------------
