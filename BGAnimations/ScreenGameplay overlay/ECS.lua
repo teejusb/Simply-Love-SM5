@@ -191,9 +191,7 @@ af[#af+1] = Def.Actor{
 }
 
 -- -----------------------------------------------------------------------
--- prefer the engine's SecondsToHMMSS()
--- but define it ourselves if it isn't provided by this version of SM5
-local mmss = "%02d:%02d"
+local mmss = "%d:%02d"
 
 local SecondsToMMSS = function(s)
 	-- native floor division sounds nice but isn't available in Lua 5.1
@@ -212,7 +210,7 @@ local FaustsScalpelIsActive = function()
 end
 
 local second_to_pause = {
-	["lower"] = 1699.301270,
+	["lower"] = 2,
 	["mid"] = 1223.617676,
 	["upper"] = 1953.137939,
 }
@@ -222,6 +220,8 @@ local elapsed_seconds = 0
 
 local InputHandler = function(event)
 	if not event.PlayerNumber or not event.button then return false end
+
+	MESSAGEMAN:Broadcast("TestInputEvent", event)
 
 	if event.type == "InputEventType_FirstPress" and event.GameButton == "Start" then
 		MESSAGEMAN:Broadcast("UnpauseMarathon")
@@ -279,7 +279,7 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 		end,
 
 		Def.ActorFrame {
-			InitCommand=function(self) self:visible(false) end,
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-70):visible(false) end,
 			WaitCommand=function(self)
 				if SCREENMAN:GetTopScreen():IsPaused() then
 					self:visible(true)
@@ -291,15 +291,20 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 				InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0.4) end
 			},
 			Def.Quad {
-				InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y):diffuse(Color.White):zoomto(202, 202) end
+				InitCommand=function(self) self:diffuse(Color.White):zoomto(202, 202) end
 			},
 			Def.Quad {
-				InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y):diffuse(Color.Black):zoomto(200, 200) end
+				InitCommand=function(self) self:diffuse(Color.Black):zoomto(200, 200) end
 			},
 			LoadFont("Common Normal")..{
 				InitCommand=function(self)
 					local text = "You may end your break time early by pressing the &START; button"
-					self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+40):wrapwidthpixels(200):settext(text)
+					self:y(40):wrapwidthpixels(200):settext(text)
+				end,
+			},
+			LoadActor( THEME:GetPathB("", "_modules/TestInput Pad/default.lua"), {Player=player, ShowMenuButtons=false, ShowPlayerLabel=false})..{
+				InitCommand=function(self)
+					self:zoom(0.8):y(260)
 				end,
 			}
 		},
@@ -312,14 +317,14 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 			LoopCommand=function(self)
 				local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
 				if cur_second > 0 then
-					if cur_second < second_to_pause then
-						self:settext(SecondsToMMSS((second_to_pause - cur_second + 1)/SL.Global.ActiveModifiers.MusicRate))
+					if cur_second < second_to_pause[GetDivision()] then
+						self:settext(SecondsToMMSS((second_to_pause[GetDivision()] - cur_second + 1)/SL.Global.ActiveModifiers.MusicRate))
 					end
 				end
 			end,
 			WaitCommand=function(self)
 				local remaining_pause_duration = pause_duration_seconds - elapsed_seconds + 1
-				self:horizalign(center):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-25)
+				self:horizalign(center):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-95)
 				if remaining_pause_duration >= 0 then
 					if remaining_pause_duration <= 5 then
 						self:diffuse(color("#ff3030"))
@@ -337,13 +342,13 @@ if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() th
 				self:horizalign(right):xy(_screen.cx + w/2 + 95, 20):settext("Pausing in:"):visible(true)
 			end,
 			WaitCommand=function(self)
-				self:horizalign(center):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-50)
+				self:horizalign(center):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-120)
 				self:settext("Unpausing in:")
 			end,
 			UnpauseMarathonMessageCommand=function(self)
 				self:visible(false)
 			end,
-		}
+		},
 	}
 end
 
