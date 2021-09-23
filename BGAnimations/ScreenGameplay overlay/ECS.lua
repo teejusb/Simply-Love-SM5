@@ -202,7 +202,7 @@ local FaustsScalpelIsActive = function()
 end
 
 local second_to_pause = {
-	["lower"] = 2,
+	["lower"] = 1699.301270,
 	["mid"] = 1223.617676,
 	["upper"] = 1953.137939,
 }
