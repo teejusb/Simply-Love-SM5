@@ -119,7 +119,7 @@ end
 -- retrieves profile data from disk without applying it to the SL table
 
 local RetrieveProfileData = function(profile, dir)
-	local theme_name = THEME:GetThemeDisplayName()
+	local theme_name = "Simply Love" -- Share Simply Love user preferences
 	local path = dir .. theme_name .. " UserPrefs.ini"
 	if FILEMAN:DoesFileExist(path) then
 		return IniFile.ReadFile(path)[theme_name]

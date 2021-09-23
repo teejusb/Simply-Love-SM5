@@ -67,7 +67,7 @@ local permitted_profile_settings = {
 
 -- -----------------------------------------------------------------------
 
-local theme_name = THEME:GetThemeDisplayName()
+local theme_name = "Simply Love" -- Share Simply Love user preferences
 local filename =  theme_name .. " UserPrefs.ini"
 
 -- function assigned to "CustomLoadFunction" under [Profile] in metrics.ini
