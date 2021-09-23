@@ -11,7 +11,7 @@ local quotes = {
 
 local body, author, picture
 local w = 310
-local quote_pics = 4
+local quote_pics = 0
 local rand_quote
 -- ---------------------------------------
 
@@ -43,7 +43,7 @@ local slc = SL.Global.ActiveColorIndex
 -- semitransparent black quad as background for 7 decorative arrows
 af[#af+1] = Def.Quad{
 	InitCommand=function(self) self:zoomto(_screen.w,0):diffuse(Color.Black) end,
-	OnCommand=function(self) self:accelerate(0.3):zoomtoheight(128):diffusealpha(0.9):sleep(2.1) end,
+	OnCommand=function(self) self:accelerate(0.3):zoomtoheight(128):diffusealpha(0.9) end,
 	OffCommand=function(self) self:accelerate(0.3):zoomtoheight(0) end
 }
 
@@ -89,8 +89,8 @@ af[#af+1] = LoadFont("Common Normal")..{
 		body = self
 		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(left):vertspacing(-4)
 	end,
-	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
-	OffCommand=cmd(linear,0.25; diffusealpha,0)
+	OnCommand=cmd(sleep,2.1; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(accelerate,0.3; diffusealpha,0)
 }
 
 -- quote author
@@ -99,8 +99,8 @@ af[#af+1] = LoadFont("Common Normal")..{
 		author = self
 		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(right)
 	end,
-	OnCommand=cmd(sleep,3; linear,0.25; diffusealpha,1),
-	OffCommand=cmd(linear,0.25; diffusealpha,0)
+	OnCommand=cmd(sleep,2.1; linear,0.25; diffusealpha,1),
+	OffCommand=cmd(accelerate,0.3; diffusealpha,0)
 }
 
 af[#af+1] = Def.Sprite{
@@ -110,14 +110,14 @@ af[#af+1] = Def.Sprite{
 	end,
 	OnCommand=function(self)
 		local zoom_value = math.min(128/self:GetHeight(), 320/self:GetWidth())
-		self:zoom(zoom_value):sleep(3):linear(0.25):diffusealpha(1):queuecommand("MaybePlaySound")
+		self:zoom(zoom_value):sleep(2.1):linear(0.25):diffusealpha(1):queuecommand("MaybePlaySound")
 	end,
 	MaybePlaySoundCommand=function(self)
 		if rand_quote == 4 then
 			SOUND:PlayOnce(THEME:GetPathS("", "mario_hey_stinky.ogg"))
 		end
 	end,
-	OffCommand=cmd(linear,0.25; zoomtoheight, 0; diffusealpha,0)
+	OffCommand=cmd(accelerate,0.3; zoomtoheight, 0; diffusealpha,0)
 }
 
 return af
