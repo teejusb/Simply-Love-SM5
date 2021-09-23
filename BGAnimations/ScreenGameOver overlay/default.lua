@@ -140,7 +140,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 
 				if slime_badge > 0 then total_points = total_points + (100 * slime_tiers) * slime_badge end
 				if agility_potion > 0 then total_points = total_points + (math.floor(((total_bpm / songs_passed) - 120)^1.3)) * agility_potion end
-				if stamina_potion > 0 then total_points = total_points + (math.floor(total_steps / 75)) *  end
+				if stamina_potion > 0 then total_points = total_points + (math.floor(total_steps / 75)) * accuracy_potion end
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-250), 0)) * stamina_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if beret_tiers > 0 then total_points = total_points + (100 * beret_tiers) * beret_tiers end
