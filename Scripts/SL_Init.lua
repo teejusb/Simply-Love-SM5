@@ -409,6 +409,10 @@ function InitializeSimplyLove()
 	SL.P1:initialize()
 	SL.P2:initialize()
 	SL.Global:initialize()
+
+	-- Require Event Mode for this theme by default.
+	-- If you change it in the options, then you'll only get the freeplay option.
+	PREFSMAN:SetPreference("EventMode", true)
 end
 
 InitializeSimplyLove()
