@@ -46,7 +46,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 		f:Write( data )
 	else
 		local fError = f:GetError()
-		SM("There was some kind of error writing your score to disk.  You should let Ian know.")
+		SM("There was some kind of error writing your score to disk.  You should let Archi know.")
 		Trace( "[FileUtils] Error writing to ".. path ..": ".. fError )
 		f:ClearError()
 	end
@@ -91,7 +91,7 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 		f:Write( data )
 	else
 		local fError = f:GetError()
-		SM("There was some kind of error writing your score to disk.  You should let Ian know.")
+		SM("There was some kind of error writing your score to disk.  You should let Archi know.")
 		Trace( "[FileUtils] Error writing to ".. path ..": ".. fError )
 		f:ClearError()
 	end
@@ -134,14 +134,6 @@ local WriteRelicDataToDisk = function()
 		f:destroy()
 	end
 end
-
--- ----------------------------------------------------------
--- We need a way to check if the player gave up before the song properly ended.
--- It doesn't look like the engine broadcasts any messages that would be helpful here,
--- so we do the best we can by toggling a flag when the player presses START.
---
--- If the screen's OffCommand occurs while START is being held, we assume they gave up early.
--- It's certainly not foolproof, but I'm unsure how else to handle this.
 
 -- ----------------------------------------------------------
 
@@ -404,7 +396,7 @@ if ECS.Mode == "ECS" and ChickenKnifeIsActive() and IsPlayingECS() then
 				pss:FailPlayer()
 			end
 
-			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenEvaluationStage"):StartTransitioningScreen("SM_GoToNextScreen")
+			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenEvaluationStage"):StartTransitioningScreen("SM_DoNextScreen")
 		end
 	}
 

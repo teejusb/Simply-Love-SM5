@@ -8857,6 +8857,8 @@ ECS.Players["teejusb"] = {
 		{name="Memepeace Beret", quantity=1},
 		{name="Slime Badge", quantity=1},
 		{name="Godfather's Token", quantity=1},
+
+		{name="Chicken Knife", quantity=1}
 	},
 	tier_skill = {[120]=99, [130]=90, [140]=78, [150]=70, [160]=64, [170]=52, [180]=37, [190]=20, [200]=5, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1},
 	affinities = {dp=0, ep=0, rp=315, ap=0},
