@@ -1663,7 +1663,7 @@ ECS.Relics = {
 				if name == "Alacritous Aspis" then
 					bp = bp + math.floor(song_data.dp * 1.1)
 				end
-				if name == " Indefatigable Escutcheon" then
+				if name == "Indefatigable Escutcheon" then
 					bp = bp + math.floor(song_data.ep * 1.2)
 				end
 				if name == "Alucard Shield" then
