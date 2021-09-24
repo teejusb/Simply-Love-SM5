@@ -137,7 +137,7 @@ LoadProfileCustom = function(profile, dir)
 		end
 	end
 
-	local relic_file_path = dir .. "Player_Relic_Data.lua"	
+	local relic_file_path = dir .. THEME:GetThemeDisplayName() .. "_Player_Relic_Data.lua"	
 
 	if FILEMAN:DoesFileExist(relic_file_path) and GAMESTATE:GetMasterPlayerNumber() ~= nil then	
 		local relic_data = LoadActor(relic_file_path)
