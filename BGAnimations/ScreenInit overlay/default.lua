@@ -110,12 +110,7 @@ af[#af+1] = Def.Sprite{
 	end,
 	OnCommand=function(self)
 		local zoom_value = math.min(128/self:GetHeight(), 320/self:GetWidth())
-		self:zoom(zoom_value):sleep(2.1):linear(0.25):diffusealpha(1):queuecommand("MaybePlaySound")
-	end,
-	MaybePlaySoundCommand=function(self)
-		if rand_quote == 4 then
-			SOUND:PlayOnce(THEME:GetPathS("", "mario_hey_stinky.ogg"))
-		end
+		self:zoom(zoom_value):sleep(2.1):linear(0.25):diffusealpha(1)
 	end,
 	OffCommand=cmd(accelerate,0.3; zoomtoheight, 0; diffusealpha,0)
 }
