@@ -11,25 +11,16 @@ local quotes = {
 
 local body, author, picture
 local w = 310
-local quote_pics = 0
-local rand_quote
 -- ---------------------------------------
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
 		self:Center()
-		rand_quote = math.random(#quotes + quote_pics)
-		if rand_quote <= quote_pics then
-			picture:Load(THEME:GetPathG("", "_Mario/Quotes/" .. tostring(rand_quote)))
-			body:settext("")
-			author:settext("")
-		else
-			rand_quote = rand_quote - quote_pics
-			local quote = quotes[rand_quote]
-			body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
-			author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
-			picture:Load(nil)
-		end
+		local rand_quote = math.random(#quotes)
+		local quote = quotes[rand_quote]
+		body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
+		author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
+		picture:Load(nil)
 	end
 }
 
