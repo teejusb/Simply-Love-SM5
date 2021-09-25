@@ -286,7 +286,7 @@ local Overrides = {
 	-------------------------------------------------------------------------
 	MusicRate = {
 		Choices = function()
-			local first	= 0.05
+			local first	= 1
 			local last 	= 2
 			local step 	= 0.01
 
