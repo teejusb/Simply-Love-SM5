@@ -605,18 +605,18 @@ ECS.Relics = {
 			-- We need the 2nd highest as well for those that weren't rank 1
 			local second_highest = nil
 			for i = #all_jp_amounts, 1, -1 do
-				if all_jp_amounts[i] < max_gold then
+				if all_jp_amounts[i] < max_jp then
 					second_highest = all_jp_amounts[i]
 					break
 				end
 			end
 
-			if max_jp == ecs_player.lifetime_song_jp then
+			if max_jp == ecs_player.lifetime_jp then
 				return 600
 			else
 				local second_highest = all_jp_amounts[#all_jp_amounts-1]
 				if second_highest == nil then return 0 end
-				return math.floor(300 * (ecs_player.lifetime_song_jp / second_highest))
+				return math.floor(300 * (ecs_player.lifetime_jp / second_highest))
 			end
 		end,
 	},
@@ -1854,7 +1854,9 @@ ECS.Relics = {
 				end
 			end
 		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
 	},
 	{
 		id=108,
@@ -1980,7 +1982,9 @@ ECS.Relics = {
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW3)
 			end
 		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
 	},
 	{
 		id=117,
@@ -16500,6 +16504,67 @@ end
 
 InitializeDefaultRelics()
 InitializeECS()
+
+local VerifyRelics = function()
+	local size = #ECS.Relics
+
+	for i=1, size do
+		for j=i+1, size do
+			local relic1 = ECS.Relics[i]
+			local relic2 = ECS.Relics[j]
+			local did_error = false
+
+			-- Can these relics actually be used together?
+			if relic1.is_marathon == relic2.is_marathon then
+				-- Iterate through the divisions.
+				for division, song_info in pairs(ECS.SongInfo) do
+					-- Iterater through every song in each division.
+					for song_data in ivalues(song_info.Songs) do
+						-- Iterate through all players (except we break early below).
+						for name, ecs_player in pairs(ECS.Players) do
+							local result1 = relic1.score(ecs_player, song_info, song_data, {relic1, relic2}, 1000, 1.0)
+							local result2 = relic2.score(ecs_player, song_info, song_data, {relic1, relic2}, 1000, 1.0)
+
+							local error = ""
+							if type(result1) ~= "number" then
+								error = error .. "Relic1 failed "
+							end
+							if type(result2) ~= "number" then
+								error = error .. "Relic2 failed "
+							end
+
+							if #error > 0 then
+								did_error = true
+								Trace(("*********************************************************************\n"..
+										"\tRelic1: " .. relic1.name .. ", Relic2: " .. relic2.name .. "\n" ..
+										"\tSong: " .. song_data.name .. "\n" ..
+										"\tPlayer: " .. name .. "\n\t") .. error .. "\n" ..
+										"********************************************************************"
+									)
+							end
+							-- Break early because it will take very long to iterate through 500+ players for every
+							-- relic pairing. Technically this affects the relics that scale based off of
+							-- lifetime gold/lifetime jp but I think it's sufficient enough for now.
+							break
+						end
+						if did_error then
+							break
+						end
+					end
+					if did_error then
+						break
+					end
+				end
+			end
+			if did_error then
+				break
+			end
+		end
+	end
+end
+
+-- Uncomment if to verify that all the score functions of the relics return valid numbers.
+-- VerifyRelics()
 
 -- -----------------------------------------------------------------------
 -- Helper Functions
