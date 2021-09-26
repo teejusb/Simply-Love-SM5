@@ -227,7 +227,7 @@ local IsPlayingMarathon = function()
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
 	if GetDivision() == "upper" then
-		return group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam"
+		return group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam Aulis Mk 0"
 	elseif GetDivision() == "mid" then
 		return group_name == "ECS10 - Mid Marathon" and song_name == "ECS Classics (Side B-A)"
 	else

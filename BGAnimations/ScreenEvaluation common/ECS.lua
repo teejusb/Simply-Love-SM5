@@ -21,7 +21,7 @@ local af = Def.ActorFrame{
 		if ECS.Mode == "ECS" then
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
 		elseif ECS.Mode == "Marathon" then
-			if ((GetDivision() == "upper" and group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam") or
+			if ((GetDivision() == "upper" and group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam Aulis Mk 0") or
 				(GetDivision() == "mid" and group_name == "ECS10 - Mid Marathon" and song_name == "ECS Classics (Side B-A)") or
 				(GetDivision() == "lower" and group_name == "ECS10 - Lower Marathon" and song_name == "ECS Classics (Side A)")) then
 			
