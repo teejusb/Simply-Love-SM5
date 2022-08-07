@@ -40,8 +40,8 @@ end
 -- -----------------------------------------------------------------------
 -- get timing window in milliseconds
 
-GetTimingWindow = function(n)
-	local prefs = SL.Preferences[SL.Global.GameMode]
+GetTimingWindow = function(n, mode)
+	local prefs = SL.Preferences[mode or SL.Global.GameMode]
 	local scale = PREFSMAN:GetPreference("TimingWindowScale")
 	return prefs["TimingWindowSecondsW"..n] * scale + prefs.TimingWindowAdd
 end
@@ -52,7 +52,7 @@ end
 
 DetermineTimingWindow = function(offset)
 	for i=1,NumJudgmentsAvailable() do
-		if math.abs(offset) < GetTimingWindow(i) then
+		if math.abs(offset) <= GetTimingWindow(i) then
 			return i
 		end
 	end
@@ -317,10 +317,6 @@ SetGameModePreferences = function()
 	-- so turn Decents and WayOffs off now.
 	if SL.Global.GameMode == "Casual" then
 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
-
-	-- Otherwise, we want all TimingWindows enabled by default.
-	else
- 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
 	end
 
 	--------------------------------------------
@@ -466,9 +462,8 @@ StripSpriteHints = function(filename)
 	return filename:gsub(" %d+x%d+", ""):gsub(" %(doubleres%)", ""):gsub(".png", "")
 end
 
-GetJudgmentGraphics = function(mode)
-	if mode == 'Casual' then mode = 'ITG' end
-	local path = THEME:GetPathG('', '_judgments/' .. mode)
+GetJudgmentGraphics = function()
+	local path = THEME:GetPathG('', '_judgments')
 	local files = FILEMAN:GetDirListing(path .. '/')
 	local judgment_graphics = {}
 
@@ -563,6 +558,303 @@ end
 
 
 -- -----------------------------------------------------------------------
+IsHumanPlayer = function(player)
+	return GAMESTATE:GetPlayerState(player):GetPlayerController() == "PlayerController_Human"
+end
+
+-- -----------------------------------------------------------------------
 IsAutoplay = function(player)
-	return GAMESTATE:GetPlayerState(player):GetPlayerController() ~= "PlayerController_Human"
+	return GAMESTATE:GetPlayerState(player):GetPlayerController() == "PlayerController_Autoplay"
+end
+
+-- -----------------------------------------------------------------------
+-- Helper function to determine if a TNS falls within the W0 window.
+-- Params are the params received from the JudgmentMessageCommand.
+-- Returns true/false
+IsW0Judgment = function(params, player)
+	if params.Player ~= player then return false end
+	if params.HoldNoteScore then return false end
+	
+	-- Only check/update FA+ count if we received a TNS in the top window.
+	if params.TapNoteScore == "TapNoteScore_W1" and SL.Global.GameMode == "ITG"  then
+		local prefs = SL.Preferences["FA+"]
+		local scale = PREFSMAN:GetPreference("TimingWindowScale")
+		local W0 = prefs["TimingWindowSecondsW1"] * scale + prefs["TimingWindowAdd"]
+
+		local offset = math.abs(params.TapNoteOffset)
+		if offset <= W0 then
+			return true
+		end
+	end
+	return false
+end
+
+-- -----------------------------------------------------------------------
+-- Gets the fully populated judgment counts for a player.
+-- This includes the FA+ window (W0). Decents/WayOffs (W4/W5) will only exist in the
+-- resultant table if the windows were active.
+--
+-- Should NOT be used in casual mode.
+--
+-- Returns a table with the following keys:
+-- {
+--             "W0" -> the fantasticPlus count
+--             "W1" -> the fantastic count
+--             "W2" -> the excellent count
+--             "W3" -> the great count
+--             "W4" -> the decent count (may not exist if window is disabled)
+--             "W5" -> the way off count (may not exist if window is disabled)
+--           "Miss" -> the miss count
+--     "totalSteps" -> the total number of steps in the chart (including hold heads)
+--          "Holds" -> total number of holds held
+--     "totalHolds" -> total number of holds in the chart
+--          "Mines" -> total number of mines hit
+--     "totalMines" -> total number of mines in the chart
+--          "Rolls" -> total number of rolls held
+--     "totalRolls" -> total number of rolls in the chart
+-- }
+GetExJudgmentCounts = function(player)
+	local pn = ToEnumShortString(player)
+	local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
+
+	local counts = {}
+
+	local TNS = { "W1", "W2", "W3", "W4", "W5", "Miss" }
+	
+	if SL.Global.GameMode == "FA+" then
+		for window in ivalues(TNS) do
+			adjusted_window = window
+			-- In FA+ mode, we need to shift the windows up 1 so that the key we're using is accurate.
+			-- E.g. W1 window becomes W0, W2 becomes W1, etc.
+			if window ~= "Miss" then
+				adjusted_window = "W"..(tonumber(window:sub(-1))-1)
+			end
+			
+			-- Get the count.
+			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
+			-- For the last window (Decent) in FA+ mode...
+			if window == "W5" then
+				-- Only populate if the window is still active.
+				if SL.Global.ActiveModifiers.TimingWindows[5] then
+					counts[adjusted_window] = number
+				end
+			else
+				counts[adjusted_window] = number
+			end
+		end
+	elseif SL.Global.GameMode == "ITG" then
+		for window in ivalues(TNS) do
+			-- Get the count.
+			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
+			-- We need to extract the W0 count in ITG mode.
+			if window == "W1" then
+				local faPlus = SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].ex_counts.W0_total
+				-- Subtract white count from blue count
+				number = number - faPlus
+				-- Populate the two numbers.
+				counts["W0"] = faPlus
+				counts["W1"] = number
+			else
+				if ((window ~= "W4" and window ~= "W5") or
+						-- Only populate decent and way off windows if they're active.
+						(window == "W4" and SL.Global.ActiveModifiers.TimingWindows[4]) or
+						(window == "W5" and SL.Global.ActiveModifiers.TimingWindows[5])) then
+					counts[window] = number
+				end
+			end
+		end
+	end
+	counts["totalSteps"] = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_TapsAndHolds" )
+	
+	local RadarCategory = { "Holds", "Mines", "Rolls" }
+
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
+
+	for RCType in ivalues(RadarCategory) do
+		local number = stats:GetRadarActual():GetValue( "RadarCategory_"..RCType )
+		local possible = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_"..RCType )
+
+		if RCType == "Mines" then
+			-- NoMines still report the total number of mines that exist in a chart, even if they weren't played in the chart.
+			-- If NoMines was set, report 0 for the number of mines as the chart actually didn't have any.
+			-- TODO(teejusb): Track AvoidMine in the future. This is fine for now as ITL compares serverside.
+			if po:NoMines() then
+				counts[RCType] = 0
+				counts["total"..RCType] = 0
+			else
+				-- We want to keep track of mines hit.
+				counts[RCType] = possible - number
+				counts["total"..RCType] = possible
+			end
+		else
+			counts[RCType] = number
+			counts["total"..RCType] = possible
+		end
+	end
+
+	return counts
+end
+
+-- -----------------------------------------------------------------------
+-- Calculate the EX score given for a given player.
+--
+-- The ex_counts default to those computed in BGAnimations/ScreenGameplay underlay/TrackExScoreJudgments.lua
+-- They are computed from the HoldNoteScore and TapNotScore from the JudgmentMessageCommands.
+-- We look for the following keys: 
+-- {
+--             "W0" -> the fantasticPlus count
+--             "W1" -> the fantastic count
+--             "W2" -> the excellent count
+--             "W3" -> the great count
+--             "W4" -> the decent count
+--             "W5" -> the way off count
+--           "Miss" -> the miss count
+--           "Held" -> the number of holds/rolds held
+--          "LetGo" -> the number of holds/rolds dropped
+--        "HitMine" -> total number of mines hit
+-- }
+CalculateExScore = function(player, ex_counts)
+	-- No EX scores in Casual mode, just return some dummy number early.
+	if SL.Global.GameMode == "Casual" then return 0 end
+	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
+
+	local totalSteps = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_TapsAndHolds" )
+	local totalHolds = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Holds" )
+	local totalRolls = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Rolls" )
+
+	local total_possible = totalSteps * SL.ExWeights["W0"] + (totalHolds + totalRolls) * SL.ExWeights["Held"]
+
+	local total_points = 0
+
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
+
+	-- If mines are disabled, they should still be accounted for in EX Scoring based on the weight assigned to it.
+	-- Stamina community does often play with no-mines on, but because EX scoring is more timing centric where mines
+	-- generally have a negative weight, it's a better experience to make sure the EX score reflects that.
+	if po:NoMines() then
+		local totalMines = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Mines" )
+		total_points = total_points + totalMines * SL.ExWeights["HitMine"];
+	end
+
+	local keys = { "W0", "W1", "W2", "W3", "W4", "W5", "Miss", "Held", "LetGo", "HitMine" }
+	local counts = ex_counts or SL[ToEnumShortString(player)].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].ex_counts
+	-- Just for validation, but shouldn't happen in normal gameplay.
+	if counts == nil then return 0 end
+
+	for key in ivalues(keys) do
+		local value = counts[key]
+		if value ~= nil then		
+			total_points = total_points + value * SL.ExWeights[key]
+		end
+	end
+
+	return math.max(0, math.floor(total_points/total_possible * 10000) / 100)
+end
+
+-- -----------------------------------------------------------------------
+WriteItlFile = function(dir, data)
+	local path = dir.. "itl2022.itl"
+	local f = RageFileUtil:CreateRageFile()
+	local existing = ""
+	if FILEMAN:DoesFileExist(path) then
+		-- Load the current contents of the file if it exists.
+		if f:Open(path, 1) then
+			existing = f:Read()
+		end
+	end
+
+	-- Append all the scores to the file.
+	if f:Open(path, 2) then
+		f:Write(existing..data)
+	end
+	f:destroy()
+end
+
+-- -----------------------------------------------------------------------
+-- Generates the column mapping in case of any turn mods.
+-- Returns a table containing the column swaps.
+-- Returns nil if we can't compute it
+GetColumnMapping = function(player)
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Preferred')
+
+	local shuffle = po:Shuffle() or po:SoftShuffle() or po:SuperShuffle() 
+	local notes_inserted = (po:Wide() or po:Skippy() or po:Quick() or po:Echo() or
+													po:BMRize() or po:Stomp() or po:Big())
+	local notes_removed = (po:Little()  or po:NoHolds() or po:NoStretch() or
+													po:NoHands() or po:NoJumps() or po:NoFakes() or 
+													po:NoLifts() or po:NoQuads() or po:NoRolls())
+	
+	-- If shuffle is used or notes were inserted/removed, we can't compute it
+	-- return early
+	-- TODO(teejusb): Add support for Backwards()
+	if shuffle or notes_inserted or notes_removed or po:Backwards() then
+		return nil
+	end
+
+	local flip = po:Flip() > 0
+	local invert = po:Invert() > 0
+	local left = po:Left()
+	local right = po:Right()
+	local mirror = po:Mirror()
+
+	-- Combining flip and invert results in unusual spacing so ignore it.
+	if flip and invert then
+		return nil
+	end
+
+	local has_turn = flip or invert or left or right or mirror
+	local style = GAMESTATE:GetCurrentStyle()
+	local num_columns = style:ColumnsPerPlayer()
+
+	-- We only resolve turn mods in 4 and 8 panel.
+	if num_columns ~= 4 and num_columns ~= 8 then
+		if not has_turn then
+			-- Not turn mod used, return 1-to-1 mapping.
+			return range(num_columns)
+		else
+			-- If we are using turn mods in modes without 4 or 8 columns then return
+			-- early since we don't try to resolve them.
+			return nil
+		end
+	end
+
+	local column_mapping = {1, 2, 3, 4}
+
+	if flip then
+		column_mapping = {column_mapping[4], column_mapping[3], column_mapping[2], column_mapping[1]}
+	end
+
+	if invert then
+		column_mapping = {column_mapping[2], column_mapping[1], column_mapping[4], column_mapping[3]}
+	end
+
+	if left then
+		column_mapping = {column_mapping[2], column_mapping[4], column_mapping[1], column_mapping[3]}
+	end
+
+	if right then
+		column_mapping = {column_mapping[3], column_mapping[1], column_mapping[4], column_mapping[2]}
+	end
+
+	if mirror then
+		column_mapping = {column_mapping[4], column_mapping[3], column_mapping[2], column_mapping[1]}
+	end
+
+	if num_columns == 8 then
+		for i=1,4 do
+			column_mapping[4+i] = column_mapping[i] + 4
+		end
+
+		-- We only need to apply the following if exactly one of flip or mirror is active
+		-- since they otherwise cancel each other out
+		if (not flip and mirror) or (flip and not mirror) then
+			for i=1,4 do
+				column_mapping[i] = column_mapping[i] + 4
+				column_mapping[i+4] = column_mapping[i+4] - 4
+			end
+		end
+	end
+
+	return column_mapping
 end

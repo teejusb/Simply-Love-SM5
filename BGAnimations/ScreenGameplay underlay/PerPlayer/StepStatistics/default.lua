@@ -10,6 +10,7 @@ local NoteFieldIsCentered = (GetNotefieldX(player) == _screen.cx)
 local stylename = GAMESTATE:GetCurrentStyle():GetName()
 
 if (SL[pn].ActiveModifiers.DataVisualizations ~= "Step Statistics")
+or (not IsUltraWide and stylename == "versus")
 or (SL.Global.GameMode == "Casual")
 or (GetNotefieldWidth() > _screen.w/2)
 or (NoteFieldIsCentered and not IsUsingWideScreen())
@@ -77,7 +78,6 @@ af[#af+1] = Def.ActorFrame{
 				local zoom = scale(GetScreenAspectRatio(), 16/10, 16/9, zoomfactor.sixteen_ten, zoomfactor.sixteen_nine)
 				self:zoom( zoom )
 			end
-
 		else
 			if #GAMESTATE:GetHumanPlayers() > 1 then
 				self:zoom(zoomfactor.ultrawide):addy(-55)
@@ -86,9 +86,10 @@ af[#af+1] = Def.ActorFrame{
 	end,
 
 	LoadActor("./Banner.lua", player),
-	LoadActor("./TapNoteJudgments.lua", player),
+	LoadActor("./TapNoteJudgments.lua", {player, true}), -- second argument is if it has labels or not
 	LoadActor("./HoldsMinesRolls.lua", player),
 	LoadActor("./Time.lua", player),
+	LoadActor("./Scorebox.lua", player)
 }
 
 af[#af+1] = LoadActor("./DensityGraph.lua", {player, sidepane_width})

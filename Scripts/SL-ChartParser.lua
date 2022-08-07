@@ -27,14 +27,21 @@ local GetSimfileString = function(steps)
 end
 
 -- ----------------------------------------------------------------
--- We use our own BinaryToHex function as it seems like the current
--- implementation from the engine doesn't handle sequential zeroes correctly.
+-- hex-encode binary data
 local Bin2Hex = function(s)
 	local hex_bytes = {}
 	for i = 1, string.len(s), 1 do
 		hex_bytes[#hex_bytes+1] = string.format('%02x', string.byte(s, i))
 	end
 	return table.concat(hex_bytes, '')
+end
+
+-- StepMania 5.1 has a BinaryToHex function, but an older version of it was
+-- broken and stopped when encountering a zero byte in the input. Let's detect
+-- if the function exists and if it works as intended before using it. If not
+-- useable we fall back to the lua implementation defined above.
+if type(BinaryToHex) == "function" and BinaryToHex("\0") == "00" then
+	Bin2Hex = BinaryToHex
 end
 
 -- Reduce the chart to it's smallest unique representable form.
@@ -145,6 +152,17 @@ local NormalizeFloatDigits = function(param)
 end
 
 -- ----------------------------------------------------------------
+-- Takes a string and generates a case insensitive regex pattern.
+-- e.g. "BPMS" returns "[Bb][Pp][Mm][Ss]""
+local MixedCaseRegex = function(str)
+	local t = {}
+	for c in str:gmatch(".") do
+		t[#t+1] = "[" .. c:upper() .. c:lower() .. "]"
+	end
+	return table.concat(t, "")
+end
+
+-- ----------------------------------------------------------------
 -- ORIGINAL SOURCE: https://github.com/JonathanKnepp/SM5StreamParser
 
 -- GetSimfileChartString() accepts four arguments:
@@ -161,6 +179,17 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 	local NoteDataString = nil
 	local BPMs = nil
 
+	-- Support lowercased variants.
+	StepsType = StepsType:lower()
+	Difficulty = Difficulty:lower()
+
+	local BPMS = MixedCaseRegex("BPMS")
+	local NOTEDATA = MixedCaseRegex("NOTEDATA")
+	local NOTES = MixedCaseRegex("NOTES")
+	local STEPSTYPE = MixedCaseRegex("STEPSTYPE")
+	local DIFFICULTY = MixedCaseRegex("DIFFICULTY")
+	local DESCRIPTION = MixedCaseRegex("DESCRIPTION")
+
 	-- ----------------------------------------------------------------
 	-- StepMania uses each steps' "Description" attribute to uniquely
 	-- identify Edit charts. (This is important, because there can be more
@@ -171,10 +200,10 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 	-- ----------------------------------------------------------------
 
 	if Filetype == "ssc" then
-		local topLevelBpm = NormalizeFloatDigits(SimfileString:match("#BPMS:(.-);"):gsub("%s+", ""))
+		local topLevelBpm = NormalizeFloatDigits(SimfileString:match("#"..BPMS..":(.-);"):gsub("%s+", ""))
 		-- SSC File
 		-- Loop through each chart in the SSC file
-		for noteData in SimfileString:gmatch("#NOTEDATA.-#NOTES2?:[^;]*") do
+		for noteData in SimfileString:gmatch("#"..NOTEDATA..".-#"..NOTES.."2?:[^;]*") do
 			-- Normalize all the line endings to '\n'
 			local normalizedNoteData = noteData:gsub('\r\n?', '\n')
 
@@ -184,25 +213,25 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 			-- TODO(teejsub): Double check the expected behavior even though it is
 			-- currently sufficient for all ranked charts on GrooveStats.
 			local stepsType = ''
-			for st in normalizedNoteData:gmatch("#STEPSTYPE:(.-);") do
+			for st in normalizedNoteData:gmatch("#"..STEPSTYPE..":(.-);") do
 				if stepsType == '' and st ~= '' then
 					stepsType = st
 					break
 				end
 			end
-			stepsType = stepsType:gsub("%s+", "")
+			stepsType = stepsType:gsub("%s+", ""):lower()
 
 			local difficulty = ''
-			for diff in normalizedNoteData:gmatch("#DIFFICULTY:(.-);") do
+			for diff in normalizedNoteData:gmatch("#"..DIFFICULTY..":(.-);") do
 				if difficulty == '' and diff ~= '' then
 					difficulty = diff
 					break
 				end
 			end
-			difficulty = difficulty:gsub("%s+", "")
+			difficulty = difficulty:gsub("%s+", ""):lower()
 
 			local description = ''
-			for desc in normalizedNoteData:gmatch("#DESCRIPTION:(.-);") do
+			for desc in normalizedNoteData:gmatch("#"..DESCRIPTION..":(.-);") do
 				if description == '' and desc ~= '' then
 					description = desc
 					break
@@ -212,10 +241,10 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 			-- Find the chart that matches our difficulty and game type.
 			if (stepsType == StepsType and difficulty == Difficulty) then
 				-- Ensure that we've located the correct edit stepchart within the SSC file.
-				-- There can be multiple Edit stepcharts but each is guaranteed to have a unique #DESCIPTION tag
-				if (difficulty ~= "Edit" or description == StepsDescription) then
+				-- There can be multiple Edit stepcharts but each is guaranteed to have a unique #DESCRIPTION tag
+				if (difficulty ~= "edit" or description == StepsDescription) then
 					-- Get chart specific BPMS (if any).
-					local splitBpm = normalizedNoteData:match("#BPMS:(.-);") or ''
+					local splitBpm = normalizedNoteData:match("#"..BPMS..":(.-);") or ''
 					splitBpm = splitBpm:gsub("%s+", "")
 
 					if #splitBpm == 0 then
@@ -224,7 +253,7 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 						BPMs = NormalizeFloatDigits(splitBpm)
 					end
 					-- Get the chart data, remove comments, and then get rid of all non-'\n' whitespace.
-					NoteDataString = normalizedNoteData:match("#NOTES2?:[\n]*([^;]*)\n?$"):gsub("//[^\n]*", ""):gsub('[\r\t\f\v ]+', '')
+					NoteDataString = normalizedNoteData:match("#"..NOTES.."2?:[\n]*([^;]*)\n?$"):gsub("//[^\n]*", ""):gsub('[\r\t\f\v ]+', '')
 					NoteDataString = MinimizeChart(NoteDataString)
 					break
 				end
@@ -232,9 +261,9 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 		end
 	elseif Filetype == "sm" then
 		-- SM FILE
-		BPMs = NormalizeFloatDigits(SimfileString:match("#BPMS:(.-);"):gsub("%s+", ""))
+		BPMs = NormalizeFloatDigits(SimfileString:match("#"..BPMS..":(.-);"):gsub("%s+", ""))
 		-- Loop through each chart in the SM file
-		for noteData in SimfileString:gmatch("#NOTES2?[^;]*") do
+		for noteData in SimfileString:gmatch("#"..NOTES.."2?[^;]*") do
 			-- Normalize all the line endings to '\n'
 			local normalizedNoteData = noteData:gsub('\r\n?', '\n')
 			-- Split the entire chart string into pieces on ":"
@@ -249,14 +278,16 @@ local GetSimfileChartString = function(SimfileString, StepsType, Difficulty, Ste
 			-- Index 4 will contain the difficulty (like "challenge")
 			-- Index 3 will contain the description for Edit charts
 			if #parts >= 7 then
-				local stepsType = parts[2]:gsub("[^%w-]", "")
+				local stepsType = parts[2]:gsub("[^%w-]", ""):lower()
+				-- Normalize the parsed difficulty (e.g. expert/oni should map to challenge).
 				local difficulty = parts[4]:gsub("[^%w]", "")
+				difficulty = ToEnumShortString(OldStyleStringToDifficulty(difficulty)):lower()
 				local description = parts[3]:gsub("^%s*(.-)", "")
 				-- Find the chart that matches our difficulty and game type.
 				if (stepsType == StepsType and difficulty == Difficulty) then
 					-- Ensure that we've located the correct edit stepchart within the SSC file.
-					-- There can be multiple Edit stepcharts but each is guaranteed to have a unique #DESCIPTION tag
-					if (difficulty ~= "Edit" or description == StepsDescription) then
+					-- There can be multiple Edit stepcharts but each is guaranteed to have a unique #DESCRIPTION tag
+					if (difficulty ~= "edit" or description == StepsDescription) then
 						NoteDataString = parts[7]:gsub("//[^\n]*", ""):gsub('[\r\t\f\v ]+', '')
 						NoteDataString = MinimizeChart(NoteDataString)
 						break
@@ -276,12 +307,17 @@ local GetMeasureInfo = function(Steps, chartString)
 	-- Which measures are considered a stream?
 	local notesPerMeasure = {}
 	local measureCount = 1
-	local notesInMeasure = 0
+	local notesInMeasure = 0  -- The tap notes found in this measure
+	local rowsInMeasure = 0   -- The total rows in this measure
 
 	-- NPS and Density Graph Variables
 	local NPSperMeasure = {}
 	local NPSForThisMeasure, peakNPS = 0, 0
 	local timingData = Steps:GetTimingData()
+
+	-- Column Cues variables.
+	local columnCueAllData = {} 
+	local columnTimes = {}
 
 	-- Loop through each line in our string of measures, trimming potential leading whitespace (thanks, TLOES/Mirage Garden)
 	for line in chartString:gmatch("[^%s*\r\n]+") do
@@ -289,6 +325,15 @@ local GetMeasureInfo = function(Steps, chartString)
 		if(line:match("^[,;]%s*")) then
 			-- Does the number of notes in this measure meet our threshold to be considered a stream?
 			table.insert(notesPerMeasure, notesInMeasure)
+
+			-- Column Cue calculation
+			for noteData in ivalues(columnCueAllData) do
+				local beat = 4 * ((measureCount-1) + (noteData.rowNum-1)/rowsInMeasure)
+				columnTimes[#columnTimes + 1] = {
+					columns=noteData.columns,
+					time=timingData:GetElapsedTimeFromBeat(beat)
+				}
+			end
 
 			-- NPS Calculation
 			durationOfMeasureInSeconds = timingData:GetElapsedTimeFromBeat(measureCount * 4) - timingData:GetElapsedTimeFromBeat((measureCount-1)*4)
@@ -303,7 +348,10 @@ local GetMeasureInfo = function(Steps, chartString)
 			-- This doesn't always hold true.  Measures 48 and 49 of "Mudkyp Korea/Can't Nobody" use a properly
 			-- timed negative stop, but the engine reports them as having very small but positive durations
 			-- which erroneously inflates the notes per second calculation.
-			if durationOfMeasureInSeconds == 0 then
+			--
+			-- As a hold over for this case, we check that the duration is <= 0.12 (instead of 0), so this only
+			-- breaks for cases where charts are of 2,000 BPM (which are likely rarer than those with warps).
+			if durationOfMeasureInSeconds <= 0.12 then
 				NPSForThisMeasure = 0
 			else
 				NPSForThisMeasure = notesInMeasure/durationOfMeasureInSeconds
@@ -318,16 +366,53 @@ local GetMeasureInfo = function(Steps, chartString)
 
 			-- Reset iterative variables
 			notesInMeasure = 0
+			rowsInMeasure = 0
 			measureCount = measureCount + 1
+			columnCueAllData = {}
 		else
+			rowsInMeasure = rowsInMeasure + 1
 			-- Is this a note? (Tap, Hold Head, Roll Head)
 			if(line:match("[124]")) then
 				notesInMeasure = notesInMeasure + 1
 			end
+
+			-- For column cues, also keep track of mines
+			if line:match("[124M]") then
+				-- Find all the columns where the tap notes/mines occur.
+				-- This is used for the ColumnCues.
+				local columns = {}
+				local i = 0
+				while true do
+					i = line:find("[124M]", i+1)
+					if i == nil then break end
+					columns[#columns+1] = {
+						colNum=i,
+						isMine=line:sub(i, i) == "M"
+					}
+				end
+				columnCueAllData[#columnCueAllData+1] = {
+					rowNum=rowsInMeasure,
+					columns=columns
+				}
+			end
 		end
 	end
 
-	return notesPerMeasure, peakNPS, NPSperMeasure
+	local columnCues = {}
+	local prevTime = 0
+	for columnTime in ivalues(columnTimes) do
+		local duration = columnTime.time - prevTime
+		if duration >= SL.Global.ColumnCueMinTime or prevTime == 0 then
+			columnCues[#columnCues + 1] = {
+				columns=columnTime.columns,
+				startTime=prevTime,
+				duration=duration
+			}
+		end
+		prevTime = columnTime.time
+	end
+
+	return notesPerMeasure, peakNPS, NPSperMeasure, columnCues
 end
 -- ----------------------------------------------------------------
 
@@ -668,6 +753,7 @@ local MaybeCopyFromOppositePlayer = function(pn, filename, stepsType, difficulty
 		SL[pn].Streams.NotesPerMeasure = SL[opposite_player].Streams.NotesPerMeasure
 		SL[pn].Streams.PeakNPS = SL[opposite_player].Streams.PeakNPS
 		SL[pn].Streams.NPSperMeasure = SL[opposite_player].Streams.NPSperMeasure
+		SL[pn].Streams.ColumnCues = SL[opposite_player].Streams.ColumnCues
 		SL[pn].Streams.Hash = SL[opposite_player].Streams.Hash
 
 		SL[pn].Streams.Crossovers = SL[opposite_player].Streams.Crossovers
@@ -722,12 +808,13 @@ ParseChartInfo = function(steps, pn)
 				chartString = chartString .. '\n;'
 				-- Which measures have enough notes to be considered as part of a stream?
 				-- We can also extract the PeakNPS and the NPSperMeasure table info in the same pass.
-				local NotesPerMeasure, PeakNPS, NPSperMeasure = GetMeasureInfo(steps, chartString)
+				local NotesPerMeasure, PeakNPS, NPSperMeasure, ColumnCues = GetMeasureInfo(steps, chartString)
 
 				-- Which sequences of measures are considered a stream?
 				SL[pn].Streams.NotesPerMeasure = NotesPerMeasure
 				SL[pn].Streams.PeakNPS = PeakNPS
 				SL[pn].Streams.NPSperMeasure = NPSperMeasure
+				SL[pn].Streams.ColumnCues = ColumnCues
 				SL[pn].Streams.Hash = Hash
 
 				local Crossovers, Footswitches, Sideswitches, Jacks, Brackets = GetTechniques(chartString)

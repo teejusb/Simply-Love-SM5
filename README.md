@@ -20,7 +20,7 @@ Simply Love is compatible with current releases from the official StepMania proj
 **Compatible Releases**<br>
 ✅ [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12)<br>
 ✅ [StepMania 5.1-b2](https://github.com/stepmania/stepmania/releases/tag/v5.1.0-b2)<br>
-✅ [StepMania 5.3-a4.9.7 (OutFox)](https://projectmoon.dance/releases/5.3.0-alpha-4.9.7GG) (preliminary support)<br>
+✅ [OutFox 0.4.14.1](https://projectoutfox.com/releases/0.4.14.1) and newer (preliminary support). Versions prior to that are not supported.<br>
 
 For new installations we currently recommend installing StepMania 5.1. While
 5.0.12 is officially the latest stable release of StepMania, 5.1 is widely used
@@ -58,7 +58,7 @@ Simply Love has support for:
   * Italiano
   * 日本語
   * Polski
-  * Português Brasileiro
+  * Português Brasileiro (incomplete, translator wanted)
 
 The current language can be changed in Simply Love under *System Options*.
 

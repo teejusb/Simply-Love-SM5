@@ -1,8 +1,8 @@
 local Players = GAMESTATE:GetHumanPlayers()
-local NumPanes = SL.Global.GameMode=="Casual" and 1 or 7
+local NumPanes = SL.Global.GameMode=="Casual" and 1 or 8
 
 local InputHandler = nil
-local RpgInputHandler = nil
+local EventOverlayInputHandler = nil
 
 if ThemePrefs.Get("WriteCustomScores") then
 	WriteScores()
@@ -16,24 +16,29 @@ if SL.Global.GameMode ~= "Casual" then
 	-- and the number of panes there are to InputHandler.lua
 	t.OnCommand=function(self)
 		InputHandler = LoadActor("./InputHandler.lua", {self, NumPanes})
-		RpgInputHandler = LoadActor("./Shared/RpgInputHandler.lua")
+		EventOverlayInputHandler = LoadActor("./Shared/EventInputHandler.lua")
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
+		PROFILEMAN:SaveMachineProfile()
 	end
 	t.DirectInputToEngineCommand=function(self)
-		SCREENMAN:GetTopScreen():RemoveInputCallback(RpgInputHandler)
+		SCREENMAN:GetTopScreen():RemoveInputCallback(EventOverlayInputHandler)
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 
 		for player in ivalues(PlayerNumber) do
 			SCREENMAN:set_input_redirected(player, false)
 		end
 	end
-	t.DirectInputToRpgHandlerCommand=function(self)
+	t.DirectInputToEventOverlayHandlerCommand=function(self)
 		SCREENMAN:GetTopScreen():RemoveInputCallback(InputHandler)
-		SCREENMAN:GetTopScreen():AddInputCallback(RpgInputHandler)
+		SCREENMAN:GetTopScreen():AddInputCallback(EventOverlayInputHandler)
 
 		for player in ivalues(PlayerNumber) do
 			SCREENMAN:set_input_redirected(player, true)
 		end
+	end
+else
+	t.OnCommand=function(self)
+		PROFILEMAN:SaveMachineProfile()
 	end
 end
 
@@ -76,6 +81,10 @@ for player in ivalues(Players) do
 	-- Accumulate scores for the ECS player. The loop itself doesn't matter for this since this can
 	-- only run in single player mode.
 	t[#t+1] = LoadActor("./ECS.lua", player)
+
+	-- Generate the .itl file for the player.
+	-- When the event isn't active, this actor is nil.
+	t[#t+1] = LoadActor("./PerPlayer/ItlFile.lua", player)
 end
 
 -- -----------------------------------------------------------------------
@@ -87,7 +96,7 @@ t[#t+1] = LoadActor("./Panes/default.lua", NumPanes)
 
 -- The actor that will automatically upload scores to GrooveStats.
 -- This is only added in "dance" mode and if the service is available.
--- Since this actor also spawns the RPG overlay it must go on top of everything else
+-- Since this actor also spawns the event overlay it must go on top of everything else
 t[#t+1] = LoadActor("./Shared/AutoSubmitScore.lua")
 
 return t

@@ -285,13 +285,14 @@ ValidForGrooveStats = function(player)
 	--
 	-- 4 (1, internally) is considered standard for ITG.
 	-- GrooveStats expects players to have both these set to 4 (1, internally).
+	-- We also allow people to use harder values as well.
 	--
 	-- People can probably use some combination of LifeDifficultyScale,
 	-- TimingWindowScale, and TimingWindowAdd to probably match up with ITG's windows, but that's a
 	-- bit cumbersome to handle so just requre TimingWindowScale and LifeDifficultyScale these to be set
 	-- to 4.
-	valid[5] = PREFSMAN:GetPreference("TimingWindowScale") == 1
-	valid[6] = PREFSMAN:GetPreference("LifeDifficultyScale") == 1
+	valid[5] = PREFSMAN:GetPreference("TimingWindowScale") <= 1
+	valid[6] = PREFSMAN:GetPreference("LifeDifficultyScale") <= 1
 
 	-- Validate all other metrics.
 	local ExpectedTWA = 0.0015
@@ -422,8 +423,8 @@ ValidForGrooveStats = function(player)
 	-- only FailTypes "Immediate" and "ImmediateContinue" are valid for GrooveStats
 	valid[11] = (po:FailSetting() == "FailType_Immediate" or po:FailSetting() == "FailType_ImmediateContinue")
 
-	-- AutoPlay is not allowed
-	valid[12] = not IsAutoplay(player)
+	-- AutoPlay/AutoplayCPU is not allowed
+	valid[12] = IsHumanPlayer(player)
 
 	-- ------------------------------------------
 	-- return the entire table so that we can let the player know which settings,
@@ -504,11 +505,12 @@ CreateCommentString = function(player)
 
 	local pn = ToEnumShortString(player)
 	-- If a player CModded, then add that as well.
-	if SL[pn].ActiveModifiers.SpeedModType == "C" then
+	local cmod = GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred"):CMod()
+	if cmod ~= nil then
 		if #comment ~= 0 then
 			comment = comment .. ", "
 		end
-		comment = comment.."C"..SL[pn].ActiveModifiers.SpeedMod
+		comment = comment.."C"..tostring(cmod)
 	end
 
 	return comment

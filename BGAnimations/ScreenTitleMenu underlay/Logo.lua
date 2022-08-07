@@ -35,11 +35,10 @@ af[#af+1] = Def.Sprite{
 
 		return
 
-
-		-- if ThemePrefs.Get("VisualStyle") == "SRPG5" then
-		-- 	self:Load(THEME:GetPathG("", "_VisualStyles/SRPG5/"..SL.SRPG5.GetLogo()))
-		-- 	self:zoom(0.7):vertalign(top)
-		-- 	self:y(-120):shadowlength(0)
+		-- if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+		-- 	self:Load(THEME:GetPathG("", "_VisualStyles/SRPG6/"..SL.SRPG6.GetLogo()))
+		-- 	self:zoom(0.55):vertalign(top)
+		-- 	self:y(-165):shadowlength(0)
 		-- else
 		-- 	local style = ThemePrefs.Get("VisualStyle")
 		-- 	local image = THEME:GetPathG("", "_VisualStyles/"..style.."/TitleMenu (doubleres).png")
@@ -54,7 +53,6 @@ af[#af+1] = Def.Sprite{
 		-- end
 	end,
 }
-
 
 if false then
 	-- decorative arrows for current game (dance, pump, techno, etc.)
@@ -81,9 +79,9 @@ if false then
 			end
 		end,
 		VisualStyleSelectedMessageCommand=function(self)
-			-- In case we auto-switch to SRPG5, then it's possible this actor may have been added to the screen.
-			-- If so, we want to hide the logo as it interferes with the SRPG5 logo.
-			if ThemePrefs.Get("VisualStyle") == "SRPG5" then
+			-- In case we auto-switch to SRPG6, then it's possible this actor may have been added to the screen.
+			-- If so, we want to hide the logo as it interferes with the SRPG6 logo.
+			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
 				self:visible(false)
 			end
 		end
