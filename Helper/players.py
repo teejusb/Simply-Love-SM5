@@ -29,20 +29,23 @@ with open("sqldump.json") as f:
 
 for player in data:
 	print(r"""ECS.Players["%s"] = {""" % player["members_name"])
-	print(r"""	id=%s,""" % player["srpg5_entrants_member_id"])
-	print(r"""	division="%s",""" % (GetDivision(int(player["TPLP_RANK"]), int(player["srpg5_entrants_member_id"]))))
+	print(r"""	id=%s,""" % player["srpg6_entrants_member_id"])
+	print(r"""	division="%s",""" % (GetDivision(int(player["TPLP_RANK"]), int(player["srpg6_entrants_member_id"]))))
 	print(r"""	country="%s",""" % player["COUNTRY"])
-	print(r"""	level=%s,""" % player["srpg5_entrants_level"])
-	print(r"""	exp=%s,""" % player["srpg5_entrants_exp"])
+	print(r"""	level=%s,""" % player["srpg6_entrants_level"])
+	print(r"""	exp=%s,""" % player["srpg6_entrants_exp"])
 	print(r"""	relics = {""")
-	for i in range(0, len(relics)):
-		quantity = int(player["rel_%d_quant" % i])
+
+	relic_count = json.loads(player["RELIC_COUNT"])
+
+	for i, relic in enumerate(relic_count):
+		quantity = relic[str(i)]
 		if quantity > 0:
 			print(r"""		{name="%s", quantity=%d},""" % (relics[str(i)], quantity))
 	print(r"""	},""")
-	print(r"""	tier_skill = {%s},""" % ", ".join(["[%d]=%s" % (x, player["srpg5_entrants_%dskill" % x]) for x in range(120, 300, 10)])) # [120, 290]
-	print(r"""	affinities = {%s},""" % ", ".join("%s=%s" % (name, player["srpg5_entrants_aff%s" % name]) for name in ["dp", "ep", "rp", "ap"]))
-	print(r"""	lifetime_song_gold = %s,""" % player["srpg5_entrants_rankgold"])
-	print(r"""	lifetime_jp = %s,""" % player["srpg5_entrants_rankjp"])
+	print(r"""	tier_skill = {%s},""" % ", ".join(["[%d]=%s" % (x, player["srpg6_entrants_%dskill" % x]) for x in range(120, 300, 10)])) # [120, 290]
+	print(r"""	affinities = {%s},""" % ", ".join("%s=%s" % (name, player["srpg6_entrants_aff%s" % name]) for name in ["dp", "ep", "rp", "ap"]))
+	print(r"""	lifetime_song_gold = %s,""" % player["srpg6_entrants_rankgold"])
+	print(r"""	lifetime_jp = %s,""" % player["srpg6_entrants_rankjp"])
 	print(r"""}""")
 	print(r"")

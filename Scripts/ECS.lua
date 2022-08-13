@@ -37,12 +37,32 @@ local ArrowEquipped = function(relics_used)
 	return false
 end
 
+local GunEquipped = function(relics_used)
+	for relic in ivalues(relics_used) do
+		local name = relic.name
+		if (name == "Annihilator" or name == "Death Penalty" or name == "Armageddon" or name == "Arquebus") then
+			return true
+		end
+	end
+	return false
+end
+
+local BulletEquipped = function(relics_used)
+	for relic in ivalues(relics_used) do
+		local name = relic.name
+		if (name == "Bullet" or name == "Living Bullet") then
+			return true
+		end
+	end
+	return false
+end
+
 -- the master list
 ECS.Relics = {
 	{
 		id=0,
 		name="Stone Blade",
-		desc="A low-level blade made from stone.  Somewhat enhanced by the accuracy of your attacks.",
+		desc="A low-level blade made from stone. Somewhat enhanced by the accuracy of your attacks.",
 		effect="Lv. 1 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -55,7 +75,7 @@ ECS.Relics = {
 	{
 		id=1,
 		name="Stone Knife",
-		desc="A low-level knife made from stone.  Somewhat effective against fast opponents.",
+		desc="A low-level knife made from stone. Somewhat effective against fast opponents.",
 		effect="Lv. 1 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -68,7 +88,7 @@ ECS.Relics = {
 	{
 		id=2,
 		name="Stone Axe",
-		desc="A low-level axe made from stone.  Somewhat effective against large opponents.",
+		desc="A low-level axe made from stone. Somewhat effective against large opponents.",
 		effect="Lv. 1 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -95,7 +115,7 @@ ECS.Relics = {
 	{
 		id=4,
 		name="Stone Arrow",
-		desc="A low-level arrow tipped with stone.  Deals weak damage with a bow equipped.  Single use.",
+		desc="A low-level arrow tipped with stone. Deals weak damage with a bow equipped. Single use.",
 		effect="+125 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -112,7 +132,7 @@ ECS.Relics = {
 	{
 		id=5,
 		name="Bronze Blade",
-		desc="A mid-level blade made from bronze.  Enhanced by the accuracy of your attacks.",
+		desc="A mid-level blade made from bronze. Enhanced by the accuracy of your attacks.",
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -125,7 +145,7 @@ ECS.Relics = {
 	{
 		id=6,
 		name="Bronze Knife",
-		desc="A mid-level knife made from bronze.  Effective against fast opponents.",
+		desc="A mid-level knife made from bronze. Effective against fast opponents.",
 		effect="Lv. 2 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -138,7 +158,7 @@ ECS.Relics = {
 	{
 		id=7,
 		name="Bronze Axe",
-		desc="A mid-level axe made from bronze.  Effective against large opponents.",
+		desc="A mid-level axe made from bronze. Effective against large opponents.",
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -168,7 +188,7 @@ ECS.Relics = {
 	{
 		id=9,
 		name="Bronze Arrow",
-		desc="A mid-level arrow tipped with bronze.  Deals good damage with a bow equipped.  Single use.",
+		desc="A mid-level arrow tipped with bronze. Deals good damage with a bow equipped. Single use.",
 		effect="+225 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -185,7 +205,7 @@ ECS.Relics = {
 	{
 		id=10,
 		name="Mythril Blade",
-		desc="A high-level blade made from mythril.  Strongly enhanced by the accuracy of your attacks.",
+		desc="A high-level blade made from mythril. Strongly enhanced by the accuracy of your attacks.",
 		effect="Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -198,7 +218,7 @@ ECS.Relics = {
 	{
 		id=11,
 		name="Mythril Knife",
-		desc="A high-level knife made from mythril.  Strongly effective against fast opponents.",
+		desc="A high-level knife made from mythril. Strongly effective against fast opponents.",
 		effect="Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -211,7 +231,7 @@ ECS.Relics = {
 	{
 		id=12,
 		name="Mythril Axe",
-		desc="A high-level axe made from mythril.  Strongly effective against large opponents.",
+		desc="A high-level axe made from mythril. Strongly effective against large opponents.",
 		effect="Lv. 3 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -241,7 +261,7 @@ ECS.Relics = {
 	{
 		id=14,
 		name="Mythril Arrow",
-		desc="A high-level arrow tipped with mythril.  Deals strong damage with a bow equipped.  Single use.",
+		desc="A high-level arrow tipped with mythril. Deals strong damage with a bow equipped. Single use.",
 		effect="+300 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -257,8 +277,25 @@ ECS.Relics = {
 	},
 	{
 		id=15,
+		name="Bullet",
+		desc="Lead bullet with good penetrating power. Deals incredible damage with a gun equipped. Single use.",
+		effect="+500 BP with gun equipped",
+		is_consumable=true,
+		is_marathon=false,
+		img="bullet.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if GunEquipped(relics_used) then
+				return 500
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=16,
 		name="Crystal Sword",
-		desc="A stunningly beautiful crystal sword.  Incredibly enhanced by the accuracy of your attacks.",
+		desc="A stunningly beautiful crystal sword. Incredibly enhanced by the accuracy of your attacks.",
 		effect="Lv. 4 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -269,9 +306,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=16,
+		id=17,
 		name="Diamond Sword",
-		desc="An immaculate diamond sword.  Maximally enhanced by the accuracy of your attacks.",
+		desc="An immaculate diamond sword. Maximally enhanced by the accuracy of your attacks.",
 		effect="Lv. 5 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -282,7 +319,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=17,
+		id=18,
 		name="Silver Stopwatch",
 		desc="Stopwatch imbued with time magic.",
 		effect="45 seconds added to break timer",
@@ -303,10 +340,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=18,
+		id=19,
 		name="Accuracy Potion",
 		desc="An old DPRT concoction, this potion grows more potent as you accurately defeat enemies.",
-		effect="At end of set, +BP equal to (1000^average song score) - 250",
+		effect="At end of set, +BP equal to (1000^average song score) - 50",
 		is_consumable=true,
 		is_marathon=false,
 		img="accuracypotion.png",
@@ -317,10 +354,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=19,
+		id=20,
 		name="Mammon",
-		desc="A massive war axe fueled by the essence of avarice.  Has the potential to be extremely deadly.",
-		effect="+500 BP for Rank 1 on Lifetime Song Gold|+BP based on Lifetime Song Gold for Rank 2 and below (Max 300)",
+		desc="A massive war axe fueled by the essence of avarice. Has the potential to be extremely deadly.",
+		effect="+550 BP for Rank 1 on Lifetime Song Gold|+BP based on Lifetime Song Gold for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
 		img="mammon.png",
@@ -332,10 +369,8 @@ ECS.Relics = {
 				all_gold_amounts[#all_gold_amounts + 1] = player.lifetime_song_gold
 			end
 			table.sort(all_gold_amounts)
-
 			local max_gold = all_gold_amounts[#all_gold_amounts]
 			if max_gold == nil then return 0 end
-
 			-- We need the 2nd highest as well for those that weren't rank 1
 			local second_highest = nil
 			for i = #all_gold_amounts, 1, -1 do
@@ -344,20 +379,19 @@ ECS.Relics = {
 					break
 				end
 			end
-
 			if max_gold == ecs_player.lifetime_song_gold then
-				return 500
+				return 550
 			else
 				local second_highest = all_gold_amounts[#all_gold_amounts-1]
 				if second_highest == nil then return 0 end
-				return math.floor(300 * (ecs_player.lifetime_song_gold / second_highest))
+				return math.floor(400 * (ecs_player.lifetime_song_gold / second_highest))
 			end
 		end,
 	},
 	{
-		id=20,
+		id=21,
 		name="Baguette",
-		desc="Oh come on ! It's the best France has to offer! Nuh-uh. It isn't because it's the most successful that it is the best. In my case, it is the true and tried classic, but it is not necessarily what I'd take above all.",
+		desc="\"Oh come on ! It's the best France has to offer!\" Nuh-uh. It isn't because it's the most successful that it is the best. In my case, it is the true and tried classic, but it is not necessarily what I'd take above all.",
 		effect="+BP equal to 100 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
@@ -368,61 +402,61 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=21,
+		id=22,
 		name="Pain Viennois",
-		desc="Oh please! This is not even French! Yup. Thank you Austria for this delicious contraption that can be used as a breakfast, or in certain elaborate sandwiches of which I am particularly affectionate.",
-		effect="+BP equal to 200 * (Adj. Stream %)^3",
+		desc="\"Oh please! This is not even French!\" Yup. Thank you Austria for this delicious contraption that can be used as a breakfast, or in certain elaborate sandwiches of which I am particularly affectionate.",
+		effect="+BP equal to 175 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
 		img="painviennois.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(200 * (song_data.adj_stream ^ 3))
+			return math.floor(175 * (song_data.adj_stream ^ 3))
 		end,
 	},
 	{
-		id=22,
+		id=23,
 		name="Pain Brioche",
-		desc="Man, now its not even bread anymore. Well, depends on what your definition is, but this is the best sugary bread there is. Some might even use it for the legendary Saucisson Brioche, which is also an underrated french classic. ",
-		effect="+BP equal to 300 * (Adj. Stream %)^3",
+		desc="\"Man, now its not even bread anymore.\" Well, depends on what your definition is, but this is the best sugary bread there is. Some might even use it for the legendary Saucisson Brioche, which is also an underrated french classic. ",
+		effect="+BP equal to 250 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
 		img="painbrioche.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(300 * (song_data.adj_stream ^ 3))
+			return math.floor(250 * (song_data.adj_stream ^ 3))
 		end,
 	},
 	{
-		id=23,
+		id=24,
 		name="Fougasse",
-		desc="What does that even mean? Fogatza in ancient Occitan (old French dialect of the South Of France), which then turned into fogatza and then fougasse as time went by, this is a flatbread that you can use as a base for all kinds of pizza-style dishes, which can be as classic as the olive fougasse, or as exotic as raclette fougasse. ",
-		effect="+BP equal to 400 * (Adj. Stream %)^3",
+		desc="\"What does that even mean?\" Fogatza in ancient Occitan (old French dialect of the South Of France), which then turned into fogatza and then fougasse as time went by, this is a flatbread that you can use as a base for all kinds of pizza-style dishes, which can be as classic as the olive fougasse, or as exotic as raclette fougasse. ",
+		effect="+BP equal to 325 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
 		img="fougasse.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return math.floor(325 * (song_data.adj_stream ^ 3))
+		end,
+	},
+	{
+		id=25,
+		name="Faluche",
+		desc="\"No idea what this is either. Is that some sort of FA-luchis shenanigans?\" The quintessential bread of the North branch of the French Coast Stamina. Neither a round nor flat bread but looks somewhat like a small deflated soccer ball, these deceiving looks hide true greatness. Can be used for breakfast, for lunch, for whatever you'd like, in forms ranging from just sugar inside, to what we call an "Americain", which is literally using this as a bun for a cheeseburger, then fill whatever space you have left with fries. Delicious isn't it?",
+		effect="+BP equal to 400 * (Adj. Stream %)^3",
+		is_consumable=true,
+		is_marathon=false,
+		img="faluche.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return math.floor(400 * (song_data.adj_stream ^ 3))
 		end,
 	},
 	{
-		id=24,
-		name="Faluche",
-		desc="No idea what this is either. Is that some sort of FA-luchis shenanigans? The quintessential bread of the North branch of the French Coast Stamina. Neither a round nor flat bread but looks somewhat like a small deflated soccer ball, these deceiving looks hide true greatness. Can be used for breakfast, for lunch, for whatever you'd like, in forms ranging from just sugar inside, to what we call an 'Americain', which is literally using this as a bun for a cheeseburger, then fill whatever space you have left with fries. Delicious isn't it?",
-		effect="+BP equal to 500 * (Adj. Stream %)^3",
-		is_consumable=true,
-		is_marathon=false,
-		img="faluche.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(500 * (song_data.adj_stream ^ 3))
-		end,
-	},
-	{
-		id=25,
+		id=26,
 		name="BURGER",
-		desc="The ultimate burger, formed from expertly chosen ingredients in perfect harmony with one another.  You can practically taste the aura of delicious burgerness radiating from it.  Truly a divine entree.",
+		desc="The ultimate burger, formed from expertly chosen ingredients in perfect harmony with one another. You can practically taste the aura of delicious burgerness radiating from it. Truly a divine entree.",
 		effect="+1000 BP|The BP here stands for Burger Points|The Burger Points don't do anything",
 		is_consumable=true,
 		is_marathon=false,
@@ -433,9 +467,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=26,
+		id=27,
 		name="Crystal Axe",
-		desc="A stunningly beautiful crystal axe.  Incredibly effective against large opponents.",
+		desc="A stunningly beautiful crystal axe. Incredibly effective against large opponents.",
 		effect="Lv. 4 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -446,9 +480,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=27,
+		id=28,
 		name="Diamond Axe",
-		desc="An immaculate diamond axe.  Maximum effectiveness against large opponents.",
+		desc="An immaculate diamond axe. Maximum effectiveness against large opponents.",
 		effect="Lv. 5 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -459,9 +493,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=28,
+		id=29,
 		name="Lance of Longinus",
-		desc="Extremely rare holy lance.  Very effective against marathon beasts.",
+		desc="Extremely rare holy lance. Very effective against marathon beasts.",
 		effect="+3000 MP",
 		is_consumable=false,
 		is_marathon=true,
@@ -474,7 +508,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=29,
+		id=30,
 		name="Ornate Hourglass",
 		desc="Hourglass imbued with time magic.",
 		effect="45 seconds added to break timer",
@@ -495,10 +529,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=30,
+		id=31,
 		name="Stamina Potion",
-		desc="Commissioned the Stamina Corps, these potions grow more effective as large enemies are defeated.  Single use.",
-		effect="At end of set, +BP equal to total steps of passed songs divided by 75",
+		desc="Commissioned the Stamina Corps, these potions grow more effective as large enemies are defeated. Single use.",
+		effect="At end of set, +BP equal to total steps of passed songs divided by 45",
 		is_consumable=true,
 		is_marathon=false,
 		img="staminapotion.png",
@@ -509,22 +543,22 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=31,
-		name="Long Boi",
-		desc="'Stupid door.  Stupid apartment.  Stupid long boi.' :-( --Zetorux",
-		effect="+45 BP per minute of song length",
+		id=32,
+		name="Giant-Crusher",
+		desc="A hammer made from a boulder, used in the war against the Grigori in ages past. One of the heftiest weapons across the Three Nations. After the Grigori were quelled, and man turned against man in violence, this weapon was all but forgotten. Man has grown feeble in comparison to his forebears. ",
+		effect="+50 BP per minute of song length",
 		is_consumable=false,
 		is_marathon=false,
-		img="longboi.png",
+		img="giantcrusher.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(song_data.length * 45)
+			return math.floor(song_data.length * 50)
 		end,
 	},
 	{
-		id=32,
+		id=33,
 		name="Crystal Dagger",
-		desc="A stunningly beautiful crystal dagger.  Incredibly effective against fast opponents.",
+		desc="A stunningly beautiful crystal dagger. Incredibly effective against fast opponents.",
 		effect="Lv. 4 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -535,9 +569,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=33,
+		id=34,
 		name="Diamond Dagger",
-		desc="An immaculate diamond dagger.  Maximum effectiveness against fast opponents.",
+		desc="An immaculate diamond dagger. Maximum effectiveness against fast opponents.",
 		effect="Lv. 5 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -548,9 +582,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=34,
+		id=35,
 		name="Twisted Bow",
-		desc="Prized bow recovered from the Chambers of Xeric.  Maximum effectiveness against difficult opponents.",
+		desc="Prized bow recovered from the Chambers of Xeric. Maximum effectiveness against difficult opponents.",
 		effect="Lv. 5 RP Bonus with arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
@@ -566,9 +600,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=35,
+		id=36,
 		name="Dragon Arrow",
-		desc="A vicious arrow tipped with a dragon fang.  Strongly effective against fast opponents with a bow equipped.  Single use.",
+		desc="A vicious arrow tipped with a dragon fang. Strongly effective against fast opponents with a bow equipped. Single use.",
 		effect="Lv. 3 DP Bonus with bow equipped|+200 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -583,13 +617,36 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=36,
-		name="Gilded Gallows",
-		desc="Golden twin-bladed knife enhanced by the strength of your memes.",
-		effect="+600 BP for Rank 1 on Lifetime JP|+BP based on Lifetime JP for Rank 2 and below (Max 300)",
+		id=37,
+		name="Living Bullet",
+		desc="Banned from use in traditional warfare by various treaties, these black market bullets are formed through a sinister process rumored to involve human sacrifice. The resulting ammunition magically resonates with the strength of the one wielding it. Single use.",
+		effect="+307 BP with a gun equipped|+1 BP for each skill level in tiers 240+ with a gun equipped",
+		is_consumable=true,
+		is_marathon=false,
+		img="livingbullet.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if GunEquipped(relics_used) then
+				local total_skill = 0
+				for tier, skill in pairs(ecs_player.tier_skill) do
+					if tier >= 240 then
+						total_skill = total_skill + 1
+					end
+				end
+				return 307 + total_skill
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=38,
+		name="Omen Cleaver",
+		desc="Heavy-bladed curved sword of colossal size awarded to Omen as a tool of war. This weapon is made to take advantage of brute strength.  The pattern etched upon the blade is the remnant of a deteriorating malediction. Indeed, when bestowing a weapon, preparations must be made for taking it away.",
+		effect="+650 BP for Rank 1 on Lifetime JP|+BP based on Lifetime JP for Rank 2 and below (Max 475)",
 		is_consumable=false,
 		is_marathon=false,
-		img="gildedgallows.png",
+		img="omencleaver.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- Determine Rank 1 JP by checking every player
@@ -612,18 +669,18 @@ ECS.Relics = {
 			end
 
 			if max_jp == ecs_player.lifetime_jp then
-				return 600
+				return 650
 			else
 				local second_highest = all_jp_amounts[#all_jp_amounts-1]
 				if second_highest == nil then return 0 end
-				return math.floor(300 * (ecs_player.lifetime_jp / second_highest))
+				return math.floor(475 * (ecs_player.lifetime_jp / second_highest))
 			end
 		end,
 	},
 	{
-		id=37,
+		id=39,
 		name="Antique Sundial",
-		desc="Sundial imbued with time magic.",
+		desc="Sundial imbued with time magic. Single use.",
 		effect="45 seconds added to break timer",
 		is_consumable=true,
 		is_marathon=false,
@@ -642,9 +699,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=38,
+		id=40,
 		name="Agility Potion",
-		desc="Brewed in the Footspeed Empire, this potion grows more effective as fast enemies are defeated.  Single use.",
+		desc="Brewed in the Footspeed Empire, this potion grows more effective as fast enemies are defeated. Single use.",
 		effect="At end of set, +BP equal to (average BPM of passed songs-120)^1.3",
 		is_consumable=true,
 		is_marathon=false,
@@ -656,60 +713,62 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=39,
-		name="Swift Abaddon",
-		desc="Forged from the horn of an ancient and unspeakably cruel demon.  Transcendent effectiveness against fast opponents.",
-		effect="+150 BP for 290 BPM songs|Lv. 6 DP Bonus",
-		is_consumable=false,
+		id=41,
+		name="Kraken Club",
+		desc="Immensely sought-after, this club is enchanted with a spell that hastens the wielder's swings, allowing consecutive blows in the time it would normally take to make one. Single use.",
+		effect="+25 BP|+BP equal to total amount yielded by other relics",
+		is_consumable=true,
 		is_marathon=false,
-		img="swiftabaddon.png",
+		img="krakenclub.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local bp = 0
-			if song_data.bpm_tier == 290 then
-				bp = bp + 150
+			local other_bp = 0
+			for relic in ivalues(relics_used) do
+				if relic.name ~= "Kraken Club" then
+					other_bp = relic.score(ecs_player, song_info, song_data, relics_used, ap, score)
+				end
 			end
-			return bp + math.floor(song_data.dp * 0.6)
+			return 25 + other_bp
 		end,
 	},
 	{
-		id=40,
-		name="Spiral Heart Moon Rod",
-		desc="In the name of the moon, I'll punish you!",
+		id=42,
+		name="Uchigatana",
+		desc="A katana with a long single-edged curved blade. A unique weapon wielded by the samurai from Japan Coast Stamina. The blade, with its undulating design, boasts extraordinary sharpness, and its slash attacks cause blood loss.",
 		effect="+BP equal to your skill in the speed tier",
 		is_consumable=false,
 		is_marathon=false,
-		img="spiralheartmoonrod.png",
+		img="uchigatana.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return ecs_player.tier_skill[song_data.bpm_tier]
 		end,
 	},
 	{
-		id=41,
-		name="Dry-rotted Staff",
-		desc="This brittle staff feels like it will probably break as soon as you use it.  Single use.",
-		effect="+150 BP for 130 BPM songs",
-		is_consumable=true,
+		id=43,
+		name="Kikoku",
+		desc="This reforged ninja knife is a relic from the distant past has been used for many clandestine acts over the course of Footspeed Empire history. Somewhat effective against fast opponents.",
+		effect="Lv. 1 DP Bonus for 130 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="dryrottedstaff.png",
+		img="kikoku.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 130 then
-				return 150
+				return math.floor(song_data.dp * 0.1)
 			else
 				return 0
 			end
 		end,
 	},
 	{
-		id=42,
-		name="Princess Guard",
-		desc="Forgotten staff excavated from a lost Temple of the Ancients.  Somewhat effective against opponents that are both large and fast.",
+		id=44,
+		name="Nagi",
+		desc="From the epic stage of great eastern battles comes the tale of this dagger which, before entering into his possession, was once trained on the very heart of the Godfather while in the hands of an unknown female ninja. The story that survives tells us nothing more of her than that she was a failed acolyte at a shrine of some notoriety, from which she absconded the ceremonial blade in order to fuel her own twisted drive for power. The katana itself, they say, has at its beck and call all the fury and rage of the most unrelenting winds and torrential rains. Somewhat effective against opponents that are both large and fast.",
 		effect="+100 BP for 130 BPM songs|Lv. 1 DP/EP Bonus for 130 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="princessguard.png",
+		img="nagi.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 130 then
@@ -720,13 +779,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=43,
-		name="Claustrum",
-		desc="This staff from the distant past has been reforged into this form.  Effective against large opponents.",
+		id=45,
+		name="Kannagi",
+		desc="In less civilized times, this empyrean ninja knife was used for purposes both great and ill, both on the field of battle and in covert operations. Effective against large opponents.",
 		effect="+100 BP for 130 BPM songs|Lv. 2 EP Bonus for 130 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="claustrum.png",
+		img="kannagi.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 130 then
@@ -737,30 +796,30 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=44,
-		name="Crappy Gloves",
-		desc="I don't know what to say, man, they're just some crappy gloves.  They'll probably fall apart pretty quickly if you hit stuff with them.  Single use.",
-		effect="+150 BP for 140 BPM songs",
-		is_consumable=true,
+		id=46,
+		name="Spharai",
+		desc="Relics from a bygone era of bloodshed, the Spharai typify caestus of their time and are notable for having been wielded by a general forgotten to time who resided in the present-day West Coast Stamina region of the Stamina Nation. Somewhat effective against fast opponents.",
+		effect="Lv. 1 DP Bonus for 140 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="crappygloves.png",
+		img="spharai.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 140 then
-				return 150
+				return math.floor(song_data.dp * 0.1)
 			else
 				return 0
 			end
 		end,
 	},
 	{
-		id=45,
-		name="Ehrgeiz",
-		desc="Special gloves designed for hand to hand combat.  Somewhat effective against opponents that are both large and fast.",
+		id=47,
+		name="Glanzfaust",
+		desc="As the name entails, these weapons transform the wearer's fists into instruments of glorious destruction. Many believe they will be one of the greatest legacies of the pugilist of the Footspeed Empire, YourVinished, dear friend to the Godfather of Stamina and undisputed champion of the Empire's martial games. Somewhat effective against opponents that are both large and fast.",
 		effect="+100 BP for 140 BPM songs|Lv. 1 DP/EP Bonus for 140 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="ehrgeiz.png",
+		img="glanzfaust.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 140 then
@@ -771,9 +830,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=46,
+		id=48,
 		name="Godhands",
-		desc="These mystic claws were supposedly once worn by a god.  Effective against large opponents.",
+		desc="Aeonic and grandiose, these claws were once held by a god, according to ancient tradition. Effective against large opponents.",
 		effect="+100 BP for 140 BPM songs|Lv. 2 EP Bonus for 140 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -788,51 +847,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=47,
-		name="Fragile Knife",
-		desc="This knife has seen better days and probably won't survive much more abuse.  Single use.",
-		effect="+150 BP for 150 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="fragileknife.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 150 then
-				return 150
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=48,
-		name="Mage Masher",
-		desc="Strange dagger designed for combat against mages.  Effective against opponents that are both large and fast.",
-		effect="+100 BP for 150 BPM songs|Lv. 2 DP/EP Bonus for 150 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="magemasher.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 150 then
-				return 100 + math.floor(song_data.dp_ep * 0.2)
-			else
-				return 0
-			end
-		end,
-	},
-	{
 		id=49,
-		name="Mandau",
-		desc="hey man(dau).  Effective against large opponents.",
-		effect="+150 BP for 150 BPM songs|Lv. 2 EP Bonus for 150 BPM songs",
+		name="Bravura",
+		desc="A relic axe noted in historical texts that resurfaced two years ago after being exhumed from a dig site near an old battlefield from the BBP age. Somewhat effective against fast opponents.",
+		effect="Lv. 1 DP Bonus for 150 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="mandau.png",
+		img="bravura.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 150 then
-				return 150 + math.floor(song_data.ep * 0.2)
+				return math.floor(song_data.dp * 0.1)
 			else
 				return 0
 			end
@@ -840,16 +865,16 @@ ECS.Relics = {
 	},
 	{
 		id=50,
-		name="Frayed Lasso",
-		desc="This old lasso has been fraying for a while, but maybe it'll still last a few swings?  Single use.",
-		effect="+150 BP for 160 BPM songs",
-		is_consumable=true,
+		name="Conqueror",
+		desc="This great axe, unconventional in design and unequaled in its powers of subjugation, was passed down along the line of the divine Emperor Mad Matt. In nobler days it was presented as an award once per generation by the emperor himself on the field of battle to the single general whose performance garnered the greatest of praise. It was by far the highest military commendation one could aspire to receive, and was much sought after by all for the visibility and clout it brought with it. Somewhat effective against opponents that are both large and fast.",
+		effect="+100 BP for 150 BPM songs|Lv. 1 DP/EP Bonus for 150 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="frayedlasso.png",
+		img="conqueror.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 160 then
-				return 150
+			if song_data.bpm_tier == 150 then
+				return 100 + math.floor(song_data.dp_ep * 0.1)
 			else
 				return 0
 			end
@@ -857,12 +882,46 @@ ECS.Relics = {
 	},
 	{
 		id=51,
-		name="Dragon Whip",
-		desc="A high-quality whip fashioned from the hardy hide of a green dragon, making it taut and durable.  Effective against opponents that are both large and fast.",
+		name="Ukonvasara",
+		desc="This massive axe is empyrean-class, and a storied weapon of renown, prized by those seeking to combat Eurobeat and Hardbass monsters. Effective against large opponents.",
+		effect="+100 BP for 150 BPM songs|Lv. 2 EP Bonus for 150 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="ukonvasara.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 150 then
+				return 100 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=52,
+		name="Mandau",
+		desc="hey man(dau) Somewhat effective against fast opponents.",
+		effect="Lv. 1 DP Bonus for 160 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="mandau.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 160 then
+				return math.floor(song_data.dp * 0.1)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=53,
+		name="Vajra",
+		desc="Forged from meteoric iron during the foregone age of the Bearpocalypse civilization, this unworldly dagger is fabled to have been wielded by the Emperor Mad Matt himself. Thought to have been forever lost within the dark passage of time, it was eventually excavated from within an ancient shrine surviving deep inside the bowels of the Mount Sigatrev subterrane. The recent discovery of a minute powering device embedded in the hilt has sparked heated intellectual fervor among the Footspeed Empire's alchemist community. Effective against opponents that are both large and fast.",
 		effect="+100 BP for 160 BPM songs|Lv. 2 DP/EP Bonus for 160 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="dragonwhip.png",
+		img="vajra.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 160 then
@@ -873,13 +932,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=52,
-		name="Vampire Killer",
-		desc="A preferred weapon of rawinput, this whip has been passed down through generations of vampire hunters.  Effective against large opponents.",
+		id=54,
+		name="Aeneas",
+		desc="Regarded favorably as one of the aeonic weapons, this dagger's usage throughout history has garnered it attention in the chronicles across the three realms. Effective against large opponents.",
 		effect="+150 BP for 160 BPM songs|Lv. 2 EP Bonus for 160 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="vampirekiller.png",
+		img="aeneas.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 160 then
@@ -890,51 +949,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=53,
-		name="Damaged Zweihander",
-		desc="Following a long, tumultuous life, this old blade has maybe one good battle left in it.  Single use.",
-		effect="+150 BP for 170 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="damagedzweihander.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 170 then
-				return 150
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=54,
-		name="Flamberge",
-		desc="This fine weapon is sharpened to a razor edge and features a distinctive wave-shaped blade.  Effective against opponents that are both large and fast.",
-		effect="+100 BP for 170 BPM songs|Lv. 2 DP/EP Bonus for 170 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="flamberge.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 170 then
-				return 100 + math.floor(song_data.dp_ep * 0.2)
-			else
-				return 0
-			end
-		end,
-	},
-	{
 		id=55,
-		name="Pandemonium",
-		desc="The sword of the Godfather of Stamina.  Strongly effective against large opponents.",
-		effect="+100 BP for 170 BPM songs|Lv. 3 EP Bonus for 170 BPM songs",
+		name="Warhawk's Talon",
+		desc="Talon-swords are affixed to the legs of the Palace of Speed's warhawks, but this one has been repurposed for human use. The blade is thin and lightweight so as not to obstruct the hawk's mobility. Somewhat effective against fast opponents.",
+		effect="Lv. 1 DP Bonus for 170 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="pandemonium.png",
+		img="warhawkstalon.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 170 then
-				return 100 + math.floor(song_data.ep * 0.3)
+				return math.floor(song_data.dp * 0.1)
 			else
 				return 0
 			end
@@ -942,16 +967,16 @@ ECS.Relics = {
 	},
 	{
 		id=56,
-		name="Splintered Bow",
-		desc="You'd be lucky to get even one good shot out of this bow.  Single use.",
-		effect="+150 BP for 180 BPM songs with an arrow equipped",
-		is_consumable=true,
+		name="Murgleis",
+		desc="The blade of this finely crafted sword is ingeniously armed with a fluke for disarming opponents, and is at its most effective when used in thrusting and stabbing attacks. After the passing of the great pastry chef @@, one of his patrons, Rynker, left the Stamina Nation in exile bearing the sword, and came to settle in the DPRT. Effective against opponents that are both large and fast.",
+		effect="+100 BP for 170 BPM songs|Lv. 2 DP/EP Bonus for 170 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="splinteredbow.png",
+		img="murgleis.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
-				return 150
+			if song_data.bpm_tier == 170 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
 			else
 				return 0
 			end
@@ -959,12 +984,46 @@ ECS.Relics = {
 	},
 	{
 		id=57,
-		name="Amos' Bow",
-		desc="An old, powerful bow spurred on by the heart's desire.  Effective against opponents that are both large and fast.",
+		name="Sequence",
+		desc="Part of the pantheon of aeonic arms, this sword is an elegant weapon that only nobility and military leaders have been allowed to hold in past times. Effective against large opponents.",
+		effect="+150 BP for 170 BPM songs|Lv. 2 EP Bonus for 170 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="sequence.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 170 then
+				return 150 + math.floor(song_data.ep * 0.2)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=58,
+		name="Eurytos' Bow",
+		desc="Legend has it that this unremarkable-looking bow was once a possession of a man who challenged a god. Somewhat effective against fast opponents with an arrow equipped.",
+		effect="Lv. 1 DP Bonus for 180 BPM songs with an arrow equipped",
+		is_consumable=false,
+		is_marathon=false,
+		img="eurytosbow.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
+				return math.floor(song_data.dp * 0.1)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=59,
+		name="Gastraphetes",
+		desc="Equipped with an incredibly strong compound string, proper operation of this powerful bow typically requires the user to brace the stock against their stomach, from which its name, literally "belly bow," derives. At present, the empire furnishes automated pulling devices to accomplish the arduous task of reloading.  Effective against opponents that are both large and fast with an arrow equipped.",
 		effect="+100 BP for 180 BPM songs with an arrow equipped|Lv. 2 DP/EP Bonus for 180 BPM songs with an arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		img="amosbow.png",
+		img="gastraphetes.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
@@ -975,51 +1034,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=58,
-		name="Yoichi Bow",
-		desc="Bow once belonging to a legendary samurai archer of Japan Coast Stamina.  Strongly effective against large opponents.",
-		effect="+100 BP for 180 BPM songs with an arrow equipped|Lv. 3 EP Bonus for 180 BPM songs with an arrow equipped",
+		id=60,
+		name="Gandiva",
+		desc="This divine, empyrean bow was once feared as a weapon used to fell not only great warriors, but the gods themselves. Effective against large opponents with an arrow equipped.",
+		effect="+150 BP for 180 BPM songs with an arrow equipped|Lv. 2 EP Bonus for 180 BPM songs with an arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
-		img="yoichibow.png",
+		img="gandiva.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
-				return 100 + math.floor(song_data.ep * 0.3)
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=59,
-		name="Faulty Blade",
-		desc="Which is more broken: this sword, or the one who swings it with some dim hope of success?  Single use.",
-		effect="+150 BP for 190 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="faultyblade.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 190 then
-				return 150
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=60,
-		name="Almace",
-		desc="Sword of legend from the French Coast, once gifted to a ruler of old.  Strongly effective against opponents that are both large and fast.",
-		effect="+100 BP for 190 BPM songs|Lv. 3 DP/EP Bonus for 190 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="almace.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 190 then
-				return 100 + math.floor(song_data.dp_ep * 0.3)
+				return 150 + math.floor(song_data.ep * 0.2)
 			else
 				return 0
 			end
@@ -1027,16 +1052,16 @@ ECS.Relics = {
 	},
 	{
 		id=61,
-		name="Excalibur",
-		desc="Famed as the 'sword in the stone' from British Coast Stamina folklore, this noble blade possesses mysterious magic.  Strongly effective against large opponents.",
-		effect="+150 BP for 190 BPM songs|Lv. 3 EP Bonus for 190 BPM songs",
+		name="Claustrum",
+		desc="This staff from the elder days has been reforged into this form as a perfect mirror of the past relic. Effective against fast opponents.",
+		effect="Lv. 2 DP Bonus for 190 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="excalibur.png",
+		img="claustrum.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 190 then
-				return 150 + math.floor(song_data.ep * 0.3)
+				return math.floor(song_data.dp * 0.2)
 			else
 				return 0
 			end
@@ -1044,16 +1069,16 @@ ECS.Relics = {
 	},
 	{
 		id=62,
-		name="Cracked Zanbato",
-		desc="This gigantic horse-cleaving sword has seen better days.  Single use.",
-		effect="+150 BP for 200 BPM songs",
-		is_consumable=true,
+		name="Laevateinn",
+		desc="Passed down for generations in the myths and stories of the peoples of the Viking Coast is the World Tree motif, known to those intimately versed in such tales as Yggdrasil, or perhaps the Erdtree. One obscure legend tells of an ambitious marathon beast who ventured to the center of the tree to obtain the single branch fabled to grow there, the "Branch of Ruin." Known to sprout only the seemingly lifeless, skeletal frames of leaves in place of lush foliage, he plucked it at its base and made his way to the lands of the Viking Coast, whom he commissioned to fashion the branch into Laevateinn. Effective against opponents that are both large and fast.",
+		effect="+100 BP for 190 BPM songs|Lv. 2 DP/EP Bonus for 190 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="crackedzanbato.png",
+		img="laevateinn.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 200 then
-				return 150
+			if song_data.bpm_tier == 190 then
+				return 100 + math.floor(song_data.dp_ep * 0.2)
 			else
 				return 0
 			end
@@ -1061,12 +1086,46 @@ ECS.Relics = {
 	},
 	{
 		id=63,
-		name="Dragon Slayer",
-		desc="Rest in peace, Kentaro Miura.",
+		name="Khatvanga",
+		desc="This aeonic staff has, over the course of its storied history, been used both as a weapon of war and as a sacred artifact during religious rituals. Strongly effective against large opponents.",
+		effect="+100 BP for 190 BPM songs|Lv. 3 EP Bonus for 190 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="khatvanga.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 190 then
+				return 100 + math.floor(song_data.ep * 0.3)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=64,
+		name="Amanomurakumo",
+		desc="This unusual relic blade once belonged to an ancient and violent deity in Japan Coast Stamina. Effective against fast opponents.",
+		effect="Lv. 2 DP Bonus for 200 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="amanomurakumo.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 200 then
+				return math.floor(song_data.dp * 0.2)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=65,
+		name="Kogarasumaru",
+		desc="Atypical among other members of the great katana tradition, the tip of this blade has been forged to hold two edges, one fashioned in the traditional eastern style, and the other in that of the west. Legend proclaims that the blade was presented to Archi after his defeat of the enemy general in an epic struggle. Strongly effective against opponents that are both large and fast.",
 		effect="+100 BP for 200 BPM songs|Lv. 3 DP/EP Bonus for 200 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="dragonslayer.png",
+		img="kogarasumaru.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 200 then
@@ -1077,13 +1136,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=64,
-		name="Yoru",
-		desc="A supreme grade sword, Yoru is a menacing black blade said to have once been owned by the world's greatest swordsman.  Strongly effective against large opponents.",
+		id=66,
+		name="Dojikiri Yasutsuna",
+		desc="Named after a mountain demon it is purported to have slain, this blade finds its origins in a folk story from Japan Coast Stamina. Strongly effective against large opponents.",
 		effect="+150 BP for 200 BPM songs|Lv. 3 EP Bonus for 200 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="yoru.png",
+		img="dojikiriyasutsuna.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 200 then
@@ -1094,30 +1153,30 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=65,
-		name="Fractured Sword",
-		desc="Can't expect too much from what's left of this blade.  Single use.",
-		effect="+200 BP for 210 BPM songs",
-		is_consumable=true,
+		id=67,
+		name="Grave Scythe",
+		desc="Greatscythe comprised of a large blade affixed to a crooked stick. Weapon wielded by the aged grave keepers who tend the forgotten graveyards throughout the Three Nations. This weapon is said to have served as a charm against evil spirits in times of old. Effective against fast opponents.",
+		effect="Lv. 2 DP Bonus for 210 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="fracturedsword.png",
+		img="gravescythe.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 210 then
-				return 200
+				return math.floor(song_data.dp * 0.2)
 			else
 				return 0
 			end
 		end,
 	},
 	{
-		id=66,
-		name="Dainsleif",
-		desc="Long ago wielded by a king of the Viking Coast, this weapon has only recently been rediscovered.  Strongly effective against opponents that are both large and fast.",
+		id=68,
+		name="Liberator",
+		desc="Unorthodox by any assessment, this bifurcate scythe bears a name representative of its significant role in history. Archi's heroic efforts to quell the rebellions in the east are now a topic of common knowledge. It was on those campaigns that he directly encountered the leader of the insurgency to whom this scythe originally belonged. Strongly effective against opponents that are both large and fast.",
 		effect="+150 BP for 210 BPM songs|Lv. 3 DP/EP Bonus for 210 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="dainsleif.png",
+		img="liberator.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 210 then
@@ -1128,13 +1187,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=67,
-		name="Ridill",
-		desc="In tales of old from the Viking Coast, legend has it that this sword was used to slay a mighty dragon.  Strongly effective against large opponents.",
+		id=69,
+		name="Redemption",
+		desc="Sporting an unusual shape and design, Redemption is an empyrean scythe that was once held by a disgraced warrior seeking vengeance and renewed honor. Strongly effective against large opponents.",
 		effect="+200 BP for 210 BPM songs|Lv. 3 EP Bonus for 210 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="ridill.png",
+		img="redemption.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 210 then
@@ -1145,30 +1204,30 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=68,
-		name="Busted Scythe",
-		desc="This weapon might have been a lot more threatening at some point before it started falling apart.  Single use.",
-		effect="+200 BP for 220 BPM songs",
-		is_consumable=true,
+		id=70,
+		name="Guttler",
+		desc="A relic axe known to possess a strong affinity with beasts. Effective against fast opponents.",
+		effect="Lv. 2 DP Bonus for 220 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="bustedscythe.png",
+		img="guttler.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 220 then
-				return 200
+				return math.floor(song_data.dp * 0.2)
 			else
 				return 0
 			end
 		end,
 	},
 	{
-		id=69,
-		name="Vassal Scythe",
-		desc="Scythe possessed by a spirit.  Strongly effective against opponents that are both large and fast.",
+		id=71,
+		name="Aymur",
+		desc="This axe, fashioned of the finest darksteel, bears the inlay of a majestic dragon, modeled after the Stamina Nation coat of arms. Its name allegedly derives from an ancient source and is symbolic of the inexplicable powers of influence the weapon seems to exert over others. It is said that the Godfather of Stamina forged the axe in an attempt to harness the power of the mighty marathon beasts. Strongly effective against opponents that are both large and fast.",
 		effect="+150 BP for 220 BPM songs|Lv. 3 DP/EP Bonus for 220 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="vassalscythe.png",
+		img="aymur.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 220 then
@@ -1179,51 +1238,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=70,
-		name="Graceful Dahlia",
-		desc="Weapon once preferred by an enforcer to a shadowy organization.  Incredibly effective against large opponents.",
-		effect="+150 BP for 220 BPM songs|Lv. 4 EP Bonus for 220 BPM songs",
+		id=72,
+		name="Farsha",
+		desc="A one-handed axe amongst the empyrean weapons, Farsha has appeared in legends throughout the history of the Three Nations. Strongly effective against large opponents.",
+		effect="+200 BP for 220 BPM songs|Lv. 3 EP Bonus for 220 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="gracefuldahlia.png",
+		img="farsha.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 220 then
-				return 150 + math.floor(song_data.ep * 0.4)
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=71,
-		name="Loose Hatchet",
-		desc="If the head of this hatchet stays attached for long enough, you might get a good hit in with it.  Or maybe you'll maim yourself if it comes flying off.  Single use.",
-		effect="+200 BP for 230 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="loosehatchet.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 230 then
-				return 200
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=72,
-		name="Kulutues",
-		desc="Named 'The Merciless Destroyer in a lost tongue, this brutal axe carries mystic enchantments.  Incredibly effective against opponents that are both large and fast.",
-		effect="+150 BP for 230 BPM songs|Lv. 4 DP/EP Bonus for 230 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="kulutues.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 230 then
-				return 150 + math.floor(song_data.dp_ep * 0.4)
+				return 200 + math.floor(song_data.ep * 0.3)
 			else
 				return 0
 			end
@@ -1231,16 +1256,16 @@ ECS.Relics = {
 	},
 	{
 		id=73,
-		name="Divine Axe Rhitta",
-		desc="Enormous, ornate, and balanced for one-handed use-- certainly an axe that is as intimidating as it is difficult to master.  Incredibly effective against large opponents.",
-		effect="+200 BP for 230 BPM songs|Lv. 4 EP Bonus for 230 BPM songs",
+		name="Vyke's War Spear",
+		desc="War spear singed and blistered by fingers, used by Vyke, former Knight of the Stamina Corps. Like Vyke himself, it has been tormented by the yellow flame of frenzy from within. Strongly effective against fast opponents.",
+		effect="Lv. 3 DP Bonus for 230 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="divineaxerhitta.png",
+		img="vykeswarspear.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 230 then
-				return 200 + math.floor(song_data.ep * 0.4)
+				return math.floor(song_data.dp * 0.3)
 			else
 				return 0
 			end
@@ -1248,16 +1273,16 @@ ECS.Relics = {
 	},
 	{
 		id=74,
-		name="Broken Katana",
-		desc="The (for) business end of this katana might hold up for a swing or two.  Single use.",
-		effect="+200 BP for 240 BPM songs",
-		is_consumable=true,
+		name="Ryunohige",
+		desc="Ryunohige is the notorious polearm obtained by Archi as an end result of his hundreds of battles with marathon beasts in the eastern theater of war. Forged in the image of the imposing beards of the formidable eastern wyrms, the undulating spearhead is said to harbor the powers of tumbling thunderclouds. Strongly effective against opponents that are both large and fast.",
+		effect="+150 BP for 230 BPM songs|Lv. 3 DP/EP Bonus for 230 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="brokenkatana.png",
+		img="ryunohige.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 240 then
-				return 200
+			if song_data.bpm_tier == 230 then
+				return 150 + math.floor(song_data.dp_ep * 0.3)
 			else
 				return 0
 			end
@@ -1265,12 +1290,46 @@ ECS.Relics = {
 	},
 	{
 		id=75,
-		name="Enma",
-		desc="This strange and dangerous sword draws out its wielders haki in excess.  Incredibly effective against opponents that are both large and fast.",
+		name="Rhongomiant",
+		desc="A powerful empyrean spear bearing no enchantments, tradition holds that this weapon was bequeathed unto an ancient king of British Coast Stamina by a god. Incredibly effective against large opponents.",
+		effect="+150 BP for 230 BPM songs|Lv. 4 EP Bonus for 230 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="rhongomiant.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 230 then
+				return 150 + math.floor(song_data.ep * 0.4)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=76,
+		name="Karambit",
+		desc="Powerful knuckles that were perfected by the great mage Abdhaljs, though precious little else is known about their origins. Strongly effective against fast opponents.",
+		effect="Lv. 3 DP Bonus for 240 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="karambit.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 240 then
+				return math.floor(song_data.dp * 0.3)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=77,
+		name="Kenkonken",
+		desc="The very devices that nearly claimed the eye of the Godfather, these ringed fist weapons are said to have been donned by the minion of an evil puppeteer. A vivid and detailed retelling of this encounter came to have a most profound effect upon the Stamina Corps. Incredibly effective against opponents that are both large and fast.",
 		effect="+150 BP for 240 BPM songs|Lv. 4 DP/EP Bonus for 240 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="enma.png",
+		img="kenkonken.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 240 then
@@ -1281,13 +1340,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=76,
-		name="Masamune",
-		desc="A treasure of Japan Coast Stamina, this katana is a masterwork from ages past.  Incredibly effective against large opponents.",
+		id=78,
+		name="Verethragna",
+		desc="These empyrean claws were named after an ancient god of victory that smote countless thousands with righteous blows. Incredibly effective against large opponents.",
 		effect="+200 BP for 240 BPM songs|Lv. 4 EP Bonus for 240 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="masamune.png",
+		img="verethragna.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 240 then
@@ -1298,51 +1357,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=77,
-		name="Cleft Spear",
-		desc="It's only a matter of time before this spear's shaft completely splits.  Single use.",
-		effect="+200 BP for 250 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="cleftspear.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 250 then
-				return 200
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=78,
-		name="Silence Glaive",
-		desc="Tremendously powerful polearm said to have caused the doom of many worlds in the wrong hands.  Incredibly effective against opponents that are both large and fast.",
-		effect="+150 BP for 250 BPM songs|Lv. 4 DP/EP Bonus for 250 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="silenceglaive.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 250 then
-				return 150 + math.floor(song_data.dp_ep * 0.4)
-			else
-				return 0
-			end
-		end,
-	},
-	{
 		id=79,
-		name="Murakumogiri",
-		desc="A hulking supreme grade naginata that was the former property of one of the world's strongest fighters.  Maximum effectiveness against large opponents.",
-		effect="+150 BP for 250 BPM songs|Lv. 5 EP Bonus for 250 BPM songs",
+		name="Azur's Glintstone Staff",
+		desc="Staff of the primeval glintstone sorcerer Azur. Only those who have glimpsed what lies beyond the wisdom of stone may wield it. Strongly effective against fast opponents.",
+		effect="Lv. 3 DP Bonus for 250 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="murakumogiri.png",
+		img="azursglintstonestaff.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 250 then
-				return 150 + math.floor(song_data.ep * 0.5)
+				return math.floor(song_data.dp * 0.3)
 			else
 				return 0
 			end
@@ -1350,16 +1375,16 @@ ECS.Relics = {
 	},
 	{
 		id=80,
-		name="Worn Kunai",
-		desc="Don't expect too much from this old kunai.  Single use.",
-		effect="+200 BP for 260 BPM songs",
-		is_consumable=true,
+		name="Nirvana",
+		desc="A powerful staff imbued with the state of gnostic enlightenment that its name implies. Once a sacred relic of the Palace of Speed, it was stolen by Archi to combat the twisted thaumaturgy of the denizens of the evil realms. After bonding to the Godfather and making his will its own, it was no longer able to be returned, and remained in his possession. The exact circumstances of this phenomenon are not altogether clear and shrouded in esoteric mystery. Incredibly effective against opponents that are both large and fast.",
+		effect="+150 BP for 250 BPM songs|Lv. 4 DP/EP Bonus for 250 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="wornkunai.png",
+		img="nirvana.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 260 then
-				return 200
+			if song_data.bpm_tier == 250 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
 			else
 				return 0
 			end
@@ -1367,12 +1392,46 @@ ECS.Relics = {
 	},
 	{
 		id=81,
-		name="Kikoku",
-		desc="This reforged ninja knife from the distant past has been used for many clandestine acts over the course of Footspeed Empire history.  Incredibly effective against opponents that are both large and fast.",
+		name="Hvergelmir",
+		desc="Named for a mythical well ensconced deep within Viking Coast Stamina, this empyrean staff is brimming with the power of the old gods. Incredibly effective against large opponents.",
+		effect="+200 BP for 250 BPM songs|Lv. 4 EP Bonus for 250 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="hvergelmir.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 250 then
+				return 200 + math.floor(song_data.ep * 0.4)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=82,
+		name="Helphen's Steeple",
+		desc="Greatsword patterned after the black steeple of the Helphen, the lampwood which guides the dead of the spirit world. The lamplight is similar to grace in appearance, only it is said that it can only be seen by those who met their death in battle. Strongly effective against fast opponents.",
+		effect="Lv. 3 DP Bonus for 260 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="helphenssteeple.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 260 then
+				return math.floor(song_data.dp * 0.3)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=83,
+		name="Burtgang",
+		desc="This was once the long sword of the celebrated knight, rawinput, who is still often championed as the very embodiment of chivalry itself. Some say that on one memorable occasion, in an attempt to prove his unflinching loyalty and goodwill to his liege during a training bout, he intentionally sundered the blade. At present, however, the body shows no sign or scar of having been broken or remade. Incredibly effective against opponents that are both large and fast.",
 		effect="+150 BP for 260 BPM songs|Lv. 4 DP/EP Bonus for 260 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="kikoku.png",
+		img="burtgang.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 260 then
@@ -1383,51 +1442,17 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=82,
-		name="Yagyu Darkblade",
-		desc="Demonic ninja blade rumored to be able to rend souls from bodies.  Maximum effectiveness against large opponents.",
-		effect="+150 BP for 260 BPM songs|Lv. 5 EP Bonus for 260 BPM songs",
+		id=84,
+		name="Almace",
+		desc="Empyrean sword of legend from the French Coast, once gifted to a ruler of old. Incredibly effective against large opponents.",
+		effect="+200 BP for 260 BPM songs|Lv. 4 EP Bonus for 260 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="yagyudarkblade.png",
+		img="almace.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 260 then
-				return 150 + math.floor(song_data.ep * 0.5)
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=83,
-		name="Shattered Greatsword",
-		desc="A shadow of its former self.  Maybe this greatsword could maybe make it through one last fight?  Single use.",
-		effect="+200 BP for 270 BPM songs",
-		is_consumable=true,
-		is_marathon=false,
-		img="shatteredgreatsword.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 270 then
-				return 200
-			else
-				return 0
-			end
-		end,
-	},
-	{
-		id=84,
-		name="Atma Weapon",
-		desc="Caustic enough to burn through any substance, this etheric weapon was found buried near a sealed gate to another realm.  Maximum effectiveness against opponents that are both large and fast.",
-		effect="+150 BP for 270 BPM songs|Lv. 5 DP/EP Bonus for 270 BPM songs",
-		is_consumable=false,
-		is_marathon=false,
-		img="atmaweapon.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 270 then
-				return 150 + math.floor(song_data.dp_ep * 0.5)
+				return 200 + math.floor(song_data.ep * 0.4)
 			else
 				return 0
 			end
@@ -1435,16 +1460,16 @@ ECS.Relics = {
 	},
 	{
 		id=85,
-		name="Ultima Weapon",
-		desc="The final weapon forged by a master swordsmith from a distant world, the power possessed by this sword is matched by few.  Maximum effectiveness against large opponents.",
-		effect="+200 BP for 270 BPM songs|Lv. 5 EP Bonus for 270 BPM songs",
+		name="Dragonscale Blade",
+		desc="A weapon made by sharpening a Gravel Stone scale, thought to bethe source of ancient dragon immortality, into an unclouded blade. Alas, the Dragonkin Soldiers never attained immortality, and perished as decrepit, pale imitations of their skyborn kin. Incredibly effective against fast opponents.",
+		effect="Lv. 4 DP Bonus for 270 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="ultimaweapon.png",
+		img="dragonscaleblade.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 270 then
-				return 200 + math.floor(song_data.ep * 0.5)
+				return math.floor(song_data.dp * 0.4)
 			else
 				return 0
 			end
@@ -1452,16 +1477,16 @@ ECS.Relics = {
 	},
 	{
 		id=86,
-		name="Tauret",
-		desc="Imbued with a godly essence, this powerful knife crackles with electricity.  Incredibly effective against fast opponents.",
-		effect="+100 BP for 280 BPM songs|Lv. 4 DP Bonus for 280 BPM songs",
+		name="Tizona",
+		desc="The sword wielded by the Godfather in his younger days. While on his travels it was stripped of him after suffering the only defeat of his life at the hands of a certain mercenary. He later rose up anew, mustering the bravery to again challenge his newfound rival, this time achieving victory and reclaiming the blade. Afterwards the mercenary and Archi came to share a lasting friendship until the end of their days. Incredibly effective against opponents that are both large and fast.",
+		effect="+150 BP for 270 BPM songs|Lv. 4 DP/EP Bonus for 270 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="tauret.png",
+		img="tizona.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 280 then
-				return 100 + math.floor(song_data.dp * 0.4)
+			if song_data.bpm_tier == 270 then
+				return 150 + math.floor(song_data.dp_ep * 0.4)
 			else
 				return 0
 			end
@@ -1469,12 +1494,46 @@ ECS.Relics = {
 	},
 	{
 		id=87,
-		name="Twashtar",
-		desc="An empyrean dagger named for a god.  Its otherworldly beauty is as captivating as the blade is sharp.  Maximum effectiveness against opponents that are both large and fast.",
+		name="Caladbolg",
+		desc="Rumored to have hewn the tops of mountains, this empyrean blade is feared for its remarkable strength. Maximum effectiveness against large opponents.",
+		effect="+150 BP for 270 BPM songs|Lv. 5 EP Bonus for 270 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="caladbolg.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 270 then
+				return 150 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=88,
+		name="Tauret",
+		desc="Imbued with a godly essence by the great mage Abdhaljs, this powerful knife crackles with electricity. Incredibly effective against fast opponents.",
+		effect="Lv. 4 DP Bonus for 280 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="tauret.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 280 then
+				return math.floor(song_data.dp * 0.4)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=89,
+		name="Carnwenhan",
+		desc="Wrought of pure silver and designed for self-defense, legend holds that this dagger was the original counterpart to the great Excalibur, designed to be borne simultaneously by the same divine king of old. Though handed down through generations of bards who carried on the tradition of singing that royal line's glories, it was seized by the Godfather and added to his collection, stating simply that bards, "don't need daggers to sing." Maximum effectiveness against opponents that are both large and fast.",
 		effect="+150 BP for 280 BPM songs|Lv. 5 DP/EP Bonus for 280 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="twashtar.png",
+		img="carnwenhan.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 280 then
@@ -1485,120 +1544,215 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=88,
-		name="Armajejjon",
-		desc="Equal parts vicious and jej, Armajejjon is a treasured heirloom of the Footspeed Empire that has brought its wielders fame and glory.",
-		effect="+700 BP|30 seconds removed from break timer",
+		id=90,
+		name="Twashtar",
+		desc="An empyrean dagger named for a god. Its otherworldly beauty is as captivating as the blade is sharp. Maximum effectiveness against large opponents.",
+		effect="+200 BP for 280 BPM songs|Lv. 5 EP Bonus for 280 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
-		img="armajejjon.png",
-		action=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				ECS.BreakTimer = ECS.BreakTimer - 30
-				if ECS.BreakTimer < 0 then
-					ECS.BreakTimer = 0
-				end
+		img="twashtar.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 280 then
+				return 200 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
 			end
-		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 700
-		end,
-	},
-	{
-		id=89,
-		name="Mario For Pleasure",
-		desc="Lusting for... lust, this Mario has allowed his desire to consume him, leading him to a profligate, hedonistic existence.",
-		effect="None",
-		is_consumable=true,
-		is_marathon=false,
-		img="marioforpleasure.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
-		end,
-	},
-	{
-		id=90,
-		name="Juicer Mario",
-		desc="This Mario, in pursuit of his vanity, pumped his body full of magical performance enhancers, and now suffers the consequences.  His reckless roid raging has left him bereft of companions, and as a result of his over-buffed physique, his arms go numb when he grips the bar (or I guess a sword or something more setting appropriate).  Truly a cautionary tale.",
-		effect="None",
-		is_consumable=true,
-		is_marathon=false,
-		img="juicermario.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
 		end,
 	},
 	{
 		id=91,
-		name="Anointed Mario",
-		desc="Abandoning rational empiricism and embracing superstition, this Mario joined a church and rose through the ranks of his religion before firmly rooting himself in a seat of power.  After achieving immortality through ill-gotten means, he loosed eldritch horrors upon the world, who turned men against their brothers, embroiling many nations in civil war.  After an epic final battle, he was sealed in this plush toy.  The heavy weight of the responsibility for his continued confinement now falls upon its bearer's shoulders.<br/><br/>That sucks, man.",
-		effect="None",
-		is_consumable=true,
+		name="Annihilator",
+		desc="A relic of the past, this early rifle design packs an enormous punch and has informed the engineering of many later generations of weapons. Incredibly effective against fast opponents with a bullet equipped.",
+		effect="Lv. 4 DP Bonus for 290 BPM songs with a bullet equipped",
+		is_consumable=false,
 		is_marathon=false,
-		img="anointedmario.png",
+		img="annihilator.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
+			if BulletEquipped(relics_used) and song_data.bpm_tier == 290 then
+				return math.floor(song_data.dp * 0.4)
+			else
+				return 0
+			end
 		end,
 	},
 	{
 		id=92,
-		name="Mom's Knife",
-		desc="This is mom's knife.  In some of your more delusional moments, you sometimes suspect she's trying to kill you with it.",
-		effect="+50 BP",
+		name="Death Penalty",
+		desc="As its name implies, this high-caliber firearm earned its moniker by doling out swift and often fatal retribution. It was long the beloved weapon of choice of the infamous cattle rustler, Rust. Still somewhat unbelievable stories abound of the pistol's sheer destructive force, said to be such that it once sank a great battleship by blowing a hole clean through the hull. Maximum effectiveness against opponents that are both large and fast with a bullet equipped.",
+		effect="+150 BP for 290 BPM songs with a bullet equipped|Lv. 5 DP/EP Bonus for 290 BPM songs with a bullet equipped",
 		is_consumable=false,
 		is_marathon=false,
-		img="momsknife.png",
+		img="deathpenalty.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 50
+			if BulletEquipped(relics_used) and song_data.bpm_tier == 290 then
+				return 150 + math.floor(song_data.dp_ep * 0.5)
+			else
+				return 0
+			end
 		end,
 	},
 	{
 		id=93,
-		name="Chicken Knife",
-		desc="Cut into the shape of a chocobo, this knife is quite strong... but holding it makes you feel, uh... afraid?  Weird.",
-		effect="Lv. 5 RP Bonus|50% chance of backing out of the song during gameplay",
+		name="Armageddon",
+		desc="This firearm is an empyrean masterpiece of worksmanship. Its keen and ornate design is rivaled only by its destructive capacity. Maximum effectiveness against large opponents with a bullet equipped.",
+		effect="+200 BP for 290 BPM songs with a bullet equipped|Lv. 5 EP Bonus for 290 BPM songs with a bullet equipped",
 		is_consumable=false,
 		is_marathon=false,
-		img="chickenknife.png",
+		img="armageddon.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
-			return math.floor(song_data.rp/(max_division_rp/1000) * 0.5)
+			if BulletEquipped(relics_used) and song_data.bpm_tier == 290 then
+				return 200 + math.floor(song_data.ep * 0.5)
+			else
+				return 0
+			end
 		end,
 	},
 	{
 		id=94,
-		name="Speed Shoes",
-		desc="GOTTA GO FAST",
-		effect="Forces life 3|Forces 1.05x rate",
-		is_consumable=true,
+		name="Maxentius",
+		desc="Named for an emperor of old, this wand has been augmented with immense energies by none other than the great mage Abdhaljs. Incredibly effective against fast opponents.",
+		effect="Lv. 4 DP Bonus for 300 BPM songs",
+		is_consumable=false,
 		is_marathon=false,
-		img="speedshoes.png",
-		action=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
-					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
-					SM("Set to Life 3")
-				end
-			end
-
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
+		img="maxentius.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 300 then
+				return math.floor(song_data.dp * 0.4)
+			else
+				return 0
 			end
 		end,
+	},
+	{
+		id=95,
+		name="Yagrush",
+		desc="Also known by its alias, "Chaser," this robust red sandalwood club is plated in phosphorescent gold and exquisitely encrusted with an array of magically imbued sacred stones. It is said to have been the weapon of choice for the legendary vicar, The Cosmic Pope, who commissioned its creation to master crafter priests specifically for high sea encounters with the dreaded Dragons of Force. Maximum effectiveness against opponents that are both large and fast.",
+		effect="+150 BP for 300 BPM songs|Lv. 5 DP/EP Bonus for 300 BPM songs",
+		is_consumable=false,
+		is_marathon=false,
+		img="yagrush.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			if song_data.bpm_tier == 300 then
+				return 150 + math.floor(song_data.dp_ep * 0.5)
+			else
+				return 0
+			end
+		end,
+	},
+	{
+		id=96,
+		name="Mario For Enterprise",
+		desc="Eschewing all ethical considerations, this Mario has pursued faster and more efficient business processes and grown his company (and his earnings) to immense proportions-- but with the twin specters of horrific worker exploitation and environmental disregard, he exists as a cautionary tale.",
+		effect="None",
+		is_consumable=true,
+		is_marathon=false,
+		img="marioforenterprise.png",
+		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
 		end,
 	},
 	{
-		id=95,
+		id=97,
+		name="Shambling Mario",
+		desc="Shambling Mario exists in a perpetual state of undeath, cursed to forever wander the realm as punishment for bygone transgressions against deities that have long fallen out of worship. Will the day come when he is freed from his everlasting torment?",
+		effect="None",
+		is_consumable=true,
+		is_marathon=false,
+		img="shamblingmario.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=98,
+		name="Mario the Elder",
+		desc="In days long past, a young Mario grew up in a deeply agrarian community, and came to be respected by his neighbors as a wise and even-handed arbiter in disputes. After many years serving as the de facto village chief, well, this is that Mario.",
+		effect="None",
+		is_consumable=true,
+		is_marathon=false,
+		img="mariotheelder.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=99,
+		name="Arquebus",
+		desc="A primitive but effective firearm, this heavy gun is a bit impractical. You'll be able to fire bullets from it at least, though!",
+		effect="+0 BP",
+		is_consumable=false,
+		is_marathon=false,
+		img="arquebus.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=100,
+		name="Kaja Sword",
+		desc="Full of potential, the relic now known as 'Kaja Sword' seems to be an ancient blade with illegible engravings bearing a meaning lost to time.",
+		effect="+175 BP",
+		is_consumable=false,
+		is_marathon=false,
+		img="kajasword.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 175
+		end,
+	},
+	{
+		id=101,
+		name="Abdhaljs Matter",
+		desc="This undocumented material is rumored to be used for upgrading weapons, but otherwise, all that is known about this strange substance is that it's believed to have been created by the great mage Abdhaljs.",
+		effect="None",
+		is_consumable=false,
+		is_marathon=false,
+		img="abdhaljsmatter.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=102,
+		name="Router",
+		desc="A pulse weapon once claimed by a great yztarg, this great axe is wreathed with inextinguishable flame.",
+		effect="+100 BP",
+		is_consumable=false,
+		is_marathon=false,
+		img="router.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 100
+		end,
+	},
+	{
+		id=103,
+		name="Naegling",
+		desc="Restored to its former glory, this weapon's runes and powerful aura recall its use as an arm of a famous hero of the Viking Coast. ",
+		effect="+300 BP",
+		is_consumable=false,
+		is_marathon=false,
+		img="naegling.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 300
+		end,
+	},
+	{
+		id=104,
 		name="Pendulum Blade",
-		desc="One of those swinging-blade dungeon traps.  How are you even planning on using it without hurting yourself?",
+		desc="One of those swinging-blade dungeon traps. It's not clear how you would use this without inflicting injury on yourself. Incredibly effective against difficult opponents.",
 		effect="+200 BP|Lv. 4 RP Bonus|Forces life 5",
 		is_consumable=false,
 		is_marathon=false,
@@ -1618,35 +1772,89 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=96,
+		id=105,
+		name="Red Angus #72",
+		desc="Moo cow",
+		effect="None",
+		is_consumable=true,
+		is_marathon=false,
+		img="redangus72.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=106,
+		name="Bedlam",
+		desc="Cursed by Aulis, the ancient god of the Grigori, this corrupted blade is immensely threatening to foe and wielder alike.",
+		effect="+700 BP|30 seconds removed from break timer",
+		is_consumable=false,
+		is_marathon=false,
+		img="bedlam.png",
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				ECS.BreakTimer = ECS.BreakTimer - 30
+				if ECS.BreakTimer < 0 then
+					ECS.BreakTimer = 0
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 700
+		end,
+	},
+	{
+		id=107,
+		name="Onion Sword",
+		desc="Basic gear issued to staminadventurers by the Stamina Corps.",
+		effect="+20 BP",
+		is_consumable=false,
+		is_marathon=false,
+		img="onionsword.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 20
+		end,
+	},
+	{
+		id=108,
+		name="Grains of Chronos Sand",
+		desc="The sand in this pouch is said to have been stolen from the god of time. Perhaps in a time of need, it could help you reclaim some lost moments.",
+		effect="30 seconds added to break timer",
+		is_consumable=true,
+		is_marathon=false,
+		img="grainsofchronossand.png",
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 45
+				end
+			end
+		end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+	},
+	{
+		id=109,
 		name="Shield Rod",
 		desc="A many-eyed rod that draws out the hidden properties of shields.",
-		effect="+100 BP|With Scrupulous Shield: Lv. 12 AP Bonus|With Alacritous Aspis: Lv. 11 DP Bonus|With Indefatigable Escutcheon: Lv. 12 EP Bonus|With Alucard Shield: +30 BP per minute of song length and 13% of song length added to break timer|With Aegis: Forces life 1",
+		effect="+100 BP|With Scrupulous Shield equipped: Lv. 6 AP Bonus|With Alacritous Aspis equipped: Lv. 5 DP Bonus|With Indefatigable Escutcheon equipped: Lv. 6 EP Bonus|With Ochain equipped: Forces life 2",
 		is_consumable=true,
 		is_marathon=false,
 		img="shieldrod.png",
 		action=function(relics_used)
 			for relic in ivalues(relics_used) do
 				local name = relic.name
-				if name == "Alucard Shield" then
-					if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-						local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
-						local failed = pss:GetFailed()
-						if not failed then
-							local length = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
-							if length then
-								-- BreakTimer is in seconds.
-								ECS.BreakTimer = ECS.BreakTimer + (length * 0.13)
-							end
-						end
-					end
-				end
-				if name == "Aegis" then
+				if name == "Ochain" then
 					if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 						local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
 						if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
-							PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
-							SM("Set to Life 1")
+							PREFSMAN:SetPreference("LifeDifficultyScale", 1.4)
+							SM("Set to Life 2")
 						end
 					end
 				end
@@ -1658,16 +1866,13 @@ ECS.Relics = {
 			for relic in ivalues(relics_used) do
 				local name = relic.name
 				if name == "Scrupulous Shield" then
-					bp = bp + math.floor(ap * 1.2)
+					bp = bp + math.floor(ap * 0.6)
 				end
 				if name == "Alacritous Aspis" then
-					bp = bp + math.floor(song_data.dp * 1.1)
+					bp = bp + math.floor(song_data.dp * 0.5)
 				end
 				if name == "Indefatigable Escutcheon" then
-					bp = bp + math.floor(song_data.ep * 1.2)
-				end
-				if name == "Alucard Shield" then
-					bp = bp + math.floor(song_data.length * 30)
+					bp = bp + math.floor(song_data.ep * 0.6)
 				end
 			end
 
@@ -1675,100 +1880,54 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=97,
-		name="Alucard Shield",
-		desc="A very balanced shield once belonging to a famous vampire.",
-		effect="Lv. 1 EP Bonus|Lv. 1 DP Bonus|Lv. 1 RP Bonus|Lv. 1 AP Bonus",
+		id=110,
+		name="Mablung Sword",
+		desc="Legend has it this blade steeped in aetheric energy was the main arm of an elf from the age of myths. It has the ability to fortify the nature of any shield paired with it to tremendous effect.",
+		effect="+300 BP|With Scrupulous Shield equipped: Lv. 12 AP Bonus|With Alacritous Aspis equipped: Lv. 11 DP Bonus|With Indefatigable Escutcheon equipped: Lv. 12 EP Bonus|With Ochain equipped: Forces life 1",
 		is_consumable=true,
 		is_marathon=false,
-		img="alucardshield.png",
-		action=function(relics_used) end,
+		img="mablungsword.png",
+		action=function(relics_used)
+			for relic in ivalues(relics_used) do
+				local name = relic.name
+				if name == "Ochain" then
+					if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+						local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+						if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
+							PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
+							SM("Set to Life 1")
+						end
+					end
+				end
+			end
+		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			local bp = 300
 
-			return (math.floor(song_data.ep * 0.1) + math.floor(song_data.dp * 0.1) +
-					math.floor(song_data.rp/(max_division_rp/1000) * 0.1) + math.floor(ap * 0.1))
+			for relic in ivalues(relics_used) do
+				local name = relic.name
+				if name == "Scrupulous Shield" then
+					bp = bp + math.floor(ap * 12)
+				end
+				if name == "Alacritous Aspis" then
+					bp = bp + math.floor(song_data.dp * 11)
+				end
+				if name == "Indefatigable Escutcheon" then
+					bp = bp + math.floor(song_data.ep * 12)
+				end
+			end
+
+			return bp
 		end,
 	},
 	{
-		id=98,
-		name="Corps Knight Uniform",
-		desc="Uniform issued to Knights of the Stamina Corps.",
-		effect="+100 BP|Lv. 1 RP Bonus",
-		is_consumable=true,
-		is_marathon=false,
-		img="corpsknightuniform.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
-			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.1)
-		end,
-	},
-	{
-		id=99,
-		name="Corps Captain Uniform",
-		desc="This uniform is proudly worn by Captains of the Stamina Corps.",
-		effect="+100 BP|Lv. 2 RP Bonus",
-		is_consumable=true,
-		is_marathon=false,
-		img="corpscaptainuniform.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
-			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.2)
-		end,
-	},
-	{
-		id=100,
-		name="Corps General Uniform",
-		desc="Finely tailored uniform used by the most trusted among the Stamina Corps leadership.",
-		effect="+100 BP|Lv. 3 RP Bonus",
-		is_consumable=true,
-		is_marathon=false,
-		img="corpsgeneraluniform.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
-			return 100 + math.floor(song_data.rp/(max_division_rp/1000)*0.3)
-		end,
-	},
-	{
-		id=101,
-		name="Cultist Robes",
-		desc="Strange black robes belonging to an adherent of a particularly mysterious cult.",
-		effect="At end of set, +75 BP for each pass on a chart written by Archi, @@, Zaia, Aoreo, YourVinished, Rems, or ITGAlex",
-		is_consumable=true,
-		is_marathon=false,
-		img="cultistrobes.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- End of set relics are handled in ScreenGameOver
-			return 0
-		end,
-	},
-	{
-		id=102,
-		name="Claiomh Solais",
-		desc="Powerful sword once wielded by a paladin.  Contains the essence of sacred fire and is extremely effective against marathon beasts.",
-		effect="+2000 MP",
-		is_consumable=false,
-		is_marathon=true,
-		img="claiomhsolais.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- NOTE(teejusb): MP Relics will only show up during the marathon so
-			-- returning the actual MP points is fine.
-			return 2000
-		end,
-	},
-	{
-		id=103,
-		name="Aegis",
-		desc="Shield previously used by a paladin.  Very effective protection against various opponents.",
+		id=111,
+		name="Ochain",
+		desc="This mighty shield, born of empyrean origins, offers unparalleled protection in combat.",
 		effect="Forces life 3",
 		is_consumable=true,
 		is_marathon=false,
-		img="aegis.png",
+		img="ochain.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
@@ -1783,96 +1942,20 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=104,
-		name="Throne",
-		desc="A strange, sentient-throne familiar.  Will come to your aid against marathon beasts.",
-		effect="Forces life 3",
-		is_consumable=true,
-		is_marathon=true,
-		img="throne.png",
-		action=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.2) then
-					PREFSMAN:SetPreference("LifeDifficultyScale", 1.2)
-					SM("Set to Life 3")
-				end
-			end
-		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
-		end,
-	},
-	{
-		id=105,
-		name="Perish",
-		desc="Possesses abominable power, but carries great risk with its use.",
-		effect="+700 BP|Forces life 5",
+		id=112,
+		name="Sword Familiar",
+		desc="Formerly sealed in the form of a card, this sentient weapon's strength grows as you become more experienced.",
+		effect="+BP based on Lifetime EXP (Max 200)",
 		is_consumable=false,
 		is_marathon=false,
-		img="perish.png",
-		action=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
-					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
-					SM("Set to Life 5")
-				end
-			end
-		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 700
-		end,
-	},
-	{
-		id=106,
-		name="Champion Belt",
-		desc="Belt presented to the greatest champions of Stamina Nation.  Single use.",
-		effect="+100 BP|Allows user to equip one additional relic",
-		is_consumable=true,
-		is_marathon=false,
-		img="championbelt.png",
+		img="swordfamiliar.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 100
+			return math.floor(200 * (ecs_player.level / 100))
 		end,
 	},
 	{
-		id=107,
-		name="Protect Ring",
-		desc="Onyx ring imbued with powerful magic that will protect your life.",
-		effect="Forces life 1",
-		is_consumable=true,
-		is_marathon=false,
-		img="protectring.png",
-		action=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.6) then
-					PREFSMAN:SetPreference("LifeDifficultyScale", 1.6)
-					SM("Set to Life 1")
-				end
-			end
-		end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
-		end,
-	},
-	{
-		id=108,
-		name="Pandemonium Zero",
-		desc="Forged by the Godfather in Chimney Rock on the Misty Moor, this weapon grows in strength alongside its wielder.",
-		effect="+BP based on Lifetime EXP (Max 250)",
-		is_consumable=false,
-		is_marathon=false,
-		img="pandemoniumzero.png",
-		action=function(relics_used) end,
-		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(250*(ecs_player.level / 100))
-		end,
-	},
-	{
-		id=109,
+		id=113,
 		name="Bronze Trophy",
 		desc="The Stamina Corps awards these trophies to fledgling staminadventurers as thanks for their good deeds.",
 		effect="Access to #bronze-bistro on the Stamina Nation discord (upon request)",
@@ -1885,9 +1968,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=110,
+		id=114,
 		name="Mythril Trophy",
-		desc="A trophy made from a rare metal.  Only given to those who have made substantial contributions to the Stamina Nation.",
+		desc="A trophy made from a rare metal. Only given to those who have made substantial contributions to the Stamina Nation.",
 		effect="Access to #mythril-lounge on the Stamina Nation discord (upon request)",
 		is_consumable=false,
 		is_marathon=false,
@@ -1898,7 +1981,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=111,
+		id=115,
 		name="Crystal Trophy",
 		desc="Awarded to high class staminadventurers for exceptional achievements.",
 		effect="Access to #crystal-cafe on the Stamina Nation discord (upon request)",
@@ -1911,7 +1994,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=112,
+		id=116,
 		name="Ivory Trophy",
 		desc="Given only to the greatest staminadventurers across all the lands.",
 		effect="Access to #ivory-tower on the Stamina Nation discord (upon request)",
@@ -1924,7 +2007,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=113,
+		id=117,
 		name="TPA Standard",
 		desc="A banner commonly flown in battle by TPA regiments.",
 		effect="At end of set, +100 BP for each song with a 95% or higher",
@@ -1938,9 +2021,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=114,
+		id=118,
 		name="Scrupulous Shield",
-		desc="A kite shield featuring DPRT heraldry.  Enhanced by the accuracy of your attacks.",
+		desc="A kite shield featuring DPRT heraldry. Enhanced by the accuracy of your attacks.",
 		effect="Lv. 2 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -1951,9 +2034,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=115,
+		id=119,
 		name="Virtue Blade",
-		desc="This holy sword is bursting with righteous energy, but is only capable of being used to its fullest extent by a precise swordsman.",
+		desc="This holy sword is bursting with righteous energy, but is only capable of being used to its fullest extent by a precise swordsman. Strongly enhanced by the accuracy of your attacks,",
 		effect="+100 BP if score is a 99% or higher|Lv. 3 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -1968,7 +2051,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=116,
+		id=120,
 		name="Astral Ring",
 		desc="Ring that possesses a magic enchantment to deter The Bois when you're facing marathon beasts.",
 		effect="WayOffs/Decents Off",
@@ -1976,6 +2059,7 @@ ECS.Relics = {
 		is_marathon=true,
 		img="astralring.png",
 		action=function(relics_used)
+			-- TODO(teejusb): DO THIS DIFFERENTLY FOR ITGmania!
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
 				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW3)
@@ -1987,10 +2071,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=117,
+		id=121,
 		name="Flawless Iluvatar ",
-		desc="A divine blade passed down through generations of DPRT warriors, this perfect sword can only be truly harnessed by those who can wield it impeccably.",
-		effect="+200 BP if score is a 99% or higher|Lv.6 AP Bonus",
+		desc="A divine blade passed down through generations of DPRT warriors, this perfect sword can only be truly harnessed by those who can wield it impeccably. Transcendentally enhanced by the accuracy of your attacks.",
+		effect="+200 BP if score is a 99% or higher|Lv. 6 AP Bonus",
 		is_consumable=false,
 		is_marathon=false,
 		img="flawlessiluvatar.png",
@@ -2004,7 +2088,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=118,
+		id=122,
 		name="Memepeace Beret",
 		desc="Standard-issue headwear for new Memepeace employees.",
 		effect="At end of set, +100 BP for each song with a different speed tier 210 and above",
@@ -2018,9 +2102,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=119,
+		id=123,
 		name="Alacritous Aspis",
-		desc="A small shield emblazoned with the colors of the Footspeed Empire.  Strongly effective against fast opponents.",
+		desc="A small shield emblazoned with the colors of the Footspeed Empire. Strongly effective against fast opponents.",
 		effect="Lv. 3 DP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -2031,10 +2115,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=120,
+		id=124,
 		name="Principia",
-		desc="A magically enhanced dagger that can be difficult to use.",
-		effect="+200 BP|Lv. 3 DP Bonus|Forces 1.02x rate",
+		desc="A magically enhanced dagger that can be difficult to use. Strongly effective against fast opponents.",
+		effect="+300 BP|Lv. 3 DP Bonus|Forces 1.02x rate",
 		is_consumable=false,
 		is_marathon=false,
 		img="principia.png",
@@ -2044,13 +2128,13 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 200 + math.floor(song_data.dp * 0.3)
+			return 300 + math.floor(song_data.dp * 0.3)
 		end,
 	},
 	{
-		id=121,
+		id=125,
 		name="Arvin's Gambit",
-		desc="Well-known set of playing cards from the Footspeed Empire.  Highly prized for their magical qualities.",
+		desc="Well-known set of playing cards from the Footspeed Empire. Highly prized for their magical qualities.",
 		effect="If equipped, and you fail the marathon, you may reattempt it immediately with up to 20 additional minutes to warm up/fix the pads.",
 		is_consumable=true,
 		is_marathon=true,
@@ -2063,10 +2147,10 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=122,
+		id=126,
 		name="Almagest",
-		desc="Enchanted with magic that can bring forth concentrated hurricane-force winds, few are capable of wielding this ultimate dagger.",
-		effect="+500 BP|Lv. 7 DP Bonus|Forces 1.05x rate",
+		desc="Enchanted with magic that can bring forth concentrated hurricane-force winds, few are capable of wielding this ultimate dagger. Transcendentally effective against fast opponents.",
+		effect="+300 BP|Lv. 10 DP Bonus|Forces 1.05x rate",
 		is_consumable=false,
 		is_marathon=false,
 		img="almagest.png",
@@ -2077,11 +2161,11 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 500 + math.floor(song_data.dp * 0.7)
+			return 300 + math.floor(song_data.dp * 1.0)
 		end,
 	},
 	{
-		id=123,
+		id=127,
 		name="Slime Badge",
 		desc="A cheaply made badge presented to you by the Stamina Corps for services rendered.",
 		effect="At end of set, +100 BP for each song with a different speed tier 200 and below",
@@ -2095,9 +2179,9 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=124,
+		id=128,
 		name="Indefatigable Escutcheon",
-		desc="Shield bearing the coat of arms of the Stamina Nation.  Effective against large opponents.",
+		desc="Shield bearing the coat of arms of the Stamina Nation. Effective against large opponents.",
 		effect="Lv. 2 EP Bonus",
 		is_consumable=false,
 		is_marathon=false,
@@ -2108,13 +2192,13 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=125,
-		name="Vampiric Longsword",
-		desc="Originally conferred unto those who sought to challenge a many-tentacled Horror, this weapon absorbs the lifeforce of your enemies.",
+		id=129,
+		name="Bloody Helice",
+		desc="Ominous piercing sword with a winding blade. Carried by the noble servants of the Lord of Blood. Designed to bore into flesh, causing severe blood loss at the wound. The extracted blood trickles gracefully down the length of the blade.",
 		effect="+20 BP per minute of song length|9% of song length added to break timer",
 		is_consumable=false,
 		is_marathon=false,
-		img="vampiriclongsword.png",
+		img="bloodyhelice.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
@@ -2133,7 +2217,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=126,
+		id=130,
 		name="Faust's Scalpel",
 		desc="This massive scalpel has the ability to split marathon beasts in two.",
 		effect="If equipped, the marathon is split into two parts, and you may take up to five minutes of break between them.",
@@ -2146,7 +2230,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=127,
+		id=131,
 		name="Muramasa",
 		desc="An ancient and bloodthirsty weapon from Japan Coast Stamina, this katana's effectivity against large opponents is peerless.",
 		effect="+50 BP per minute of song length|18% of song length added to break timer",
@@ -2171,7 +2255,7 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=128,
+		id=132,
 		name="Order of Ambrosia",
 		desc="The greatest of honors bestowed upon staminadventurers.",
 		effect="Allows user to equip an additional two relics",
@@ -2184,7 +2268,20 @@ ECS.Relics = {
 		end,
 	},
 	{
-		id=129,
+		id=133,
+		name="Champion Belt",
+		desc="Belt presented to the greatest champions of Stamina Nation. Single use.",
+		effect="+100 BP|Allows user to equip one additional relic",
+		is_consumable=true,
+		is_marathon=false,
+		img="championbelt.png",
+		action=function(relics_used) end,
+		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 100
+		end,
+	},
+	{
+		id=134,
 		name="Godfather's Token",
 		desc="The Godfather of Stamina presents this literal token of his gratitude in thanks for financial contributions to the Stamina Nation.",
 		effect="None",
@@ -2197,6 +2294,7 @@ ECS.Relics = {
 		end,
 	},
 }
+
 
 
 ECS.GetRelicNames = function( list )
