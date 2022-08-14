@@ -20,7 +20,7 @@ local BowEquipped = function(relics_used)
 	for relic in ivalues(relics_used) do
 		local name = relic.name
 		if (name == "Short Bow" or name == "Composite Bow" or name == "Long Bow" or name == "Twisted Bow" or
-			name == "Splintered Bow" or name == "Amos' Bow" or name == "Yoichi Bow") then
+			name == "Eurytos' Bow" or name == "Gastraphetes" or name == "Gandiva") then
 			return true
 		end
 	end
@@ -1529,7 +1529,7 @@ ECS.Relics = {
 	{
 		id=89,
 		name="Carnwenhan",
-		desc="Wrought of pure silver and designed for self-defense, legend holds that this dagger was the original counterpart to the great Excalibur, designed to be borne simultaneously by the same divine king of old. Though handed down through generations of bards who carried on the tradition of singing that royal line's glories, it was seized by the Godfather and added to his collection, stating simply that bards, "don't need daggers to sing." Maximum effectiveness against opponents that are both large and fast.",
+		desc="Wrought of pure silver and designed for self-defense, legend holds that this dagger was the original counterpart to the great Excalibur, designed to be borne simultaneously by the same divine king of old. Though handed down through generations of bards who carried on the tradition of singing that royal line's glories, it was seized by the Godfather and added to his collection, stating simply that bards, \"don't need daggers to sing.\" Maximum effectiveness against opponents that are both large and fast.",
 		effect="+150 BP for 280 BPM songs|Lv. 5 DP/EP Bonus for 280 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -1631,7 +1631,7 @@ ECS.Relics = {
 	{
 		id=95,
 		name="Yagrush",
-		desc="Also known by its alias, "Chaser," this robust red sandalwood club is plated in phosphorescent gold and exquisitely encrusted with an array of magically imbued sacred stones. It is said to have been the weapon of choice for the legendary vicar, The Cosmic Pope, who commissioned its creation to master crafter priests specifically for high sea encounters with the dreaded Dragons of Force. Maximum effectiveness against opponents that are both large and fast.",
+		desc="Also known by its alias, \"Chaser,\" this robust red sandalwood club is plated in phosphorescent gold and exquisitely encrusted with an array of magically imbued sacred stones. It is said to have been the weapon of choice for the legendary vicar, The Cosmic Pope, who commissioned its creation to master crafter priests specifically for high sea encounters with the dreaded Dragons of Force. Maximum effectiveness against opponents that are both large and fast.",
 		effect="+150 BP for 300 BPM songs|Lv. 5 DP/EP Bonus for 300 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -1830,7 +1830,7 @@ ECS.Relics = {
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
 				local failed = pss:GetFailed()
 				if not failed then
-					ECS.BreakTimer = ECS.BreakTimer + 45
+					ECS.BreakTimer = ECS.BreakTimer + 30
 				end
 			end
 		end,
