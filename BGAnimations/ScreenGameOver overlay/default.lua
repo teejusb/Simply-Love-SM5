@@ -29,12 +29,12 @@ local t = Def.ActorFrame{
 	},
 }
 
-if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
+if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 	t[#t+1] = LoadFont("Wendy/_wendy white")..{
 		InitCommand=function(self) self:xy(_screen.cx,_screen.cy-200):croptop(1):fadetop(1):zoom(0.3):shadowlength(1) end,
 		OnCommand=function(self)
 			self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1)
-			if ECS.Mode == "ECS" then
+			if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 				self:settext("Final Set Points")
 			elseif ECS.Mode == "Marathon" then
 				self:settext("Final Marathon Points")
@@ -48,7 +48,8 @@ if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
 		OnCommand=function(self)
 			self:decelerate(0.5):croptop(0):fadetop(0):glow(1,1,1,1):decelerate(1):glow(1,1,1,1)
 
-			if ECS.Mode == "ECS" then
+			-- Speed division doesn't have any relics but we can still go through the calculation below to total up the points.
+			if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 
 				-- Add best 7 scores and also check which end of set relics were active.
 				local total_points = 0

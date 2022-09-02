@@ -18,7 +18,7 @@ local af = Def.ActorFrame{
 
 		local failed = stats:GetFailed()
 
-		if ECS.Mode == "ECS" then
+		if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
 		elseif ECS.Mode == "Marathon" then
 			if ((GetDivision() == "upper" and group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam Aulis Mk 0") or

@@ -20,6 +20,8 @@ return Def.Actor{
 					GAMESTATE:SetPreferredSong(discovery)
 				end
 			end
+		elseif ECS.Mode == "Speed" then
+			-- TODO(teejusb): fill this out.
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
 				local memoriam = SONGMAN:FindSong("ECS10 - Upper Marathon/In Memoriam")

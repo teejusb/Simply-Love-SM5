@@ -59,7 +59,7 @@ return LoadFont("Common Normal")..{
 	end,
 	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 	UpdateColorCommand=function(self)
-		local textColor = Color.White
+		local textColor = Color.Black
 		local shadowLength = 0
 		if ThemePrefs.Get("RainbowMode") and not HolidayCheer() then
 			textColor = Color.Black

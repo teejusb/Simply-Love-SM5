@@ -4,7 +4,7 @@ local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 
 local CreateScoreFile = function(day, month_string, year, seconds, hour, minute, second)
 	-- Don't write any files in a practice set.
-	if ECS.IsPracticeSet then return end
+	if ECS.IsPractice then return end
 
 	local passed_song = pss:GetFailed() and "Failed" or "Passed"
 
@@ -14,6 +14,8 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
+
+	if ECS.Mode == "Speed" and group_name ~= "ECS11 - Speed" then return end
 
 	if GetDivision() == nil then return end
 
@@ -56,10 +58,12 @@ end
 
 local CreateRelicFile = function(day, month_string, year, seconds)
 	-- Don't write any files in a practice set.
-	if ECS.IsPracticeSet then return end
+	if ECS.IsPractice then return end
 
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
+
+	if ECS.Mode == "Speed" and group_name ~= "ECS11 - Speed" then return end
 
 	if GetDivision() == nil then return end
 
@@ -102,7 +106,7 @@ end
 -- ----------------------------------------------------------
 local WriteRelicDataToDisk = function()
 	-- Don't write any files in a practice set.
-	if ECS.IsPracticeSet then return end
+	if ECS.IsPractice then return end
 
 	local p = PlayerNumber:Reverse()[GAMESTATE:GetMasterPlayerNumber()] + 1
 	local profile_dir = PROFILEMAN:GetProfileDir("ProfileSlot_Player"..p)
@@ -160,7 +164,8 @@ end
 local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
 	OnCommand=function(self)
-		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
+		-- Speed mode doesn't have relics, but the functions are still safe to call.
+		if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 			-- relic actions depend on the current screen,
 			-- so ApplyRelicActions() must be called from OnCommand
 			ApplyRelicActions()
@@ -169,7 +174,8 @@ af[#af+1] = Def.Actor{
 		end
 	end,
 	OffCommand=function(self)
-		if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
+		-- Speed mode doesn't have relics, but the functions are still safe to call.
+		if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 			local year, month, day = Year(), MonthOfYear() + 1, DayOfMonth()
 			local hour, minute, second = Hour(), Minute(), Second()
 			local seconds = (hour*60*60) + (minute*60) + second

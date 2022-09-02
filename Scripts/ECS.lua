@@ -3,7 +3,7 @@ ECS = {}
 -- call this to (re)initialize per-player settings
 InitializeECS = function()
 	ECS.Mode = "Warmup"
-	ECS.IsPracticeSet = false
+	ECS.IsPractice = false
 	ECS.BreakTimer=(15 * 60)
 
 	ECS.Player = {
@@ -443,7 +443,7 @@ ECS.Relics = {
 	{
 		id=25,
 		name="Faluche",
-		desc="\"No idea what this is either. Is that some sort of FA-luchis shenanigans?\" The quintessential bread of the North branch of the French Coast Stamina. Neither a round nor flat bread but looks somewhat like a small deflated soccer ball, these deceiving looks hide true greatness. Can be used for breakfast, for lunch, for whatever you'd like, in forms ranging from just sugar inside, to what we call an "Americain", which is literally using this as a bun for a cheeseburger, then fill whatever space you have left with fries. Delicious isn't it?",
+		desc="\"No idea what this is either. Is that some sort of FA-luchis shenanigans?\" The quintessential bread of the North branch of the French Coast Stamina. Neither a round nor flat bread but looks somewhat like a small deflated soccer ball, these deceiving looks hide true greatness. Can be used for breakfast, for lunch, for whatever you'd like, in forms ranging from just sugar inside, to what we call an \"Americain\", which is literally using this as a bun for a cheeseburger, then fill whatever space you have left with fries. Delicious isn't it?",
 		effect="+BP equal to 400 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
@@ -1019,7 +1019,7 @@ ECS.Relics = {
 	{
 		id=59,
 		name="Gastraphetes",
-		desc="Equipped with an incredibly strong compound string, proper operation of this powerful bow typically requires the user to brace the stock against their stomach, from which its name, literally "belly bow," derives. At present, the empire furnishes automated pulling devices to accomplish the arduous task of reloading.  Effective against opponents that are both large and fast with an arrow equipped.",
+		desc="Equipped with an incredibly strong compound string, proper operation of this powerful bow typically requires the user to brace the stock against their stomach, from which its name, literally \"belly bow,\" derives. At present, the empire furnishes automated pulling devices to accomplish the arduous task of reloading.  Effective against opponents that are both large and fast with an arrow equipped.",
 		effect="+100 BP for 180 BPM songs with an arrow equipped|Lv. 2 DP/EP Bonus for 180 BPM songs with an arrow equipped",
 		is_consumable=false,
 		is_marathon=false,
@@ -1070,7 +1070,7 @@ ECS.Relics = {
 	{
 		id=62,
 		name="Laevateinn",
-		desc="Passed down for generations in the myths and stories of the peoples of the Viking Coast is the World Tree motif, known to those intimately versed in such tales as Yggdrasil, or perhaps the Erdtree. One obscure legend tells of an ambitious marathon beast who ventured to the center of the tree to obtain the single branch fabled to grow there, the "Branch of Ruin." Known to sprout only the seemingly lifeless, skeletal frames of leaves in place of lush foliage, he plucked it at its base and made his way to the lands of the Viking Coast, whom he commissioned to fashion the branch into Laevateinn. Effective against opponents that are both large and fast.",
+		desc="Passed down for generations in the myths and stories of the peoples of the Viking Coast is the World Tree motif, known to those intimately versed in such tales as Yggdrasil, or perhaps the Erdtree. One obscure legend tells of an ambitious marathon beast who ventured to the center of the tree to obtain the single branch fabled to grow there, the \"Branch of Ruin.\" Known to sprout only the seemingly lifeless, skeletal frames of leaves in place of lush foliage, he plucked it at its base and made his way to the lands of the Viking Coast, whom he commissioned to fashion the branch into Laevateinn. Effective against opponents that are both large and fast.",
 		effect="+100 BP for 190 BPM songs|Lv. 2 DP/EP Bonus for 190 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -16675,6 +16675,17 @@ GetDivision = function()
 		return ECS.Players[profile_name].division
 	end
 	return nil
+end
+
+-- Returns whether the player has entered themselves in the Speed division (with error checking).
+IsSpeedDivisionEntrant = function()
+	return false
+	-- local mpn = GAMESTATE:GetMasterPlayerNumber()
+	-- local profile_name = PROFILEMAN:GetPlayerName(mpn)
+	-- if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].is_speed then
+	-- 	return ECS.Players[profile_name].is_speed
+	-- end
+	-- return nil
 end
 
 -- ------------------------------------------------------

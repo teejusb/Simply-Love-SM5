@@ -29,9 +29,9 @@ af[#af+1] = Def.Sprite{
 		self:playcommand("LoadImage")
 	end,
 	LoadImageCommand=function(self)
-		self:Load(THEME:GetPathG("", "_ECSX/logo (doubleres).png"))
+		self:Load(THEME:GetPathG("", "_ECS/logo (doubleres).png"))
 		self:zoom(0.18)
-		self:addy(-15)
+		self:addy(-35)
 
 		return
 

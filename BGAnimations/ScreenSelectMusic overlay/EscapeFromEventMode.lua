@@ -91,7 +91,7 @@ local af = Def.ActorFrame{
 		local topscreen = SCREENMAN:GetTopScreen()
 		if topscreen then
 			-- Reset relics to default when quitting through ScreenSelectMusic.
-			if ECS.Mode == "ECS" or ECS.Mode == "Marathon" then
+			if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local mpn = GAMESTATE:GetMasterPlayerNumber()
 				local profile_name = PROFILEMAN:GetPlayerName(mpn)
 				-- profile_name will exist if we're already in this mode.

@@ -192,7 +192,7 @@ Branch.AfterSelectMusic = function()
 				return "ScreenEquipRelics"
 			end
 		else
-			-- No need to select relics in warmup or freeplay.
+			-- No need to select relics in warmup or freeplay or speed.
 			return "ScreenGameplay"
 		end
 	end

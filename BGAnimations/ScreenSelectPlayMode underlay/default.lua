@@ -63,7 +63,11 @@ local t = Def.ActorFrame{
 			-- 'if ECS.Mode == "ECS" or ECS.Mode == "PracticeSet"'.
 			if choices[cursor.index+1] == "PracticeSet" then
 				ECS.Mode = "ECS"
-				ECS.IsPracticeSet = true
+				ECS.IsPractice = true
+			-- Do something similar for the practice speed option.
+			elseif choices[cursor.index+1] == "PracticeSpeed" then
+				ECS.Mode = "Speed"
+				ECS.IsPractice = true
 			end
 
 			-- hardcode this to always be ITG windows for the ECS event
