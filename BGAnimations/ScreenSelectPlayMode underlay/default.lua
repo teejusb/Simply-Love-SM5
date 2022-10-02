@@ -64,10 +64,6 @@ local t = Def.ActorFrame{
 			if choices[cursor.index+1] == "PracticeSet" then
 				ECS.Mode = "ECS"
 				ECS.IsPractice = true
-			-- Do something similar for the practice speed option.
-			elseif choices[cursor.index+1] == "PracticeSpeed" then
-				ECS.Mode = "Speed"
-				ECS.IsPractice = true
 			end
 
 			-- hardcode this to always be ITG windows for the ECS event
@@ -93,26 +89,31 @@ local t = Def.ActorFrame{
 	Def.ActorFrame{
 		InitCommand=function(self) self:x(-188) end,
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-80) end,
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-100) end,
 			OffCommand=function(self) self:sleep(0.4):linear(0.1):diffusealpha(0) end
 		},
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-40) end,
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-60) end,
 			OnCommand=function(self) if choices[2]==nil then self:visible(false) end end,
 			OffCommand=function(self) self:sleep(0.3):linear(0.1):diffusealpha(0) end
 		},
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(0) end,
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(-20) end,
 			OnCommand=function(self) if choices[3]==nil then self:visible(false) end end,
 			OffCommand=function(self) self:sleep(0.2):linear(0.1):diffusealpha(0) end
 		},
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(40) end,
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(20) end,
 			OnCommand=function(self) if choices[4]==nil then self:visible(false) end end,
 			OffCommand=function(self) self:sleep(0.1):linear(0.1):diffusealpha(0) end
 		},
 		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(80) end,
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(60) end,
+			OnCommand=function(self) if choices[4]==nil then self:visible(false) end end,
+			OffCommand=function(self) self:sleep(0.1):linear(0.1):diffusealpha(0) end
+		},
+		Def.Quad{
+			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(100) end,
 			OnCommand=function(self) if choices[4]==nil then self:visible(false) end end,
 			OffCommand=function(self) self:sleep(0.1):linear(0.1):diffusealpha(0) end
 		},
@@ -120,12 +121,12 @@ local t = Def.ActorFrame{
 
 	-- border
 	Def.Quad{
-		InitCommand=function(self) self:zoomto(302, 202):diffuse(1,1,1,1) end,
+		InitCommand=function(self) self:zoomto(302, 242):diffuse(1,1,1,1) end,
 		OffCommand=function(self) self:sleep(0.6):linear(0.2):cropleft(1) end
 	},
 	-- background
 	Def.Quad{
-		InitCommand=function(self) self:zoomto(300, 200):diffuse(0,0,0,1) end,
+		InitCommand=function(self) self:zoomto(300, 240):diffuse(0,0,0,1) end,
 		OffCommand=function(self) self:sleep(0.6):linear(0.2):cropleft(1) end
 	},
 
@@ -157,7 +158,7 @@ local t = Def.ActorFrame{
 		end,
 		UpdateCommand=function(self)
 			self:stoptweening():linear(0.1)
-				:y( -80 + (cursor.h * cursor.index) )
+				:y( -100 + (cursor.h * cursor.index) )
 		end,
 
 		Def.Quad{

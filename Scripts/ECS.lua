@@ -13673,7 +13673,7 @@ ECS.Players["DGY.Synthromancy"] = {
 ECS.Players["teejusb"] = {
 	id=50287,
 	division="lower",
-	opted_for_speed=false,
+	opted_for_speed=true,
 	country="U.S.A.",
 	level=58,
 	exp=109279,
@@ -21422,13 +21422,33 @@ end
 
 -- Returns whether the player has entered themselves in the Speed division (with error checking).
 IsSpeedDivisionEntrant = function()
+	local mpn = GAMESTATE:GetMasterPlayerNumber()
+	local profile_name = PROFILEMAN:GetPlayerName(mpn)
+	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].opted_for_speed then
+		return ECS.Players[profile_name].opted_for_speed
+	end
+	return nil
+end
+
+IsPlayingFromPackForDivision = function(song)
+	local group_name = song:GetGroupName()
+	-- Speed is only selectable by those who have opted for speed.
+	if ECS.Mode == "Speed" then
+		return group_name == ECS.SongInfo.Speed.PackName
+	else
+		local division = GetDivision()
+		if division == nil then
+			return false
+		end
+		-- Uppercase the fist letter
+		division = division:gsub("^%l", string.upper)
+		if ECS.Mode == "Marathon" then
+			return group_name == ECS.SongInfo[division].PackName .." Marathon"
+		elseif ECS.Mode == "PracticeSet" or ECS.Mode == "ECS" then
+			return group_name == ECS.SongInfo[division].PackName
+		end
+	end
 	return false
-	-- local mpn = GAMESTATE:GetMasterPlayerNumber()
-	-- local profile_name = PROFILEMAN:GetPlayerName(mpn)
-	-- if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].is_speed then
-	-- 	return ECS.Players[profile_name].is_speed
-	-- end
-	-- return nil
 end
 
 -- ------------------------------------------------------

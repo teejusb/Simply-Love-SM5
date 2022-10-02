@@ -78,6 +78,7 @@ local SetSongPointText = function(self)
 	if (group_name ~= "ECS10 - Upper" and
 		group_name ~= "ECS10 - Mid" and 
 		group_name ~= "ECS10 - Lower" and 
+		group_name ~= "ECS10 - Speed" and 
 		group_name ~= "ECS10 - Upper Marathon" and
 		group_name ~= "ECS10 - Mid Marathon" and
 		group_name ~= "ECS10 - Lower Marathon") then
@@ -270,27 +271,6 @@ t[#t+1] = Def.ActorFrame{
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
 						if relic.name == "Memepeace Beret" then
-							relic_used = true
-						end
-					end
-				end
-			end
-			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
-			self:visible(relic_used)
-		end,
-	},
-	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/cultistrobes.png"),
-		InitCommand=function(self)
-			self:zoom(0.3):addx(320):addy(100)
-		end,
-		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Cultist Robes" then
 							relic_used = true
 						end
 					end
