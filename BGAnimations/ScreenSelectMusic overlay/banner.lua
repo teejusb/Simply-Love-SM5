@@ -119,8 +119,7 @@ t[#t+1] = Def.ActorFrame{
 			return
 		end
 		local group_name = song:GetGroupName()
-		-- Don't display for Marathons.
-		if IsPlayingFromPackForDivision(song) and (ECS.Mode == "ECS" or ECS.Mode == "Speed") then
+		if IsPlayingFromPackForDivision() then
 			self:visible(true)
 		else
 			self:visible(false)

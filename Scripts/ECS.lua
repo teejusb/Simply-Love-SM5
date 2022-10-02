@@ -21430,23 +21430,20 @@ IsSpeedDivisionEntrant = function()
 	return nil
 end
 
-IsPlayingFromPackForDivision = function(song)
+IsPlayingFromPackForDivision = function()
+	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 	-- Speed is only selectable by those who have opted for speed.
 	if ECS.Mode == "Speed" then
 		return group_name == ECS.SongInfo.Speed.PackName
-	else
+	elseif ECS.Mode == "ECS" then
 		local division = GetDivision()
 		if division == nil then
 			return false
 		end
 		-- Uppercase the fist letter
 		division = division:gsub("^%l", string.upper)
-		if ECS.Mode == "Marathon" then
-			return group_name == ECS.SongInfo[division].PackName .." Marathon"
-		elseif ECS.Mode == "ECS" then
-			return group_name == ECS.SongInfo[division].PackName
-		end
+		return group_name == ECS.SongInfo[division].PackName
 	end
 	return false
 end
