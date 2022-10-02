@@ -1,10 +1,11 @@
 import csv
 
 
-for tier in ["Lower", "Mid", "Upper"]:
+for tier in ["Lower", "Mid", "Upper", "Speed"]:
 	# Song Info
 	print(r"""ECS.SongInfo.%s = {""" % tier)
 	print(r"""	-- These values will be calculated and set below.""")
+	print(r"""	PackName = "ECS11 - %s",""" % tier)
 	print(r"""	MinBpm = 0,""")
 	print(r"""	MaxBpm = 0,""")
 	print(r"""	MinScaled16ths = 0,""")
@@ -13,7 +14,7 @@ for tier in ["Lower", "Mid", "Upper"]:
 	print(r"""	MaxBlockLevel = 0,""")
 	print(r"""	MinLength = 0,""")
 	print(r"""	Songs = {""")
-	with open('%ssongs.csv' % tier.lower()) as f:
+	with open('%ssongs.csv' % tier.lower(), encoding="utf8") as f:
 		reader = csv.DictReader(f)
 		for row in reader:
 			print(r"""		{""")
