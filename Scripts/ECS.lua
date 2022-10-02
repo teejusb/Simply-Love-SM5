@@ -21451,6 +21451,24 @@ IsPlayingFromPackForDivision = function(song)
 	return false
 end
 
+IsPlayingMarathon = function(song)
+	local hashes = {
+		["lower"] = "a90bed802350af9d",
+		["mid"] = "8d8c7b9de2118a7c",
+		["upper"] = "0646825a441b2f92",
+	}
+	local names = {
+		["lower"] = "Return Of The Chepers",
+		["mid"] = "Let's Go Ballistic",
+		["upper"] = "Proof Of Will",
+	}
+	local division = GetDivision()
+	if division == nil then
+		return false
+	end
+	return ECS.Mode == "Marathon" and song:GetMainTitle() == names[division] 
+end
+
 -- ------------------------------------------------------
 -- Score Calculations
 
