@@ -434,8 +434,7 @@ HolidayCheer = function()
 end
 
 DarkUI = function()
-	-- No more rainbow mode no more darkui.
-	return false
+	return true
 end
 
 -- -----------------------------------------------------------------------
