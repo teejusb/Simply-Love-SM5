@@ -5,4 +5,4 @@ if style == "SRPG6" then
 	audio_file = "SRPG6-GameOver.ogg"
 end
 
-return THEME:GetPathS("", "goodnightcoldwill.ogg")
+return THEME:GetPathS("", "Recollection Mastering.ogg")
