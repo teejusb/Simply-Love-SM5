@@ -121,7 +121,11 @@ Branch.AfterEvaluationStage = function()
 end
 
 Branch.AfterSelectPlayMode = function()
-	return SelectMusicOrCourse()
+	if ECS.Mode == "Speed" then
+		return "ScreenPromptToStartSpeed"
+	else
+		return SelectMusicOrCourse()
+	end
 end
 
 

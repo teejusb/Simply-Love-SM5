@@ -5,38 +5,41 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local nachmancore = SONGMAN:FindSong("ECS10 - Upper/[22] [225] Nachmancore")
+				local nachmancore = SONGMAN:FindSong("ECS11 - Upper/[23] [230] Parallax (Rerestep)")
 				if nachmancore then
 					GAMESTATE:SetPreferredSong(nachmancore)
 				end
 			elseif GetDivision() == "mid" then
-				local sukure = SONGMAN:FindSong("ECS10 - Mid/[17] [175] Sukure")
-				if sukure then
-					GAMESTATE:SetPreferredSong(sukure)
+				local falz = SONGMAN:FindSong("ECS11 - Mid/[17] [170] Falz Double Hunar Theme")
+				if falz then
+					GAMESTATE:SetPreferredSong(falz)
 				end
 			else
-				local discovery = SONGMAN:FindSong("ECS10 - Lower/[12] [130] Discovery")
+				local discovery = SONGMAN:FindSong("ECS11 - Lower/[12] [130] Discovery")
 				if discovery then
 					GAMESTATE:SetPreferredSong(discovery)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			-- TODO(teejusb): fill this out.
+			local eljektronnyi = SONGMAN:FindSong("ECS11 - Speed/[23] [240] Eljektronnyi Mir")
+			if eljektronnyi then
+				GAMESTATE:SetPreferredSong(eljektronnyi)
+			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local memoriam = SONGMAN:FindSong("ECS10 - Upper Marathon/In Memoriam")
-				if memoriam then
-					GAMESTATE:SetPreferredSong(memoriam)
+				local proof = SONGMAN:FindSong("ECS11 - Upper Marathon/Proof Of Will")
+				if proof then
+					GAMESTATE:SetPreferredSong(proof)
 				end
 			elseif GetDivision() == "mid" then
-				local sideba = SONGMAN:FindSong("ECS10 - Mid Marathon/ECS Classics (Side B-A)")
-				if sideba then
-					GAMESTATE:SetPreferredSong(sideba)
+				local ballistic = SONGMAN:FindSong("ECS11 - Mid Marathon/Let's Go Ballistic")
+				if ballistic then
+					GAMESTATE:SetPreferredSong(ballistic)
 				end
 			else
-				local sidea = SONGMAN:FindSong("ECS10 - Lower Marathon/ECS Classics (Side A)")
-				if sidea then
-					GAMESTATE:SetPreferredSong(sidea)
+				local chepers = SONGMAN:FindSong("ECS11 - Lower Marathon/Return Of The Chepers")
+				if chepers then
+					GAMESTATE:SetPreferredSong(chepers)
 				end
 			end
 		end
