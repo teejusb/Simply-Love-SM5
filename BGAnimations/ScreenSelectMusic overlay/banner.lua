@@ -70,25 +70,22 @@ t[#t+1] = Def.ActorFrame{
 
 local SetSongPointText = function(self)
 	local song = GAMESTATE:GetCurrentSong()
+
 	if song == nil then
 		self:settext("Min Song Points:")
 		return
 	end
-	local group_name = song:GetGroupName()
-	if (group_name ~= "ECS10 - Upper" and
-		group_name ~= "ECS10 - Mid" and 
-		group_name ~= "ECS10 - Lower" and 
-		group_name ~= "ECS10 - Speed" and 
-		group_name ~= "ECS10 - Upper Marathon" and
-		group_name ~= "ECS10 - Mid Marathon" and
-		group_name ~= "ECS10 - Lower Marathon") then
-			self:settext("Min Song Points:")
+
+	if not IsPlayingFromPackForDivision(song) then
+		self:settext("Min Song Points:")
 		return
 	end
 
 	local song_info = nil
 
-	if GetDivision() == "upper" then
+	if ECS.Mode == "Speed" then
+		song_info = ECS.SongInfo.Speed
+	elseif GetDivision() == "upper" then
 		song_info = ECS.SongInfo.Upper
 	elseif GetDivision() == "mid" then
 		song_info = ECS.SongInfo.Mid
@@ -111,7 +108,7 @@ end
 t[#t+1] = Def.ActorFrame{
 	InitCommand=function(self)
 		self:addx(-170):addy(-60)
-		if ECS.Mode ~= "ECS" then
+		if ECS.Mode ~= "ECS" or ECS.Mode ~= "Speed" then
 			self:visible(false)
 		end
 	end,
@@ -122,9 +119,8 @@ t[#t+1] = Def.ActorFrame{
 			return
 		end
 		local group_name = song:GetGroupName()
-		if ((group_name == "ECS10 - Upper" and GetDivision() == "upper") or
-			(group_name == "ECS10 - Mid" and GetDivision() == "mid") or
-			(group_name == "ECS10 - Lower" and GetDivision() == "lower")) then
+		-- Don't display for Marathons.
+		if IsPlayingFromPackForDivision(song) and (ECS.Mode == "ECS" or ECS.Mode == "Speed") then
 			self:visible(true)
 		else
 			self:visible(false)

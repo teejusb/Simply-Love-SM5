@@ -21444,7 +21444,7 @@ IsPlayingFromPackForDivision = function(song)
 		division = division:gsub("^%l", string.upper)
 		if ECS.Mode == "Marathon" then
 			return group_name == ECS.SongInfo[division].PackName .." Marathon"
-		elseif ECS.Mode == "PracticeSet" or ECS.Mode == "ECS" then
+		elseif ECS.Mode == "ECS" then
 			return group_name == ECS.SongInfo[division].PackName
 		end
 	end
@@ -21455,8 +21455,14 @@ end
 -- Score Calculations
 
 FindEcsSong = function(song_name, SongInfo)
+	local StripBlockBpm = function(s)
+		_, _, title = s:find("%[[0-9]+] %[[0-9]+] (.*)")
+		return title
+	end
+
+
 	for data in ivalues(SongInfo.Songs) do
-		if data.name == song_name then
+		if StripBlockBpm(data.name) == StripBlockBpm(song_name) then
 			return data
 		end
 	end
@@ -21513,7 +21519,9 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 
 	local song_info = nil
 
-	if GetDivision() == "upper" then
+	if ECS.Mode == "Speed" then
+		song_info = ECS.SongInfo.Speed
+	elseif GetDivision() == "upper" then
 		song_info = ECS.SongInfo.Upper
 	elseif GetDivision() == "mid" then
 		song_info = ECS.SongInfo.Mid
