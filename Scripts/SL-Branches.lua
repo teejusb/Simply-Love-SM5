@@ -174,17 +174,9 @@ Branch.AfterSelectMusic = function()
 					return "ScreenGameplay"
 				end
 
-				if (
-					(GetDivision() == "upper" and
-						((ECS.Mode == "ECS" and group_name == "ECS10 - Upper") or
-						(ECS.Mode == "Marathon" and group_name == "ECS10 - Upper Marathon"))) or
-					(GetDivision() == "mid" and
-						((ECS.Mode == "ECS" and group_name == "ECS10 - Mid") or
-						(ECS.Mode == "Marathon" and group_name == "ECS10 - Mid Marathon"))) or
-					(GetDivision() == "lower" and
-						((ECS.Mode == "ECS" and group_name == "ECS10 - Lower") or
-						(ECS.Mode == "Marathon" and group_name == "ECS10 - Lower Marathon")))
-					) then
+				-- IsPlayingFromPackForDivision generally also considers speed, but we
+				-- have te if check above.
+				if IsPlayingFromPackForDivision() or IsPlayingMarathon() then
 					-- Only go to ScreenEquipRelics if it's a valid song for the player.
 					return "ScreenEquipRelics"
 				else

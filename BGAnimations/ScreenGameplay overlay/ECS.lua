@@ -15,20 +15,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
 
-	if ECS.Mode == "Speed" and group_name ~= "ECS11 - Speed" then return end
-
-	if GetDivision() == nil then return end
-
-	if GetDivision() == "upper" then
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Upper" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Upper Marathon" then return end
-	elseif GetDivision() == "mid" then
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Mid" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Mid Marathon" then return end
-	else
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Lower" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Lower Marathon" then return end
-	end
+	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
 	-- ----------------------------------------------------------
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
@@ -63,20 +50,7 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 
-	if ECS.Mode == "Speed" and group_name ~= "ECS11 - Speed" then return end
-
-	if GetDivision() == nil then return end
-
-	if GetDivision() == "upper" then
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Upper" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Upper Marathon" then return end
-	elseif GetDivision() == "mid" then
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Mid" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Mid Marathon" then return end
-	else
-		if ECS.Mode == "ECS" and group_name ~= "ECS10 - Lower" then return end
-		if ECS.Mode == "Marathon" and group_name ~= "ECS10 - Lower Marathon" then return end
-	end
+	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
 	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC"..".txt"
