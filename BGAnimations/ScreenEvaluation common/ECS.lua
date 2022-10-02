@@ -20,25 +20,20 @@ local af = Def.ActorFrame{
 
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
-		elseif ECS.Mode == "Marathon" then
-			if ((GetDivision() == "upper" and group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam Aulis Mk 0") or
-				(GetDivision() == "mid" and group_name == "ECS10 - Mid Marathon" and song_name == "ECS Classics (Side B-A)") or
-				(GetDivision() == "lower" and group_name == "ECS10 - Lower Marathon" and song_name == "ECS Classics (Side A)")) then
-			
-				ECS.Player.TotalMarathonPoints = 35000 * score
-				if not failed then
-					ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 10000
-				end
-				-- Relics for marathons are always applied regarldess of pass/fail.
-				for relic in ivalues(ECS.Player.Relics) do
-					if relic.name ~= "(nothing)" then
-						-- All marathon relics return pure numeric values. We don't need to pass any real values to the score function.
-						ECS.Player.TotalMarathonPoints = (ECS.Player.TotalMarathonPoints +
-							relic.score(--[[ecs_player=]]nil, --[[song_info=]]nil, --[[song_data=]]nil, --[[relics_used]]nil, --[[ap=]]nil))
-					end
-				end
-				ECS.Player.TotalMarathonPoints = math.floor(ECS.Player.TotalMarathonPoints)
+		elseif ECS.Mode == "Marathon" and IsPlayingMarathon() then		
+			ECS.Player.TotalMarathonPoints = 35000 * score
+			if not failed then
+				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 10000
 			end
+			-- Relics for marathons are always applied regarldess of pass/fail.
+			for relic in ivalues(ECS.Player.Relics) do
+				if relic.name ~= "(nothing)" then
+					-- All marathon relics return pure numeric values. We don't need to pass any real values to the score function.
+					ECS.Player.TotalMarathonPoints = (ECS.Player.TotalMarathonPoints +
+						relic.score(--[[ecs_player=]]nil, --[[song_info=]]nil, --[[song_data=]]nil, --[[relics_used]]nil, --[[ap=]]nil))
+				end
+			end
+			ECS.Player.TotalMarathonPoints = math.floor(ECS.Player.TotalMarathonPoints)
 		end
 	end,
 

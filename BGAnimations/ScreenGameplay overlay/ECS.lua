@@ -228,19 +228,6 @@ local InputHandler = function(event)
 	return false
 end
 
-local IsPlayingMarathon = function()
-	local song = GAMESTATE:GetCurrentSong()
-	local group_name = song:GetGroupName()
-	local song_name = song:GetDisplayFullTitle()
-	if GetDivision() == "upper" then
-		return group_name == "ECS10 - Upper Marathon" and song_name == "In Memoriam Aulis Mk 0"
-	elseif GetDivision() == "mid" then
-		return group_name == "ECS10 - Mid Marathon" and song_name == "ECS Classics (Side B-A)"
-	else
-		return group_name == "ECS10 - Lower Marathon" and song_name == "ECS Classics (Side A)"
-	end
-end
-
 if ECS.Mode == "Marathon" and FaustsScalpelIsActive() and IsPlayingMarathon() then
 	af[#af+1] = Def.ActorFrame{
 		InitCommand=function(self) end,
