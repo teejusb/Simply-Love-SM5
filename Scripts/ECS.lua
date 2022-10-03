@@ -5,7 +5,7 @@ InitializeECS = function()
 	ECS.Mode = "Warmup"
 	ECS.IsPractice = false
 	ECS.BreakTimer=(15 * 60)
-	ECS.AttemptNumber = 0
+	ECS.SpeedAttemptNumber = 0
 
 	ECS.Player = {
 		Profile=nil,
@@ -21478,7 +21478,7 @@ end
 
 FindEcsSong = function(song_name, SongInfo)
 	local StripBlockBpm = function(s)
-		_, _, title = s:find("%[[0-9]+] %[[0-9]+] (.*)")
+		local _, _, title = s:find("%[[0-9]+] %[[0-9]+] (.*)")
 		return title
 	end
 

@@ -17,9 +17,11 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 
 	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
+	local attempt_number = ECS.Mode == "Speed" and ECS.SpeedAttemptNumber or 0
+
 	-- ----------------------------------------------------------
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE-"..ECS.Mode.."-"..ECS.AttemptNumber..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE-"..ECS.Mode.."-"..attempt_number..".txt"
 
 	local data = ""
 	data = data..percent_score .."\n"
@@ -52,8 +54,10 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 
 	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
+	local attempt_number = ECS.Mode == "Speed" and ECS.SpeedAttemptNumber or 0
+
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC-"..ECS.Mode.."-"..ECS.AttemptNumber..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC-"..ECS.Mode.."-"..attempt_number..".txt"
 	local data = ""
 
 	for i=1, 5 do

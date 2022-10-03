@@ -135,15 +135,35 @@ LoadProfileCustom = function(profile, dir)
 		end
 	end
 
-	local relic_file_path = dir .. THEME:GetThemeDisplayName() .. "_Player_Relic_Data.lua"	
+	
+	local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
+	if ECS.Players[player_name] ~= nil then
+		-- First try and load the relic_file_path
+		local relic_file_path = dir .. THEME:GetThemeDisplayName() .. "_Player_Relic_Data.lua"
+		if FILEMAN:DoesFileExist(relic_file_path) and GAMESTATE:GetMasterPlayerNumber() ~= nil then	
+			local relic_data = LoadActor(relic_file_path)
+			if relic_data then	
+				ECS.Players[player_name].relics = relic_data	
+			end	
+		end
 
-	if FILEMAN:DoesFileExist(relic_file_path) and GAMESTATE:GetMasterPlayerNumber() ~= nil then	
-		local relic_data = LoadActor(relic_file_path)
-		local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
-		if relic_data and ECS.Players[player_name] ~= nil then	
-			ECS.Players[player_name].relics = relic_data	
-		end	
-	end	
+		-- Then try determining the Speed attempt number
+		local player_id = ECS.Players[player_name].id
+		local ecs_data_path = THEME:GetCurrentThemeDirectory().."ECSData/"
+		local score_pattern = "^(.*)%-(.*)%-(.*)%-SCORE%-(.*)%-(.*)%.txt$"
+
+		local max_attempt = 0
+		for file in ivalues(FILEMAN:GetDirListing(ecs_data_path)) do
+			local _, _, id, mode, attempt = file:match(score_pattern)
+			if id ~= nil and mode ~= nil and attempt ~= nil then
+				if tonumber(id) == player_id and mode == "Speed" then
+					max_attempt = math.max(max_attempt, tonumber(attempt))
+				end
+			end
+		end
+	end
+
+	ECS.SpeedAttemptNumber = max_attempt
 
 	return true
 end
