@@ -19,7 +19,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 
 	-- ----------------------------------------------------------
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE"..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE-"..ECS.Mode.."-"..ECS.AttemptNumber..".txt"
 
 	local data = ""
 	data = data..percent_score .."\n"
@@ -53,7 +53,7 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
-	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC"..".txt"
+	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."RELIC-"..ECS.Mode.."-"..ECS.AttemptNumber..".txt"
 	local data = ""
 
 	for i=1, 5 do
@@ -81,6 +81,9 @@ end
 local WriteRelicDataToDisk = function()
 	-- Don't write any files in a practice set.
 	if ECS.IsPractice then return end
+
+	-- Speed doesn't use relics so nothing to write.
+	if ECS.Mode == "Speed" then return end
 
 	local p = PlayerNumber:Reverse()[GAMESTATE:GetMasterPlayerNumber()] + 1
 	local profile_dir = PROFILEMAN:GetProfileDir("ProfileSlot_Player"..p)

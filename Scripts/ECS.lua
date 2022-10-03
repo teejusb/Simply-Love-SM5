@@ -5,6 +5,7 @@ InitializeECS = function()
 	ECS.Mode = "Warmup"
 	ECS.IsPractice = false
 	ECS.BreakTimer=(15 * 60)
+	ECS.AttemptNumber = 0
 
 	ECS.Player = {
 		Profile=nil,
