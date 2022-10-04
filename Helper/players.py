@@ -17,9 +17,8 @@ def GetDivision(rank, id):
 		else:
 			return "lower"
 
-def OptedForSpeed(id):
-	opted_for_speed = []
-	return id in opted_for_speed
+def OptedForSpeed(rank):
+	return rank <= 24
 
 relics = {}
 with open('relics.csv') as f:
@@ -34,7 +33,7 @@ for player in data:
 	print(r"""ECS.Players["%s"] = {""" % player["members_name"])
 	print(r"""	id=%s,""" % player["srpg6_entrants_member_id"])
 	print(r"""	division="%s",""" % (GetDivision(int(player["TPLP_RANK"]), int(player["srpg6_entrants_member_id"]))))
-	print(r"""	opted_for_speed=%s,""" % (OptedForSpeed(int(player["srpg6_entrants_member_id"])) and "true" or "false"))
+	print(r"""	opted_for_speed=%s,""" % (OptedForSpeed(int(player["TPLP_RANK"])) and "true" or "false"))
 	print(r"""	country="%s",""" % player["COUNTRY"])
 	print(r"""	level=%s,""" % player["srpg6_entrants_level"])
 	print(r"""	exp=%s,""" % player["srpg6_entrants_exp"])
