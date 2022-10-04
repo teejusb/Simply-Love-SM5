@@ -66,6 +66,10 @@ local t = Def.ActorFrame{
 				ECS.IsPractice = true
 			end
 
+			if ECS.Mode == "Speed" then
+				ECS.BreakTimer = (20 * 60)
+			end
+
 			-- hardcode this to always be ITG windows for the ECS event
 			SL.Global.GameMode = "ITG"
 
