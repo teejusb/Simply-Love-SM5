@@ -97,6 +97,11 @@ local Update = function(af, dt)
 			ECS.BreakTimer = breaktimer_at_screen_start - (cur_time - seconds_at_screen_start)
 		end
 
+		if SCREENMAN:GetTopScreen():GetName() ~= "ScreenGameplay" and ECS.RemainingTimeSpentInStreams ~= 0 then
+			ECS.BreakTimer = ECS.BreakTimer - ECS.RemainingTimeSpentInStreams
+			ECS.RemainingTimeSpentInStreams = 0
+		end
+
 		if breaktimer_actor then
 			breaktimer_actor:settext( "BREAK - " .. SecondsToMMSS(ECS.BreakTimer) )
 
