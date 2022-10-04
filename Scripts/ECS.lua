@@ -6979,7 +6979,7 @@ ECS.SongInfo.Upper = {
 					},
 					{
 									id=85,
-									name="[27] [260] Chipspeed Legacy FB 260",
+									name="[27] [260] Chipspeed Legacy",
 									stepartist="ITGAlex & Rust & Aoreo & Zaia",
 									pack="Big Waves",
 									difficulty=27,
@@ -7973,7 +7973,7 @@ ECS.SongInfo.Speed = {
 					},
 					{
 									id=41,
-									name="[24] [290] The Only Thing I Know for Real (Maniac Agenda",
+									name="[24] [290] The Only Thing I Know for Real (Maniac Agenda Mix)",
 									stepartist="Aoreo",
 									pack="BangerZ 3",
 									difficulty=24,
@@ -8687,7 +8687,7 @@ ECS.SongInfo.Speed = {
 					},
 					{
 									id=92,
-									name="[26] [320] XENON II 銆淭OMOYUKI�噹鏈涖��",
+									name="[26] [320] XENON II 〜TOMOYUKIの野望〜",
 									stepartist="nv",
 									pack="Recycle Bin Streams",
 									difficulty=26,
@@ -23619,7 +23619,7 @@ local VerifyRelics = function()
 end
 
 -- Uncomment if to verify that all the score functions of the relics return valid numbers.
-VerifyRelics()
+-- VerifyRelics()
 
 -- -----------------------------------------------------------------------
 -- Helper Functions

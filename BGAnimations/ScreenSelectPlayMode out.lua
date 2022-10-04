@@ -5,9 +5,9 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local nachmancore = SONGMAN:FindSong("ECS11 - Upper/[23] [230] Parallax (Rerestep)")
-				if nachmancore then
-					GAMESTATE:SetPreferredSong(nachmancore)
+				local parallax = SONGMAN:FindSong("ECS11 - Upper/[23] [230] Parallax (Rerestep) FP 230")
+				if parallax then
+					GAMESTATE:SetPreferredSong(parallax)
 				end
 			elseif GetDivision() == "mid" then
 				local falz = SONGMAN:FindSong("ECS11 - Mid/[17] [170] Falz Double Hunar Theme")
