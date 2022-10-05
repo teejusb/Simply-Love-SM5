@@ -632,7 +632,7 @@ ECS.Relics = {
 				local total_skill = 0
 				for tier, skill in pairs(ecs_player.tier_skill) do
 					if tier >= 240 then
-						total_skill = total_skill + 1
+						total_skill = skill + 1
 					end
 				end
 				return 307 + total_skill

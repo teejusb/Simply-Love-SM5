@@ -7,7 +7,6 @@ local af = Def.ActorFrame{
 		local ecs_player = ECS.Players[PROFILEMAN:GetPlayerName(player)]
 
 		local song_name = song:GetDisplayFullTitle()
-		local group_name = song:GetGroupName()
 
 		local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 		local PercentDP = stats:GetPercentDancePoints()
@@ -36,7 +35,6 @@ local af = Def.ActorFrame{
 			ECS.Player.TotalMarathonPoints = math.floor(ECS.Player.TotalMarathonPoints)
 		end
 	end,
-
 }
 
 return af
