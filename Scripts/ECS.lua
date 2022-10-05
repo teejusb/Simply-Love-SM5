@@ -2130,7 +2130,10 @@ ECS.Relics = {
 		img="principia.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
+				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
+				if songOptions:MusicRate() < 1.02 then
+					GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
+				end
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -2163,7 +2166,9 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
+				if songOptions:MusicRate() < 1.05 then
+					GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
+				end
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
