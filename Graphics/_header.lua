@@ -98,6 +98,7 @@ local Update = function(af, dt)
 		end
 
 		if SCREENMAN:GetTopScreen():GetName() ~= "ScreenGameplay" and ECS.RemainingTimeSpentInStreams ~= 0 then
+			SM(SecondsToMSS(ECS.RemainingTimeSpentInStreams).." removed from Break Timer")
 			ECS.BreakTimer = ECS.BreakTimer - ECS.RemainingTimeSpentInStreams
 			ECS.RemainingTimeSpentInStreams = 0
 		end
