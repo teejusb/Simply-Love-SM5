@@ -46,7 +46,7 @@ for player in data:
 		if quantity > 0:
 			print(r"""		{name="%s", quantity=%d},""" % (relics[str(i)], quantity))
 	print(r"""	},""")
-	print(r"""	tier_skill = {%s},""" % ", ".join(["[%d]=%s" % (x, player["srpg6_entrants_%dskill" % x]) for x in range(120, 300, 10)])) # [120, 290]
+	print(r"""	tier_skill = {%s},""" % ", ".join(["[%d]=%s" % (x, player["srpg6_entrants_%dskill" % x]) for x in range(120, 310, 10)])) # [120, 300]
 	print(r"""	affinities = {%s},""" % ", ".join("%s=%s" % (name, player["srpg6_entrants_aff%s" % name]) for name in ["dp", "ep", "rp", "ap"]))
 	print(r"""	lifetime_song_gold = %s,""" % player["srpg6_entrants_rankgold"])
 	print(r"""	lifetime_jp = %s,""" % player["srpg6_entrants_rankjp"])
