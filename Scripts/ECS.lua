@@ -6,7 +6,7 @@ InitializeECS = function()
 	ECS.IsPractice = false
 	ECS.BreakTimer=(15 * 60)
 	ECS.SpeedAttemptNumber = 0
-	ECS.RemainingTimeSpentInStreams = 0
+	ECS.TimeToRemoveFromBreakTimer = 0
 
 	ECS.Player = {
 		Profile=nil,

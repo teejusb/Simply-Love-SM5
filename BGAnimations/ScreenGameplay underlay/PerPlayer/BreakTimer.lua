@@ -10,6 +10,7 @@ local prevMeasure = -1
 
 local start_time = GetTimeSinceStart()
 local stream_time = ECS.Mode == "Speed" and 8 or 15
+local elapsed_time = 0
 
 -- Returns whether or not we've reached the end of this stream segment.
 local IsEndOfStream = function(currMeasure, Measures, streamIndex)
@@ -27,6 +28,7 @@ end
 
 
 local Update = function(self, delta)
+  elapsed_time = GetTimeSinceStart() - start_time
   local currMeasure = (math.floor(PlayerState:GetSongPosition():GetSongBeatVisible()))/4
   if currMeasure > prevMeasure then
     prevMeasure = currMeasure
@@ -48,6 +50,8 @@ return Def.ActorFrame{
 	end,
 	SetUpdateCommand=function(self) self:SetUpdateFunction( Update ) end,
   ScreenChangedMessageCommand=function(self)
-    ECS.RemainingTimeSpentInStreams = stream_time
+    if stream_time ~= 0 then
+      ECS.TimeToRemoveFromBreakTimer = elapsed_time
+    end
   end
 }
