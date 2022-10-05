@@ -165,7 +165,7 @@ LoadProfileCustom = function(profile, dir)
 		end
 	end
 
-	ECS.SpeedAttemptNumber = max_attempt
+	ECS.SpeedAttemptNumber = max_attempt + 1
 
 	return true
 end
