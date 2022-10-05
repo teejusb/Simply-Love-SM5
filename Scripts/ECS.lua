@@ -10610,7 +10610,7 @@ ECS.Players["nidyz"] = {
 
 ECS.Players["airplane"] = {
 	id=135061,
-	division="mid",
+	division="upper",
 	opted_for_speed=true,
 	country="U.S.A.",
 	level=89,
@@ -10647,7 +10647,7 @@ ECS.Players["airplane"] = {
 
 ECS.Players["ensypuri"] = {
 	id=66782,
-	division="mid",
+	division="upper",
 	opted_for_speed=true,
 	country="U.S.A.",
 	level=92,
@@ -10905,7 +10905,7 @@ ECS.Players["NBCrescendo"] = {
 
 ECS.Players["Fierra"] = {
 	id=165792,
-	division="mid",
+	division="upper",
 	opted_for_speed=true,
 	country="United Kingdom",
 	level=88,
@@ -14159,7 +14159,7 @@ ECS.Players["itgaz"] = {
 
 ECS.Players["aminuteawayx"] = {
 	id=66674,
-	division="lower",
+	division="mid",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=72,
@@ -14243,7 +14243,7 @@ ECS.Players["DanPeriod"] = {
 
 ECS.Players["xiaowuc1"] = {
 	id=66558,
-	division="lower",
+	division="mid",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=74,
@@ -14285,7 +14285,7 @@ ECS.Players["xiaowuc1"] = {
 
 ECS.Players["tommoda"] = {
 	id=132032,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="United Kingdom",
 	level=61,
@@ -15350,7 +15350,7 @@ ECS.Players["dlim"] = {
 
 ECS.Players["DF.CaptainBlack"] = {
 	id=7737,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=63,
@@ -15803,7 +15803,7 @@ ECS.Players["hegza"] = {
 
 ECS.Players["skateinmars"] = {
 	id=66545,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="France",
 	level=50,
@@ -21458,7 +21458,7 @@ ECS.Players["Unspecified "] = {
 
 ECS.Players["Fieoner"] = {
 	id=66724,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Spain",
 	level=7,
@@ -23551,8 +23551,6 @@ ECS.Players["Xidi"] = {
 	lifetime_song_gold = 79,
 	lifetime_jp = 0,
 }
-
-
 
 InitializeDefaultRelics = function()
 	-- Keep a copy of the relics under its own field.

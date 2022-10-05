@@ -2,8 +2,8 @@ import csv
 import json
 
 def GetDivision(rank, id):
-	mid_overrides = [127780, 132032, 76070, 66545, 7737, 66724]
-	upper_overrides = [35619, 66755, 129083]
+	mid_overrides = [66674, 66558]
+	upper_overrides = [66782, 165792, 135061]
 
 	if id in mid_overrides:
 		return "mid"
