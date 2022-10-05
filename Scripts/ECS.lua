@@ -23673,11 +23673,6 @@ IsPlayingMarathon = function()
 		["Mid"] = "8d8c7b9de2118a7c",
 		["Upper"] = "0646825a441b2f92",
 	}
-	local names = {
-		["Lower"] = "Return Of The Chepers",
-		["Mid"] = "Let's Go Ballistic",
-		["Upper"] = "Proof Of Will",
-	}
 	local division = GetDivision()
 	if division == nil then
 		return false
@@ -23685,10 +23680,7 @@ IsPlayingMarathon = function()
 	-- Uppercase the fist letter
 	division = division:gsub("^%l", string.upper)
 
-	local song = GAMESTATE:GetCurrentSong()
-	local group_name = song:GetGroupName()
-	local song_name = song:GetMainTitle()
-	return group_name == ECS.SongInfo[division].PackName .." Marathon" and song_name == names[division] 
+	return hashes[division] == SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].Streams.Hash
 end
 
 -- ------------------------------------------------------
