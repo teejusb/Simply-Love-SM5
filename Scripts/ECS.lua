@@ -1913,13 +1913,13 @@ ECS.Relics = {
 			for relic in ivalues(relics_used) do
 				local name = relic.name
 				if name == "Scrupulous Shield" then
-					bp = bp + math.floor(ap * 12)
+					bp = bp + math.floor(ap * 1.2)
 				end
 				if name == "Alacritous Aspis" then
-					bp = bp + math.floor(song_data.dp * 11)
+					bp = bp + math.floor(song_data.dp * 1.1)
 				end
 				if name == "Indefatigable Escutcheon" then
-					bp = bp + math.floor(song_data.ep * 12)
+					bp = bp + math.floor(song_data.ep * 1.2)
 				end
 			end
 
