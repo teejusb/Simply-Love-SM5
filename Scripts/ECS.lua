@@ -726,7 +726,7 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local other_bp = 0
 			for relic in ivalues(relics_used) do
-				if relic.name ~= "Kraken Club" then
+				if relic.name ~= "Kraken Club" and relic.name ~= "(nothing)" then
 					other_bp = relic.score(ecs_player, song_info, song_data, relics_used, ap, score)
 				end
 			end
