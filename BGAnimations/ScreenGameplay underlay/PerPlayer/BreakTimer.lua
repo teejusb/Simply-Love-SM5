@@ -49,7 +49,7 @@ return Def.ActorFrame{
 		self:queuecommand("SetUpdate")
 	end,
 	SetUpdateCommand=function(self) self:SetUpdateFunction( Update ) end,
-  ScreenChangedMessageCommand=function(self)
+  OffCommand=function(self)
     if stream_time ~= 0 then
       ECS.TimeToRemoveFromBreakTimer = elapsed_time
     end
