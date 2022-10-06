@@ -135,8 +135,9 @@ LoadProfileCustom = function(profile, dir)
 		end
 	end
 
-	
-	local max_attempt = 0
+
+	-- This will get incremented below so the value is 0-indexed
+	local max_attempt = -1
 
 	if GAMESTATE:GetMasterPlayerNumber() ~= nil then
 		local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
