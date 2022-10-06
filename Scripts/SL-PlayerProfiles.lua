@@ -136,6 +136,8 @@ LoadProfileCustom = function(profile, dir)
 	end
 
 	
+	local max_attempt = 0
+
 	if GAMESTATE:GetMasterPlayerNumber() ~= nil then
 		local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
 		if ECS.Players[player_name] ~= nil then
@@ -153,7 +155,6 @@ LoadProfileCustom = function(profile, dir)
 			local ecs_data_path = THEME:GetCurrentThemeDirectory().."ECSData/"
 			local score_pattern = "^(.*)%-(.*)%-(.*)%-SCORE%-(.*)%-(.*)%.txt$"
 
-			local max_attempt = 0
 			for file in ivalues(FILEMAN:GetDirListing(ecs_data_path)) do
 				local _, _, id, mode, attempt = file:match(score_pattern)
 				if id ~= nil and mode ~= nil and attempt ~= nil then
@@ -164,7 +165,7 @@ LoadProfileCustom = function(profile, dir)
 			end
 		end
 	end
-
+	
 	ECS.SpeedAttemptNumber = max_attempt + 1
 
 	return true

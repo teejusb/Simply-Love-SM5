@@ -2166,7 +2166,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() < 1.05 then
+				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.05 then
 					GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
 				end
 			end
