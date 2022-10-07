@@ -21,6 +21,15 @@ local af = Def.ActorFrame{
 		body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
 		author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
 		picture:Load(nil)
+	end,
+	OnCommand=function(self)
+		if ThemePrefs.Get("VisualStyle") ~= "Hearts" or ThemePrefs.Get("RainbowMode") == true then
+			ThemePrefs.Set("VisualStyle", "Hearts")
+			ThemePrefs.Set("RainbowMode", false)
+			ThemePrefs.Save()
+
+			MESSAGEMAN:Broadcast("VisualStyleSelected")
+		end
 	end
 }
 
