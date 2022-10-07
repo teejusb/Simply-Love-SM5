@@ -39,7 +39,7 @@ local Update = function(self, delta)
   end
 
   -- We are in a stream
-  if not streams[streamIndex].isBreak and stream_time > 0 then
+  if streams[streamIndex] ~= nil and not streams[streamIndex].isBreak and stream_time > 0 then
     stream_time = math.max(0, stream_time - delta)
   end
 end
