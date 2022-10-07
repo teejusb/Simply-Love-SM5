@@ -31,7 +31,14 @@ if ThemePrefs.Get("VisualStyle") ~= "SRPG6" then
 	local img = failed and "failed text.png" or "cleared text.png"
 
 	return Def.ActorFrame {
-		OnCommand=function(self) ApplyRelicActions() end,
+		OnCommand=function(self)
+			ApplyRelicActions()
+			if failed then
+				SOUND:PlayOnce(THEME:GetPathS("", "lamelevelup.ogg"))
+			else
+				SOUND:PlayOnce(THEME:GetPathS("", "levelup.ogg"))
+			end
+		end,
 		OffCommand=function(self) ResetSettings()	end,
 		Def.Quad{
 			InitCommand=function(self) self:FullScreen():diffuse(Color.Black) end,

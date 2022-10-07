@@ -138,7 +138,7 @@ local InputHandler = function(event)
 		elseif (event.button == "Select" or
 				event.button == "MenuUp" or
 				((not OnlyDedicatedMenuButtons or ThreeKeyNavigation) and event.button == "Up")) then
-			SOUND:PlayOnce(THEME:GetPathS("", "_prev row.ogg"))
+			SOUND:PlayOnce(THEME:GetPathS("", "_next row.ogg"))
 
 			OptionRowWheels[pn]:scroll_by_amount(-1)
 
