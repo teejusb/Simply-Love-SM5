@@ -9745,6 +9745,7 @@ end
 InitializeSongStats(ECS.SongInfo.Lower)
 InitializeSongStats(ECS.SongInfo.Mid)
 InitializeSongStats(ECS.SongInfo.Upper)
+InitializeSongStats(ECS.SongInfo.Speed)
 
 -- ------------------------------------------------------
 -- Player Data
@@ -23771,7 +23772,10 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		local ep = song_data.ep
 		local rp = song_data.rp
 		local ap = AP(score)
-		local bp = BP(ecs_player, song_info, song_data, relics_used, ap, score)
+		local bp = 0
+		if ECS.Mode ~= "Speed" then
+			bp = BP(ecs_player, song_info, song_data, relics_used, ap, score)
+		end
 		return (dp + ep + rp + ap + bp), song_data
 	end
 
