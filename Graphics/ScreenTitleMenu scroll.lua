@@ -27,7 +27,7 @@ t[#t+1] = LoadFont("Common Bold")..{
 	UpdateColorCommand=function(self)
 		if has_focus then
 			local textColor = PlayerColor(PLAYER_2)
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				textColor = GetCurrentColor(true)
 			end
 			textColor = color("#000000")
@@ -37,8 +37,8 @@ t[#t+1] = LoadFont("Common Bold")..{
 			if ThemePrefs.Get("RainbowMode") then
 				textColor = Color.White
 			end
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
-				textColor = color(SL.SRPG6.TextColor)
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
+				textColor = color(SL.SRPG7.TextColor)
 			end
 			textColor = color("#8f490d")
 			self:diffuse(textColor)

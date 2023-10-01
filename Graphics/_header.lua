@@ -152,7 +152,7 @@ local af = Def.ActorFrame{
 	Def.Quad{
 		InitCommand=function(self)
 			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx)
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			elseif DarkUI() then
 				self:diffuse(dark)
@@ -165,13 +165,13 @@ local af = Def.ActorFrame{
 			if SL.Global.GameMode == "Casual" and (topscreen == "ScreenEvaluationStage" or topscreen == "ScreenEvaluationSummary") then
 				self:diffuse(dark)
 			end
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			end
 			self:visible(topscreen ~= "ScreenCRTTestPatterns")
 		end,
 		ColorSelectedMessageCommand=function(self)
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			end
 		end,

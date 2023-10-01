@@ -1,7 +1,8 @@
 local NumEntries = 13
 local RowHeight = 24
-local RpgYellow = color("1,0.972,0.792,1")
-local RpgTextYellow = color("1,0.945,0.557,1")
+local RpgGreen = color("#009b7f")
+local RpgTextGreen = color("#00e6bc")
+local RpgTextBody = color("#d8e87c")
 local ItlPink = color("1,0.2,0.406,1")
 
 local paneWidth1Player = 330
@@ -11,16 +12,16 @@ local paneHeight = 360
 local borderWidth = 2
 
 local SetRpgStyle = function(eventAf)
-	eventAf:GetChild("MainBorder"):diffuse(RpgYellow)
+	eventAf:GetChild("MainBorder"):diffuse(RpgGreen)
 	eventAf:GetChild("BackgroundImage"):visible(true)
 	eventAf:GetChild("BackgroundColor"):diffuse(color("0,0,0,0.7"))
-	eventAf:GetChild("BackgroundColor2"):visible(true):diffuse(color("1,0.972,0.792,0.2")):faderight(0.1):fadeleft(0.1)
-	eventAf:GetChild("HeaderBorder"):diffuse(RpgYellow)
-	eventAf:GetChild("HeaderBackground"):diffusetopedge(color("0.5,0.5,0.5,1")):diffusebottomedge(color("0.239,0.239,0.239,1"))
-	eventAf:GetChild("Header"):diffuse(Color.White)
+	eventAf:GetChild("BackgroundColor2"):visible(true):diffuse(color("1,1,1,0.05")):faderight(0.1):fadeleft(0.1)
+	eventAf:GetChild("HeaderBorder"):diffuse(RpgGreen)
+	eventAf:GetChild("HeaderBackground"):diffusetopedge(color("#033c2f")):diffusebottomedge(color("#1c6f4c"))
+	eventAf:GetChild("Header"):diffuse(color("#a2e87c"))
 	eventAf:GetChild("EX"):visible(false)
 	eventAf:GetChild("BodyText"):diffuse(Color.White)
-	eventAf:GetChild("PaneIcons"):GetChild("Text"):diffuse(RpgYellow)
+	eventAf:GetChild("PaneIcons"):GetChild("Text"):diffuse(RpgGreen)
 
 	local leaderboard = eventAf:GetChild("Leaderboard")
 	for i=1, NumEntries do
@@ -35,22 +36,22 @@ end
 local SetItlStyle = function(eventAf)
 	eventAf:GetChild("MainBorder"):diffuse(ItlPink)
 	eventAf:GetChild("BackgroundImage"):visible(false)
-	eventAf:GetChild("BackgroundColor"):diffuse(Color.White):diffusealpha(1)
+	eventAf:GetChild("BackgroundColor"):diffuse(Color.Black):diffusealpha(1)
 	eventAf:GetChild("BackgroundColor2"):visible(false)
 	eventAf:GetChild("HeaderBorder"):diffuse(ItlPink)
 	eventAf:GetChild("HeaderBackground"):diffusetopedge(color("0.3,0.3,0.3,1")):diffusebottomedge(color("0.157,0.157,0.165,1"))
 	eventAf:GetChild("Header"):diffuse(Color.White)
 	eventAf:GetChild("EX"):diffuse(Color.White):visible(false)
-	eventAf:GetChild("BodyText"):diffuse(color("0.157,0.157,0.165,1"))
+	eventAf:GetChild("BodyText"):diffuse(Color.White)
 	eventAf:GetChild("PaneIcons"):GetChild("Text"):diffuse(ItlPink)
 
 	local leaderboard = eventAf:GetChild("Leaderboard")
 	for i=1, NumEntries do
 		local entry = leaderboard:GetChild("LeaderboardEntry"..i)
-		entry:GetChild("Rank"):diffuse(Color.Black)
-		entry:GetChild("Name"):diffuse(Color.Black)
-		entry:GetChild("Score"):diffuse(Color.Black)
-		entry:GetChild("Date"):diffuse(Color.Black)
+		entry:GetChild("Rank"):diffuse(Color.White)
+		entry:GetChild("Name"):diffuse(Color.White)
+		entry:GetChild("Score"):diffuse(Color.White)
+		entry:GetChild("Date"):diffuse(Color.White)
 	end
 end
 
@@ -251,7 +252,7 @@ local GetRpgPaneFunctions = function(eventAf, rpgData, player)
 				-- Extract the actual numeric text.
 				local substring = string.sub(text, i, j)
 
-				local clr = RpgTextYellow
+				local clr = RpgTextGreen
 
 				-- Except negatives should be red.
 				if substring:sub(1, 1) == "-" then
@@ -283,7 +284,7 @@ local GetRpgPaneFunctions = function(eventAf, rpgData, player)
 
 				bodyText:AddAttribute(i-1, {
 					Length=#substring,
-					Diffuse=RpgTextYellow
+					Diffuse=RpgTextGreen
 				})
 
 				offset = j + 1
@@ -318,20 +319,89 @@ local GetItlPaneFunctions = function(eventAf, itlData, player)
 	currentPointTotal = itlData["currentPointTotal"]
 	totalDelta = currentPointTotal - previousPointTotal
 
+	local statImprovements = {}
+	local quests = {}
+	local progress = itlData["progress"]
+	if progress then
+		if progress["statImprovements"] then
+			for improvement in ivalues(progress["statImprovements"]) do
+				if improvement["gained"] > 0 then
+					if improvement["name"] == "clearType" then
+						local clearTypeMap = {
+							[0] = "No Play",
+							[1] = "Clear",
+							[2] = "FC",
+							[3] = "FEC",
+							[4] = "Quad",
+							[5] = "Quint",
+						}
+						local curr = improvement["current"]
+						local prev = curr - improvement["gained"]
+
+						table.insert(
+							statImprovements,
+							string.format("Clear Type: %s >>> %s", clearTypeMap[prev], clearTypeMap[curr]))
+					else
+						local statName = improvement["name"]:gsub("Level", ""):gsub("^%l", string.upper)
+						table.insert(
+							statImprovements,
+							string.format("%s Lvl: %d (+%d)", statName, improvement["current"], improvement["gained"])
+						)
+					end
+				end
+			end
+		end
+
+		if progress["questsCompleted"] then
+			for quest in ivalues(progress["questsCompleted"]) do
+				local questStrings = {}
+				table.insert(questStrings, string.format(
+					"Completed \"%s\"!\n",
+					quest["title"]
+				))
+
+				-- Group all the rewards by type.
+				local allRewards = {}
+				for reward in ivalues(quest["rewards"]) do
+					if allRewards[reward["type"]] == nil then
+						allRewards[reward["type"]] = {}
+					end
+					table.insert(allRewards[reward["type"]], reward["description"])
+				end
+
+				for rewardType, rewardDescriptions in pairs(allRewards) do
+					table.insert(questStrings, string.format(
+						"%s"..
+						"%s\n",
+						rewardType == "ad-hoc" and "" or string.upper(rewardType)..":\n",
+						table.concat(rewardDescriptions, "\n")
+					))
+				end
+
+				table.insert(quests, table.concat(questStrings, "\n"))
+			end
+		end
+	end
+
 	table.insert(paneTexts, string.format(
 		"EX Score: %.2f%% (%+.2f%%)\n"..
 		"Ranking Points: %d (%+d)\n"..
-		"Total Points: %d (%+d)\n\n",
+		"Total Points: %d (%+d)\n\n"..
+		"%s",
 		score, scoreDelta,
 		currentRankingPointTotal, rankingDelta,
-		currentPointTotal, totalDelta
+		currentPointTotal, totalDelta,
+		#statImprovements == 0 and "" or table.concat(statImprovements, "\n").."\n\n"
 	))
 
+	for quest in ivalues(quests) do
+		table.insert(paneTexts, quest)
+	end
 
 	for text in ivalues(paneTexts) do
 		table.insert(paneFunctions, function(eventAf)
 			SetItlStyle(eventAf)
-			eventAf:GetChild("Header"):settext(itlData["name"])
+			eventAf:GetChild("Header"):settext(itlData["name"]:gsub("ITL Online", "ITL"))
 			eventAf:GetChild("Leaderboard"):visible(false)
 			eventAf:GetChild("EX"):visible(true)
 			local bodyText = eventAf:GetChild("BodyText")
@@ -399,13 +469,42 @@ local GetItlPaneFunctions = function(eventAf, itlData, player)
 
 				offset = j + 1
 			end
+
+			-- Colorize the clearType improvements
+			offset = 0
+			local i, j = string.find(text, "Clear Type: ", offset)
+			if i ~= nil then
+				offset = j + 1
+				local clearTypeMap = {
+					["FC"] = SL.JudgmentColors["ITG"][3],
+					["FEC"] = SL.JudgmentColors["ITG"][2],
+					["Quad"] = SL.JudgmentColors["ITG"][1],
+					["Quint"] = ItlPink,
+				}
+
+				local search = "No Play Clear FC FEC Quad Quint"
+				for a=1,2 do
+					for ct in search:gmatch("%S+") do 
+						i, j = string.find(text, ct, offset)
+						if i ~= nil then
+							-- Extract the actual clear type.
+							local substring = string.sub(text, i, j)
+							bodyText:AddAttribute(i-1, {
+								Length=#substring,
+								Diffuse=(clearTypeMap[substring] and clearTypeMap[substring] or Color.White)
+							})
+							offset = j + 1
+						end
+					end
+				end
+			end
 		end)
 	end
 
 	table.insert(paneFunctions, function(eventAf)
 		SetItlStyle(eventAf)
 		SetLeaderboardData(eventAf, itlData["itlLeaderboard"], "itl")
-		eventAf:GetChild("Header"):settext(itlData["name"])
+		eventAf:GetChild("Header"):settext(itlData["name"]:gsub("ITL Online", "ITL"))
 		eventAf:GetChild("Leaderboard"):visible(true)
 		eventAf:GetChild("EX"):visible(true)
 		eventAf:GetChild("BodyText"):visible(false)
@@ -461,6 +560,16 @@ for player in ivalues(PlayerNumber) do
 				for func in ivalues(GetItlPaneFunctions(self, itlData, player)) do
 					self.PaneFunctions[#self.PaneFunctions+1] = func
 				end
+
+				-- If the ITL song was played outside of the pack for the first time,
+				-- write the ITL data for it.
+				-- All other cases should be handled by normal ItlFile.lua write.
+				local song = GAMESTATE:GetCurrentSong()
+				local song_dir = song:GetSongDir()
+				local pn = ToEnumShortString(player)
+				if SL[pn].ITLData["pathMap"][song_dir] == nil then
+					UpdateItlData(player)
+				end
 			end
 
 			self.PaneIndex = 1
@@ -506,7 +615,7 @@ for player in ivalues(PlayerNumber) do
 		-- Main Black cement background
 		Def.Sprite {
 			Name="BackgroundImage",
-			Texture=THEME:GetPathG("", "_VisualStyles/SRPG6/Overlay-BG.png"),
+			Texture=THEME:GetPathG("", "_VisualStyles/SRPG7/Overlay-BG.png"),
 			InitCommand=function(self)
 				self:CropTo(paneWidth, paneHeight)
 			end

@@ -31,7 +31,6 @@ local PlayerDefaults = {
 				ActionOnMissedTarget = "Nothing",
 				Pacemaker = false,
 				LifeMeterType = "Standard",
-				MissBecauseHeld = false,
 				NPSGraphAtTop = false,
 				JudgmentTilt = false,
 				ColumnCues = false,
@@ -40,10 +39,14 @@ local PlayerDefaults = {
 				ErrorBar = "None",
 				ErrorBarUp = false,
 				ErrorBarMultiTick = false,
+				ErrorBarTrim = "Off",
 
 				ShowFaPlusWindow = false,
 				ShowEXScore = false,
 				ShowFaPlusPane = true,
+
+				NoteFieldOffsetX = 0,
+				NoteFieldOffsetY = 0,
 			}
 			-- TODO(teejusb): Rename "Streams" as the data contains more information than that.
 			self.Streams = {
@@ -78,7 +81,10 @@ local PlayerDefaults = {
 				Stats = {}
 			}
 			self.PlayerOptionsString = nil
-			self.ITLData = {}
+			self.ITLData = {
+				["pathMap"] = {},
+				["hashMap"] = {},
+			}
 
 			-- default panes to intialize ScreenEvaluation to
 			-- when only a single player is joined (single, double)

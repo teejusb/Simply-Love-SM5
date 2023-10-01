@@ -21,6 +21,8 @@ local permitted_profile_settings = {
 	ComboFont        = "string",
 	HoldJudgment     = "string",
 	BackgroundFilter = "string",
+	NoteFieldOffsetX = "number",
+	NoteFieldOffsetY = "number",
 
 	----------------------------------
 	-- "Advanced Modifiers"
@@ -47,7 +49,6 @@ local permitted_profile_settings = {
 	ColumnFlashOnMiss    = "boolean",
 	SubtractiveScoring   = "boolean",
 	Pacemaker            = "boolean",
-	MissBecauseHeld      = "boolean",
 	NPSGraphAtTop        = "boolean",
 	JudgmentTilt         = "boolean",
 	ColumnCues           = "boolean",
@@ -56,10 +57,11 @@ local permitted_profile_settings = {
 	ErrorBar             = "string",
 	ErrorBarUp           = "boolean",
 	ErrorBarMultiTick    = "boolean",
+	ErrorBarTrim         = "string",
 
-	ShowFaPlusWindow = "boolean",
-	ShowEXScore      = "boolean",
-	ShowFaPlusPane   = "boolean",
+	ShowFaPlusWindow     = "boolean",
+	ShowEXScore          = "boolean",
+	ShowFaPlusPane       = "boolean",
 
 	----------------------------------
 	-- Profile Settings without OptionRows
@@ -92,6 +94,7 @@ LoadProfileCustom = function(profile, dir)
 
 	if pn then
 		ParseGrooveStatsIni(player)
+		ReadItlFile(player)
 	end
 
 	if pn and FILEMAN:DoesFileExist(path) then
@@ -194,11 +197,8 @@ SaveProfileCustom = function(profile, dir)
 			IniFile.WriteFile( path, {[theme_name]=output} )
 
 			-- Write to the ITL file if we need to.
-			-- The ITLData table will only contain data for memory cards.
-			if #SL[pn].ITLData ~= 0 then
-				WriteItlFile(dir, table.concat(SL[pn].ITLData, ""))
-			end
-
+			-- This is relevant for memory cards.
+			WriteItlFile(player)
 			break
 		end
 	end
