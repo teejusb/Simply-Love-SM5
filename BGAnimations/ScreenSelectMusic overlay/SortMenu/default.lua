@@ -338,10 +338,6 @@ local t = Def.ActorFrame {
 			end
 		end
 
-		if ThemePrefs.Get("AllowScreenSelectProfile") then
-			table.insert(wheel_options, {"NextPlease", "SwitchProfile"})
-		end
-
 		local any_player_has_favorites = false
 		local profileSlot = {
 			["PlayerNumber_P1"] = "ProfileSlot_Player1",
