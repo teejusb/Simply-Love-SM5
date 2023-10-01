@@ -152,7 +152,7 @@ local af = Def.ActorFrame{
 	Def.Quad{
 		InitCommand=function(self)
 			self:zoomto(_screen.w, 32):vertalign(top):x(_screen.cx)
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			elseif DarkUI() then
 				self:diffuse(dark)
@@ -165,13 +165,13 @@ local af = Def.ActorFrame{
 			if SL.Global.GameMode == "Casual" and (topscreen == "ScreenEvaluationStage" or topscreen == "ScreenEvaluationSummary") then
 				self:diffuse(dark)
 			end
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			end
 			self:visible(topscreen ~= "ScreenCRTTestPatterns")
 		end,
 		ColorSelectedMessageCommand=function(self)
-			if ThemePrefs.Get("VisualStyle") == "SRPG6" then
+			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				self:diffuse(GetCurrentColor(true))
 			end
 		end,
@@ -182,7 +182,13 @@ local af = Def.ActorFrame{
 		Text=ScreenString("HeaderText"),
 		InitCommand=function(self) self:diffusealpha(0):horizalign(left):xy(10, 15):zoom( SL_WideScale(0.5,0.6) ) end,
 		OnCommand=function(self) self:sleep(0.1):decelerate(0.33):diffusealpha(1) end,
-		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end
+		OffCommand=function(self) self:accelerate(0.33):diffusealpha(0) end,
+		SetHeaderTextMessageCommand=function(self, params)
+			self:settext(params.Text)
+		end,
+		ResetHeaderTextMessageCommand=function(self)
+			self:settext(THEME:GetString(SCREENMAN:GetTopScreen():GetName(), "HeaderText"))
+		end
 	},
 
 	-- Freeplay | Warmup | PracticeSet | ECS | Marathon

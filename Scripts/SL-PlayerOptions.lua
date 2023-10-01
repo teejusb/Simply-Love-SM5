@@ -138,6 +138,7 @@ local Overrides = {
 				local game = GAMESTATE:GetCurrentGame():GetName()
 
 				-- Apologies, midiman. :(
+				-- Most of these are StepMania 5 stock note skins
 				local stock = {
 					dance = {
 						"default", "delta", "easyv2", "exactv2", "lambda", "midi-note",
@@ -416,24 +417,25 @@ local Overrides = {
 
 			list[1] = mods.ShowFaPlusWindow or false
 			list[2] = mods.ShowEXScore or false
-			list[3] = mods.ShowFaPlusPane or true
+			list[3] = mods.ShowFaPlusPane and true
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
 			local sl_pn = SL[ToEnumShortString(pn)]
 			local mods = sl_pn.ActiveModifiers
 			if SL.Global.GameMode == "FA+" then
-				 -- always disable in FA+ mode since it's handled engine side.
+				-- always disable in FA+ mode since it's handled engine side.
 				mods.ShowFaPlusWindow = false
 				mods.ShowEXScore = list[1]
-				mods.ShowFaPlusPane = list[3]
+				-- the main score pane is already the FA+ pane
+				mods.ShowFaPlusPane = false
 				return
 			end
 			mods.ShowFaPlusWindow = list[1]
 			mods.ShowEXScore = list[2]
 			mods.ShowFaPlusPane = list[3]
 			-- Default to FA+ pane if either options are active.
-			sl_pn.EvalPanePrimary = ((list[1] or list[2]) and not list[3]) and 2 or 1
+			sl_pn.EvalPanePrimary = ((list[1] or list[2]) and list[3]) and 2 or 1
 		end
 	},
 	-------------------------------------------------------------------------
@@ -526,12 +528,11 @@ local Overrides = {
 		SelectType = "SelectMultiple",
 		Values = function()
 			-- GameplayExtras will be presented as a single OptionRow when WideScreen
-			local vals = { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "MissBecauseHeld", "NPSGraphAtTop" }
+			local vals = { "ColumnFlashOnMiss", "SubtractiveScoring", "Pacemaker", "NPSGraphAtTop" }
 
 			-- if not WideScreen (traditional DDR cabinets running at 640x480)
 			-- remove the last two choices to be appended an additional OptionRow (GameplayExtrasB below).
 			if not IsUsingWideScreen() then
-				table.remove(vals, 5)
 				table.remove(vals, 4)
 			end
 			return vals
@@ -548,7 +549,7 @@ local Overrides = {
 				end
 			else
 				-- Add in the two removed options if not in WideScreen.
-				vals = { "MissBecauseHeld", "NPSGraphAtTop", "JudgmentTilt", "ColumnCues" }
+				vals = { "NPSGraphAtTop", "JudgmentTilt", "ColumnCues" }
 			end
 			return vals
 		end
@@ -565,6 +566,14 @@ local Overrides = {
 	},
 	ErrorBar = {
 		Values = { "None", "Colorful", "Monochrome", "Text" },
+	},-------------------------------------------------------------------------
+	ErrorBarTrim = {
+		Values = { "Off", "Great", "Excellent" },
+		Choices = function()
+			local tns = "TapNoteScore"
+			local t = {THEME:GetString("SLPlayerOptions","Off"), THEME:GetString(tns,"W3"), THEME:GetString(tns,"W2")}
+			return t
+		end,
 	},
 	-------------------------------------------------------------------------
 	ErrorBarOptions = {
@@ -581,6 +590,32 @@ local Overrides = {
 		Values = { "MeasureCounterLeft", "MeasureCounterUp", "HideLookahead" },
 	},
 	-------------------------------------------------------------------------
+	VisualDelay = {
+		Choices = function()
+			local first	= -100
+			local last 	= 100
+			local step 	= 1
+			return stringify( range(first, last, step), "%gms")
+		end,
+		ExportOnChange = true,
+		LayoutType = "ShowOneInRow",
+		SaveSelections = function(self, list, pn)
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
+
+			for i=1,#self.Choices do
+				if list[i] then
+					mods.VisualDelay = self.Choices[i]
+				end
+			end
+			playeroptions:VisualDelay( mods.VisualDelay:gsub("ms","")/1000 )
+		end
+	},
+	-------------------------------------------------------------------------
+	TimingWindowOptions = {
+		SelectType = "SelectMultiple",
+		Values = { "HideEarlyDecentWayOffJudgments", "HideEarlyDecentWayOffFlash" }
+	},
+	-------------------------------------------------------------------------
 	TimingWindows = {
 		Values = function()
 			return {
@@ -594,36 +629,122 @@ local Overrides = {
 			local tns = "TapNoteScore" .. (SL.Global.GameMode=="ITG" and "" or SL.Global.GameMode)
 			local t = {THEME:GetString("SLPlayerOptions","None")}
 			-- assume pluralization via terminal s
-			t[2] = THEME:GetString(tns,"W5").."s"
-			t[3] = THEME:GetString(tns,"W4").."s + "..t[2]
-			t[4] = THEME:GetString(tns,"W1").."s + "..THEME:GetString(tns,"W2").."s"
+			local idx = 2
+			t[idx] = THEME:GetString(tns,"W5").."s"
+			idx = idx + 1
+			if SL.Global.GameMode=="ITG" then
+				t[idx] = THEME:GetString(tns,"W4").."s + "..t[idx-1]
+				idx = idx + 1
+			end
+			t[idx] = THEME:GetString(tns,"W1").."s + "..THEME:GetString(tns,"W2").."s"
 			return t
 		end,
-		OneChoiceForAllPlayers = true,
 		LoadSelections = function(self, list, pn)
-			local windows = SL.Global.ActiveModifiers.TimingWindows
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
+
+			-- First determine the set of actual enabled windows.
+			local windows = {true,true,true,true,true}
+			local disabledWindows = playeroptions:GetDisabledTimingWindows()
+			for w in ivalues(disabledWindows) do
+				windows[tonumber(ToEnumShortString(w):sub(-1))] = false
+			end
+
+			-- Compare them to any of our available selections
+			local matched = false
 			for i=1,#list do
 				local all_match = true
 				for w,window in ipairs(windows) do
 					if window ~= self.Values[i][w] then all_match = false; break end
 				end
-				if all_match then list[i] = true; break end
+				if all_match then
+					matched = true
+					list[i] = true
+					mods.TimingWindows = windows
+					break
+				end
+			end
+
+			-- It's possible one may have manipulated the available windows through playeroptions elsewhere.
+			-- If the TimingWindows set via LoadSelections is not one of our valid choices then default
+			-- to a known value (all windows enabled).
+			if not matched then
+				mods.TimingWindows = {true,true,true,true,true}
+				playeroptions:ResetDisabledTimingWindows()
+				list[1] = true
 			end
 			return list
 		end,
 		SaveSelections = function(self, list, pn)
-			local gmods = SL.Global.ActiveModifiers
+			local mods, playeroptions = GetModsAndPlayerOptions(pn)
 			for i=1,#list do
 				if list[i] then
-					gmods.TimingWindows = self.Values[i]
-					for w=1,NumJudgmentsAvailable() do
-						if self.Values[i][w] then
-							PREFSMAN:SetPreference("TimingWindowSecondsW"..w, SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..w])
-						else
-							local prev = (w > 1 and PREFSMAN:GetPreference("TimingWindowSecondsW"..(w-1)) or -math.abs(SL.Preferences[SL.Global.GameMode].TimingWindowAdd))
-							PREFSMAN:SetPreference("TimingWindowSecondsW"..w, prev)
+					mods.TimingWindows = self.Values[i]
+					playeroptions:ResetDisabledTimingWindows()
+					for i,enabled in ipairs(mods.TimingWindows) do
+						if not enabled then
+							playeroptions:DisableTimingWindow("TimingWindow_W"..i)
 						end
 					end
+				end
+			end
+		end
+	},
+	-------------------------------------------------------------------------
+	NoteFieldOffsetX = {
+		LayoutType = "ShowOneInRow",
+		ExportOnChange = true,
+		Choices = function()
+			local first	= -50
+			local last 	= 50
+			local step 	= 1
+
+			return range(first, last, step)
+		end,
+		LoadSelections = function(self, list, pn)
+			local val = tonumber(SL[ToEnumShortString(pn)].ActiveModifiers.NoteFieldOffsetX) or 0
+			for i,v in ipairs(self.Choices) do
+				if v == val then
+					list[i] = true
+					break
+				end
+			end
+			return list
+		end,
+		SaveSelections = function(self, list, pn)
+			for i,v in ipairs(self.Choices) do
+				if list[i] then
+					SL[ToEnumShortString(pn)].ActiveModifiers.NoteFieldOffsetX = v
+					break
+				end
+			end
+		end
+	},
+	-------------------------------------------------------------------------
+	NoteFieldOffsetY = {
+		LayoutType = "ShowOneInRow",
+		ExportOnChange = true,
+		Choices = function()
+			local first	= -50
+			local last 	= 50
+			local step 	= 1
+
+			return range(first, last, step)
+		end,
+		LoadSelections = function(self, list, pn)
+			local val = tonumber(SL[ToEnumShortString(pn)].ActiveModifiers.NoteFieldOffsetY) or 0
+			for i,v in ipairs(self.Choices) do
+				if v == val then
+					list[i] = true
+					break
+				end
+			end
+			return list
+		end,
+		SaveSelections = function(self, list, pn)
+			for i,v in ipairs(self.Choices) do
+				if list[i] then
+					SL[ToEnumShortString(pn)].ActiveModifiers.NoteFieldOffsetY = v
+					break
 				end
 			end
 		end

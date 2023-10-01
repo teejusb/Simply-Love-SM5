@@ -67,6 +67,23 @@ NumJudgmentsAvailable = function()
 end
 
 -- -----------------------------------------------------------------------
+-- get worst timing judgment hit for a song
+
+GetWorstJudgment = function(offsets)
+	local worst_judgment = 1
+	for i in ivalues(offsets) do
+		if i[2] ~= "Miss" then
+			local judgment = DetermineTimingWindow(i[2])
+			if worst_judgment < judgment then
+				worst_judgment = judgment
+			end
+		end
+	end
+	
+	return worst_judgment
+end
+
+-- -----------------------------------------------------------------------
 -- some common information needed by ScreenSystemOverlay's credit display,
 -- as well as ScreenTitleJoin overlay and ./Scripts/SL-Branches.lua regarding coin credits
 
@@ -312,16 +329,16 @@ SetGameModePreferences = function()
 	end
 
 	--------------------------------------------
-	-- If we're switching to Casual mode,
-	-- we want to reduce the number of judgments,
-	-- so turn Decents and WayOffs off now.
-	if SL.Global.GameMode == "Casual" then
-		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
-	end
-
-	--------------------------------------------
 	-- loop through human players and apply whatever mods need to be set now
 	for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+		local pn = ToEnumShortString(player)
+		-- If we're switching to Casual mode,
+		-- we want to reduce the number of judgments,
+		-- so turn Decents and WayOffs off now.
+		if SL.Global.GameMode == "Casual" then
+			SL[pn].ActiveModifiers.TimingWindows = {true,true,true,false,false}
+		end
+
 		-- Now that we've set the SL table for TimingWindows appropriately,
 		-- use it to apply TimingWindows.
 		local TW_OptRow = CustomOptionRow( "TimingWindows" )
@@ -612,6 +629,9 @@ end
 --          "Rolls" -> total number of rolls held
 --     "totalRolls" -> total number of rolls in the chart
 -- }
+--
+-- Note: The returned table can't be used directly into CalculateExScore because the keys
+-- "HitMine", "Held", and "LetGo" aren't calculated here.
 GetExJudgmentCounts = function(player)
 	local pn = ToEnumShortString(player)
 	local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
@@ -635,7 +655,7 @@ GetExJudgmentCounts = function(player)
 			-- For the last window (Decent) in FA+ mode...
 			if window == "W5" then
 				-- Only populate if the window is still active.
-				if SL.Global.ActiveModifiers.TimingWindows[5] then
+				if SL[pn].ActiveModifiers.TimingWindows[5] then
 					counts[adjusted_window] = number
 				end
 			else
@@ -649,7 +669,7 @@ GetExJudgmentCounts = function(player)
 			-- We need to extract the W0 count in ITG mode.
 			if window == "W1" then
 				local faPlus = SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1].ex_counts.W0_total
-				-- Subtract white count from blue count
+				-- Subtract FA+ count from the overall fantastic window count.
 				number = number - faPlus
 				-- Populate the two numbers.
 				counts["W0"] = faPlus
@@ -657,8 +677,8 @@ GetExJudgmentCounts = function(player)
 			else
 				if ((window ~= "W4" and window ~= "W5") or
 						-- Only populate decent and way off windows if they're active.
-						(window == "W4" and SL.Global.ActiveModifiers.TimingWindows[4]) or
-						(window == "W5" and SL.Global.ActiveModifiers.TimingWindows[5])) then
+						(window == "W4" and SL[pn].ActiveModifiers.TimingWindows[4]) or
+						(window == "W5" and SL[pn].ActiveModifiers.TimingWindows[5])) then
 					counts[window] = number
 				end
 			end
@@ -748,26 +768,7 @@ CalculateExScore = function(player, ex_counts)
 		end
 	end
 
-	return math.max(0, math.floor(total_points/total_possible * 10000) / 100)
-end
-
--- -----------------------------------------------------------------------
-WriteItlFile = function(dir, data)
-	local path = dir.. "itl2022.itl"
-	local f = RageFileUtil:CreateRageFile()
-	local existing = ""
-	if FILEMAN:DoesFileExist(path) then
-		-- Load the current contents of the file if it exists.
-		if f:Open(path, 1) then
-			existing = f:Read()
-		end
-	end
-
-	-- Append all the scores to the file.
-	if f:Open(path, 2) then
-		f:Write(existing..data)
-	end
-	f:destroy()
+	return math.max(0, math.floor(total_points/total_possible * 10000) / 100), total_points, total_possible
 end
 
 -- -----------------------------------------------------------------------

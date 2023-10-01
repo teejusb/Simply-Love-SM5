@@ -138,15 +138,14 @@ for i=1, PROFILEMAN:GetNumLocalProfiles() do
 		index = i,
 		dir=dir,
 		displayname = profile_name,
-		highscorename = profile:GetLastUsedHighScoreName(),
-		-- recentsong = RecentSong(profile:GetLastPlayedSong()),
 		totalsongs = TotalSongs(profile:GetNumTotalSongsPlayed()),
 		mods = mods,
 		noteskin = noteskin,
 		judgment = judgment,
 		country = ECSCountry(profile_name),
 		level = ECSLevel(profile_name),
-		exp = ECSExp(profile_name)
+		exp = ECSExp(profile_name),
+		guid = profile:GetGUID(),
 	}
 
 	table.insert(profile_data, data)

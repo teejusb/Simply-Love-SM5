@@ -24,6 +24,7 @@ local RadarCategories = {
 	x = { P1=-180, P2=218 }
 }
 
+-- TODO(Zankoku) - EX judgments are in storage now, so we shouldn't have to calculate this all over again
 local counts = GetExJudgmentCounts(player)
 
 local t = Def.ActorFrame{
@@ -38,8 +39,8 @@ local t = Def.ActorFrame{
 
 -- The FA+ window shares the status as the FA window.
 -- If the FA window is disabled, then we consider the FA+ window disabled as well.
-local windows = {SL.Global.ActiveModifiers.TimingWindows[1]} 
-for v in ivalues( SL.Global.ActiveModifiers.TimingWindows) do
+local windows = {SL[pn].ActiveModifiers.TimingWindows[1]}
+for v in ivalues( SL[pn].ActiveModifiers.TimingWindows) do
 	windows[#windows + 1] = v
 end
 
