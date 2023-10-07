@@ -1,5 +1,17 @@
 local Players = GAMESTATE:GetHumanPlayers();
 
+local BreadsUsed = function(relics_used)
+	local count = 0
+	for relic in ivalues(relics_used) do
+		local name = relic.name
+		if (name == "Baguette" or name == "Khachapuri" or name == "Pain Brioche" or name == "Fougasse" or
+			name == "Faluche") then
+			count = count + 1
+		end
+	end
+	return count
+end
+
 local t = Def.ActorFrame{
 	LoadFont("Wendy/_wendy white")..{
 		Text="GAME",
@@ -59,6 +71,10 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local accuracy_potion = 0
 				local tpa_standard = 0
 				local memepeace_beret = 0
+				local exjam09 = 0
+				local jar_of_pickles = 0
+				local meteorite = 0
+				local despots_chapeau = 0
 
 				for i=1,7 do
 					local song_played = ECS.Player.SongsPlayed[i]
@@ -85,6 +101,18 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 								if relic.name == "Memepeace Beret" then
 									memepeace_beret = memepeace_beret + 1
 								end
+								if relic.name == "ExJam09" then
+									exjam09 = exjam09 + 1
+								end
+								if relic.name == "Jar of Pickles" then
+									jar_of_pickles = jar_of_pickles + 1
+								end
+								if relic.name == "Meteorite" then
+									meteorite = meteorite + 1
+								end
+								if relic.name == "Despot's Chapeau" then
+									despots_chapeau = despots_chapeau + 1
+								end
 							end
 						end
 					end
@@ -92,13 +120,19 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 
 				-- Add additional BP from the end of set relics
 				local songs_passed = 0
+				local songs_passed_not_in_top_7 = 0
+				local total_bread = 0
 				local total_bpm = 0
 				local tiers = {}
 				local total_steps = 0
 				local total_score = 0
 				local total_over_95 = 0
+
+				local count = 0
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
+						count = count + 1
+						total_bread = total_bread + BreadsUsed(song_played.relics_used)
 						total_bpm = total_bpm + song_played.bpm
 						if tiers[song_played.bpm_tier] == nil then
 							tiers[song_played.bpm_tier] = 0
@@ -106,6 +140,9 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						tiers[song_played.bpm_tier] = tiers[song_played.bpm_tier] + 1
 						total_steps = total_steps + song_played.steps
 						songs_passed = songs_passed + 1
+						if count > 7 then
+							songs_passed_not_in_top_7 = songs_passed_not_in_top_7 + 1
+						end
 						total_score = total_score + song_played.score
 						if song_played.score >= 0.95 then
 							total_over_95 = total_over_95 + 1
@@ -130,10 +167,38 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
+				if despots_chapeau > 0 then total_points = total_points + (20 * songs_passed) * despots_chapeau end
+				if meteorite > 0 then total_points = total_points + (100 * songs_passed_not_in_top_7) * meteorite end
+				if jar_of_pickles > 0 then total_points = total_points + (55 * total_bread) * jar_of_pickles end
+				if exjam09 > 0 then total_points = total_points + (40 * total_bread) * exjam09 end
 
 				self:settext(tostring(total_points))
 			elseif ECS.Mode == "Marathon" then
-				self:settext(tostring(ECS.Player.TotalMarathonPoints))
+				local marathon_points = ECS.Player.TotalMarathonPoints
+			
+				local dagger_of_time = 0
+				local corsage = 0
+
+				for active_relic in ivalues(ECS.Player.Relics) do
+					if active_relic.name == "Dagger of Time" then
+						dagger_of_time = dagger_of_time + 1
+					end
+
+					if active_relic.name == "Corsage" then
+						corsage = corsage + 1
+					end
+				end
+
+				-- Corsage always takes priority over Dagger of Time.
+				if corsage > 0 then
+					marathon_points = math.floor(marathon_points * 3)
+				elseif dagger_of_time > 0 then
+					marathon_points = math.floor(marathon_points / 3)
+				end
+
+				-- TODO(teejusb): +100 if "Hero Cape" was used.
+
+				self:settext(tostring(marathon_points))
 			end
 		end,
 		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
