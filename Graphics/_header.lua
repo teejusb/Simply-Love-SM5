@@ -2,8 +2,6 @@
 local dark  = {0,0,0,0.9}
 local light = {0.65,0.65,0.65,1}
 
-local settimer_seconds = 60 * 60
-
 
 local ArvinsGambitIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
@@ -15,7 +13,7 @@ local ArvinsGambitIsActive = function()
 end
 
 if ArvinsGambitIsActive() then
-	settimer_seconds = 20 * 60
+	ECS.SetTimer = 20 * 60
 end
 
 local endgame_warning_has_been_issued = false
@@ -44,7 +42,7 @@ local SessionHasEnded = function(session_seconds)
 	if (ECS.Mode == "ECS" or ECS.Mode == "Speed") and ECS.BreakTimer < 0 then return true end
 
 	if SL.Global.TimeAtSessionStart
-		and (session_seconds > settimer_seconds)
+		and (session_seconds > ECS.SetTimer)
 		and (ECS.Mode == "Warmup" or
 			 ((ECS.Mode == "ECS" or ECS.Mode == "Speed") and SL.Global.Stages.PlayedThisGame >= 7) or
 			 ArvinsGambitIsActive())
@@ -87,7 +85,7 @@ local Update = function(af, dt)
 		local session_seconds = cur_time - SL.Global.TimeAtSessionStart
 
 		-- if this game session is less than 1 hour in duration so far
-		if session_seconds < settimer_seconds then
+		if session_seconds < ECS.SetTimer then
 			sessiontimer_actor:settext( "SET - " .. SecondsToMMSS(session_seconds) )
 		else
 			sessiontimer_actor:settext( "SET - " .. SecondsToHHMMSS(session_seconds) ):diffuse(1,0,0,1)

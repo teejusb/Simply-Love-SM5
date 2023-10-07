@@ -5,7 +5,7 @@ for tier in ["Lower", "Mid", "Upper", "Speed"]:
 	# Song Info
 	print(r"""ECS.SongInfo.%s = {""" % tier)
 	print(r"""	-- These values will be calculated and set below.""")
-	print(r"""	PackName = "ECS11 - %s",""" % tier)
+	print(r"""	PackName = "ECS12 - %s",""" % tier)
 	print(r"""	MinBpm = 0,""")
 	print(r"""	MaxBpm = 0,""")
 	print(r"""	MinScaled16ths = 0,""")

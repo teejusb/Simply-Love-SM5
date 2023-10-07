@@ -5,41 +5,41 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local parallax = SONGMAN:FindSong("ECS11 - Upper/[23] [230] Parallax (Rerestep) FP 230")
-				if parallax then
-					GAMESTATE:SetPreferredSong(parallax)
+				local default = SONGMAN:FindSong("ECS12 - Upper/[24] [240] Fumisugi Annihilation")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local falz = SONGMAN:FindSong("ECS11 - Mid/[17] [170] Falz Double Hunar Theme")
-				if falz then
-					GAMESTATE:SetPreferredSong(falz)
+				local default = SONGMAN:FindSong("ECS12 - Mid/[18] [180] The Second Circle - Lust")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local discovery = SONGMAN:FindSong("ECS11 - Lower/[12] [130] Discovery")
-				if discovery then
-					GAMESTATE:SetPreferredSong(discovery)
+				local default = SONGMAN:FindSong("ECS12 - Lower/[12] [120] Dancin KRONO Extended Remix")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local eljektronnyi = SONGMAN:FindSong("ECS11 - Speed/[23] [240] Eljektronnyi Mir")
-			if eljektronnyi then
-				GAMESTATE:SetPreferredSong(eljektronnyi)
+			local default = SONGMAN:FindSong("ECS12 - Speed/[24] [240] The Eighth Circle - Fraud")
+			if default then
+				GAMESTATE:SetPreferredSong(default)
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local proof = SONGMAN:FindSong("ECS11 - Upper Marathon/Proof Of Will")
-				if proof then
-					GAMESTATE:SetPreferredSong(proof)
+				local default = SONGMAN:FindSong("ECS12 - Upper Marathon/PATH OF THE GREATS ~The Vast Gardens Of Elysium~")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local ballistic = SONGMAN:FindSong("ECS11 - Mid Marathon/Let's Go Ballistic")
-				if ballistic then
-					GAMESTATE:SetPreferredSong(ballistic)
+				local default = SONGMAN:FindSong("ECS12 - Mid Marathon/TOTAL BLACKOUT ~The Flooded Plains Of Asphodel~")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local chepers = SONGMAN:FindSong("ECS11 - Lower Marathon/Return Of The Chepers")
-				if chepers then
-					GAMESTATE:SetPreferredSong(chepers)
+				local default = SONGMAN:FindSong("ECS12 - Lower Marathon/NO ESCAPE ~The Deep Abyss Of Tartarus~")
+				if default then
+					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		end
