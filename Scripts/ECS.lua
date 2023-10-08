@@ -26979,7 +26979,7 @@ local VerifyRelics = function()
 end
 
 -- Uncomment if to verify that all the score functions of the relics return valid numbers.
-VerifyRelics()
+-- VerifyRelics()
 
 -- -----------------------------------------------------------------------
 -- Helper Functions
