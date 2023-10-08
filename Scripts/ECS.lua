@@ -1960,7 +1960,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.pack:find("Hardbass Madness") then
-				return 200
+				return 150
 			else
 				return 0
 			end
