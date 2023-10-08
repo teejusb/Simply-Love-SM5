@@ -189,14 +189,14 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					end
 				end
 
+				-- TODO(teejusb): +100 if "Hero Cape" was used at any time (even in RO).
+
 				-- Corsage always takes priority over Dagger of Time.
 				if corsage > 0 then
 					marathon_points = math.floor(marathon_points * 3)
 				elseif dagger_of_time > 0 then
 					marathon_points = math.floor(marathon_points / 3)
 				end
-
-				-- TODO(teejusb): +100 if "Hero Cape" was used.
 
 				self:settext(tostring(marathon_points))
 			end

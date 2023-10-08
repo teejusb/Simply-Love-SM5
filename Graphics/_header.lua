@@ -92,13 +92,14 @@ local Update = function(af, dt)
 		end
 
 		if DeductFromBreakTimer() then
-			ECS.BreakTimer = breaktimer_at_screen_start - (cur_time - seconds_at_screen_start)
-		end
+			if ECS.TimeToRemoveFromBreakTimer ~= 0 then
+				SM(SecondsToMSS(ECS.TimeToRemoveFromBreakTimer).." removed from Break Timer")
+				-- Adjust the breaktimer_at_screen_start value to account for the time removed
+				breaktimer_at_screen_start = breaktimer_at_screen_start - ECS.TimeToRemoveFromBreakTimer
+				ECS.TimeToRemoveFromBreakTimer = 0
+			end
 
-		if SCREENMAN:GetTopScreen():GetName() ~= "ScreenGameplay" and ECS.TimeToRemoveFromBreakTimer ~= 0 then
-			SM(SecondsToMSS(ECS.TimeToRemoveFromBreakTimer).." removed from Break Timer")
-			ECS.BreakTimer = ECS.BreakTimer - ECS.TimeToRemoveFromBreakTimer
-			ECS.TimeToRemoveFromBreakTimer = 0
+			ECS.BreakTimer = breaktimer_at_screen_start - (cur_time - seconds_at_screen_start)
 		end
 
 		if breaktimer_actor then
