@@ -149,9 +149,12 @@ af[#af+1] = Def.Actor{
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 			-- relic actions depend on the current screen,
 			-- so ApplyRelicActions() must be called from OnCommand
-			ApplyRelicActions()
+			
+			if MixTapesRandomSong == nil then
+				ApplyRelicActions()
 
-			ExpendChargesOnActiveRelics()
+				ExpendChargesOnActiveRelics()
+			end
 		end
 	end,
 	OffCommand=function(self)
