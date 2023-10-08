@@ -25,6 +25,22 @@ local af = Def.ActorFrame{
 				end
 			end
 		end
+
+		if ECS.MixTapesRandomSong ~= nil then
+			self:queuecommand("SelectSong")
+		end
+	end,
+	SelectSongCommand=function(self)
+		local wheel = SCREENMAN:GetTopScreen():GetMusicWheel()
+
+		wheel:SelectSong(ECS.MixTapesRandomSong)
+		wheel:Move(1)
+		wheel:Move(-1)
+		wheel:Move(0)
+		GAMESTATE:SetCurrentSong(ECS.MixTapesRandomSong)
+
+		SCREENMAN:GetTopScreen():SetNextScreenName("ScreenGameplay")
+		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 	end,
 	ChangeStepsMessageCommand=function(self, params)
 		self:playcommand("StepsHaveChanged", params)

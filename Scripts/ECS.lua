@@ -8,7 +8,7 @@ InitializeECS = function()
 	ECS.SetTimer=(60 * 60)
 	ECS.SpeedAttemptNumber = 0
 	ECS.TimeToRemoveFromBreakTimer = 0
-	ECS.MixTapesUsed = false
+	ECS.MixTapesRandomSong = nil
 
 	ECS.Player = {
 		Profile=nil,
@@ -2071,9 +2071,10 @@ ECS.Relics = {
 		img="herocape.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				ECS.BreakTimer = ECS.BreakTimer + 100
-				if ECS.BreakTimer < 0 then
-					ECS.BreakTimer = 0
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 100
 				end
 			end
 
@@ -2211,9 +2212,10 @@ ECS.Relics = {
 		img="xynnsmixtape.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				ECS.BreakTimer = ECS.BreakTimer + 60
-				if ECS.BreakTimer < 0 then
-					ECS.BreakTimer = 0
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 60
 				end
 			end
 
@@ -2224,26 +2226,18 @@ ECS.Relics = {
 				end
 
 				-- Don't want to run into an infinite loop so use the MixTapesUsed flag
-				if not ECS.MixTapesUsed then
-					ECS.MixTapesUsed = true
-
+				if ECS.MixTapesRandomSong == nil then
 					local song = GAMESTATE:GetCurrentSong()
 					local group = song:GetGroupName()
 					local all_songs = SONGMAN:GetSongsInGroup(group)
 					local random_song = all_songs[math.random(#all_songs)]
 
-					ECS.RandomSong = random_song
+					ECS.MixTapesRandomSong = random_song
 
-					local steps = random_song:GetStepsByStepsType("StepsType_Dance_Single")
-
-					-- Only one player should be joined, use the MasterPlayerNumber to determine which.
-					local mpn = GAMESTATE:GetMasterPlayerNumber()
-
-					-- Assume that there are only one set of steps for each of these songs
-					GAMESTATE:SetCurrentSong(ECS.RandomSong)
-					GAMESTATE:SetCurrentSteps(mpn, steps[1])
-
-					SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
+					SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMusic")
+					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+				else
+					ECS.MixTapesRandomSong = nil
 				end
 			end
 		end,
@@ -2368,9 +2362,10 @@ ECS.Relics = {
 		img="grainsofchronossand.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				ECS.BreakTimer = ECS.BreakTimer + 30
-				if ECS.BreakTimer < 0 then
-					ECS.BreakTimer = 0
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 30
 				end
 			end
 		end,
