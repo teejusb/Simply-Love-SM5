@@ -1843,6 +1843,7 @@ ECS.Relics = {
 			if not CorsageEquipped(relics_used) and SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 0.85 then
+					SL.Global.ActiveModifiers.MusicRate = 0.85
 					GAMESTATE:ApplyGameCommand("mod,0.85xmusic")
 				end
 			end
@@ -1937,6 +1938,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.02 then
+					SL.Global.ActiveModifiers.MusicRate = 1.02
 					GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
 				end
 			end
@@ -2091,6 +2093,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.10 then
+					SL.Global.ActiveModifiers.MusicRate = 1.10
 					GAMESTATE:ApplyGameCommand("mod,1.10xmusic")
 				end
 			end
@@ -2187,6 +2190,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.00 then
+					SL.Global.ActiveModifiers.MusicRate = 1
 					GAMESTATE:ApplyGameCommand("mod,1.00xmusic")
 				end
 			end
@@ -2232,6 +2236,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 0.97 then
+					SL.Global.ActiveModifiers.MusicRate = 0.97
 					GAMESTATE:ApplyGameCommand("mod,0.97xmusic")
 				end
 
@@ -2321,6 +2326,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.10 then
+					SL.Global.ActiveModifiers.MusicRate = 1.10
 					GAMESTATE:ApplyGameCommand("mod,1.10xmusic")
 				end
 			end
@@ -2686,6 +2692,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.02 then
+					SL.Global.ActiveModifiers.MusicRate = 1.02
 					GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
 				end
 			end
@@ -2721,6 +2728,7 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
 				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.05 then
+					SL.Global.ActiveModifiers.MusicRate = 1.05
 					GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
 				end
 			end
