@@ -34,9 +34,9 @@ if ThemePrefs.Get("VisualStyle") ~= "SRPG7" then
 		OnCommand=function(self)
 			ApplyRelicActions()
 			if failed then
-				SOUND:PlayOnce(THEME:GetPathS("", "lamelevelup.ogg"))
+				SOUND:PlayOnce(THEME:GetPathS("", "ECS-Failed.ogg"))
 			else
-				SOUND:PlayOnce(THEME:GetPathS("", "levelup.ogg"))
+				SOUND:PlayOnce(THEME:GetPathS("", "ECS-Passed.ogg"))
 			end
 		end,
 		OffCommand=function(self) ResetSettings() end,
