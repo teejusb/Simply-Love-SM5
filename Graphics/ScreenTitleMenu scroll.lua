@@ -30,7 +30,7 @@ t[#t+1] = LoadFont("Common Bold")..{
 			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				textColor = GetCurrentColor(true)
 			end
-			textColor = color("#000000")
+			textColor = color("#00b3a4")
 			self:diffuse(textColor)
 		else
 			local textColor = color("#888888")
@@ -40,7 +40,7 @@ t[#t+1] = LoadFont("Common Bold")..{
 			if ThemePrefs.Get("VisualStyle") == "SRPG7" then
 				textColor = color(SL.SRPG7.TextColor)
 			end
-			textColor = color("#8f490d")
+			textColor = color("#FFFFFF")
 			self:diffuse(textColor)
 		end
 	end,
