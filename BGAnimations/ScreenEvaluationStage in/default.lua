@@ -16,6 +16,7 @@ local ResetSettings = function()
 	-- always undo the effects of any relics that change LifeDifficulty when leaving ScreenEval, even if they weren't active
 	PREFSMAN:SetPreference("LifeDifficultyScale", 1)
 
+	SL.Global.ActiveModifiers.MusicRate = 1
 	GAMESTATE:ApplyGameCommand("mod,1xmusic")
 end
 
