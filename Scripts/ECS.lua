@@ -22,6 +22,16 @@ InitializeECS = function()
 	}
 end
 
+local UsingMedalOfFreedom = function(relics_used)
+	for relic in ivalues(relics_used) do
+		local name = relic.name
+		if (name == "Medal of Freedom") then
+			return true
+		end
+	end
+	return false
+end
+
 local BowEquipped = function(relics_used)
 	for relic in ivalues(relics_used) do
 		local name = relic.name
@@ -1926,7 +1936,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.02 then
+				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.02 then
 					GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
 				end
 			end
@@ -2080,7 +2090,7 @@ ECS.Relics = {
 
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.10 then
+				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.10 then
 					GAMESTATE:ApplyGameCommand("mod,1.10xmusic")
 				end
 			end
@@ -2221,7 +2231,7 @@ ECS.Relics = {
 
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 0.97 then
+				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 0.97 then
 					GAMESTATE:ApplyGameCommand("mod,0.97xmusic")
 				end
 
@@ -2675,7 +2685,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.02 then
+				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.02 then
 					GAMESTATE:ApplyGameCommand("mod,1.02xmusic")
 				end
 			end
@@ -2710,7 +2720,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 or songOptions:MusicRate() > 1.05 then
+				if songOptions:MusicRate() == 1 and not UsingMedalOfFreedom(relics_used) or songOptions:MusicRate() > 1.05 then
 					GAMESTATE:ApplyGameCommand("mod,1.05xmusic")
 				end
 			end
