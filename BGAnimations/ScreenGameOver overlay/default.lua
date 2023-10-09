@@ -133,10 +133,8 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local total_over_95 = 0
 				local squirrel_songs = 0
 
-				local count = 0
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
-						count = count + 1
 						total_bread = total_bread + BreadsUsed(song_played.relics_used)
 						total_bpm = total_bpm + song_played.bpm
 						if tiers[song_played.bpm_tier] == nil then
@@ -145,7 +143,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						tiers[song_played.bpm_tier] = tiers[song_played.bpm_tier] + 1
 						total_steps = total_steps + song_played.steps
 						songs_passed = songs_passed + 1
-						if count > 7 then
+						if songs_passed > 7 then
 							songs_passed_not_in_top_7 = songs_passed_not_in_top_7 + 1
 						end
 						total_score = total_score + song_played.score

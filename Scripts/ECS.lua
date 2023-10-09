@@ -27166,6 +27166,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	ECS.Player.SongsPlayed[index] = {
 		name=song_data.name,
 		stepartist=song_data.stepartist,
+		pack=song_data.pack,
 		points=points,
 		steps=song_data.steps,
 		bpm=song_data.bpm,
