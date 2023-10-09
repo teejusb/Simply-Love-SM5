@@ -12,6 +12,10 @@ local BreadsUsed = function(relics_used)
 	return count
 end
 
+local IsSquirrelSong = function(song_data)
+	return song_data.pack:find("Squirrel Metal") or song_data.pack:find("Squirrel Singles") or song_data.pack:find("Mozee Metal")
+end
+
 local t = Def.ActorFrame{
 	LoadFont("Wendy/_wendy white")..{
 		Text="GAME",
@@ -127,6 +131,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local total_steps = 0
 				local total_score = 0
 				local total_over_95 = 0
+				local squirrel_songs = 0
 
 				local count = 0
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
@@ -146,6 +151,10 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						total_score = total_score + song_played.score
 						if song_played.score >= 0.95 then
 							total_over_95 = total_over_95 + 1
+						end
+
+						if IsSquirrelSong(song_played) then
+							squirrel_songs = squirrel_songs + 1
 						end
 					end
 				end
@@ -167,7 +176,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
-				if despots_chapeau > 0 then total_points = total_points + (20 * songs_passed) * despots_chapeau end
+				if despots_chapeau > 0 then total_points = total_points + (20 * squirrel_songs) * despots_chapeau end
 				if meteorite > 0 then total_points = total_points + (100 * songs_passed_not_in_top_7) * meteorite end
 				if jar_of_pickles > 0 then total_points = total_points + (55 * total_bread) * jar_of_pickles end
 				if exjam09 > 0 then total_points = total_points + (40 * total_bread) * exjam09 end
