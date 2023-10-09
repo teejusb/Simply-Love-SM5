@@ -23,16 +23,28 @@ local IsActiveRelic = function(relic)
 	return false
 end
 
--- this works because no single player in ECS has both Order of Ambrosia and Champion Belt
 local GetNumActiveRows = function()
-	local num_active_rows = 2
+	local has_order = false
+	local has_belt = false
+
 	for active_relic in ivalues(active_relics) do
 		if active_relic.name == "Order of Ambrosia" then
-			num_active_rows = num_active_rows + 2
+			has_order = true
 		elseif active_relic.name == "Champion Belt" then
-			num_active_rows = num_active_rows + 1
+			has_belt = true
 		end
 	end
+
+	local num_active_rows = 2
+
+	if has_order and has_belt then
+		num_active_rows = 5
+	elseif has_order then
+		num_active_rows = 4
+	elseif has_belt then
+		num_active_rows = 3
+	end
+
 	return num_active_rows
 end
 
