@@ -1087,7 +1087,7 @@ ECS.Relics = {
 		img="bowoflight.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 180 then
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
 				return math.floor(song_data.dp * 0.1)
 			else
 				return 0
@@ -1104,7 +1104,7 @@ ECS.Relics = {
 		img="bowoflight+1.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 180 then
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
 				return math.floor(song_data.dp * 0.1) + math.floor(song_data.ep * 0.2)
 			else
 				return 0
@@ -1121,7 +1121,7 @@ ECS.Relics = {
 		img="bowoflight+2.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.bpm_tier == 180 then
+			if ArrowEquipped(relics_used) and song_data.bpm_tier == 180 then
 				return math.floor(song_data.dp * 0.1) + math.floor(song_data.ep * 0.2) + math.floor(song_data.length * 25)
 			else
 				return 0
