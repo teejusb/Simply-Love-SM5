@@ -2400,7 +2400,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			for relic in ivalues(relics_used) do
 				local name = relic.name
-				if name == "Aegis" then
+				if name == "Aegis" or name == "Aegis +1" or name == "Aegis +2" then
 					if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 						ECS.BreakTimer = ECS.BreakTimer - 300
 						if ECS.BreakTimer < 0 then
@@ -2442,7 +2442,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			for relic in ivalues(relics_used) do
 				local name = relic.name
-				if name == "Aegis" then
+				if name == "Aegis" or name == "Aegis +1" or name == "Aegis +2" then
 					if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 						ECS.BreakTimer = ECS.BreakTimer - 300
 						if ECS.BreakTimer < 0 then
