@@ -308,7 +308,7 @@ if (ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Warmup" or (ECS.Mod
 						if ECS.BreakTimer < 0 then
 							s = s .. " used up all your break time!\n\n"
 						else
-							s = s .. " played more than 7 songs and your set has lasted longer than 1 hour!\n\n"
+							s = s .. " played more than 7 songs and have exceeded your allotted set time!\n\n"
 						end
 					elseif ECS.Mode == "Warmup" then
 						s = s .. "'ve played longer than 1 hour!\n\n"
