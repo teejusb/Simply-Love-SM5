@@ -86,38 +86,64 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						total_points = total_points + song_played.points
 						-- Relics are only active if you passed the song you used them on.
 						if not song_played.failed then
+							local kraken_multiplier = 1
+							local slime_badge_used = false
+							local agility_potion_used = false
+							local stamina_potion_used = false
+							local accuracy_potion_used = false
+							local tpa_standard_used = false
+							local memepeace_beret_used = false
+							local exjam09_used = false
+							local jar_of_pickles_used = false
+							local meteorite_used = false
+							local despots_chapeau_used = false
+
 							for relic in ivalues(song_played.relics_used) do
 								if relic.name == "Slime Badge" then
-									slime_badge = slime_badge + 1
+									slime_badge_used = true
 								end
 								if relic.name == "Agility Potion" then
-									agility_potion = agility_potion + 1
+									agility_potion_used = true
 								end
 								if relic.name == "Stamina Potion" then
-									stamina_potion = stamina_potion + 1
+									stamina_potion_used = true
 								end
 								if relic.name == "Accuracy Potion" then
-									accuracy_potion = accuracy_potion + 1
+									accuracy_potion_used = true
 								end
 								if relic.name == "TPA Standard" then
-									tpa_standard = tpa_standard + 1
+									tpa_standard_used = true
 								end
 								if relic.name == "Memepeace Beret" then
-									memepeace_beret = memepeace_beret + 1
+									memepeace_beret_used = true
 								end
 								if relic.name == "ExJam09" then
-									exjam09 = exjam09 + 1
+									exjam09_used = true
 								end
 								if relic.name == "Jar of Pickles" then
-									jar_of_pickles = jar_of_pickles + 1
+									jar_of_pickles_used = true
 								end
 								if relic.name == "Meteorite" then
-									meteorite = meteorite + 1
+									meteorite_used = true
 								end
 								if relic.name == "Despot's Chapeau" then
-									despots_chapeau = despots_chapeau + 1
+									despots_chapeau_used = true
+								end
+								if relic.name == "Kraken Club" then
+									kraken_multiplier = 2
 								end
 							end
+
+							slime_badge = slime_badge + (slime_badge_used and 1 or 0) * kraken_multiplier
+							agility_potion = agility_potion + (agility_potion_used and 1 or 0) * kraken_multiplier
+							stamina_potion = stamina_potion + (stamina_potion_used and 1 or 0) * kraken_multiplier
+							accuracy_potion = accuracy_potion + (accuracy_potion_used and 1 or 0) * kraken_multiplier
+							tpa_standard = tpa_standard + (tpa_standard_used and 1 or 0) * kraken_multiplier
+							memepeace_beret = memepeace_beret + (memepeace_beret_used and 1 or 0) * kraken_multiplier
+							exjam09 = exjam09 + (exjam09_used and 1 or 0) * kraken_multiplier
+							jar_of_pickles = jar_of_pickles + (jar_of_pickles_used and 1 or 0) * kraken_multiplier
+							meteorite = meteorite + (meteorite_used and 1 or 0) * kraken_multiplier
+							despots_chapeau = despots_chapeau + (despots_chapeau_used and 1 or 0) * kraken_multiplier
 						end
 					end
 				end
