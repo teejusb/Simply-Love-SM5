@@ -42,6 +42,10 @@ local Update = function(self, delta)
   if streams[streamIndex] ~= nil and not streams[streamIndex].isBreak and stream_time > 0 then
     stream_time = math.max(0, stream_time - delta)
   end
+
+  if stream_time ~= 0 then
+    ECS.TimeToRemoveFromBreakTimer = elapsed_time
+  end
 end
 
 return Def.ActorFrame{
@@ -49,9 +53,4 @@ return Def.ActorFrame{
 		self:queuecommand("SetUpdate")
 	end,
 	SetUpdateCommand=function(self) self:SetUpdateFunction( Update ) end,
-  OffCommand=function(self)
-    if stream_time ~= 0 then
-      ECS.TimeToRemoveFromBreakTimer = elapsed_time
-    end
-  end
 }
