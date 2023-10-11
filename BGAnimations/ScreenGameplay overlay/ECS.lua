@@ -150,9 +150,9 @@ af[#af+1] = Def.Actor{
 			-- relic actions depend on the current screen,
 			-- so ApplyRelicActions() must be called from OnCommand
 			
-			if MixTapesRandomSong == nil then
-				ApplyRelicActions()
-
+			ApplyRelicActions()
+			
+			if ECS.MixTapesRandomSong == nil then
 				ExpendChargesOnActiveRelics()
 			end
 		end
@@ -165,9 +165,11 @@ af[#af+1] = Def.Actor{
 			local seconds = (hour*60*60) + (minute*60) + second
 			local month_string = THEME:GetString("Months", "Month"..month)
 
-			CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
-			CreateRelicFile(day, month_string, year, seconds)
-			WriteRelicDataToDisk()
+			if ECS.MixTapesRandomSong == nil then
+				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
+				CreateRelicFile(day, month_string, year, seconds)
+				WriteRelicDataToDisk()
+			end
 		end
 	end
 }
