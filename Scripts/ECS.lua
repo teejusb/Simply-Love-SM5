@@ -8,7 +8,6 @@ InitializeECS = function()
 	ECS.SetTimer=(60 * 60)
 	ECS.SpeedAttemptNumber = 0
 	ECS.TimeToRemoveFromBreakTimer = 0
-	ECS.MixTapesRandomSong = nil
 
 	ECS.Player = {
 		Profile=nil,
@@ -18,6 +17,8 @@ InitializeECS = function()
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
 		ConsecutivePasses = 0,
+		HeartRingActive = false,
+		MixTapesRandomSong = nil,
 		TotalMarathonPoints=0,
 	}
 end
@@ -1885,10 +1886,12 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
 				local failed = pss:GetFailed()
-				if not failed then
-					-- When relics get applied in ScreenEvaluationStage In, we don't increment the ConsecutivePasses
-					-- (which happens in ScreenEvaluation common). Manually add the + 1 here.
-					ECS.BreakTimer = ECS.BreakTimer + 10 + 5 * (ECS.Player.ConsecutivePasses + 1)
+				if not failed and not ECS.Player.HeartRingActive then
+					ECS.Player.HeartRingActive = true
+
+					-- The first time Heart Ring is used, we handle adding to the break timer here.
+					-- Subsequent passes will be handled in AddPlayerSong below.
+					ECS.BreakTimer = ECS.BreakTimer + 10 + 5
 				end
 			end
 		end,
@@ -2241,18 +2244,18 @@ ECS.Relics = {
 				end
 
 				-- Don't want to run into an infinite loop so use the MixTapesUsed flag
-				if ECS.MixTapesRandomSong == nil then
+				if ECS.Player.MixTapesRandomSong == nil then
 					local song = GAMESTATE:GetCurrentSong()
 					local group = song:GetGroupName()
 					local all_songs = SONGMAN:GetSongsInGroup(group)
 					local random_song = all_songs[math.random(#all_songs)]
 
-					ECS.MixTapesRandomSong = random_song
+					ECS.Player.MixTapesRandomSong = random_song
 
 					SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMusic")
 					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 				else
-					ECS.MixTapesRandomSong = nil
+					ECS.Player.MixTapesRandomSong = nil
 				end
 			end
 		end,
@@ -19799,6 +19802,7 @@ ECS.Players["teejusb"] = {
 		{name="Sword Familiar", quantity=1},
 		{name="Godfather's Token", quantity=1},
 		{name="Xynn's Mix Tape", quantity=1},
+		{name="Heart Ring", quantity=1},
 	},
 	tier_skill = {[120]=6, [130]=15, [140]=6, [150]=4, [160]=2, [170]=2, [180]=1, [190]=3, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1, [300]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
@@ -27164,8 +27168,13 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 
 	if failed then
 		ECS.Player.ConsecutivePasses = 0
+		ECS.Player.HeartRingActive = false
 	else
 		ECS.Player.ConsecutivePasses = ECS.Player.ConsecutivePasses + 1
+	end
+
+	if ECS.Player.HeartRingActive then
+		ECS.BreakTimer = ECS.BreakTimer + 10 + 5 * ECS.Player.ConsecutivePasses
 	end
 
 	-- We can always reset this since Mix Tapes usage doesn't get to ScreenEvaluation.

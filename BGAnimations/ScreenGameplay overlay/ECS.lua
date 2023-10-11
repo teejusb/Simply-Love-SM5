@@ -152,7 +152,7 @@ af[#af+1] = Def.Actor{
 			
 			ApplyRelicActions()
 			
-			if ECS.MixTapesRandomSong == nil then
+			if ECS.Player.MixTapesRandomSong == nil then
 				ExpendChargesOnActiveRelics()
 			end
 		end
@@ -165,7 +165,7 @@ af[#af+1] = Def.Actor{
 			local seconds = (hour*60*60) + (minute*60) + second
 			local month_string = THEME:GetString("Months", "Month"..month)
 
-			if ECS.MixTapesRandomSong == nil then
+			if ECS.Player.MixTapesRandomSong == nil then
 				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 				CreateRelicFile(day, month_string, year, seconds)
 				WriteRelicDataToDisk()
