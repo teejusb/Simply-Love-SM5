@@ -204,7 +204,6 @@ LoadProfileCustom = function(profile, dir)
 					local found_hero_cape = false
 					if f:Open(full_path, 1) then
 						local str = f:Read()
-						SM(str)
 						if str:find("Hero Cape") then
 							found_hero_cape = true
 						end
