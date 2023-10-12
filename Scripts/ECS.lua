@@ -27899,10 +27899,11 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		local rp = song_data.rp
 		local ap = AP(score)
 
-		if song_data.length < 8 then
-			return math.floor(((dp + ep + rp + ap) * (tier_skill / 99) * score) * ((song_data.length - song_info.MinLength + 0.1) / ( 8 - (song_info.MinLength))))
+		local multiplier = ((song_data.length - song_info.MinLength + 0.1) / ( 8 - (song_info.MinLength)))
+		if multiplier < 1 then
+			return math.floor((((dp + ep + rp + ap) * tier_skill / 99) * score) * multiplier)
 		else
-			return math.floor((dp + ep + rp + ap) * (tier_skill / 99) * score)
+			return math.floor(((dp + ep + rp + ap) * tier_skill / 99) * score)
 		end
 	end
 
