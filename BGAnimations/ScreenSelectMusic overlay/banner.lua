@@ -375,7 +375,7 @@ if ECS.Mode == "Marathon" and ECS.Player.UsedHeroCape then
 		Def.Sprite{
 			Texture=THEME:GetPathG("", "_relics/herocape.png"),
 			InitCommand=function(self)
-				self:zoom(0.28):addx(-8):addx(0):addy(100)
+				self:zoom(0.28):addx(-8):addx(180):addy(100)
 			end,
 		},
 	}
