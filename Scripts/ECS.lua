@@ -11415,7 +11415,7 @@ ECS.Players["Yuzu"] = {
 	lifetime_jp = 11779441,
 }
 
-ECS.Players["ENGINE IS FOR CHEATERS"] = {
+ECS.Players["JNero"] = {
 	id=4707,
 	division="upper",
 	opted_for_speed=true,
@@ -11817,37 +11817,6 @@ ECS.Players["LP IS FOR CHEATERS"] = {
 	affinities = {dp=0, ep=0, rp=0, ap=0},
 	lifetime_song_gold = 0,
 	lifetime_jp = 948236,
-}
-
-ECS.Players["mahavairo"] = {
-	id=173645,
-	division="upper",
-	opted_for_speed=true,
-	country="U.S.A.",
-	level=99,
-	exp=6116415,
-	relics = {
-		{name="Varatha", quantity=1},
-		{name="Coronacht", quantity=1},
-		{name="Malphon", quantity=1},
-		{name="Exagryph", quantity=1},
-		{name="Rusty Sword", quantity=1},
-		{name="Grains of Chronos Sand", quantity=1},
-		{name="Shield Rod", quantity=1},
-		{name="Mablung Sword", quantity=1},
-		{name="Sword Familiar", quantity=1},
-		{name="Bronze Trophy", quantity=1},
-		{name="Mythril Trophy", quantity=1},
-		{name="Crystal Trophy", quantity=1},
-		{name="Ivory Trophy", quantity=1},
-		{name="Obsidian Trophy", quantity=1},
-		{name="Memepeace Beret", quantity=1},
-		{name="Alacritous Aspis", quantity=1},
-	},
-	tier_skill = {[120]=12, [130]=8, [140]=1, [150]=1, [160]=1, [170]=4, [180]=1, [190]=6, [200]=7, [210]=14, [220]=8, [230]=8, [240]=20, [250]=11, [260]=17, [270]=18, [280]=15, [290]=24, [300]=29},
-	affinities = {dp=255, ep=50, rp=250, ap=0},
-	lifetime_song_gold = 0,
-	lifetime_jp = 2111463,
 }
 
 ECS.Players["Fierra"] = {
@@ -14612,34 +14581,6 @@ ECS.Players["kelly_kato"] = {
 	affinities = {dp=0, ep=407, rp=0, ap=0},
 	lifetime_song_gold = 6089,
 	lifetime_jp = 55,
-}
-
-ECS.Players["SkeletonPump"] = {
-	id=165540,
-	division="mid",
-	opted_for_speed=false,
-	country="U.S.A.",
-	level=77,
-	exp=674381,
-	relics = {
-		{name="Hoslow's Petal Whip", quantity=1},
-		{name="Ascalon", quantity=1},
-		{name="Legendary Spear", quantity=1},
-		{name="Tournesol", quantity=1},
-		{name="Chase Pine Freshener", quantity=1},
-		{name="Rusty Sword", quantity=1},
-		{name="Grains of Chronos Sand", quantity=1},
-		{name="Shield Rod", quantity=1},
-		{name="Sword Familiar", quantity=1},
-		{name="Bronze Trophy", quantity=1},
-		{name="Mythril Trophy", quantity=1},
-		{name="Memepeace Beret", quantity=1},
-		{name="Alacritous Aspis", quantity=1},
-	},
-	tier_skill = {[120]=10, [130]=7, [140]=13, [150]=23, [160]=29, [170]=35, [180]=21, [190]=28, [200]=42, [210]=22, [220]=18, [230]=12, [240]=3, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1, [300]=1},
-	affinities = {dp=0, ep=0, rp=0, ap=0},
-	lifetime_song_gold = 12860,
-	lifetime_jp = 2589,
 }
 
 ECS.Players["JaceITG"] = {
