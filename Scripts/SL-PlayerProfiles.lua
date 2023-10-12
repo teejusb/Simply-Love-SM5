@@ -171,13 +171,14 @@ LoadProfileCustom = function(profile, dir)
 
 			local relic_pattern = "^(.*)%-(.*)%-(.*)%-RELIC%-(.*)%-(.*)%.txt$"
 			for file in ivalues(FILEMAN:GetDirListing(ecs_data_path)) do
-				local date, time, id, mode, attempt = file:match(score_pattern)
+				local date, time, id, mode, attempt = file:match(relic_pattern)
 				if mode == "ECS" and id ~= nil and tonumber(id) == player_id then
 					local f = RageFileUtil:CreateRageFile()
 					local full_path = ecs_data_path .. file
 					local found_hero_cape = false
-					if f:Open(path, 1) then
+					if f:Open(full_path, 1) then
 						local str = f:Read()
+						SM(str)
 						if str:find("Hero Cape") then
 							found_hero_cape = true
 						end
@@ -193,12 +194,13 @@ LoadProfileCustom = function(profile, dir)
 								used_hero_cape = true
 							end
 						end
+						score_file:destroy()
 					end
 				end
 			end
 		end
 	end
-	
+
 	ECS.SpeedAttemptNumber = max_attempt + 1
 	ECS.Player.UsedHeroCape = used_hero_cape
 
