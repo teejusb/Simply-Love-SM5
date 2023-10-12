@@ -1,7 +1,7 @@
 import csv
 import json
 
-def GetDivision(rank, id):
+def GetDivision(tplp, id):
 	mid_overrides = [
 		66674,
 		127205,
@@ -17,15 +17,15 @@ def GetDivision(rank, id):
 	elif id in upper_overrides:
 		return "upper"
 	else:
-		if rank <= 16:
+		if tplp >= 120000:
 			return "upper"
-		elif rank <= 88:
+		elif tplp >= 20000:
 			return "mid"
 		else:
 			return "lower"
 
-def OptedForSpeed(rank):
-	return rank <= 24
+def OptedForSpeed(tp):
+	return tp >= 55000
 
 relics = {}
 with open('relics.csv') as f:
@@ -39,8 +39,8 @@ with open("sqldump.json") as f:
 for player in data:
 	print(r"""ECS.Players["%s"] = {""" % player["members_name"])
 	print(r"""	id=%s,""" % player["srpg7_entrants_member_id"])
-	print(r"""	division="%s",""" % (GetDivision(int(player["TPLP_RANK"]), int(player["srpg7_entrants_member_id"]))))
-	print(r"""	opted_for_speed=%s,""" % (OptedForSpeed(int(player["TPLP_RANK"])) and "true" or "false"))
+	print(r"""	division="%s",""" % (GetDivision(int(player["srpg7_entrants_tplp"]), int(player["srpg7_entrants_member_id"]))))
+	print(r"""	opted_for_speed=%s,""" % (OptedForSpeed(int(player["srpg7_entrants_tp"])) and "true" or "false"))
 	print(r"""	country="%s",""" % player["COUNTRY"])
 	print(r"""	level=%s,""" % player["srpg7_entrants_level"])
 	print(r"""	exp=%s,""" % player["srpg7_entrants_exp"])
