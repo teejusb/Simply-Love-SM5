@@ -12056,7 +12056,7 @@ ECS.Players["Lotarr"] = {
 
 ECS.Players["Doughbun"] = {
 	id=91630,
-	division="upper",
+	division="mid",
 	opted_for_speed=true,
 	country="U.S.A.",
 	level=82,
@@ -12083,7 +12083,7 @@ ECS.Players["Doughbun"] = {
 
 ECS.Players["tinynoodle"] = {
 	id=66678,
-	division="upper",
+	division="mid",
 	opted_for_speed=true,
 	country="Netherlands",
 	level=87,
@@ -12126,7 +12126,7 @@ ECS.Players["tinynoodle"] = {
 
 ECS.Players["NBCrescendo"] = {
 	id=6069,
-	division="upper",
+	division="mid",
 	opted_for_speed=true,
 	country="Finland",
 	level=82,
@@ -12160,7 +12160,7 @@ ECS.Players["NBCrescendo"] = {
 ECS.Players["Tuuc"] = {
 	id=7036,
 	division="mid",
-	opted_for_speed=true,
+	opted_for_speed=false,
 	country="Finland",
 	level=88,
 	exp=1704938,
@@ -12299,7 +12299,7 @@ ECS.Players["Bran"] = {
 ECS.Players["Xynn"] = {
 	id=7385,
 	division="mid",
-	opted_for_speed=true,
+	opted_for_speed=false,
 	country="U.S.A.",
 	level=95,
 	exp=3045676,
@@ -12422,7 +12422,7 @@ ECS.Players["artimst"] = {
 ECS.Players["Archi"] = {
 	id=6562,
 	division="mid",
-	opted_for_speed=true,
+	opted_for_speed=false,
 	country="U.S.A.",
 	level=91,
 	exp=2307685,
@@ -13342,29 +13342,6 @@ ECS.Players["Beremy"] = {
 	affinities = {dp=0, ep=0, rp=0, ap=0},
 	lifetime_song_gold = 0,
 	lifetime_jp = 44823,
-}
-
-ECS.Players["copas"] = {
-	id=172954,
-	division="upper",
-	opted_for_speed=true,
-	country="Colombia",
-	level=74,
-	exp=526981,
-	relics = {
-		{name="Sting", quantity=1},
-		{name="Rusty Sword", quantity=1},
-		{name="Grains of Chronos Sand", quantity=1},
-		{name="Sword Familiar", quantity=1},
-		{name="Bronze Trophy", quantity=1},
-		{name="Mythril Trophy", quantity=1},
-		{name="Crystal Trophy", quantity=1},
-		{name="Ivory Trophy", quantity=1},
-	},
-	tier_skill = {[120]=21, [130]=6, [140]=3, [150]=18, [160]=1, [170]=1, [180]=2, [190]=1, [200]=4, [210]=1, [220]=1, [230]=1, [240]=1, [250]=3, [260]=1, [270]=8, [280]=1, [290]=6, [300]=1},
-	affinities = {dp=0, ep=0, rp=0, ap=0},
-	lifetime_song_gold = 2121,
-	lifetime_jp = 68929,
 }
 
 ECS.Players["COLLETnm7"] = {
@@ -14639,8 +14616,8 @@ ECS.Players["kelly_kato"] = {
 
 ECS.Players["SkeletonPump"] = {
 	id=165540,
-	division="upper",
-	opted_for_speed=true,
+	division="mid",
+	opted_for_speed=false,
 	country="U.S.A.",
 	level=77,
 	exp=674381,
@@ -14667,7 +14644,7 @@ ECS.Players["SkeletonPump"] = {
 
 ECS.Players["JaceITG"] = {
 	id=173788,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=72,
@@ -14717,7 +14694,7 @@ ECS.Players["JaceITG"] = {
 
 ECS.Players["StefXFN"] = {
 	id=162522,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=78,
@@ -14771,7 +14748,7 @@ ECS.Players["StefXFN"] = {
 
 ECS.Players["Yeyeito"] = {
 	id=165832,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Colombia",
 	level=74,
@@ -14805,7 +14782,7 @@ ECS.Players["Yeyeito"] = {
 
 ECS.Players["Maxx-Storm"] = {
 	id=935,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="United Kingdom",
 	level=72,
@@ -14831,7 +14808,7 @@ ECS.Players["Maxx-Storm"] = {
 
 ECS.Players["aye"] = {
 	id=77372,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=77,
@@ -14876,7 +14853,7 @@ ECS.Players["aye"] = {
 
 ECS.Players["dom no bar"] = {
 	id=66762,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=76,
@@ -14926,7 +14903,7 @@ ECS.Players["dom no bar"] = {
 
 ECS.Players["Amoo"] = {
 	id=132065,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=77,
@@ -14990,7 +14967,7 @@ ECS.Players["Amoo"] = {
 
 ECS.Players["diablos"] = {
 	id=77740,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="France",
 	level=75,
@@ -15040,7 +15017,7 @@ ECS.Players["diablos"] = {
 
 ECS.Players["Jerros"] = {
 	id=66565,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Netherlands",
 	level=76,
@@ -15098,7 +15075,7 @@ ECS.Players["Jerros"] = {
 
 ECS.Players["Badjas"] = {
 	id=66701,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Netherlands",
 	level=74,
@@ -15176,7 +15153,7 @@ ECS.Players["SteveReen"] = {
 
 ECS.Players["DanPeriod"] = {
 	id=256,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=79,
@@ -15242,7 +15219,7 @@ ECS.Players["DanPeriod"] = {
 
 ECS.Players["eltigrechino"] = {
 	id=127794,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=69,
@@ -15285,7 +15262,7 @@ ECS.Players["eltigrechino"] = {
 
 ECS.Players["turn up"] = {
 	id=143630,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=71,
@@ -15319,7 +15296,7 @@ ECS.Players["turn up"] = {
 
 ECS.Players["robin_"] = {
 	id=76562,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=75,
@@ -15384,7 +15361,7 @@ ECS.Players["robin_"] = {
 
 ECS.Players["Rawinput"] = {
 	id=1975,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=67,
@@ -15411,7 +15388,7 @@ ECS.Players["Rawinput"] = {
 
 ECS.Players["_CONTROL"] = {
 	id=75667,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Canada",
 	level=68,
@@ -15450,7 +15427,7 @@ ECS.Players["_CONTROL"] = {
 
 ECS.Players["DF.freyja"] = {
 	id=49444,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=76,
@@ -15514,7 +15491,7 @@ ECS.Players["DF.freyja"] = {
 
 ECS.Players["ICTtoken"] = {
 	id=6502,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=74,
@@ -15569,7 +15546,7 @@ ECS.Players["ICTtoken"] = {
 
 ECS.Players["plasmaaa"] = {
 	id=78677,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=73,
@@ -15634,7 +15611,7 @@ ECS.Players["plasmaaa"] = {
 
 ECS.Players["Paige"] = {
 	id=52996,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=73,
@@ -15690,7 +15667,7 @@ ECS.Players["Paige"] = {
 
 ECS.Players["skateinmars"] = {
 	id=66545,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="France",
 	level=75,
@@ -15810,7 +15787,7 @@ ECS.Players["SirDelins"] = {
 
 ECS.Players["LOLWUT"] = {
 	id=145083,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=62,
@@ -15836,7 +15813,7 @@ ECS.Players["LOLWUT"] = {
 
 ECS.Players["atomcat"] = {
 	id=77065,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="Russian Federation",
 	level=72,
@@ -15902,7 +15879,7 @@ ECS.Players["atomcat"] = {
 
 ECS.Players["HURG"] = {
 	id=173965,
-	division="mid",
+	division="lower",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=72,
@@ -22459,22 +22436,6 @@ ECS.Players["Verified Bruh Moment"] = {
 	tier_skill = {[120]=99, [130]=10, [140]=11, [150]=6, [160]=3, [170]=2, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1, [300]=1},
 	affinities = {dp=0, ep=0, rp=0, ap=0},
 	lifetime_song_gold = 6881,
-	lifetime_jp = 0,
-}
-
-ECS.Players["RhythmIO"] = {
-	id=1964,
-	division="upper",
-	opted_for_speed=true,
-	country="U.S.A.",
-	level=38,
-	exp=18920,
-	relics = {
-		{name="Rusty Sword", quantity=1},
-	},
-	tier_skill = {[120]=12, [130]=22, [140]=7, [150]=6, [160]=2, [170]=3, [180]=1, [190]=1, [200]=1, [210]=1, [220]=1, [230]=1, [240]=1, [250]=1, [260]=1, [270]=1, [280]=1, [290]=1, [300]=1},
-	affinities = {dp=0, ep=0, rp=0, ap=0},
-	lifetime_song_gold = 2825,
 	lifetime_jp = 0,
 }
 
