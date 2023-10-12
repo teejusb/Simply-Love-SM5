@@ -21,6 +21,11 @@ local af = Def.ActorFrame{
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
 		elseif ECS.Mode == "Marathon" and IsPlayingMarathon() then		
 			ECS.Player.TotalMarathonPoints = 35000 * score
+
+			if ECS.Player.UsedHeroCape then
+				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 100
+			end
+
 			if not failed then
 				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 10000
 			end

@@ -363,6 +363,24 @@ t[#t+1] = Def.ActorFrame{
 	},
 }
 
+if ECS.Mode == "Marathon" and ECS.Player.UsedHeroCape then
+	t[#t+1] = Def.ActorFrame{
+		InitCommand=function(self)
+			self:addx(-175):addy(-60)
+		end,
+		Def.Quad{
+			Name="EndOfSetBg",
+			InitCommand=function(self) self:diffuse(color("#ffffffaa")):zoomto(410, 80):addx(175):addy(100) end
+		},
+		Def.Sprite{
+			Texture=THEME:GetPathG("", "_relics/herocape.png"),
+			InitCommand=function(self)
+				self:zoom(0.28):addx(-8):addx(0):addy(100)
+			end,
+		},
+	}
+end
+
 if not GAMESTATE:IsCourseMode() then
 	t[#t+1] = Def.Sprite {
 		OnCommand=function(self)

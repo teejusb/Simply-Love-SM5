@@ -20,6 +20,7 @@ InitializeECS = function()
 		HeartRingActive = false,
 		MixTapesRandomSong = nil,
 		TotalMarathonPoints=0,
+		UsedHeroCape = false
 	}
 end
 
@@ -2102,7 +2103,6 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Consider displaying the MP bonus in the UI
 			return 100
 		end,
 	},
