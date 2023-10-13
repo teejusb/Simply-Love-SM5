@@ -1,3 +1,16 @@
+local ResetSettings = function()
+	-- always undo the effects of Astral Ring/Astral Earring when loading SSM, even if they weren't active
+	SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
+	PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
+	PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
+
+	-- always undo the effects of any relics that change LifeDifficulty when loading SSM, even if they weren't active
+	PREFSMAN:SetPreference("LifeDifficultyScale", 1)
+
+	SL.Global.ActiveModifiers.MusicRate = 1
+	GAMESTATE:ApplyGameCommand("mod,1xmusic")
+end
+
 local af = Def.ActorFrame{
 	-- GameplayReloadCheck is a kludgy global variable used in ScreenGameplay in.lua to check
 	-- if ScreenGameplay is being entered "properly" or being reloaded by a scripted mod-chart.
@@ -25,6 +38,8 @@ local af = Def.ActorFrame{
 				end
 			end
 		end
+
+		ResetSettings()
 
 		if ECS.Player.MixTapesRandomSong ~= nil then
 			self:queuecommand("SelectSong")
