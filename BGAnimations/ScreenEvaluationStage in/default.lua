@@ -8,8 +8,10 @@ local ApplyRelicActions = function()
 end
 
 local ResetSettings = function()
+	local mpn = GAMESTATE:GetMasterPlayerNumber()
+
 	-- always undo the effects of Astral Ring/Astral Earring when leaving ScreenEval, even if they weren't active
-	SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
+	SL[mpn].ActiveModifiers.TimingWindows = {true,true,true,true,true}
 	PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
 	PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
 

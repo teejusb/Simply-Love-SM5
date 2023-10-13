@@ -2628,9 +2628,9 @@ ECS.Relics = {
 		is_marathon=true,
 		img="astralring.png",
 		action=function(relics_used)
-			-- TODO(teejusb): DO THIS DIFFERENTLY FOR ITGmania!
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
+				local mpn = GAMESTATE:GetMasterPlayerNumber()
+				SL[mpn].ActiveModifiers.TimingWindows = {true,true,true,false,false}
 				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW3)
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW3)
 			end
