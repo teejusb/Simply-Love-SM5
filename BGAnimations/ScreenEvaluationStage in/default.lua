@@ -8,12 +8,15 @@ local ApplyRelicActions = function()
 end
 
 local ResetSettings = function()
-	local mpn = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
+	local mpn = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())	
 
 	-- always undo the effects of Astral Ring/Astral Earring when leaving ScreenEval, even if they weren't active
 	SL[mpn].ActiveModifiers.TimingWindows = {true,true,true,true,true}
 	PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW4)
 	PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW5)
+
+	local playeroptions = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber()):GetPlayerOptions("ModsLevel_Preferred")
+	playeroptions:ResetDisabledTimingWindows()
 
 	-- always undo the effects of any relics that change LifeDifficulty when leaving ScreenEval, even if they weren't active
 	PREFSMAN:SetPreference("LifeDifficultyScale", 1)
