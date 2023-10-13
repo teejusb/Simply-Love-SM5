@@ -33,13 +33,12 @@ local af = Def.ActorFrame{
 			if po then
 				if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					po:FailSetting('FailType_Immediate')
+					ResetSettings()
 				else
 					po:FailSetting('FailType_ImmediateContinue')
 				end
 			end
 		end
-
-		ResetSettings()
 
 		if ECS.Player.MixTapesRandomSong ~= nil then
 			self:queuecommand("SelectSong")
