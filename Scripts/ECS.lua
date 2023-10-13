@@ -2629,7 +2629,7 @@ ECS.Relics = {
 		img="astralring.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
-				local mpn = GAMESTATE:GetMasterPlayerNumber()
+				local mpn = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
 				SL[mpn].ActiveModifiers.TimingWindows = {true,true,true,false,false}
 				PREFSMAN:SetPreference("TimingWindowSecondsW4", SL.Preferences.ITG.TimingWindowSecondsW3)
 				PREFSMAN:SetPreference("TimingWindowSecondsW5", SL.Preferences.ITG.TimingWindowSecondsW3)
