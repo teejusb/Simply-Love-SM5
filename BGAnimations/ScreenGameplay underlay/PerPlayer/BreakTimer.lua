@@ -45,6 +45,8 @@ local Update = function(self, delta)
 
   if stream_time ~= 0 then
     ECS.TimeToRemoveFromBreakTimer = elapsed_time
+  else
+    ECS.TimeToRemoveFromBreakTimer = 0
   end
 end
 
