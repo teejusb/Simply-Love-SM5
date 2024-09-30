@@ -27,6 +27,7 @@ local PlayerDefaults = {
 				MeasureCounter = "None",
 				MeasureCounterLeft = true,
 				MeasureCounterUp = false,
+				MeasureLines = "Off",
 				DataVisualizations = "None",
 				TargetScore = 11,
 				ActionOnMissedTarget = "Nothing",
@@ -63,6 +64,7 @@ local PlayerDefaults = {
 
 				-- Information parsed out from the chart.
 				NotesPerMeasure = {},
+				EquallySpacedPerMeasure = {},
 				PeakNPS = 0,
 				NPSperMeasure = {},
 				columnCues = {},
@@ -101,6 +103,7 @@ local PlayerDefaults = {
 			self.ApiKey = ""
 			-- Whether or not the player is playing on pad.
 			self.IsPadPlayer = false
+			self.Favorites = {}
 		end
 	}
 }
@@ -137,6 +140,7 @@ local GlobalDefaults = {
 				ScreenNameEntry = ThemePrefs.Get("ScreenNameEntryMenuTimer"),
 			}
 			self.TimeAtSessionStart = nil
+			self.SampleMusicLoops = ThemePrefs.Get("SampleMusicLoops")
 
 			self.GameplayReloadCheck = false
 			-- How long to wait before displaying a "cue"

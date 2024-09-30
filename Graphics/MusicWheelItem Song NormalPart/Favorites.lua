@@ -36,7 +36,6 @@ local af = Def.ActorFrame {
 			GAMESTATE:ResetPlayerOptions(params.Player)
 			SL[ToEnumShortString(params.Player)]:initialize()
 		end
-
 		if pn == nil then
 			player = params.Player
 			pn = ToEnumShortString(player)

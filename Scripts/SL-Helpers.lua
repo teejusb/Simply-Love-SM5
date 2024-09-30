@@ -79,7 +79,7 @@ GetWorstJudgment = function(offsets)
 			end
 		end
 	end
-	
+
 	return worst_judgment
 end
 
@@ -121,8 +121,10 @@ GetNotefieldX = function( player )
 	-- double is always centered
 	if style:GetStyleType() == "StyleType_OnePlayerTwoSides" then return _screen.cx end
 
+	local PlayerOffset = SL[p].ActiveModifiers.NoteFieldOffsetX * (player == PLAYER_1 and -1 or 1)
+
 	local NumPlayersAndSides = ToEnumShortString( style:GetStyleType() )
-	return THEME:GetMetric("ScreenGameplay","Player".. p .. NumPlayersAndSides .."X")
+	return THEME:GetMetric("ScreenGameplay","Player".. p .. NumPlayersAndSides .."X") + PlayerOffset
 end
 
 -- -----------------------------------------------------------------------
@@ -590,7 +592,7 @@ end
 IsW0Judgment = function(params, player)
 	if params.Player ~= player then return false end
 	if params.HoldNoteScore then return false end
-	
+
 	-- Only check/update FA+ count if we received a TNS in the top window.
 	if params.TapNoteScore == "TapNoteScore_W1" and SL.Global.GameMode == "ITG"  then
 		local prefs = SL.Preferences["FA+"]
@@ -640,7 +642,7 @@ GetExJudgmentCounts = function(player)
 	local counts = {}
 
 	local TNS = { "W1", "W2", "W3", "W4", "W5", "Miss" }
-	
+
 	if SL.Global.GameMode == "FA+" then
 		for window in ivalues(TNS) do
 			adjusted_window = window
@@ -649,7 +651,7 @@ GetExJudgmentCounts = function(player)
 			if window ~= "Miss" then
 				adjusted_window = "W"..(tonumber(window:sub(-1))-1)
 			end
-			
+
 			-- Get the count.
 			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
 			-- For the last window (Decent) in FA+ mode...
@@ -685,7 +687,7 @@ GetExJudgmentCounts = function(player)
 		end
 	end
 	counts["totalSteps"] = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_TapsAndHolds" )
-	
+
 	local RadarCategory = { "Holds", "Mines", "Rolls" }
 
 	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Preferred")
@@ -720,7 +722,7 @@ end
 --
 -- The ex_counts default to those computed in BGAnimations/ScreenGameplay underlay/TrackExScoreJudgments.lua
 -- They are computed from the HoldNoteScore and TapNotScore from the JudgmentMessageCommands.
--- We look for the following keys: 
+-- We look for the following keys:
 -- {
 --             "W0" -> the fantasticPlus count
 --             "W1" -> the fantastic count
@@ -733,7 +735,10 @@ end
 --          "LetGo" -> the number of holds/rolds dropped
 --        "HitMine" -> total number of mines hit
 -- }
-CalculateExScore = function(player, ex_counts)
+--
+-- The W0 weight may have been modified for Tournament mode purposes.
+-- Use the optional boolean argument use_actual_w0_weight to choose to fallback to the proper W0 weight.
+CalculateExScore = function(player, ex_counts, use_actual_w0_weight)
 	-- No EX scores in Casual mode, just return some dummy number early.
 	if SL.Global.GameMode == "Casual" then return 0 end
 	local StepsOrTrail = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentTrail(player)) or GAMESTATE:GetCurrentSteps(player)
@@ -742,7 +747,8 @@ CalculateExScore = function(player, ex_counts)
 	local totalHolds = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Holds" )
 	local totalRolls = StepsOrTrail:GetRadarValues(player):GetValue( "RadarCategory_Rolls" )
 
-	local total_possible = totalSteps * SL.ExWeights["W0"] + (totalHolds + totalRolls) * SL.ExWeights["Held"]
+	local W0Weight = use_actual_w0_weight and 3.5 or SL.ExWeights["W0"]
+	local total_possible = totalSteps * W0Weight + (totalHolds + totalRolls) * SL.ExWeights["Held"]
 
 	local total_points = 0
 
@@ -763,7 +769,7 @@ CalculateExScore = function(player, ex_counts)
 
 	for key in ivalues(keys) do
 		local value = counts[key]
-		if value ~= nil then		
+		if value ~= nil then
 			total_points = total_points + value * SL.ExWeights[key]
 		end
 	end
@@ -778,13 +784,13 @@ end
 GetColumnMapping = function(player)
 	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Preferred')
 
-	local shuffle = po:Shuffle() or po:SoftShuffle() or po:SuperShuffle() 
+	local shuffle = po:Shuffle() or po:SoftShuffle() or po:SuperShuffle()
 	local notes_inserted = (po:Wide() or po:Skippy() or po:Quick() or po:Echo() or
 													po:BMRize() or po:Stomp() or po:Big())
 	local notes_removed = (po:Little()  or po:NoHolds() or po:NoStretch() or
-													po:NoHands() or po:NoJumps() or po:NoFakes() or 
+													po:NoHands() or po:NoJumps() or po:NoFakes() or
 													po:NoLifts() or po:NoQuads() or po:NoRolls())
-	
+
 	-- If shuffle is used or notes were inserted/removed, we can't compute it
 	-- return early
 	-- TODO(teejusb): Add support for Backwards()
@@ -797,6 +803,8 @@ GetColumnMapping = function(player)
 	local left = po:Left()
 	local right = po:Right()
 	local mirror = po:Mirror()
+	local udmirror = po:UDMirror()
+	local lrmirror = po:LRMirror()
 
 	-- Combining flip and invert results in unusual spacing so ignore it.
 	if flip and invert then
@@ -841,14 +849,27 @@ GetColumnMapping = function(player)
 		column_mapping = {column_mapping[4], column_mapping[3], column_mapping[2], column_mapping[1]}
 	end
 
+	if udmirror then
+		column_mapping = {column_mapping[1], column_mapping[3], column_mapping[2], column_mapping[4]}
+	end
+
+	if lrmirror then
+		column_mapping = {column_mapping[4], column_mapping[2], column_mapping[3], column_mapping[1]}
+	end
+
 	if num_columns == 8 then
 		for i=1,4 do
 			column_mapping[4+i] = column_mapping[i] + 4
 		end
 
-		-- We only need to apply the following if exactly one of flip or mirror is active
-		-- since they otherwise cancel each other out
-		if (not flip and mirror) or (flip and not mirror) then
+		-- Flip, Mirror. and LRMirror all swap left and right sides.
+		-- If an odd number of them are set then swap.
+		local swapCount = 0
+		if flip then swapCount = swapCount + 1 end
+		if mirror then swapCount = swapCount + 1 end
+		if lrmirror then swapCount = swapCount + 1 end
+
+		if swapCount % 2 == 1 then
 			for i=1,4 do
 				column_mapping[i] = column_mapping[i] + 4
 				column_mapping[i+4] = column_mapping[i+4] - 4
@@ -857,4 +878,107 @@ GetColumnMapping = function(player)
 	end
 
 	return column_mapping
+end
+
+-- -----------------------------------------------------------------------
+-- IsGameAndMenuButton() is used to position GameButton labels in [ScreenMapControllers] in metrics.ini
+
+-- list of GameButtons that serve double duty as menu buttons when OnlyDedicatedMenuButtons=0
+local GameAndMenuButtons = {
+	dance = { "Left", "Down", "Up", "Right" },
+	pump  = { "DownLeft", "UpLeft", "Center", "UpRight", "DownRight" },
+	techno= { "Left", "Down", "Up", "Right" },
+	kb7   = { "Key2", "Key3", "Key5", "Key6" },
+	para  = { "Left", "UpLeft", "Right", "UpRight" },
+}
+
+-- local table to serve as per-language lookup
+-- e.g. LocalizedGameButtons.es.Arriba = "Up"
+--      LocalizedGameButtons.en.Up = "Up"
+local LocalizedGameButtons = {}
+
+local DelocalizeGameButton = function(localized_btn)
+	local game = GAMESTATE:GetCurrentGame():GetName()
+	if not GameAndMenuButtons[game] then return false end
+
+	-- if we haven't created a lookup table for the current language yet, do that now
+	local language = THEME:GetCurLanguage()
+	if not LocalizedGameButtons[language] then
+		local t = {}
+		for gb in ivalues(GameAndMenuButtons[game]) do
+			t[THEME:GetString("GameButton", gb)] = gb
+		end
+		LocalizedGameButtons[language] = t
+	end
+
+	-- given a localized string like "Ariba" return a GameButton like "Up"
+	return LocalizedGameButtons[language][localized_btn]
+end
+
+IsGameAndMenuButton = function(localized_btn)
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") then return false end
+
+	local btn = DelocalizeGameButton(localized_btn)
+	if not btn then return false end
+
+	return FindInTable(btn, GameAndMenuButtons[GAMESTATE:GetCurrentGame():GetName()])
+end
+
+-- -----------------------------------------------------------------------
+-- Returns a stringified form of a player's selected options.
+GetPlayerOptionsString = function(player, modsLevel)
+	local modsLevel = modsLevel or "ModsLevel_Preferred"
+	-- grab the song options from this PlayerState
+	local PlayerOptions = GAMESTATE:GetPlayerState(player):GetPlayerOptionsArray(modsLevel)
+	local pn = ToEnumShortString(player)
+
+	-- start with an empty string...
+	local optionslist = ""
+
+	-- if the player used an XMod of 1x, it won't be in PlayerOptions list
+	-- so check here, and add it in manually if necessary
+	if SL[pn].ActiveModifiers.SpeedModType == "X" and SL[pn].ActiveModifiers.SpeedMod == 1 then
+		optionslist = "1x, "
+	end
+
+	--  ...and append options to that string as needed
+	for i,option in ipairs(PlayerOptions) do
+
+		-- these don't need to show up in the mods list
+		if option ~= "FailAtEnd" and option ~= "FailImmediateContinue" and option ~= "FailImmediate" then
+			-- 100% Mini will be in the PlayerOptions as just "Mini" so use the value from the SL table instead
+			if option:match("Mini") then
+				option = SL[pn].ActiveModifiers.Mini .. " Mini"
+			end
+
+			if option:match("Cover") then
+				option = THEME:GetString("OptionNames", "Cover")
+			end
+
+			if i < #PlayerOptions then
+				optionslist = optionslist..option..", "
+			else
+				optionslist = optionslist..option
+			end
+		end
+	end
+
+	-- Display TimingWindowScale as a modifier if it's set to anything other than 1
+	local TimingWindowScale = PREFSMAN:GetPreference("TimingWindowScale")
+	if TimingWindowScale ~= 1 then
+		optionslist = optionslist .. ", " .. (ScreenString("TimingWindowScale")):format(TimingWindowScale*100)
+	end
+
+	local substitutions = {
+		["SuperShuffle"] = "Blender",
+		["HyperShuffle"] = "Random",
+		["LRMirror"] = "LR-Mirror",
+		["UDMirror"] = "UD-Mirror",
+	}
+
+	for k,v in pairs(substitutions) do
+		optionslist = optionslist:gsub(k, v)
+	end
+
+	return optionslist
 end

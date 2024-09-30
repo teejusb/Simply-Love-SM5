@@ -34,7 +34,7 @@ if PROFILEMAN:GetNumLocalProfiles() <= 0 then
 end
 -- -----------------------------------------------------------------------
 
-local initial_data = profile_data[1]
+local initial_data = profile_data[0]
 local pos = nil
 
 if SL.Global.FastProfileSwitchInProgress then
@@ -47,7 +47,6 @@ if SL.Global.FastProfileSwitchInProgress then
 			break
 		end
 	end
-
 	-- If we haven't found a matching profile looking in profile_data, this has to
 	-- be [GUEST]
 	pos = pos or 0
@@ -127,17 +126,29 @@ return Def.ActorFrame{
 
 		LoadFont("Common Normal")..{
 			InitCommand=function(self)
+				self:diffuseshift():effectcolor1(1,1,1,1):effectcolor2(0.5,0.5,0.5,1)
+				self:diffusealpha(0):maxwidth(180)
+				self:queuecommand("ResetText")
+			end,
+			OnCommand=function(self) self:sleep(0.3):linear(0.1):diffusealpha(1) end,
+			OffCommand=function(self) self:linear(0.1):diffusealpha(0) end,
+			ResetTextCommand=function(self)
 				if IsArcade() and not GAMESTATE:EnoughCreditsToJoin() then
 					self:settext( THEME:GetString("ScreenSelectProfile", "EnterCreditsToJoin") )
 				else
 					self:settext( THEME:GetString("ScreenSelectProfile", "PressStartToJoin") )
 				end
-
-				self:diffuseshift():effectcolor1(1,1,1,1):effectcolor2(0.5,0.5,0.5,1)
-				self:diffusealpha(0):maxwidth(180)
 			end,
-			OnCommand=function(self) self:sleep(0.3):linear(0.1):diffusealpha(1) end,
-			OffCommand=function(self) self:linear(0.1):diffusealpha(0) end,
+			UnselectedProfileMessageCommand=function(self, params)
+				if params.PlayerNumber ~= player then return end
+
+				self:queuecommand("ResetText")
+			end,
+			SelectedProfileMessageCommand=function(self, params)
+				if params.PlayerNumber ~= player then return end
+
+				self:settext("Waiting...")
+			end,
 			CoinsChangedMessageCommand=function(self)
 				if IsArcade() and GAMESTATE:EnoughCreditsToJoin() then
 					self:settext(THEME:GetString("ScreenSelectProfile", "PressStartToJoin"))
@@ -167,12 +178,27 @@ return Def.ActorFrame{
 			end
 
 			scroller.focus_pos = 5
-			scroller:set_info_set(scroller_data, 0)
+			-- initialize to the guest profile in case we don't have a default profile
+			scroller:set_info_set(scroller_data, 1)
+			scroller:scroll_by_amount(-1)
 
 			-- Scroll to the current player profile, if any
 			if pos then
 				local curr_index = scroller:get_info_at_focus_pos().index
 				scroller:scroll_by_amount(pos - curr_index)
+			else
+				local pn = ToEnumShortString(player)
+				if PREFSMAN:GetPreference("DefaultLocalProfileID"..pn) ~= "" then
+					local default_profile_id = PREFSMAN:GetPreference("DefaultLocalProfileID"..pn)
+					local profile_dir = PROFILEMAN:LocalProfileIDToDir(default_profile_id)
+					for i, profile_item in ipairs(scroller_data) do
+						if profile_item.dir == profile_dir then
+							scroller:scroll_by_amount(i-4)
+							initial_data = profile_data[i-4]
+							break
+						end
+					end
+				end
 			end
 		end,
 
@@ -251,6 +277,9 @@ return Def.ActorFrame{
 						LoadActor(THEME:GetPathG("", "_VisualStyles/".. ThemePrefs.Get("VisualStyle") .."/SelectColor"))..{
 							InitCommand=function(self)
 								self:align(0,0):zoom(0.09):diffusealpha(0.9):xy(13, 8)
+								if ThemePrefs.Get("VisualStyle") == "SRPG8" then
+									self:zoom(0.3):xy(5, 0)
+								end
 							end
 						},
 						LoadFont("Common Normal")..{
@@ -420,7 +449,7 @@ return Def.ActorFrame{
 		Name='SelectedProfileText',
 		InitCommand=function(self)
 			self:settext(initial_data and initial_data.displayname or "")
-			self:y(160):zoom(1.35):shadowlength(0):cropright(1)
+			self:y(160):zoom(1.35):shadowlength(ThemePrefs.Get("RainbowMode") and 0.5 or 0):cropright(1)
 		end,
 		OnCommand=function(self) self:sleep(0.2):smooth(0.2):cropright(0) end
 	}

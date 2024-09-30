@@ -8,7 +8,8 @@ local songs = {
 	Gay    = "Mystical Wheelbarrow Journey",
 	Stars  = "Shooting Star - faux VRC6 remix",
 	Thonk  = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
-	SRPG7  = "SRPG7"
+	Technique = "Quaq",
+	SRPG8  = "SRPG8"
 }
 
 -- retrieve the current VisualStyle from the ThemePrefs system

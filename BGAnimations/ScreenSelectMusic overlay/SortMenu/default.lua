@@ -247,26 +247,16 @@ local t = Def.ActorFrame {
 			{"SortBy", "Genre"},
 			{"SortBy", "BPM"},
 			{"SortBy", "Length"},
+			{"SortBy", "Meter"},
 		}
-		-- the engine's MusicWheel has distinct items in the SortOrder enum for double
-		if style == "double" then
-			table.insert(wheel_options, {"SortBy", "DoubleChallengeMeter"})
-			table.insert(wheel_options, {"SortBy", "DoubleHardMeter"})
-			table.insert(wheel_options, {"SortBy", "DoubleMediumMeter"})
-			table.insert(wheel_options, {"SortBy", "DoubleEasyMeter"})
-			table.insert(wheel_options, {"SortBy", "DoubleBeginnerMeter"})
-		-- Otherwise... use the SortOrders that don't specify double.
-		-- Does this imply that difficulty sorting in more uncommon styles
-		-- (solo, routine, etc.) probably doesn't work?
-		else
-			table.insert(wheel_options, {"SortBy", "ChallengeMeter"})
-			table.insert(wheel_options, {"SortBy", "HardMeter"})
-			table.insert(wheel_options, {"SortBy", "MediumMeter"})
-			table.insert(wheel_options, {"SortBy", "EasyMeter"})
-			table.insert(wheel_options, {"SortBy", "BeginnerMeter"})
-		end
 		table.insert(wheel_options, {"SortBy", "Popularity"})
 		table.insert(wheel_options, {"SortBy", "Recent"})
+		-- Loop through players and add their TopGrades to the wheel options if they've a profile
+		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+			if (PROFILEMAN:IsPersistentProfile(player)) then
+				table.insert(wheel_options, {"SortBy", "Top".. ToEnumShortString(player).."Grades" })
+			end
+		end
 		if ECS.Mode == "Freeplay" then
 			-- Allow players to switch from single to double and from double to single
 			-- but only present these options if Joint Double or Joint Premium is enabled
@@ -313,14 +303,14 @@ local t = Def.ActorFrame {
 			if (game=="dance" or game=="pump" or game=="techno") then
 				table.insert(wheel_options, {"FeelingSalty", "TestInput"})
 			end
+		end
 
-			table.insert(wheel_options, {"TakeABreather", "LoadNewSongs"})
+		table.insert(wheel_options, {"TakeABreather", "LoadNewSongs"})
 
-			-- Only display the View Downloads option if we're connected to
-			-- GrooveStats and Auto-Downloads are enabled.
-			if SL.GrooveStats.IsConnected and ThemePrefs.Get("AutoDownloadUnlocks") then
-				table.insert(wheel_options, {"NeedMoreRam", "ViewDownloads"})
-			end
+		-- Only display the View Downloads option if we're connected to
+		-- GrooveStats and Auto-Downloads are enabled.
+		if SL.GrooveStats.IsConnected and ThemePrefs.Get("AutoDownloadUnlocks") then
+			table.insert(wheel_options, {"NeedMoreRam", "ViewDownloads"})
 		end
 
 		-- The relevant Leaderboard.lua actor is only added if these same conditions are met.
@@ -338,31 +328,15 @@ local t = Def.ActorFrame {
 			end
 		end
 
-		local any_player_has_favorites = false
-		local profileSlot = {
-			["PlayerNumber_P1"] = "ProfileSlot_Player1",
-			["PlayerNumber_P2"] = "ProfileSlot_Player2"
-		}
-		local all_local = true
-		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-			local profileDir = PROFILEMAN:GetProfileDir(profileSlot["PlayerNumber_"..ToEnumShortString(player)])
-			local path = profileDir .. "favorites.txt"
-			if FILEMAN:DoesFileExist(path) then
-				any_player_has_favorites = true
-			end
-			if PROFILEMAN:ProfileWasLoadedFromMemoryCard(player) then
-				all_local = false
-			end
+		if GAMESTATE:GetCurrentSong() ~= nil then
+			table.insert(wheel_options, {"ImLovinIt", "AddFavorite"})
 		end
 
-		-- TODO(teejusb): Allow players to add favorites for USBs.
-		if all_local then
-			if GAMESTATE:GetCurrentSong() ~= nil then
-				table.insert(wheel_options, {"ImLovinIt", "AddFavorite"})
-			end
-
-			if any_player_has_favorites then
-				table.insert(wheel_options, {"MixTape", "Favorites"})
+		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
+			local path = getFavoritesPath(player)
+			if FILEMAN:DoesFileExist(path) then
+				table.insert(wheel_options, {"MixTape", "Preferred"})
+				break
 			end
 		end
 

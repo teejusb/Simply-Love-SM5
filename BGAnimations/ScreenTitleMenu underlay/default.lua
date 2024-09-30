@@ -5,7 +5,7 @@ InitializeSimplyLove()
 
 InitializeECS()
 
-if ThemePrefs.Get("VisualStyle") == "SRPG7" then
+if ThemePrefs.Get("VisualStyle") == "SRPG8" then
 	SL.SRPG7:MaybeRandomizeColor()
 end
 
