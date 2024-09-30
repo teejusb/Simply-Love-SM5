@@ -352,8 +352,8 @@ local NewSessionRequestProcessor = function(res, gsInfo)
 				end
 			
 				if last_active_event ~= "SRPG8" then
-					local top_screen = SCREENMAN:GetTopScreen()
-					top_screen:SetNextScreenName("ScreenPromptToSetSrpgVisualStyle"):StartTransitioningScreen("SM_GoToNextScreen")
+					-- local top_screen = SCREENMAN:GetTopScreen()
+					-- top_screen:SetNextScreenName("ScreenPromptToSetSrpgVisualStyle"):StartTransitioningScreen("SM_GoToNextScreen")
 					break
 				end
 			end
