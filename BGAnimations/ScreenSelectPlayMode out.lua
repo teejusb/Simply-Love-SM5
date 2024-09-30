@@ -5,39 +5,39 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS12 - Upper/[24] [240] Fumisugi Annihilation")
+				local default = SONGMAN:FindSong("ECS13 - Upper/[24] [240] For Creatures Such As We FB 246")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS12 - Mid/[18] [180] The Second Circle - Lust")
+				local default = SONGMAN:FindSong("ECS13 - Mid/[18] [180] Doomsday")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS12 - Lower/[12] [120] Dancin KRONO Extended Remix")
+				local default = SONGMAN:FindSong("ECS13 - Lower/[12] [120] Colorless Eyes")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS12 - Speed/[24] [240] The Eighth Circle - Fraud")
+			local default = SONGMAN:FindSong("ECS13 - Speed/[24] [240] For Creatures Such As We FB 246")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS12 - Upper Marathon/PATH OF THE GREATS ~The Vast Gardens Of Elysium~")
+				local default = SONGMAN:FindSong("ECS13 - Lower Marathon/TIMELESS BEATZ")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS12 - Mid Marathon/TOTAL BLACKOUT ~The Flooded Plains Of Asphodel~")
+				local default = SONGMAN:FindSong("ECS13 - Mid Marathon/NO MORE GAMES")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS12 - Lower Marathon/NO ESCAPE ~The Deep Abyss Of Tartarus~")
+				local default = SONGMAN:FindSong("ECS13 - Upper Marathon/HIGHER TEMPO")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end

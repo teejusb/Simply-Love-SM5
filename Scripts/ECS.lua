@@ -27826,9 +27826,9 @@ end
 
 IsPlayingMarathon = function()
 	local hashes = {
-		["Lower"] = "6fac39e5f21f7ec5",
-		["Mid"] = "ff6f17217a6dc85e",
-		["Upper"] = "635dd15a0267adde",
+		["Lower"] = "da8bc528eb55ea86",
+		["Mid"] = "697ecb01cd9ddadc",
+		["Upper"] = "a5f2e400d32c133c",
 	}
 	local division = GetDivision()
 	if division == nil then
