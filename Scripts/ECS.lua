@@ -2694,7 +2694,7 @@ ECS.Relics = {
 	},
 	{
 		id=154,
-		name="Flawless Iluvatar ",
+		name="Flawless Iluvatar",
 		desc="A divine blade passed down through generations of DPRT warriors, this perfect sword can only be truly harnessed by those who can wield it impeccably. Transcendentally enhanced by the accuracy of your attacks.",
 		effect="+200 BP if score is a 96% or higher|Lv. 6 AP Bonus",
 		is_consumable=false,
