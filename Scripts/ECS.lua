@@ -19,8 +19,11 @@ InitializeECS = function()
 		ConsecutivePasses = 0,
 		HeartRingActive = false,
 		MixTapesRandomSong = nil,
+		WrapperActive = false,
+		UsedHeroCape = false,
+
 		TotalMarathonPoints=0,
-		UsedHeroCape = false
+		MarathonRateMod=1,
 	}
 end
 
@@ -134,7 +137,7 @@ ECS.Relics = {
 	{
 		id=4,
 		name="Stone Arrow",
-		desc="A low-level arrow tipped with stone. Deals weak damage with a bow equipped.  Single use.",
+		desc="A low-level arrow tipped with stone. Deals weak damage with a bow equipped. Single use.",
 		effect="+125 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -207,7 +210,7 @@ ECS.Relics = {
 	{
 		id=9,
 		name="Bronze Arrow",
-		desc="A mid-level arrow tipped with bronze. Deals good damage with a bow equipped.  Single use.",
+		desc="A mid-level arrow tipped with bronze. Deals good damage with a bow equipped. Single use.",
 		effect="+225 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -280,7 +283,7 @@ ECS.Relics = {
 	{
 		id=14,
 		name="Mythril Arrow",
-		desc="A high-level arrow tipped with mythril. Deals strong damage with a bow equipped.  Single use.",
+		desc="A high-level arrow tipped with mythril. Deals strong damage with a bow equipped. Single use.",
 		effect="+300 BP with bow equipped",
 		is_consumable=true,
 		is_marathon=false,
@@ -358,7 +361,7 @@ ECS.Relics = {
 	{
 		id=19,
 		name="Thorn of Greed",
-		desc="Simultaneously cruel and beautiful, it is said that this weapon was forged by a master smith in the DPRT.  It grows stronger in its wielder's pursuit of financial gain.",
+		desc="Simultaneously cruel and beautiful, it is said that this weapon was forged by a master smith in the DPRT. It grows stronger in its wielder's pursuit of financial gain.",
 		effect="+550 BP for Rank 1 on Lifetime Song Gold|+BP based on Lifetime Song Gold for Rank 2 and below (Max 400)",
 		is_consumable=false,
 		is_marathon=false,
@@ -406,7 +409,7 @@ ECS.Relics = {
 	{
 		id=21,
 		name="Khachapuri",
-		desc="\"What a contraption, it's like if someone wanted both an egg muffin and a bretzel.  The eggs look perfectly cooked as well. Oh and did I mention it has feta inside as well ? Wait it's, not feta, it's soulgouni which is a local cheese from Georgia.\" Interesting, but does Georgia exist in this fantasy setting...?",
+		desc="\"What a contraption, it's like if someone wanted both an egg muffin and a bretzel. The eggs look perfectly cooked as well. Oh and did I mention it has feta inside as well ? Wait it's, not feta, it's soulgouni which is a local cheese from Georgia.\" Interesting, but does Georgia exist in this fantasy setting...?",
 		effect="+BP equal to 175 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
@@ -458,7 +461,7 @@ ECS.Relics = {
 	{
 		id=25,
 		name="BURGER",
-		desc="The ultimate burger, formed from expertly chosen ingredients in perfect harmony with one another.  You can practically taste the aura of delicious burgerness radiating from it.  Truly a divine entree.",
+		desc="The ultimate burger, formed from expertly chosen ingredients in perfect harmony with one another. You can practically taste the aura of delicious burgerness radiating from it. Truly a divine entree.",
 		effect="+1000 BP|The BP here stands for Burger Points|The Burger Points don't do anything",
 		is_consumable=true,
 		is_marathon=false,
@@ -547,7 +550,7 @@ ECS.Relics = {
 	{
 		id=31,
 		name="Mar'Day",
-		desc="Wrought to chasten the massive, monstrous denizens of the wilds of the Stamina Nation.  All who have wielded this in the past have become legendary figures in the nation's history. Gains extra effectivity proportionate to an enemy's size.",
+		desc="Wrought to chasten the massive, monstrous denizens of the wilds of the Stamina Nation. All who have wielded this in the past have become legendary figures in the nation's history. Gains extra effectivity proportionate to an enemy's size.",
 		effect="+100 BP per minute of song length",
 		is_consumable=false,
 		is_marathon=false,
@@ -621,7 +624,7 @@ ECS.Relics = {
 	{
 		id=36,
 		name="Severing Foffer",
-		desc="Made with one purpose in mind: piling the corpses of the unjej.  Only the strongest members of Memepeace can wield it effectively.",
+		desc="Made with one purpose in mind: piling the corpses of the unjej. Only the strongest members of Memepeace can wield it effectively.",
 		effect="+650 BP for Rank 1 on Lifetime JP|+BP based on Lifetime JP for Rank 2 and below (Max 475)",
 		is_consumable=false,
 		is_marathon=false,
@@ -1427,7 +1430,7 @@ ECS.Relics = {
 	{
 		id=82,
 		name="Master Sword",
-		desc="The legendary sword that seals the darkness.  Its blade gleams with a sacred luster that can oppose the Calamity.  Only a hero chosen by the sword itself may wield it. Strongly effective against fast opponents.",
+		desc="The legendary sword that seals the darkness. Its blade gleams with a sacred luster that can oppose the Calamity. Only a hero chosen by the sword itself may wield it. Strongly effective against fast opponents.",
 		effect="Lv. 3 DP Bonus for 260 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -1444,7 +1447,7 @@ ECS.Relics = {
 	{
 		id=83,
 		name="Master Sword +1",
-		desc="The legendary sword that seals the darkness.  Its blade gleams with a sacred luster that can oppose the Calamity.  Only a hero chosen by the sword itself may wield it. This weapon has been enhanced to a higher level of quality. Strongly effective against fast opponents and incredibly effective against large opponents.",
+		desc="The legendary sword that seals the darkness. Its blade gleams with a sacred luster that can oppose the Calamity. Only a hero chosen by the sword itself may wield it. This weapon has been enhanced to a higher level of quality. Strongly effective against fast opponents and incredibly effective against large opponents.",
 		effect="Lv. 3 DP Bonus for 260 BPM songs|Lv. 4 EP Bonus for 260 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -1461,7 +1464,7 @@ ECS.Relics = {
 	{
 		id=84,
 		name="Master Sword +2",
-		desc="The legendary sword that seals the darkness.  Its blade gleams with a sacred luster that can oppose the Calamity.  Only a hero chosen by the sword itself may wield it. This weapon has been enhanced to the highest level of quality. Strongly effective against fast opponents and incredibly effective against large opponents. Gains extra effectivity proportionate to an enemy's size.",
+		desc="The legendary sword that seals the darkness. Its blade gleams with a sacred luster that can oppose the Calamity. Only a hero chosen by the sword itself may wield it. This weapon has been enhanced to the highest level of quality. Strongly effective against fast opponents and incredibly effective against large opponents. Gains extra effectivity proportionate to an enemy's size.",
 		effect="Lv. 3 DP Bonus for 260 BPM songs|Lv. 4 EP Bonus for 260 BPM songs|+25 BP per minute of song length for 260 BPM songs",
 		is_consumable=false,
 		is_marathon=false,
@@ -1813,14 +1816,14 @@ ECS.Relics = {
 	{
 		id=104,
 		name="1/100 KG-6 Sleipnir",
-		desc="IT'S A GUND... no, a Kataphrakt?  The hell is that?  Well, anyway, this is a scale model of a KG-6 Sleipnir.  Apparently.",
+		desc="IT'S A GUND... no, a Kataphrakt?  The hell is that?  Well, anyway, this is a scale model of a KG-6 Sleipnir. Apparently.",
 		effect="+150 BP on any itg! Rhythm is just a step away!, Anistreamz, or Unbuild of Sharpnel chart",
 		is_consumable=false,
 		is_marathon=false,
 		img="1100kg6sleipnir.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.pack:find("itg! Rhythm is just a step away!") or song_data.pack:find("Anistreamz") or song_data.pack:find("Unbuild of Sharpnel") then
+			if song_data.pack:find("is just a step") or song_data.pack:find("Anistreamz") or song_data.pack:find("Unbuild") then
 				return 200
 			else
 				return 0
@@ -1830,14 +1833,12 @@ ECS.Relics = {
 	{
 		id=105,
 		name="Sea Ring",
-		desc="A ring.  It came from the sea.  Therefore, a sea ring.",
+		desc="A ring. It came from the sea. Therefore, a sea ring.",
 		effect="+35 BP per minute of song length|Sea levels rise during the song",
 		is_consumable=false,
 		is_marathon=false,
 		img="searing.png",
-		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
-		end,
+		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return math.floor(song_data.length * 35)
 		end,
@@ -1845,7 +1846,7 @@ ECS.Relics = {
 	{
 		id=106,
 		name="Grimoire",
-		desc="This grimoire's contents seem to consist fully of lists of race results at different locales.  Weird.",
+		desc="This grimoire's contents seem to consist fully of lists of race results at different locales. Weird.",
 		effect="+500 MP, but only if you pass",
 		is_consumable=true,
 		is_marathon=true,
@@ -1854,9 +1855,9 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			-- TODO(teejusb): Verify this works as intended.
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local player = GAMESTATE:GetMasterPlayerNumber()
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
 				if not failed then
 					return 500
@@ -1917,14 +1918,14 @@ ECS.Relics = {
 	{
 		id=110,
 		name="Eurobeater",
-		desc="A spiked mace made from the remains of a Eurobeat monster.  Strikes fear into the hearts of, uh, other Eurobeat monsters.",
+		desc="A spiked mace made from the remains of a Eurobeat monster. Strikes fear into the hearts of, uh, other Eurobeat monsters.",
 		effect="+200 BP on any Eurobeat Is Fantastic chart",
 		is_consumable=false,
 		is_marathon=false,
 		img="eurobeater.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.pack:find("Eurobeat Is Fantastic") then
+			if song_data.pack:find("Eurobeat") then
 				return 200
 			else
 				return 0
@@ -1940,7 +1941,7 @@ ECS.Relics = {
 		is_marathon=false,
 		img="nursejoyplush.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
+			SL.Metrics[SL.Global.GameMode]["InitialValue"] = 1.0
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
@@ -1956,7 +1957,7 @@ ECS.Relics = {
 		img="nanamiplush.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.pack:find("Raijin's Relaxing Resort") then
+			if song_data.pack:find("Relaxing Resort") then
 				return 250
 			else
 				return 0
@@ -1986,8 +1987,17 @@ ECS.Relics = {
 		img="spacedecals.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
-			return 0
+			local numStars = 0
+			if score == 1.00 then
+				numStars = 4
+			elseif score >= 0.99 then
+				numStars = 3
+			elseif score >= 0.98 then
+				numStars = 2
+			elseif score >= 0.96 then
+				numStars = 1
+			end
+			return 1250 * numStars
 		end,
 	},
 	{
@@ -2014,7 +2024,7 @@ ECS.Relics = {
 		img="kyypa.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.pack:find("Raijin's Relaxing Resort") then
+			if song_data.pack:find("Kyy") then
 				return 225
 			else
 				return 0
@@ -2052,7 +2062,9 @@ ECS.Relics = {
 		is_marathon=false,
 		img="wrapper.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
+			if not ECS.Player.WrapperActive then
+				ECS.Player.WrapperActive = true
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
@@ -2095,9 +2107,9 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			-- TODO(teejusb): Verify this works as intended.
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local player = GAMESTATE:GetMasterPlayerNumber()
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
 				if not failed then
 					return 1000
@@ -2115,7 +2127,16 @@ ECS.Relics = {
 		is_marathon=false,
 		img="1200boeing757.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				local random = math.random(200)
+				if random == 1 then
+					SM("LOL GET REKT NERD!")
+					-- Set BreakTimer to 0 so that the set ends immediately.
+					ECS.BreakTimer = 0
+					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+				end
+			end
+
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
 				local failed = pss:GetFailed()
@@ -2125,14 +2146,14 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
-			return 0
+			local play_number = #ECS.Player.SongsPlayed + 1
+			return math.floor((75 * play_number) * (1 - ((play_number^1.375) / 100)))
 		end,
 	},
 	{
 		id=122,
 		name="Xynn's Mix Tape",
-		desc="This is one of Xynn's fabled mix tapes.  These things are pretty highly sought after.",
+		desc="This is one of Xynn's fabled mix tapes. These things are pretty highly sought after.",
 		effect="Forces .97x rate|The next song you pick will be randomized, and 60 seconds will be added to the break timer if you pass",
 		is_consumable=true,
 		is_marathon=false,
@@ -2176,7 +2197,7 @@ ECS.Relics = {
 	{
 		id=123,
 		name="Dyson",
-		desc="Some strange device.  What could its purpose be?",
+		desc="Some strange device. What could its purpose be?",
 		effect="+300 BP|Forces Tornado",
 		is_consumable=false,
 		is_marathon=false,
@@ -2215,14 +2236,14 @@ ECS.Relics = {
 	{
 		id=125,
 		name="Estelle Plush",
-		desc="This probably used to belong to dirtypiece.  You better hope he doesn't catch you with it.",
+		desc="This probably used to belong to dirtypiece. You better hope he doesn't catch you with it.",
 		effect="+300 BP on any Trails of Cold Stream chart",
 		is_consumable=false,
 		is_marathon=false,
 		img="estelleplush.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			if song_data.pack:find("Trails of Cold Stream") then
+			if song_data.pack:find("Trails of") then
 				return 300
 			else
 				return 0
@@ -2232,7 +2253,7 @@ ECS.Relics = {
 	{
 		id=126,
 		name="Dragonball",
-		desc="It's said that if you gather seven of these, you can make a wish.  This is probably just a reproduction, though... right?",
+		desc="It's said that if you gather seven of these, you can make a wish. This is probably just a reproduction, though... right?",
 		effect="Grants its user one of three wishes:|Invulnerability (Forces Life 2)|Eternal Youth (5 + (2 * number of plays since use) seconds added to the break timer for each successive play after using)|Great Power (+1000 BP)",
 		is_consumable=true,
 		is_marathon=false,
@@ -2247,7 +2268,7 @@ ECS.Relics = {
 	{
 		id=127,
 		name="French Core",
-		desc="A hand drill with a french core.  Probably not terribly efficacious, but it IS delicious.",
+		desc="A hand drill with a french core. Probably not terribly efficacious, but it IS delicious.",
 		effect="+BP equal to 500 * (Adj. Stream %)^3",
 		is_consumable=true,
 		is_marathon=false,
@@ -2269,9 +2290,9 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			-- TODO(teejusb): Verify this works as intended.
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local player = GAMESTATE:GetMasterPlayerNumber()
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
 				if not failed then
 					return 2500
@@ -2321,7 +2342,7 @@ ECS.Relics = {
 	{
 		id=131,
 		name="Hellfire",
-		desc="Bolt of fiery damnation extracted from Xynn's Inferno.  I guess you could try throwing it at an enemy?",
+		desc="Bolt of fiery damnation extracted from Xynn's Inferno. I guess you could try throwing it at an enemy?",
 		effect="At end of set, +BP equal to Passes^2.25",
 		is_consumable=true,
 		is_marathon=false,
@@ -2340,7 +2361,7 @@ ECS.Relics = {
 		is_marathon=false,
 		img="164car.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
+			PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_None")
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return math.floor(song_data.dp * 0.6)
@@ -2366,7 +2387,7 @@ ECS.Relics = {
 	{
 		id=134,
 		name="Massive Pendulum Blade",
-		desc="One of those swinging-blade dungeon traps.  Except massive.  It's not clear how you would use this without inflicting injury on yourself. Incredibly effective against difficult opponents.",
+		desc="One of those swinging-blade dungeon traps. Except massive. It's not clear how you would use this without inflicting injury on yourself. Incredibly effective against difficult opponents.",
 		effect="+5000 MP|Forces life 5",
 		is_consumable=false,
 		is_marathon=true,
@@ -2411,7 +2432,17 @@ ECS.Relics = {
 		img="skullearring.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
+			-- NOTE(teejusb): MP Relics will only show up during the marathon so
+			-- returning the actual MP points is fine.
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local player = GAMESTATE:GetMasterPlayerNumber()
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
+				local failed = pss:GetFailed()
+				if not failed then
+					local totalMP = 35000
+					return (totalMP * (1 - score)) * 2 / 3
+				end
+			end
 			return 0
 		end,
 	},
@@ -2423,9 +2454,7 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=true,
 		img="orderofamrita.png",
-		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
-		end,
+		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
 		end,
@@ -2433,21 +2462,21 @@ ECS.Relics = {
 	{
 		id=138,
 		name="Dagger of Time",
-		desc="An artifact stolen in the ages past from a fabled Island of Time.  This powerful relic has the ability to significantly slow down marathon beasts.",
+		desc="An artifact stolen in the ages past from a fabled Island of Time. This powerful relic has the ability to significantly slow down marathon beasts.",
 		effect="Multiply final MP by (1+((Rate Mod-1)*2)) for rate mods above 1.0x, maximum 1.15x rate|Multiply final MP by (1-((1-Rate Mod)*4)) for rate mods below 1.0x, minimum .85x rate",
 		is_consumable=false,
 		is_marathon=true,
 		img="daggeroftime.png",
 		action=function(relics_used)end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
+			-- End of set relics are handled in ScreenGameOver
 			return 0
 		end,
 	},
 	{
 		id=139,
 		name="Rusty Sword",
-		desc="You can defend yourself with this in a pinch, I guess.  It's definitely seen better days.",
+		desc="You can defend yourself with this in a pinch, I guess. It's definitely seen better days.",
 		effect="+20 BP",
 		is_consumable=false,
 		is_marathon=false,
@@ -2460,7 +2489,7 @@ ECS.Relics = {
 	{
 		id=140,
 		name="Grains of Chronos Sand",
-		desc="The sand in this pouch is said to have been stolen from the god of time.  Perhaps in a time of need, it could help you reclaim some lost moments.",
+		desc="The sand in this pouch is said to have been stolen from the god of time. Perhaps in a time of need, it could help you reclaim some lost moments.",
 		effect="30 seconds added to break timer",
 		is_consumable=true,
 		is_marathon=false,
@@ -2509,7 +2538,7 @@ ECS.Relics = {
 	{
 		id=142,
 		name="Mablung Sword",
-		desc="Legend has it this blade steeped in aetheric energy was the main arm of an elf from the age of myths.  It has the ability to fortify the nature of any shield paired with it to tremendous effect.",
+		desc="Legend has it this blade steeped in aetheric energy was the main arm of an elf from the age of myths. It has the ability to fortify the nature of any shield paired with it to tremendous effect.",
 		effect="+300 BP|With Scrupulous Shield equipped: Lv. 12 AP Bonus|With Alacritous Aspis equipped: Lv. 11 DP Bonus|With Indefatigable Escutcheon equipped: Lv. 12 EP Bonus",
 		is_consumable=true,
 		is_marathon=false,
@@ -2584,7 +2613,7 @@ ECS.Relics = {
 	{
 		id=146,
 		name="Mythril Trophy",
-		desc="A trophy made from a rare metal.  Only given to those who have made substantial contributions to the Stamina Nation.",
+		desc="A trophy made from a rare metal. Only given to those who have made substantial contributions to the Stamina Nation.",
 		effect="Access to #mythril-lounge on the <a href=http://www.staminanation.com/ target=_blank>Stamina Nation discord</a> (upon request)",
 		is_consumable=false,
 		is_marathon=false,
@@ -2680,13 +2709,18 @@ ECS.Relics = {
 	{
 		id=153,
 		name="Seraphic Ainur",
-		desc="A treasured arm of the DPRT.  Its blade burns so bright that many of its past wielders have gone partially blind.  As a result, most have used it only in times of great need, sheathing it except for when its great power was a necessity.",
+		desc="A treasured arm of the DPRT. Its blade burns so bright that many of its past wielders have gone partially blind. As a result, most have used it only in times of great need, sheathing it except for when its great power was a necessity.",
 		effect="+MP equal to 6000 * (Score^10)|All non-fantastic judgments lower your lifebar",
 		is_consumable=false,
 		is_marathon=true,
 		img="seraphicainur.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW1"] = 0.008
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW2"] = -0.01
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW3"] = -0.01
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW4"] = -0.025
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW5"] = -0.050
+			SL.Metrics[SL.Global.GameMode]["LifePercentChangeMiss"] = -0.100
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
@@ -2760,7 +2794,7 @@ ECS.Relics = {
 	{
 		id=158,
 		name="Arvin's Gambit",
-		desc="Well-known set of playing cards from the Footspeed Empire.  Highly prized for their magical qualities.",
+		desc="Well-known set of playing cards from the Footspeed Empire. Highly prized for their magical qualities.",
 		effect="If equipped, and you fail the marathon, you may reattempt it immediately with up to 20 additional minutes to warm up/fix the pads.",
 		is_consumable=true,
 		is_marathon=true,

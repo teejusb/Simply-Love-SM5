@@ -210,25 +210,26 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local marathon_points = ECS.Player.TotalMarathonPoints
 			
 				local dagger_of_time = 0
-				local corsage = 0
 
 				for active_relic in ivalues(ECS.Player.Relics) do
 					if active_relic.name == "Dagger of Time" then
 						dagger_of_time = dagger_of_time + 1
 					end
-
-					if active_relic.name == "Corsage" then
-						corsage = corsage + 1
-					end
 				end
 
-				-- TODO(teejusb): +100 if "Hero Cape" was used at any time (even in RO).
+				if dagger_of_time > 0 then
+					local rate_mod = ECS.Player.MarathonRateMod
+					-- Clamp between 0.85 and 1.15
+					rate_mod = math.max(0.85, math.min(1.15, rate_mod))
 
-				-- Corsage always takes priority over Dagger of Time.
-				if corsage > 0 then
-					marathon_points = math.floor(marathon_points * 3)
-				elseif dagger_of_time > 0 then
-					marathon_points = math.floor(marathon_points / 3)
+					local multiplier = 1
+					if rate_mod > 1 then
+						multiplier = 1 + ((rate_mod - 1) * 2)
+					else
+						multiplier = 1 - ((1 - rate_mod) * 4)
+					end
+
+					marathon_points = marathon_points * multiplier
 				end
 
 				self:settext(tostring(marathon_points))

@@ -19,7 +19,8 @@ local af = Def.ActorFrame{
 
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
-		elseif ECS.Mode == "Marathon" and IsPlayingMarathon() then		
+		elseif ECS.Mode == "Marathon" and IsPlayingMarathon() then	
+			ECS.Player.MarathonRateMod = SL.Global.ActiveModifiers.MusicRate	
 			ECS.Player.TotalMarathonPoints = 35000 * score
 
 			if ECS.Player.UsedHeroCape then
@@ -32,9 +33,8 @@ local af = Def.ActorFrame{
 			-- Relics for marathons are always applied regarldess of pass/fail.
 			for relic in ivalues(ECS.Player.Relics) do
 				if relic.name ~= "(nothing)" then
-					-- All marathon relics return pure numeric values. We don't need to pass any real values to the score function.
 					ECS.Player.TotalMarathonPoints = (ECS.Player.TotalMarathonPoints +
-						relic.score(--[[ecs_player=]]nil, --[[song_info=]]nil, --[[song_data=]]nil, --[[relics_used]]nil, --[[ap=]]nil))
+						relic.score(ecs_player, --[[song_info=]]nil, --[[song_data=]]nil, ECS.Player.Relics, --[[ap=]]nil, score))
 				end
 			end
 			ECS.Player.TotalMarathonPoints = math.floor(ECS.Player.TotalMarathonPoints)

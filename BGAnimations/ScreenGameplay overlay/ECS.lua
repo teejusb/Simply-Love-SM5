@@ -134,6 +134,18 @@ end
 
 -- ----------------------------------------------------------
 
+local RestoreChargesForNonWrapperRelics = function()
+	for relic in ivalues(ECS.Players[profile_name].relics) do
+		for active_relic in ivalues(ECS.Player.Relics) do
+			if active_relic.name == relic.name and relic.name ~= "Wrapper" and relic.quantity ~= nil then
+				relic.quantity = relic.quantity + 1
+			end
+		end
+	end
+end
+
+-- ----------------------------------------------------------
+
 local ApplyRelicActions = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
 		active_relic.action(ECS.Player.Relics)
@@ -144,6 +156,12 @@ end
 -- actually hook into the screen so that we can do thing at screen's OnCommand and OffCommand
 local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
+	HealthStateChangedMessageCommand=function(self, params)
+		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrappersActive then
+			RestoreChargesForNonWrapperRelics()
+			SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
+		end
+	end,
 	OnCommand=function(self)
 		-- Speed mode doesn't have relics, but the functions are still safe to call.
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
@@ -165,10 +183,22 @@ af[#af+1] = Def.Actor{
 			local seconds = (hour*60*60) + (minute*60) + second
 			local month_string = THEME:GetString("Months", "Month"..month)
 
-			if ECS.Player.MixTapesRandomSong == nil then
+			-- Check if player has failed.
+			local failed = pss:GetFailed()
+
+			-- The cases where we don't want to write a score file are:
+			-- 1. The player is about to play a random song from a mixtape OR
+			-- 2. The player has failed and has Wrappers active (they will restart).
+			-- Thanks De Morgan...
+			if ECS.Player.MixTapesRandomSong == nil and (not ECS.Player.WrappersActive or not failed) then
 				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 				CreateRelicFile(day, month_string, year, seconds)
 				WriteRelicDataToDisk()
+			end
+
+			-- We can always reset the Wrapper status.
+			if ECS.Player.WrappersActive then
+				ECS.Player.WrappersActive = false
 			end
 		end
 	end
@@ -191,6 +221,120 @@ local FaustsScalpelIsActive = function()
 		end
 	end
 	return false
+end
+
+local SeaRingIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Sea Ring" then
+			return true
+		end
+	end
+	return false
+end
+
+local NurseJoyPlushIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Nurse Joy Plush" then
+			return true
+		end
+	end
+	return false
+end
+
+if SeaRingIsActive() then
+	local dirTime = 2
+
+	local textureWidth = 1280
+	local textureHeight = 96
+	local zoom = 0.5
+	local bodyHeight = SCREEN_HEIGHT / zoom
+
+	local numTextures = 3
+
+	local songLength = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+	local loops = math.ceil(songLength / dirTime)
+	
+	local totalHeight = SCREEN_HEIGHT + textureHeight / 2
+
+	-- We want to go up and down, but down shouldn't go as far as up since we
+	-- want the level to rise throughout the chart.
+	-- It should scale totalHeight with the number of loops.
+	local upChange = -totalHeight / (loops / 4)
+	local downChange = -upChange / 2
+
+	local maxShift = 3
+	local curShift = 0
+	local shiftOffset = 25
+
+	local seaLevels = Def.ActorFrame{
+		InitCommand=function(self)
+			self:xy(SCREEN_CENTER_X, totalHeight):zoom(zoom)
+		end,
+
+		OnCommand=function(self)
+			self:queuecommand("GoUp")
+		end,
+
+		GoUpCommand=function(self)
+			local x = curShift
+			if x == -1 * maxShift then
+				x = x + 1
+			elseif x == maxShift then
+				x = x - 1
+			else
+				local rand = math.random(0, 1)
+				if rand == 0 then rand = -1 end
+				x = rand + x
+			end
+			curShift = x
+
+			self:spring(dirTime):x(shiftOffset * x):addy(upChange):queuecommand("GoDown")
+		end,
+
+		GoDownCommand=function(self)
+			local x = curShift
+			if x == -1 * maxShift then
+				x = x + 1
+			elseif x == maxShift then
+				x = x - 1
+			else
+				local rand = math.random(0, 1)
+				if rand == 0 then rand = -1 end
+				x = rand + x
+			end
+			curShift = x
+
+
+			self:spring(dirTime):x(shiftOffset * x):addy(downChange):queuecommand("GoUp")
+		end,
+		
+		Def.Quad{
+			InitCommand=function(self)
+				-- Take me out of heeeerrreeeee
+				local waterColour = "#0072FF"
+				local alpha = 0.6
+
+				self:SetWidth(textureWidth*numTextures)
+						:SetHeight(bodyHeight)
+						:diffusetopedge(0, 0.445313, 1, alpha)
+						:diffusebottomedge(0, 0.445313, 1, 1)
+						:y(textureHeight/2 + bodyHeight/2 + 1)
+			end,
+		},
+	}
+
+	for i=1,numTextures do
+		local offset = ((numTextures - 1) / 2 + (i - numTextures)) * textureWidth
+
+		seaLevels[#seaLevels+1] = Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/sealevel.png"),
+			InitCommand=function(self)
+				self:x(offset)
+			end,
+		}
+	end
+
+	af[#af+1] = seaLevels
 end
 
 local second_to_pause = {
