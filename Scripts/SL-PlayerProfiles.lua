@@ -217,7 +217,7 @@ LoadProfileCustom = function(profile, dir)
 						local score_file = RageFileUtil:CreateRageFile()
 						if score_file:Open(ecs_data_path .. score_path, 1) then
 							local str = score_file:Read()
-							if str:find("ECS12") and str:find("Passed") then
+							if str:find("ECS13") and str:find("Passed") then
 								used_hero_cape = true
 							end
 						end
