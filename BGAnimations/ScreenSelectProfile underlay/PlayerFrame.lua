@@ -340,7 +340,7 @@ return Def.ActorFrame{
 					end,
 					SetCommand=function(self, params)
 						if params then
-							self:visible(true):settext(params.level and ("SRPG7 Level: "..params.level) or "")
+							self:visible(true):settext(params.level and ("SRPG8 Level: "..params.level) or "")
 						else
 							self:visible(false):settext("")
 						end

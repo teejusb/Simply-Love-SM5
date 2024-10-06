@@ -14,6 +14,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local song = GAMESTATE:GetCurrentSong()
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
+	local music_rate = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred"):MusicRate() or 1
 
 	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 
@@ -29,7 +30,8 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	data = data..group_name.."\n"
 	data = data..song_name.."\n"
 	data = data..day.." "..month_string.." "..year.."\n"
-	data = data..hour..":"..minute..":"..second
+	data = data..hour..":"..minute..":"..second.."\n"
+	data = data..music_rate.."\n"
 
 	local f = RageFileUtil.CreateRageFile()
 
