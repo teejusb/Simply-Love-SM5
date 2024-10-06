@@ -1854,7 +1854,7 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+			if SCREENMAN and SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local player = GAMESTATE:GetMasterPlayerNumber()
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
@@ -2118,7 +2118,7 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+			if SCREENMAN and SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local player = GAMESTATE:GetMasterPlayerNumber()
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
@@ -2328,7 +2328,7 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+			if SCREENMAN and SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local player = GAMESTATE:GetMasterPlayerNumber()
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
@@ -2472,7 +2472,7 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+			if SCREENMAN and SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local player = GAMESTATE:GetMasterPlayerNumber()
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 				local failed = pss:GetFailed()
