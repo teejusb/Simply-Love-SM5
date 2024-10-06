@@ -278,7 +278,7 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/exjam09.png"),
+		Texture=THEME:GetPathG("", "_relics/hellfire.png"),
 		InitCommand=function(self)
 			self:zoom(0.28):addx(-8):addx(240):addy(100)
 		end,
@@ -288,49 +288,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "ExJam09" then
-							relic_used = true
-						end
-					end
-				end
-			end
-			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
-			self:visible(relic_used)
-		end,
-	},
-	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/jarofpickles.png"),
-		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(280):addy(100)
-		end,
-		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Jar of Pickles" then
-							relic_used = true
-						end
-					end
-				end
-			end
-			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
-			self:visible(relic_used)
-		end,
-	},
-	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/meteorite.png"),
-		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(320):addy(100)
-		end,
-		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Meteorite" then
+						if relic.name == "Hellfire" then
 							relic_used = true
 						end
 					end
@@ -343,7 +301,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/despotschapeau.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(360):addy(100)
+			self:zoom(0.28):addx(-8):addx(280):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false

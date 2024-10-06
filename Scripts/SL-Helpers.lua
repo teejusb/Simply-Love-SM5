@@ -453,7 +453,7 @@ HolidayCheer = function()
 end
 
 DarkUI = function()
-	return true
+	return false
 end
 
 -- -----------------------------------------------------------------------

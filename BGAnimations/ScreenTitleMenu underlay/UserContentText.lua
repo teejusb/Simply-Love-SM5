@@ -69,7 +69,7 @@ return LoadFont("Common Normal")..{
 			shadowLength = 0.4
 		end
 
-		self:diffuse(textColor):shadowlength(shadowLength)
+		self:diffuse(Color.White):shadowlength(shadowLength)
 	end,
 	VisualStyleSelectedMessageCommand=function(self)
 		self:playcommand("UpdateColor")

@@ -30,8 +30,9 @@ af[#af+1] = Def.Sprite{
 	end,
 	LoadImageCommand=function(self)
 		self:Load(THEME:GetPathG("", "_ECS/logo (doubleres).png"))
-		self:zoom(0.4)
-		self:addy(-25)
+		self:zoom(0.3)
+		self:addy(-20)
+		self:addx(-80)
 
 		return
 

@@ -5,4 +5,4 @@ if style == "SRPG8" then
 	audio_file = "SRPG8-GameOver.ogg"
 end
 
-return THEME:GetPathS("", "Zeldas Lullaby.ogg")
+return THEME:GetPathS("", "Corridors of Time.ogg")
