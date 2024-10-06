@@ -20,7 +20,6 @@ InitializeECS = function()
 		StethoscopeActive = false,
 		MixTapesRandomSong = nil,
 		WrapperActive = false,
-		UsedHeroCape = false,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,

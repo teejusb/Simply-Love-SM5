@@ -23,10 +23,6 @@ local af = Def.ActorFrame{
 			ECS.Player.MarathonRateMod = SL.Global.ActiveModifiers.MusicRate	
 			ECS.Player.TotalMarathonPoints = 35000 * score
 
-			if ECS.Player.UsedHeroCape then
-				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 100
-			end
-
 			if not failed then
 				ECS.Player.TotalMarathonPoints = ECS.Player.TotalMarathonPoints + 10000
 			end
