@@ -14,6 +14,18 @@ local ResetSettings = function()
 
 	SL.Global.ActiveModifiers.MusicRate = 1
 	GAMESTATE:ApplyGameCommand("mod,1xmusic")
+
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW1"] = 0.008
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW2"] = 0.008
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW3"] = 0.004
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW4"] = 0.000
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW5"] = -0.050
+	SL.Metrics[SL.Global.GameMode]["LifePercentChangeMiss"] = -0.100
+
+	PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_W3")
+
+	-- Reset the tornado mod.
+	GAMESTATE:ApplyGameCommand("mod,notornado", GAMESTATE:GetMasterPlayerNumber())
 end
 
 local af = Def.ActorFrame{

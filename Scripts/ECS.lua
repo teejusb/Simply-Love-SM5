@@ -17,7 +17,7 @@ InitializeECS = function()
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
 		ConsecutivePasses = 0,
-		HeartRingActive = false,
+		StethoscopeActive = false,
 		MixTapesRandomSong = nil,
 		WrapperActive = false,
 		UsedHeroCape = false,
@@ -1874,7 +1874,15 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=false,
 		img="metaljohn.png",
-		action=function(relics_used) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				if math.random(1, 2) == 1 then
+					SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())]:initialize()
+					GAMESTATE:ApplyGameCommand("mod,1x,overhead", GAMESTATE:GetMasterPlayerNumber())
+					SM("Oops sorry your mods were reset")
+				end
+			end
+		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 175
 		end,
@@ -1941,7 +1949,11 @@ ECS.Relics = {
 		is_marathon=false,
 		img="nursejoyplush.png",
 		action=function(relics_used)
-			SL.Metrics[SL.Global.GameMode]["InitialValue"] = 1.0
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				local pn = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
+				local player_af = SCREENMAN:GetTopScreen():GetChild("Player"..pn)
+				player_af:SetLife(1.0)
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
@@ -2082,8 +2094,8 @@ ECS.Relics = {
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
 				local failed = pss:GetFailed()
-				if not failed and not ECS.Player.HeartRingActive then
-					ECS.Player.HeartRingActive = true
+				if not failed and not ECS.Player.StethoscopeActive then
+					ECS.Player.StethoscopeActive = true
 
 					-- The first time Heart Ring is used, we handle adding to the break timer here.
 					-- Subsequent passes will be handled in AddPlayerSong below.
@@ -2133,7 +2145,9 @@ ECS.Relics = {
 					SM("LOL GET REKT NERD!")
 					-- Set BreakTimer to 0 so that the set ends immediately.
 					ECS.BreakTimer = 0
-					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+					local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+					pss:FailPlayer()
+					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_DoNextScreen")
 				end
 			end
 
@@ -2203,12 +2217,7 @@ ECS.Relics = {
 		is_marathon=false,
 		img="dyson.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Verify this works as intended and reset the tornado after the song.
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				local pn = GAMESTATE:GetMasterPlayerNumber()
-				local playeroptions = GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel)
-				playeroptions:Tornado(100)
-			end
+			GAMESTATE:ApplyGameCommand("mod,tornado", GAMESTATE:GetMasterPlayerNumber())
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 300
@@ -28017,12 +28026,12 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 
 	if failed then
 		ECS.Player.ConsecutivePasses = 0
-		ECS.Player.HeartRingActive = false
+		ECS.Player.StethoscopeActive = false
 	else
 		ECS.Player.ConsecutivePasses = ECS.Player.ConsecutivePasses + 1
 	end
 
-	if ECS.Player.HeartRingActive then
+	if ECS.Player.StethoscopeActive then
 		ECS.BreakTimer = ECS.BreakTimer + 10 + 5 * ECS.Player.ConsecutivePasses
 	end
 

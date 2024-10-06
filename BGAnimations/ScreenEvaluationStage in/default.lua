@@ -31,9 +31,10 @@ local ResetSettings = function()
 	SL.Metrics[SL.Global.GameMode]["LifePercentChangeW5"] = -0.050
 	SL.Metrics[SL.Global.GameMode]["LifePercentChangeMiss"] = -0.100
 
-	SL.Metrics[SL.Global.GameMode]["InitialValue"] = 0.5
-
 	PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_W3")
+
+	-- Reset the tornado mod.
+	GAMESTATE:ApplyGameCommand("mod,notornado", GAMESTATE:GetMasterPlayerNumber())
 end
 
 -- loop through all available human players

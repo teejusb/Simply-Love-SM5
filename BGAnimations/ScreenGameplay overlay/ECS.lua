@@ -157,7 +157,8 @@ end
 local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
 	HealthStateChangedMessageCommand=function(self, params)
-		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrappersActive then
+		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrapperActive then
+			ECS.Player.WrapperActive = false
 			RestoreChargesForNonWrapperRelics()
 			SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
 		end
@@ -239,6 +240,24 @@ local NurseJoyPlushIsActive = function()
 		end
 	end
 	return false
+end
+
+if NurseJoyPlushIsActive() then
+	local lifeHitCount = 5
+	af[#af+1] = Def.ActorFrame{
+		LifeChangedMessageCommand=function(self, params)
+			if params.Player == player and lifeHitCount ~= 0 and params.LifeMeter:GetLife() < 1.0 then
+				local pn = ToEnumShortString(player)
+				if SCREENMAN:GetTopScreen() then
+					local player_af = SCREENMAN:GetTopScreen():GetChild("Player"..pn)
+					if player_af then
+						player_af:SetLife(1.0)
+						lifeHitCount = lifeHitCount - 1
+					end
+				end
+			end
+		end,
+	}
 end
 
 if SeaRingIsActive() then
