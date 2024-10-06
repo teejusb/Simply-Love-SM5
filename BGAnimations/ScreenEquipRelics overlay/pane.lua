@@ -57,7 +57,8 @@ for i=1,5 do
 			end,
 			["Relic"..i.."SelectedCommand"]=function(self, params)
 				self:visible(false)
-				if params and relic.name == params.name then
+				local is_dragonball = params.name:match("^Dragonball") and relic.name == "Dragonball"
+				if params and (is_dragonball or relic.name == params.name) then
 					self:visible(true)
 				end
 			end

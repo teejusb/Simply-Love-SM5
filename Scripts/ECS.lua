@@ -2262,15 +2262,45 @@ ECS.Relics = {
 		id=126,
 		name="Dragonball",
 		desc="It's said that if you gather seven of these, you can make a wish. This is probably just a reproduction, though... right?",
-		effect="Grants its user one of three wishes:|Invulnerability (Forces Life 2)|Eternal Youth (5 + (2 * number of plays since use) seconds added to the break timer for each successive play after using)|Great Power (+1000 BP)",
+		effect="Grants its user one of three wishes:|Invulnerability-Forces Life 2|Eternal Youth-5 + (2 * number of plays since use) seconds added to the break timer for each successive play after using|Great Power-+1000 BP",
 		is_consumable=true,
 		is_marathon=false,
 		img="dragonball.png",
-		action=function(relics_used)
-			-- TODO(teejusb): Implement this.
-		end,
+		-- We leave these empty and rely on the indexed variants below.
+		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
+		end,
+		--Invulnerability
+		action1=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
+				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
+				if cur_life_scale == 1.0 or (cur_life_scale ~= 1.0 and cur_life_scale < 1.4) then
+					PREFSMAN:SetPreference("LifeDifficultyScale", 1.4)
+					SM("Set to Life 2")
+				end
+			end
+		end,
+		score1=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+		-- Eternal Youth
+		action2=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
+				end
+			end
+		end,
+		score2=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 0
+		end,
+		-- Great Power
+		action3=function(relics_used) end,
+		score3=function(ecs_player, song_info, song_data, relics_used, ap, score)
+			return 1000
 		end,
 	},
 	{

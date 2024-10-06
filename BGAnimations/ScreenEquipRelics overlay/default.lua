@@ -62,15 +62,53 @@ for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 		if master_relic.name == player_relic.name then
 			if not master_relic.is_consumable or player_relic.quantity > 0 then
 				if (ECS.Mode == "ECS" and not master_relic.is_marathon) or (ECS.Mode == "Marathon" and master_relic.is_marathon) then
-					player_relics[#player_relics+1] = {
-						name=master_relic.name,
-						quantity=player_relic.quantity,
-						is_consumable=master_relic.is_consumable,
-						desc=master_relic.desc,
-						effect=master_relic.effect,
-						action=master_relic.action,
-						score=master_relic.score
-					}
+					if master_relic.name == "Dragonball" then
+						if player_relic.quantity > 0 then
+							local all_effects = split("|", master_relic.effect)
+							for i, name_effect in ipairs(all_effects) do
+								if i ~= 1 then
+									local details = split("-", name_effect)
+									local name = details[1]
+									local effect = details[2]
+
+									local action = nil
+									local score = nil
+									if name == "Invulnerability" then
+										action = master_relic.action1
+										score = master_relic.score1
+									elseif name == "Eternal Youth" then
+										action = master_relic.action2
+										score = master_relic.score2
+									elseif name == "Great Power" then
+										action = master_relic.action3
+										score = master_relic.score3
+									else
+										SM("SHOULD NEVER GET HERE! REPORT TO TEEJUSB/ARCHI!")
+									end
+
+									player_relics[#player_relics+1] = {
+										name=master_relic.name.. " - "..name,
+										quantity=player_relic.quantity,
+										is_consumable=master_relic.is_consumable,
+										desc=master_relic.desc,
+										effect=effect,
+										action=action,
+										score=score
+									}
+								end
+							end
+						end
+					else
+						player_relics[#player_relics+1] = {
+							name=master_relic.name,
+							quantity=player_relic.quantity,
+							is_consumable=master_relic.is_consumable,
+							desc=master_relic.desc,
+							effect=master_relic.effect,
+							action=master_relic.action,
+							score=master_relic.score
+						}
+					end
 				end
 			end
 		end
@@ -194,9 +232,24 @@ local InputHandler = function(event)
 
 					-- create a smaller list out of non-active relics
 					local smaller_list = { {name="(nothing)"} }
+					local used_dragonball = false
+
+					for _relic in ivalues(player_relics) do
+						if _relic.name:match("^Dragonball") and IsActiveRelic(_relic) then
+							used_dragonball = true
+						end
+					end
+
 					for _relic in ivalues(player_relics) do
 						if not IsActiveRelic(_relic) and _relic.name ~= "(nothing)" then
-							smaller_list[#smaller_list+1] = _relic
+							-- Only allow one Dragonball to be selected at a time.
+							if _relic.name:match("^Dragonball") then
+								if not used_dragonball then
+									smaller_list[#smaller_list+1] = _relic
+								end
+							else
+								smaller_list[#smaller_list+1] = _relic
+							end
 						end
 					end
 

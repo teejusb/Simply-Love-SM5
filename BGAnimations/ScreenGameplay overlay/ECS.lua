@@ -64,7 +64,21 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 
 	for i=1, 5 do
 		local relic = ECS.Player.Relics[i]
-		local name =  relic and relic.name or "*"
+		--local name = relic and relic.name or "*"
+		local name = "*"
+		if relic then
+			-- Only do drops for Great Power since it has BP, and rename it back to Dragonball.
+			local adjusted_name = relic.name
+			if relic.name:match("^Dragonball") then
+				if relic.name == "Dragonball - Great Power" then
+					adjusted_name = "Dragonball"
+				else
+					adjusted_name = "*"
+				end
+			end
+
+			name = adjusted_name
+		end
 
 		data = data .. name .. "\n"
 	end
