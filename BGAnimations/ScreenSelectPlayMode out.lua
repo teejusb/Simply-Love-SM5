@@ -21,7 +21,7 @@ return Def.Actor{
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS13 - Speed/[24] [240] Satanic Static")
+			local default = SONGMAN:FindSong("ECS13 - Upper Marathon/HIGHER TEMPO")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
@@ -37,7 +37,7 @@ return Def.Actor{
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS13 - Upper Marathon/HIGHER TEMPO")
+				local default = SONGMAN:FindSong("ECS13 - Speed/[24] [240] Satanic Static")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end

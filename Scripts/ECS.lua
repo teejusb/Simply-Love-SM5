@@ -1823,7 +1823,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.pack:find("is just a step") or song_data.pack:find("Anistreamz") or song_data.pack:find("Unbuild") then
-				return 200
+				return 150
 			else
 				return 0
 			end
@@ -2096,14 +2096,14 @@ ECS.Relics = {
 				if not failed and not ECS.Player.StethoscopeActive then
 					ECS.Player.StethoscopeActive = true
 
-					-- The first time Heart Ring is used, we handle adding to the break timer here.
+					-- The first timeStethoscope is used, we handle adding to the break timer here.
 					-- Subsequent passes will be handled in AddPlayerSong below.
 					ECS.BreakTimer = ECS.BreakTimer + 10 + 5
 				end
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 10
+			return 0
 		end,
 	},
 	{
@@ -2160,7 +2160,11 @@ ECS.Relics = {
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local play_number = #ECS.Player.SongsPlayed + 1
-			return math.floor((75 * play_number) * (1 - ((play_number^1.375) / 100)))
+
+			=if(rounddown(((play number)*75)*(1-(((play number)^1.375)/100)),0)<0,0,rounddown(((play number)*75)*(1-(((play number)^1.375)/100)),0))
+
+
+			return math.max(0, math.floor((75 * play_number) * (1 - ((play_number^1.375) / 100))))
 		end,
 	},
 	{
@@ -2753,6 +2757,7 @@ ECS.Relics = {
 		is_marathon=true,
 		img="seraphicainur.png",
 		action=function(relics_used)
+			-- TODO(teejusb): Fix this
 			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW1"] = 0.008
 			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW2"] = -0.01
 			SL.Metrics[SL.Global.GameMode]["LifePercentChangeW3"] = -0.01
@@ -2761,7 +2766,7 @@ ECS.Relics = {
 			SL.Metrics[SL.Global.GameMode]["LifePercentChangeMiss"] = -0.100
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 0
+			return 6000 * (score^10)
 		end,
 	},
 	{
