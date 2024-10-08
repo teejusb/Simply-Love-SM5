@@ -20,7 +20,6 @@ local af = Def.ActorFrame{
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" then
 			AddPlayedSong(ecs_player, song_name, score, ECS.Player.Relics, failed)
 		elseif ECS.Mode == "Marathon" and IsPlayingMarathon() then	
-			ECS.Player.MarathonRateMod = SL.Global.ActiveModifiers.MusicRate	
 			ECS.Player.TotalMarathonPoints = 35000 * score
 
 			if not failed then

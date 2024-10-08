@@ -2096,7 +2096,7 @@ ECS.Relics = {
 				if not failed and not ECS.Player.StethoscopeActive then
 					ECS.Player.StethoscopeActive = true
 
-					-- The first timeStethoscope is used, we handle adding to the break timer here.
+					-- The first time Stethoscope is used, we handle adding to the break timer here.
 					-- Subsequent passes will be handled in AddPlayerSong below.
 					ECS.BreakTimer = ECS.BreakTimer + 10 + 5
 				end
@@ -2160,10 +2160,6 @@ ECS.Relics = {
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local play_number = #ECS.Player.SongsPlayed + 1
-
-			=if(rounddown(((play number)*75)*(1-(((play number)^1.375)/100)),0)<0,0,rounddown(((play number)*75)*(1-(((play number)^1.375)/100)),0))
-
-
 			return math.max(0, math.floor((75 * play_number) * (1 - ((play_number^1.375) / 100))))
 		end,
 	},
@@ -2220,7 +2216,7 @@ ECS.Relics = {
 		is_marathon=false,
 		img="dyson.png",
 		action=function(relics_used)
-			GAMESTATE:ApplyGameCommand("mod,tornado", GAMESTATE:GetMasterPlayerNumber())
+			GAMESTATE:ApplyGameCommand("mod,20% tornado", GAMESTATE:GetMasterPlayerNumber())
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 300
@@ -2291,11 +2287,7 @@ ECS.Relics = {
 		-- Eternal Youth
 		action2=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
-				local failed = pss:GetFailed()
-				if not failed then
-					ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
-				end
+				ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
 			end
 		end,
 		score2=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -2468,7 +2460,7 @@ ECS.Relics = {
 		id=136,
 		name="Skull Earring",
 		desc="A keepsake that once belonged to Megaera, one of the Furies.",
-		effect="MP lost to scoring is reduced to a third",
+		effect="MP lost to scoring is reduced to a third, but only if you pass",
 		is_consumable=true,
 		is_marathon=true,
 		img="skullearring.png",
@@ -2509,7 +2501,7 @@ ECS.Relics = {
 		is_consumable=false,
 		is_marathon=true,
 		img="daggeroftime.png",
-		action=function(relics_used)end,
+		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- End of set relics are handled in ScreenGameOver
 			return 0
@@ -27944,6 +27936,24 @@ IsPlayingMarathon = function()
 	division = division:gsub("^%l", string.upper)
 
 	return hashes[division] == SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].Streams.Hash
+end
+
+PlayerCanUseRateMods = function()
+	if ECS.Mode ~= "Marathon" then return true end
+
+	if not IsPlayingMarathon() then return false end
+
+	local player = GAMESTATE:GetMasterPlayerNumber()
+	local profile_name = PROFILEMAN:GetPlayerName(player)
+	if profile_name == nil or profile_name == "" then return false end
+
+	for relic in ivalues(ECS.Players[profile_name].relics) do
+		if relic.name == "Dagger of Time" and relic.quantity ~= nil then
+			return true
+		end
+	end
+
+	return true
 end
 
 -- ------------------------------------------------------

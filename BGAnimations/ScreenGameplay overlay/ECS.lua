@@ -141,7 +141,12 @@ end
 local ExpendChargesOnActiveRelics = function()
 	for relic in ivalues(ECS.Players[profile_name].relics) do
 		for active_relic in ivalues(ECS.Player.Relics) do
-			if active_relic.name == relic.name and relic.quantity ~= nil then
+			local name = active_relic.name
+			if name:match("^Dragonball") then
+				name = "Dragonball"
+			end
+
+			if name == relic.name and relic.quantity ~= nil then
 				relic.quantity = relic.quantity - 1
 			end
 		end
@@ -153,7 +158,12 @@ end
 local RestoreChargesForNonWrapperRelics = function()
 	for relic in ivalues(ECS.Players[profile_name].relics) do
 		for active_relic in ivalues(ECS.Player.Relics) do
-			if active_relic.name == relic.name and relic.name ~= "Wrapper" and relic.quantity ~= nil then
+			local name = active_relic.name
+			if name:match("^Dragonball") then
+				name = "Dragonball"
+			end
+
+			if name == relic.name and relic.name ~= "Wrapper" and relic.quantity ~= nil then
 				relic.quantity = relic.quantity + 1
 			end
 		end
@@ -258,22 +268,13 @@ local NurseJoyPlushIsActive = function()
 	return false
 end
 
-if NurseJoyPlushIsActive() then
-	local lifeHitCount = 5
-	af[#af+1] = Def.ActorFrame{
-		LifeChangedMessageCommand=function(self, params)
-			if params.Player == player and lifeHitCount ~= 0 and params.LifeMeter:GetLife() < 1.0 then
-				local pn = ToEnumShortString(player)
-				if SCREENMAN:GetTopScreen() then
-					local player_af = SCREENMAN:GetTopScreen():GetChild("Player"..pn)
-					if player_af then
-						player_af:SetLife(1.0)
-						lifeHitCount = lifeHitCount - 1
-					end
-				end
-			end
-		end,
-	}
+local DaggerOfTimeIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "DaggerOfTime" then
+			return true
+		end
+	end
+	return false
 end
 
 if SeaRingIsActive() then
@@ -370,6 +371,41 @@ if SeaRingIsActive() then
 	end
 
 	af[#af+1] = seaLevels
+end
+
+if NurseJoyPlushIsActive() then
+	local lifeHitCount = 5
+	af[#af+1] = Def.ActorFrame{
+		LifeChangedMessageCommand=function(self, params)
+			if params.Player == player and lifeHitCount ~= 0 and params.LifeMeter:GetLife() < 1.0 then
+				local pn = ToEnumShortString(player)
+				if SCREENMAN:GetTopScreen() then
+					local player_af = SCREENMAN:GetTopScreen():GetChild("Player"..pn)
+					if player_af then
+						player_af:SetLife(1.0)
+						lifeHitCount = lifeHitCount - 1
+					end
+				end
+			end
+		end,
+	}
+end
+
+if IsPlayingMarathon() then
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			-- Force 1.0x for music rate if dagger not active.
+			-- It's possible for dagger to be available but the player not opting to
+			-- use it, so the music rate selector will be available but we want to
+			-- ensure the players actually play on 1.0x.
+			if not DaggerOfTimeIsActive() then
+				GAMESTATE:ApplyGameCommand("mod,1.0xmusic")
+				SL.Global.ActiveModifiers.MusicRate = 1
+			end
+
+			ECS.Player.MarathonRateMod = SL.Global.ActiveModifiers.MusicRate
+		end
+	}
 end
 
 local second_to_pause = {

@@ -26,7 +26,7 @@ end
 local GetNumActiveRows = function()
 	local has_ambrosia = false
 	local has_belt = false
-	local has_amrita = false
+	local has_amrita = false  -- Marathon only relic
 
 	for active_relic in ivalues(active_relics) do
 		if active_relic.name == "Order of Ambrosia" then
@@ -34,7 +34,7 @@ local GetNumActiveRows = function()
 		elseif active_relic.name == "Champion Belt" then
 			has_belt = true
 		elseif active_relic.nam == "Order of Amrita" then
-			has_ambrosia = true
+			has_amrita = true
 		end
 	end
 

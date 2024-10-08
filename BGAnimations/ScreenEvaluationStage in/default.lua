@@ -34,7 +34,7 @@ local ResetSettings = function()
 	PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_W3")
 
 	-- Reset the tornado mod.
-	GAMESTATE:ApplyGameCommand("mod,notornado", GAMESTATE:GetMasterPlayerNumber())
+	GAMESTATE:ApplyGameCommand("mod,no tornado", GAMESTATE:GetMasterPlayerNumber())
 end
 
 -- loop through all available human players
