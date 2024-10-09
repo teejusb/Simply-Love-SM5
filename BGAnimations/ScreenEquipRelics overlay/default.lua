@@ -33,7 +33,7 @@ local GetNumActiveRows = function()
 			has_ambrosia = true
 		elseif active_relic.name == "Champion Belt" then
 			has_belt = true
-		elseif active_relic.nam == "Order of Amrita" then
+		elseif active_relic.name == "Order of Amrita" then
 			has_amrita = true
 		end
 	end

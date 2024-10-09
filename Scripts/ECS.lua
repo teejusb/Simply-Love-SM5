@@ -2000,7 +2000,6 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local numStars = 0
-			SM(score)
 			if score == 1.00 then
 				numStars = 4
 			elseif score >= 0.99 then

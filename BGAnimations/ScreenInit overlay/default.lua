@@ -1,25 +1,65 @@
 local quotes = {
 	{
-		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed.", -150, -10},
-		{"- Zetorux, ECS1", 159, 25}
+		{"I honestly wasn't sure if I'd make it through Slam.\nThis is by far the hardest thing I've passed."},
+		{"Zetorux, ECS1"}
 	},
 	{
-		{"Are you asking about my stamina cap ?", -100, -10},
-		{"- aijbot", 138, 12}
+		{"Are you asking about my stamina cap ?"},
+		{"aijbot"}
+	},
+	{
+		{"Turns out never play marathons"},
+		{"Archi"}
+	},
+	{
+		{"get deaded"},
+		{"Archi"}
+	},
+	{
+		{"yeah nobody really cares"},
+		{"Archi"}
+	},
+	{
+		{"Death is a natural part of life though"},
+		{"Archi"}
+	},
+	{
+		{"Quit making excuses"},
+		{"Archi"}
+	},
+	{
+		{"In an RO you just deal with it"},
+		{"Archi"}
+	},
+	{
+		{"yooo I finally qualified for lower letsgooo"},
+		{"Dom ITG"}
+	},
+	{
+		{"Ok"},
+		{"daster131"}
+	},
+	{
+		{"I think that you guys are underestimating how hard it is to do the thing"},
+		{"Arvin"}
+	},
+	{
+		{"Quit job and play marathon"},
+		{"Archi"}
 	},
 }
 
 local body, author, picture
 local w = 310
--- ---------------------------------------
+----------------------------------------
 
 local af = Def.ActorFrame{
 	InitCommand=function(self)
 		self:Center()
 		local rand_quote = math.random(#quotes)
 		local quote = quotes[rand_quote]
-		body:settext(quote[1][1]):xy(quote[1][2],quote[1][3])
-		author:settext(quote[2][1]):xy(quote[2][2],quote[2][3])
+		body:settext(quote[1][1]):y(-15)
+		author:settext(" - "..quote[2][1]):horizalign(left):x(body:GetWidth()/3):y(15)
 		picture:Load(nil)
 	end,
 	OnCommand=function(self)
@@ -87,7 +127,7 @@ end
 af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
 		body = self
-		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(left):vertspacing(-4)
+		self:diffuse(GetHexColor(slc)):diffusealpha(0):vertspacing(-4)
 	end,
 	OnCommand=cmd(sleep,2.1; linear,0.25; diffusealpha,1),
 	OffCommand=cmd(accelerate,0.3; diffusealpha,0)
@@ -97,7 +137,7 @@ af[#af+1] = LoadFont("Common Normal")..{
 af[#af+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
 		author = self
-		self:diffuse(GetHexColor(slc)):diffusealpha(0):horizalign(right)
+		self:diffuse(GetHexColor(slc)):diffusealpha(0)
 	end,
 	OnCommand=cmd(sleep,2.1; linear,0.25; diffusealpha,1),
 	OffCommand=cmd(accelerate,0.3; diffusealpha,0)
