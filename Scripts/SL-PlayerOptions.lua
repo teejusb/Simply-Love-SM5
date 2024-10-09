@@ -320,10 +320,6 @@ local Overrides = {
 			local first	= 1
 			local last 	= 3
 			local step 	= 0.01
-			if PlayerCanUseRateMods() and ECS.Mode == "Marathon" then
-				local first	= 0.85
-				local last 	= 1.15
-			end
 			return stringify( range(first, last, step), "%g")
 		end,
 		ExportOnChange = true,

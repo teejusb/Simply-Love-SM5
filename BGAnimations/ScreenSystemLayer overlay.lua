@@ -497,14 +497,28 @@ local bmt = nil
 
 -- SystemMessage ActorFrame
 t[#t+1] = Def.ActorFrame {
+	InitCommand=function(self)
+		self.IsDisplaying = false
+	end,
+	OnCommand=function(self)
+		self.IsDisplaying = true
+	end,
+	OffCommand=function(self)
+		self.IsDisplaying = false
+	end,
 	SystemMessageMessageCommand=function(self, params)
-		bmt:settext( params.Message )
+		if self.IsDisplaying then
+			bmt:settext(bmt:GetText().."\n"..params.Message)
+		else
+			bmt:settext( params.Message )
+		end
 
-		self:playcommand( "On" )
+		self:playcommand( "On", params )
 		if params.NoAnimate then
 			self:finishtweening()
 		end
-		self:playcommand( "Off", params )
+
+		self:sleep(type(params.Duration)=="number" and params.Duration or 3.33 + 0.25):queuecommand("Off")
 	end,
 	HideSystemMessageMessageCommand=function(self) self:finishtweening() end,
 
@@ -515,11 +529,9 @@ t[#t+1] = Def.ActorFrame {
 			self:horizalign(left):vertalign(top)
 			self:diffuse(0,0,0,0)
 		end,
-		OnCommand=function(self)
+		OnCommand=function(self, params)
 			self:finishtweening():diffusealpha(0.85)
 			self:zoomto(_screen.w, (bmt:GetHeight() + 16) * SL_WideScale(0.8, 1) )
-		end,
-		OffCommand=function(self, params)
 			-- use 3.33 seconds as a default duration if none was provided as the second arg in SM()
 			self:sleep(type(params.Duration)=="number" and params.Duration or 3.33):linear(0.25):diffusealpha(0)
 		end,
@@ -535,10 +547,8 @@ t[#t+1] = Def.ActorFrame {
 			self:horizalign(left):vertalign(top):xy(10, 10)
 			self:diffusealpha(0):zoom(SL_WideScale(0.8, 1))
 		end,
-		OnCommand=function(self)
+		OnCommand=function(self, params)
 			self:finishtweening():diffusealpha(1)
-		end,
-		OffCommand=function(self, params)
 			-- use 3 seconds as a default duration if none was provided as the second arg in SM()
 			self:sleep(type(params.Duration)=="number" and params.Duration or 3):linear(0.5):diffusealpha(0)
 		end,

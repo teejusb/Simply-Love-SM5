@@ -272,12 +272,12 @@ local InputHandler = function(event)
 			local ecs_player = ECS.Players[PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())]
 			if ECS.Mode == "ECS" then
 				local song_name = GAMESTATE:GetCurrentSong():GetDisplayFullTitle()
-				score, _ = CalculateScoreForSong(ecs_player, song_name, 0, active_relics, false)
+				score, _ = CalculateScoreForSong(ecs_player, song_name, 0, active_relics, --[[ap=]]0, --[[score=]]0)
 			elseif ECS.Mode == "Marathon" then
 				for relic in ivalues(active_relics) do
 					if relic.name ~= "(nothing)" then
 						score = (score +
-							relic.score(ecs_player, --[[song_info=]]nil, --[[song_data=]]nil, active_relics, --[[ap=]]nil, score))
+							relic.score(ecs_player, --[[song_info=]]nil, --[[song_data=]]nil, active_relics, --[[ap=]]nil, --[[score=]]0))
 					end
 				end
 			end

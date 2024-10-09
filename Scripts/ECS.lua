@@ -20,6 +20,7 @@ InitializeECS = function()
 		StethoscopeActive = false,
 		MixTapesRandomSong = nil,
 		WrapperActive = false,
+		EternalYouthActive = false,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
@@ -1875,7 +1876,7 @@ ECS.Relics = {
 		img="metaljohn.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				if math.random(1, 2) == 1 then
+				if true then
 					SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())]:initialize()
 					GAMESTATE:ApplyGameCommand("mod,1x,overhead", GAMESTATE:GetMasterPlayerNumber())
 					SM("Oops sorry your mods were reset")
@@ -1999,6 +2000,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local numStars = 0
+			SM(score)
 			if score == 1.00 then
 				numStars = 4
 			elseif score >= 0.99 then
@@ -2216,7 +2218,11 @@ ECS.Relics = {
 		is_marathon=false,
 		img="dyson.png",
 		action=function(relics_used)
-			GAMESTATE:ApplyGameCommand("mod,20% tornado", GAMESTATE:GetMasterPlayerNumber())
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				GAMESTATE:ApplyGameCommand("mod,20% tornado", GAMESTATE:GetMasterPlayerNumber())
+			elseif SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				GAMESTATE:ApplyGameCommand("mod,no tornado", GAMESTATE:GetMasterPlayerNumber())
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 300
@@ -2234,7 +2240,14 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			if #relics_used == 1 then
+			local count = 0
+			for relic in ivalues(relics_used) do
+				if relic.name ~= "(nothing)" then
+					count = count + 1
+				end
+			end
+
+			if count == 1 then
 				return 2000
 			else
 				return 0
@@ -2286,9 +2299,7 @@ ECS.Relics = {
 		end,
 		-- Eternal Youth
 		action2=function(relics_used)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
-			end
+			ECS.Player.EternalYouthActive = true
 		end,
 		score2=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0
@@ -28077,6 +28088,10 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 
 	if ECS.Player.StethoscopeActive then
 		ECS.BreakTimer = ECS.BreakTimer + 10 + 5 * ECS.Player.ConsecutivePasses
+	end
+
+	if ECS.Player.EternalYouthActive then
+		ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
 	end
 
 	-- We can always reset this since Mix Tapes usage doesn't get to ScreenEvaluation.
