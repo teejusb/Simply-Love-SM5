@@ -80,7 +80,7 @@ t[#t+1] = LoadFont("Common Normal")..{
 			local bpms = StringifyDisplayBPMs(mpn, StepsOrTrail, MusicRate)
 			if MusicRate ~= 1 then
 				-- format a string like "150 - 300 bpm (1.5x Music Rate)"
-				self:settext( ("%s bpm (%gx %s)"):format(bpms, MusicRate, THEME:GetString("OptionTitles", "MusicRate")) )
+				self:settext( ("%s bpm (%0.2fx %s)"):format(bpms, MusicRate, THEME:GetString("OptionTitles", "MusicRate")) )
 			else
 				-- format a string like "100 - 200 bpm"
 				self:settext( ("%s bpm"):format(bpms))

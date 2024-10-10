@@ -15,6 +15,7 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local group_name = song:GetGroupName()
 	local song_name = song:GetMainTitle()
 	local music_rate = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred"):MusicRate() or 1
+	music_rate = string.format("%.2f", music_rate)
 
 	if not IsPlayingFromPackForDivision() and not IsPlayingMarathon() then return end
 

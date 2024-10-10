@@ -265,6 +265,8 @@ local InputHandler = function(event)
 				for i=GetNumActiveRows()+1, 4 do
 					OptionRowWheels[pn]["Relic"..i]:set_info_set({{name="(nothing)"}}, 1)
 					active_relics[i] = OptionRowWheels[pn]["Relic"..i]:get_info_at_focus_pos()
+					local relic = OptionRowWheels[pn]["Relic"..i]:get_info_at_focus_pos()
+					SCREENMAN:GetTopScreen():GetChild("Overlay"):playcommand( "Relic"..i.."Selected", relic )
 				end
 			end
 

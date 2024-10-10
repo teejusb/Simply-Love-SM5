@@ -1877,7 +1877,57 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
 				if math.random(1, 2) == 1 then
-					SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())]:initialize()
+					SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].ActiveModifiers = {
+						SpeedModType = "X",
+						SpeedMod = 1.00,
+						JudgmentGraphic = "Love 2x6 (doubleres).png",
+						ComboFont = "Wendy",
+						HoldJudgment = "Love 1x2 (doubleres).png",
+						NoteSkin = nil,
+						Mini = "0%",
+						BackgroundFilter = "Off",
+						VisualDelay = "0ms",
+		
+						HideTargets = false,
+						HideSongBG = false,
+						HideCombo = false,
+						HideLifebar = false,
+						HideScore = false,
+						HideDanger = false,
+						HideComboExplosions = false,
+		
+						ColumnFlashOnMiss = false,
+						SubtractiveScoring = false,
+						MeasureCounter = "None",
+						MeasureCounterLeft = true,
+						MeasureCounterUp = false,
+						MeasureLines = "Off",
+						DataVisualizations = "None",
+						TargetScore = 11,
+						ActionOnMissedTarget = "Nothing",
+						Pacemaker = false,
+						LifeMeterType = "Standard",
+						NPSGraphAtTop = false,
+						JudgmentTilt = false,
+						ColumnCues = false,
+						DisplayScorebox = true,
+		
+						ErrorBar = "None",
+						ErrorBarUp = false,
+						ErrorBarMultiTick = false,
+						ErrorBarTrim = "Off",
+		
+						HideEarlyDecentWayOffJudgments = false,
+						HideEarlyDecentWayOffFlash = false,
+		
+						TimingWindows = {true, true, true, true, true},
+						ShowFaPlusWindow = false,
+						ShowEXScore = false,
+						ShowFaPlusPane = true,
+		
+						NoteFieldOffsetX = 0,
+						NoteFieldOffsetY = 0,
+					}
 					GAMESTATE:ApplyGameCommand("mod,1x,overhead", GAMESTATE:GetMasterPlayerNumber())
 					SM("Oops sorry your mods were reset")
 				end
