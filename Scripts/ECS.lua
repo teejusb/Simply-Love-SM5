@@ -28231,7 +28231,7 @@ IsPlayingMarathon = function()
 	return hashes[division] == SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].Streams.Hash
 end
 
-PlayerCanUseRateMods = function()
+PlayerCanUseRateModForMarathon = function()
 	if ECS.Mode ~= "Marathon" then return true end
 
 	if not IsPlayingMarathon() then return false end

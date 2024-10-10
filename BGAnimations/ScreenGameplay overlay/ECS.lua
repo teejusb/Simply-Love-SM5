@@ -270,7 +270,7 @@ end
 
 local DaggerOfTimeIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
-		if active_relic.name == "DaggerOfTime" then
+		if active_relic.name == "Dagger of Time" then
 			return true
 		end
 	end

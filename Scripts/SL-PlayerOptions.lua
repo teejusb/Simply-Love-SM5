@@ -361,6 +361,52 @@ local Overrides = {
 		end
 	},
 	-------------------------------------------------------------------------
+	MarathonMR = {
+		Choices = function()
+			local first	= 0.85
+			local last 	= 1.16
+			local step 	= 0.01
+			return stringify( range(first, last, step), "%g")
+		end,
+		ExportOnChange = true,
+		OneChoiceForAllPlayers = true,
+		LoadSelections = function(self, list, pn)
+			local rate = ("%g"):format( SL.Global.ActiveModifiers.MusicRate )
+			local i = FindInTable(rate, self.Choices) or 1
+			list[i] = true
+			return list
+		end,
+		SaveSelections = function(self, list, pn)
+
+			local mods = SL.Global.ActiveModifiers
+
+			for i=1,#self.Choices do
+				if list[i] then
+					mods.MusicRate = tonumber( self.Choices[i] )
+				end
+			end
+
+			local topscreen = SCREENMAN:GetTopScreen():GetName()
+
+			-- Use the older GameCommand interface for applying rate mods in Edit Mode;
+			-- it seems to be the only way (probably due to how broken Edit Mode is, in general).
+			-- As an unintentional side-effect of setting musicrate mods this way, they STAY set
+			-- (between songs, between screens, etc.) until you manually change them.  This is (probably)
+			-- not the desired behavior in EditMode, so when users change between different songs in EditMode,
+			-- always reset the musicrate mod.  See: ./BGAnimations/ScreenEditMeny underlay.lua
+			if topscreen == "ScreenEditOptions" then
+				GAMESTATE:ApplyGameCommand("mod," .. mods.MusicRate .."xmusic")
+			else
+				GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred"):MusicRate( mods.MusicRate )
+			end
+
+			MESSAGEMAN:Broadcast("MusicRateChanged")
+			-- Broadcast a message that ./Graphics/OptionRow Frame.lua will be listening for so it can update ActorProxies
+			-- in the MusicRate OptionRow for split BPMs if needed
+			MESSAGEMAN:Broadcast("RefreshActorProxy", {Player=pn, Name="MusicRate", Value=""})
+		end
+	},
+	-------------------------------------------------------------------------
 	Stepchart = {
 		ExportOnChange = true,
 		Choices = function()
