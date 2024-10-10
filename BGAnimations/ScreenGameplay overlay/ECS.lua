@@ -184,6 +184,7 @@ local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
 	HealthStateChangedMessageCommand=function(self, params)
 		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrapperActive then
+			-- Consume the wrapper.
 			ECS.Player.WrapperActive = false
 			RestoreChargesForNonWrapperRelics()
 			SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
@@ -217,15 +218,15 @@ af[#af+1] = Def.Actor{
 			-- 1. The player is about to play a random song from a mixtape OR
 			-- 2. The player has failed and has Wrappers active (they will restart).
 			-- Thanks De Morgan...
-			if ECS.Player.MixTapesRandomSong == nil and (not ECS.Player.WrappersActive or not failed) then
+			if ECS.Player.MixTapesRandomSong == nil and (not ECS.Player.WrapperActive or not failed) then
 				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 				CreateRelicFile(day, month_string, year, seconds)
 				WriteRelicDataToDisk()
 			end
 
-			-- We can always reset the Wrapper status.
-			if ECS.Player.WrappersActive then
-				ECS.Player.WrappersActive = false
+			-- We can always reset the Wrapper status (when we're not about to random a song).
+			if ECS.Player.MixTapesRandomSong == nil and ECS.Player.WrapperActive then
+				ECS.Player.WrapperActive = false
 			end
 		end
 	end
