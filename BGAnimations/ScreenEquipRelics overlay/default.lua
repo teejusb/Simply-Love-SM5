@@ -106,7 +106,7 @@ for i,player_relic in ipairs(ECS.Players[profile_name].relics) do
 							name=master_relic.name,
 							-- This value is basically unused since we rely on
 							-- ECS.Players[profile_name].relics.quantity as the source of 
-						  -- truth instead.
+							-- truth instead.
 							quantity=player_relic.quantity,
 							is_consumable=master_relic.is_consumable,
 							desc=master_relic.desc,
