@@ -147,7 +147,7 @@ local ExpendChargesOnActiveRelics = function()
 				name = "Dragonball"
 			end
 
-			if name == relic.name and relic.quantity ~= nil then
+			if name == relic.name and active_relic.is_consumable and relic.quantity > 0 then
 				relic.quantity = relic.quantity - 1
 			end
 		end
@@ -163,8 +163,7 @@ local RestoreChargesForNonWrapperRelics = function()
 			if name:match("^Dragonball") then
 				name = "Dragonball"
 			end
-
-			if name == relic.name and relic.name ~= "Wrapper" and relic.quantity ~= nil then
+			if name == relic.name and relic.name ~= "Wrapper" and active_relic.is_consumable then
 				relic.quantity = relic.quantity + 1
 			end
 		end
@@ -175,7 +174,30 @@ end
 
 local ApplyRelicActions = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
-		active_relic.action(ECS.Player.Relics)
+		if active_relic.name == "Xynn's Mix Tape" and GetQuantityForRelic(active_relic.name) > 0 then
+			-- Don't want to run into an infinite loop so use the MixTapesUsed flag.
+			-- Handle this first so that we can reload immediately before applying any
+			-- other relics.
+			if ECS.Player.MixTapesRandomSong == nil then
+				local song = GAMESTATE:GetCurrentSong()
+				local group = song:GetGroupName()
+				local all_songs = SONGMAN:GetSongsInGroup(group)
+				local random_song = all_songs[math.random(#all_songs)]
+
+				ECS.Player.MixTapesRandomSong = random_song
+
+				SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMusic")
+				SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+			else
+				ECS.Player.MixTapesRandomSong = nil
+			end
+		end
+	end
+
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if not active_relic.is_consumable or GetQuantityForRelic(active_relic.name) > 0 then
+			active_relic.action(ECS.Player.Relics)
+		end
 	end
 end
 
@@ -185,10 +207,12 @@ local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
 	HealthStateChangedMessageCommand=function(self, params)
 		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrapperActive then
-			-- Consume the wrapper.
-			ECS.Player.WrapperActive = false
-			RestoreChargesForNonWrapperRelics()
-			SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
+			if ECS.Player.MixTapesRandomSong == nil then
+				-- Consume the wrapper.
+				ECS.Player.WrapperActive = false
+				RestoreChargesForNonWrapperRelics()
+				SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
+			end
 		end
 	end,
 	OnCommand=function(self)

@@ -6,22 +6,26 @@ def GetDivision(tplp, id):
 		132065
 	]
 	upper_overrides = [
+		75693
 	]
+	mid_cutoff = 20000
+	upper_cutooff = 120000
 
 	if id in mid_overrides:
 		return "mid"
 	elif id in upper_overrides:
 		return "upper"
 	else:
-		if tplp >= 120000:
+		if tplp >= upper_cutooff:
 			return "upper"
-		elif tplp >= 20000:
+		elif tplp >= mid_cutoff:
 			return "mid"
 		else:
 			return "lower"
 
 def OptedForSpeed(tp):
-	return tp >= 55000
+	speed_cutoff = 65000
+	return tp >= speed_cutoff
 
 relics = {}
 with open('relics.csv') as f:

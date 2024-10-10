@@ -98,7 +98,8 @@ local Update = function(af, dt)
 				local failed = stats:GetFailed()
 
 				if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" and failed or
-					SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" then
+					SCREENMAN:GetTopScreen():GetName() == "ScreenSelectMusic" and
+					ECS.Player.MixTapesRandomSong == nil then
 					SM(SecondsToMSS(ECS.TimeToRemoveFromBreakTimer).." removed from Break Timer")
 					-- Adjust the breaktimer_at_screen_start value to account for the time removed
 					breaktimer_at_screen_start = breaktimer_at_screen_start - ECS.TimeToRemoveFromBreakTimer

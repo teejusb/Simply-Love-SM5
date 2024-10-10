@@ -2124,8 +2124,10 @@ ECS.Relics = {
 		is_marathon=false,
 		img="wrapper.png",
 		action=function(relics_used)
-			if not ECS.Player.WrapperActive then
-				ECS.Player.WrapperActive = true
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				if not ECS.Player.WrapperActive then
+					ECS.Player.WrapperActive = true
+				end
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -2238,20 +2240,8 @@ ECS.Relics = {
 					GAMESTATE:ApplyGameCommand("mod,0.97xmusic")
 				end
 
-				-- Don't want to run into an infinite loop so use the MixTapesUsed flag
-				if ECS.Player.MixTapesRandomSong == nil then
-					local song = GAMESTATE:GetCurrentSong()
-					local group = song:GetGroupName()
-					local all_songs = SONGMAN:GetSongsInGroup(group)
-					local random_song = all_songs[math.random(#all_songs)]
-
-					ECS.Player.MixTapesRandomSong = random_song
-
-					SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMusic")
-					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
-				else
-					ECS.Player.MixTapesRandomSong = nil
-				end
+				-- Randoming effect handled in ScreenGameplay overlay/ECS.lua itself.
+				-- Since we want to ensure it's the first thing applied.
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
@@ -13968,7 +13958,7 @@ ECS.Players["Dingoshi"] = {
 ECS.Players["Tuuc"] = {
 	id=7036,
 	division="mid",
-	opted_for_speed=true,
+	opted_for_speed=false,
 	country="Finland",
 	level=90,
 	exp=1879436,
@@ -14114,7 +14104,7 @@ ECS.Players["JOKR"] = {
 
 ECS.Players["CrackedCaptain"] = {
 	id=75693,
-	division="mid",
+	division="upper",
 	opted_for_speed=true,
 	country="Netherlands",
 	level=91,
@@ -14229,7 +14219,7 @@ ECS.Players["Xynn"] = {
 ECS.Players["Rust ITG"] = {
 	id=66550,
 	division="mid",
-	opted_for_speed=true,
+	opted_for_speed=false,
 	country="U.S.A.",
 	level=83,
 	exp=982816,
@@ -28297,6 +28287,19 @@ PlayerCanUseRateModForMarathon = function()
 	end
 
 	return true
+end
+
+GetQuantityForRelic = function(relic_name)
+	local player = GAMESTATE:GetMasterPlayerNumber()
+	local profile_name = PROFILEMAN:GetPlayerName(player)
+	if profile_name == nil or profile_name == "" then return 0 end
+
+	for relic in ivalues(ECS.Players[profile_name].relics) do
+		if relic.name == relic_name then
+			return relic.quantity
+		end
+	end
+	return 0
 end
 
 -- ------------------------------------------------------
