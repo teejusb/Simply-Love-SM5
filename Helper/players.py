@@ -3,7 +3,8 @@ import json
 
 def GetDivision(tplp, id):
 	mid_overrides = [
-		132065
+		132065,
+		7737
 	]
 	upper_overrides = [
 		75693

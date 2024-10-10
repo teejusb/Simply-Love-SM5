@@ -241,9 +241,8 @@ af[#af+1] = Def.Actor{
 
 			-- The cases where we don't want to write a score file are:
 			-- 1. The player is about to play a random song from a mixtape OR
-			-- 2. The player has failed and has Wrappers active (they will restart).
-			-- Thanks De Morgan...
-			if ECS.Player.MixTapesRandomSong == nil and (not ECS.Player.WrapperActive or not failed) then
+			-- 2. The player has Wrappers active and has failed (they will restart).
+			if not (ECS.Player.MixTapesRandomSong ~= nil or (ECS.Player.WrapperActive and failed)) then
 				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 				CreateRelicFile(day, month_string, year, seconds)
 				WriteRelicDataToDisk()

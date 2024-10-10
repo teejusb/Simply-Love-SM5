@@ -17043,7 +17043,7 @@ ECS.Players["MegaSphere"] = {
 
 ECS.Players["DF.LemmingOnTheRun"] = {
 	id=7737,
-	division="lower",
+	division="mid",
 	opted_for_speed=false,
 	country="U.S.A.",
 	level=76,
