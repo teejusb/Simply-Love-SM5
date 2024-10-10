@@ -10,7 +10,7 @@ return Def.Actor{
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS13 - Mid/[18] [180] Fractal Glitch Works (Part 3)")
+				local default = SONGMAN:FindSong("ECS13 - Mid/[18] [180] Fractal Glitch Works (Part 3) Nirvikalpa Samadhi")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
