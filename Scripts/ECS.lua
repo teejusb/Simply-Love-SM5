@@ -2186,7 +2186,7 @@ ECS.Relics = {
 		id=121,
 		name="1/200 Boeing 757",
 		desc="Airplane model made by a literal child",
-		effect="+BP equal to 75 * current play number|1/200 chance of ending the set immediately|45 seconds removed from break timer",
+		effect="+BP equal to (75 * current play number)*(1 - ((current play number^1.375)/100))|1/200 chance of ending the set immediately|45 seconds removed from break timer",
 		is_consumable=false,
 		is_marathon=false,
 		img="1200boeing757.png",
@@ -2204,11 +2204,7 @@ ECS.Relics = {
 			end
 
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
-				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
-				local failed = pss:GetFailed()
-				if not failed then
-					ECS.BreakTimer = ECS.BreakTimer - 45
-				end
+				ECS.BreakTimer = ECS.BreakTimer - 45
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
