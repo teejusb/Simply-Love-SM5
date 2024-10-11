@@ -189,7 +189,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
 				if despots_chapeau > 0 then total_points = total_points + (20 * songs_passed + 130 * squirrel_songs) * despots_chapeau end
-				if hellfire > 0 then total_points = total_points + ((songs_passed) ^ 2.25) * hellfire end
+				if hellfire > 0 then total_points = total_points + math.floor((songs_passed) ^ 2.25) * hellfire end
 
 				self:settext(tostring(total_points))
 			elseif ECS.Mode == "Marathon" then
