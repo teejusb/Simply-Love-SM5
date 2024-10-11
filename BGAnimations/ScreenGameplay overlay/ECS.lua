@@ -312,7 +312,7 @@ if SeaRingIsActive() then
 
 	local numTextures = 3
 
-	local songLength = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+	local songLength = GAMESTATE:GetCurrentSong():MusicLengthSeconds() / SL.Global.ActiveModifiers.MusicRate
 	local loops = math.ceil(songLength / dirTime)
 	
 	local totalHeight = SCREEN_HEIGHT + textureHeight / 2
@@ -380,6 +380,16 @@ if SeaRingIsActive() then
 						:diffusetopedge(0, 0.445313, 1, alpha)
 						:diffusebottomedge(0, 0.445313, 1, 1)
 						:y(textureHeight/2 + bodyHeight/2 + 1)
+			end,
+		},
+
+		-- Add some padding at the end.
+		Def.Quad{
+			InitCommand=function(self)
+				self:SetWidth(textureWidth*numTextures)
+						:SetHeight(bodyHeight)
+						:diffuse(color("0,0.445313,1"))
+						:y(textureHeight/2 + bodyHeight/2 + bodyHeight + 1)
 			end,
 		},
 	}
