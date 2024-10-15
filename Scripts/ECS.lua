@@ -2520,7 +2520,7 @@ ECS.Relics = {
 				local failed = pss:GetFailed()
 				if not failed then
 					local totalMP = 35000
-					return (totalMP * (1 - score)) * 2 / 3
+					return math.floor((totalMP * (1 - score)) * 2 / 3)
 				end
 			end
 			return 0

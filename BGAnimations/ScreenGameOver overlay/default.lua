@@ -218,7 +218,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					marathon_points = marathon_points * multiplier
 				end
 
-				self:settext(tostring(marathon_points))
+				self:settext(tostring(math.floor(marathon_points)))
 			end
 		end,
 		OffCommand=function(self) self:accelerate(0.5):fadeleft(1):cropleft(1) end
