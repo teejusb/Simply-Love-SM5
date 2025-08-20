@@ -375,6 +375,7 @@ local af = Def.ActorFrame {
 								rescoreCounts=GetRescoredJudgmentCounts(player),
 								usedCmod=(GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred"):CMod() ~= nil),
 								comment=CreateCommentString(player),
+								playerOptions=GetPlayerOptionsJsonForGrooveStats(player),
 							}
 							sendRequest = true
 							submitForPlayer = true

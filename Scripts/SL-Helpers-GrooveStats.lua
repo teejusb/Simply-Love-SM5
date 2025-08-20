@@ -761,3 +761,374 @@ RemoveStaleCachedRequests = function()
 		end
 	end
 end
+
+-- -----------------------------------------------------------------------
+-- Functions to facilitate saving and loading player options stored in
+-- GrooveStats.
+
+-- Returns the list of keys in the SL table that are allowlisted to save to
+-- GrooveStats.
+-- NOTE: These are validated server-side.
+CreateGrooveStatsPlayerOptionKeys = function()
+	local CreateKey = function(optionType, strVals)
+		local revMap = nil
+
+		if optionType == "string" then
+			if not strVals then
+				-- If the option type is string, we need to provide a list of valid
+				-- values.
+				Trace("String option type created for key: "..key.." but no valid values provided.")
+				return nil
+			else
+				revMap = {}
+				-- If we have a list of valid values, create a reverse map.
+				for k, v in pairs(strVals) do
+					revMap[v] = k
+				end
+			end
+		end
+
+		return {
+			["Type"]=optionType,
+			["Map"]=strVals,
+			["RevMap"]=revMap,
+		}
+	end
+
+	-- We don't want to allow random string blobs to be saved to GrooveStats to
+	-- prevent abuse, thus for string keys we return a table with an
+	-- enumerated list of values that are allowed to be saved.
+	--
+	-- We try to use the same keys as those defined in the SL table for ease
+	-- of implementation.
+	--
+	-- NOTE(teejusb): Yes I recognize that this limits which options can be saved
+	-- to/restored from GrooveStats, especially in the case of custom themes, but
+	-- this is necessary to prevent people from dumping arbitrary data to the
+	-- server.
+	return {
+		["SpeedModType"] = CreateKey("string", {
+			[1]="X",
+			[2]="C",
+			[3]="M"
+		}),
+		["SpeedMod"] = CreateKey("number"),
+		["JudgmentGraphic"] = CreateKey("string", {
+				[1]="Wendy Chroma 2x7 (doubleres).png",
+				[2]="Bebas 2x7 (doubleres).png",
+				[3]="Chromatic 2x7 (doubleres).png",
+				[4]="Code 2x7 (doubleres).png",
+				[5]="Comic Sans 2x7 (doubleres).png",
+				[6]="Emoticon 2x7 (doubleres).png",
+				[7]="Focus 2x7 (doubleres).png",
+				[8]="Grammar 2x7 (doubleres).png",
+				[9]="GrooveNights 2x7.png",
+				[10]="ITG2 2x7 (doubleres).png",
+				[11]="Love 2x7 (doubleres).png",
+				[12]="Love Chroma 2x7 (doubleres).png",
+				[13]="Miso 2x7 (doubleres).png",
+				[14]="Papyrus 2x7 (doubleres).png",
+				[15]="Rainbowmatic 2x7 (doubleres).png",
+				[16]="Roboto 2x7 (doubleres).png",
+				[17]="Shift 2x7 (doubleres).png",
+				[18]="Tactics 2x7 (doubleres).png",
+				[19]="Wendy 2x7 (doubleres).png",
+		}),
+		["ComboFont"] = CreateKey("string", {
+			[1]="Arial Rounded",
+			[2]="Asap",
+			[3]="Bebas Neue",
+			[4]="Source Code",
+			[5]="Wendy",
+			[6]="Wendy (Cursed)",
+			[7]="Work",
+		}),
+		["HoldJudgment"] = CreateKey("string", {
+			[1]="ITG2 1x2 (doubleres).png",
+			[2]="Love 1x2 (doubleres).png",
+			[3]="mute 1x2 (doubleres).png",
+			[4]="None 1x2.png",
+		}),
+		["NoteSkin"] = CreateKey("string", {
+			[1]="cel",
+			[2]="cyber",
+			[3]="ddr-note",
+			[4]="ddr-rainbow",
+			[5]="ddr-vivid",
+			[6]="default",
+			[7]="enchantment",
+			[8]="lambda",
+			[9]="metal",
+		}),
+		["BackgroundFilter"] = CreateKey("string", {
+			[1]="Off",
+			[2]="Dark",
+			[3]="Darker",
+			[4]="Darkest",
+		}),
+		["HideTargets"] = CreateKey("boolean"),
+		["HideSongBG"] = CreateKey("boolean"),
+		["HideCombo"] = CreateKey("boolean"),
+		["HideLifebar"] = CreateKey("boolean"),
+		["HideScore"] = CreateKey("boolean"),
+		["HideDanger"] = CreateKey("boolean"),
+		["HideComboExplosions"] = CreateKey("boolean"),
+		["ColumnFlashOnMiss"] = CreateKey("boolean"),
+		["SubtractiveScoring"] = CreateKey("boolean"),
+		["MeasureCounter"] = CreateKey("string", {
+			[1]="None",
+			[2]="8th",
+			[3]="16th",
+			[4]="24th",
+			[5]="32nd",
+		}),
+		["MeasureCounterLeft"] = CreateKey("boolean"),
+		["MeasureCounterUp"] = CreateKey("boolean"),
+		["MeasureLines"] = CreateKey("string", {
+			[1]="Off",
+			[2]="Measure",
+			[3]="Quarter",
+			[4]="Eighth",
+		}),
+		["DataVisualizations"] = CreateKey("string", {
+			[1]="None",
+			[2]="Target Score Graph",
+			[3]="Step Statistics",
+		}),
+		["TargetScore"] = CreateKey("number"),
+		["ActionOnMissedTarget"] = CreateKey("string", {
+			[1]="Nothing",
+			[2]="Fail",
+			[3]="Restart",
+		}),
+		["LifeMeterType"] = CreateKey("string", {
+			[1]="Standard",
+			[2]="Surround",
+			[3]="Vertical",
+		}),
+		["NPSGraphAtTop"] = CreateKey("boolean"),
+		["JudgmentTilt"] = CreateKey("boolean"),
+		["TiltMultiplier"] = CreateKey("number"),
+		["ColumnCues"] = CreateKey("boolean"),
+		["DisplayScorebox"] = CreateKey("boolean"),
+		["ErrorBar"] = CreateKey("string", {
+			[1]="None",
+			[2]="Colorful",
+			[3]="Monochrome",
+			[4]="Text",
+		}),
+		["ErrorBarUp"] = CreateKey("boolean"),
+		["ErrorBarMultiTick"] = CreateKey("boolean"),
+		["ErrorBarTrim"] = CreateKey("string", {
+			[1]="Off",
+			[2]="Great",
+			[3]="Excellent",
+		}),
+		["HideEarlyDecentWayOffJudgments"] = CreateKey("boolean"),
+		["HideEarlyDecentWayOffFlash"] = CreateKey("boolean"),
+		["ShowFaPlusWindow"] = CreateKey("boolean"),
+		["ShowExScore"] = CreateKey("boolean"),
+		["ShowFaPlusPane"] = CreateKey("boolean"),
+		["NoteFieldOffsetX"] = CreateKey("number"),
+		["NoteFieldOffsetY"] = CreateKey("number"),
+
+		---------------------------------------
+		-- These are the official player options used by the engine.
+
+		-- Only save a subset of them	since some of them are not that relevant.
+		-- Also some things like SpeedMod are handled above.
+		["Mini"] = CreateKey("number"),
+		["VisualDelay"] = CreateKey("number"),
+		["Cover"] = CreateKey("boolean"), -- Hide Background
+		["NoMines"] = CreateKey("boolean"),
+		["Perspective"] = CreateKey("string", {
+			[1]="Overhead",
+			[2]="Hallway",
+			[3]="Distant",
+			[4]="Incoming",
+			[5]="Space",
+		}),
+
+		-- In theory the engine allows saving multiple Turn options,
+		-- but we don't want to support that behavior because it's kinda odd.
+		["Turn"] = CreateKey("string", {
+			[1]="Mirror",
+			[2]="Left",
+			[3]="Right",
+			[4]="Shuffle",
+			[5]="SuperShuffle", -- Blender
+			[6]="HyperShuffle", -- Random
+			[7]="LRMirror", -- LR-Mirror
+			[8]="UDMirror", -- UD-Mirror
+			[9]="Backwards",
+		}),
+		-- Similarly for scroll options, we only care about Reverse.
+		-- Things like Split/Alternate/Cross/Centered are generally just
+		-- "for fun" options.
+		["Reverse"] = CreateKey("boolean"),
+		["HideLightType"] = CreateKey("string", {
+			[1]="NoHideLights",
+			[2]="HideAllLights",
+			[3]="HideMarqueeLights",
+			[4]="HideBassLights",
+		})
+	}
+end
+
+-- Returns the stringified JSON blob for the specified players options.
+GetPlayerOptionsJsonForGrooveStats = function(player)
+	local options = {}
+	local pn = ToEnumShortString(player)
+
+	local MaybeSetOption = function(options, key, value, expectedType)
+		local keyData = SL.Global.GrooveStatsPlayerOptionKeys[key]
+		if keyData ~= nil then
+			if keyData.Type == expectedType then
+				if expectedType == "string" and type(value) == "string" then
+					-- If the option is a string, we need to map it to the correct value.
+					if keyData.RevMap and keyData.RevMap[value] then
+						options[key] = keyData.RevMap[value]
+					end
+				elseif expectedType == "number" and type(value) == "number" then
+					-- If the option is a number, we just use the value directly.
+					options[key] = value
+				elseif expectedType == "boolean" and type(value) == "boolean" then
+					-- If the option is a boolean, we just use the value directly.
+					options[key] = value and true or false
+				end
+			else
+				Trace("Tried to set option for key: "..key.." but the expectedType is not :"..expectedType)
+			end
+		else
+			Trace("Tried to set option for key: "..key.." but the key does not exist in the GrooveStatsPlayerOptionKeys.")
+		end
+	end
+
+	-- First let's handle SL specific mods.
+	for key, value in pairs(SL[pn].ActiveModifiers) do
+		MaybeSetOption(options, key, value, type(value))
+	end
+
+
+	-- Then handle the actual player options.
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptionsArray("ModsLevel_Preferred")
+
+	-- Mini and VisualDelay are special cases that we handle separately.
+	-- They're stored as strings in the SL table, but we want to save them as
+	-- numbers in the GrooveStats JSON.
+	local mini = SL[pn].ActiveModifiers.Mini:gsub("%%", "")/1
+	local visualDelay = SL[pn].ActiveModifiers.VisualDelay:gsub("ms","")/1
+
+	local hasCover = false
+	local hasNoMines = false
+	local hasReverse = false
+
+	for i, option in ipairs(po) do
+		if option == "Cover" then
+			hasCover = true
+		elseif option == "NoMines" then
+			hasNoMines = true
+		elseif option == "Reverse" then
+			hasReverse = true
+		else
+			-- This assumes each key is unique to the mod (which it should be).
+			-- It basically goes through and attempts to assign every option to
+			-- each of these keys.
+			MaybeSetOption(options, "Perspective", option, "string")
+			MaybeSetOption(options, "Turn", option, "string")
+			MaybeSetOption(options, "HideLightType", option, "string")
+		end
+	end
+
+	MaybeSetOption(options, "Mini", mini, "number")
+	MaybeSetOption(options, "VisualDelay", visualDelay, "number")
+
+	MaybeSetOption(options, "Cover", hasCover, "boolean")
+	MaybeSetOption(options, "NoMines", hasNoMines, "boolean")
+	MaybeSetOption(options, "Reverse", hasReverse, "boolean")
+
+	return JsonEncode(options)
+end
+
+SetPlayerOptionsJsonFromGroovestats = function(player, jsonStr)
+	if not jsonStr or #jsonStr == 0 then return end
+
+	local options = JsonDecode(jsonStr)
+	if not options then
+		Trace("Failed to parse GrooveStats player options JSON: "..jsonStr)
+		return
+	end
+
+	local pn = ToEnumShortString(player)
+	local playerOptionsTable = {}
+	local playerOptionsString = ""
+	for key, value in pairs(options) do
+		-- First let's check if the key is actually part of the SL table
+		if SL[pn].ActiveModifiers[key] ~= nil then
+			local keyData = SL.Global.GrooveStatsPlayerOptionKeys[key]
+			if keyData ~= nil then
+				if keyData.Type == "string" and type(value) == "number" then
+					-- If the option is a string, we need to map it to the correct value.
+					if keyData.Map and keyData.Map[value] then
+						SL[pn].ActiveModifiers[key] = keyData.Map[value]
+					else
+						Trace("Tried to set option for key: "..key.." but the value: "..value.." is not in the map.")
+					end
+				elseif keyData.Type == "number" and type(value) == "number" then
+					-- Mini and VisualDelay are special in that we use strings to actually represent them in the SL table.
+					if key == "Mini" then
+						SL[pn].ActiveModifiers[key] = value.."%"
+					elseif key == "VisualDelay" then
+						SL[pn].ActiveModifiers[key] = value.."ms"
+					else
+						-- If the option is a number, we just use the value directly.
+						SL[pn].ActiveModifiers[key] = value
+					end
+				elseif keyData.Type == "boolean" and type(value) == "boolean" then
+					SL[pn].ActiveModifiers[key] = value
+				end
+			end
+		end
+
+		-- And then explicitly check for the player options
+		if key == "Cover" and value == true then
+			playerOptionsTable[#playerOptionsTable + 1] = "Cover"
+		elseif key == "NoMines" and value == true then
+			playerOptionsTable[#playerOptionsTable + 1] = "NoMines"
+		elseif key == "Reverse" and value == true then
+			playerOptionsTable[#playerOptionsTable + 1] = "Reverse"
+		elseif (key == "Perspective" or key == "Turn" or key == "HideLightType" or key == "NoteSkin") and type(value) == "number" then
+			local keyData = SL.Global.GrooveStatsPlayerOptionKeys[key]
+			if keyData ~= nil and keyData.Map ~= nil and keyData.Map[value] then
+				-- If the option is a string, we need to map it to the correct value.
+				playerOptionsTable[#playerOptionsTable + 1] = keyData.Map[value]
+			end
+		end
+	end
+
+	-- Also add in the SpeedMod and Mini options for player options.
+	if SL[pn].ActiveModifiers.SpeedModType == "X" then
+		playerOptionsTable[#playerOptionsTable + 1] = SL[pn].ActiveModifiers.SpeedMod.."x"
+	elseif SL[pn].ActiveModifiers.SpeedModType == "C" then
+		playerOptionsTable[#playerOptionsTable + 1] = "C"..SL[pn].ActiveModifiers.SpeedMod
+	elseif SL[pn].ActiveModifiers.SpeedModType == "M" then
+		playerOptionsTable[#playerOptionsTable + 1] = "m"..SL[pn].ActiveModifiers.SpeedMod
+	end
+
+	if SL[pn].ActiveModifiers.Mini == 100 then
+		playerOptionsTable[#playerOptionsTable + 1] = "Mini"
+	elseif SL[pn].ActiveModifiers.Mini ~= 0 then
+		playerOptionsTable[#playerOptionsTable + 1] = SL[pn].ActiveModifiers.Mini.." Mini"
+	end
+
+	if SL[pn].ActiveModifiers.VisualDelay ~= "0ms" then
+		playerOptionsTable[#playerOptionsTable + 1] = SL[pn].ActiveModifiers.VisualDelay.." VisualDelay"
+	end
+
+	-- And then set the player options string.
+	if #playerOptionsTable > 0 then
+		playerOptionsString = table.concat(playerOptionsTable, ", ")
+		GAMESTATE:GetPlayerState(player):SetPlayerOptions("ModsLevel_Preferred", playerOptionsString)
+		SL[pn].ActiveModifiers.PlayerOptionsString = playerOptionsString
+	end
+end

@@ -149,6 +149,9 @@ local GlobalDefaults = {
 			self.GameplayReloadCheck = false
 			-- How long to wait before displaying a "cue"
 			self.ColumnCueMinTime = 1.5
+
+			-- TODO(teejusb): We should only initialize this once to save on compute.
+			self.GrooveStatsPlayerOptionKeys = CreateGrooveStatsPlayerOptionKeys()
 		end,
 
 		-- These values outside initialize() won't be reset each game cycle,
