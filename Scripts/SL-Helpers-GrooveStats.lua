@@ -95,8 +95,8 @@ RequestResponseActor = function(x, y)
 				method=method,
 				body=body,
 				headers=headers,
-				connectTimeout=timeout/2,
-				transferTimeout=timeout/2,
+				connectTimeout=timeout,
+				transferTimeout=timeout,
 				onResponse=function(response)
 					self.request_handler = nil
 					-- If we get a permanent error, make sure we "disconnect" from
@@ -186,7 +186,7 @@ end
 -- Sets the API key for a player if it's found in their profile.
 
 ParseGrooveStatsIni = function(player)
-	if not player then return "" end
+	if not player then return end
 
 	local profile_slot = {
 		[PLAYER_1] = "ProfileSlot_Player1",
@@ -207,6 +207,7 @@ ParseGrooveStatsIni = function(player)
 		IniFile.WriteFile(path, {
 			["GrooveStats"]={
 				["ApiKey"]="",
+				["Username"]="",
 				["IsPadPlayer"]=0,
 			}
 		})
@@ -223,6 +224,8 @@ ParseGrooveStatsIni = function(player)
 				else
 					SL[pn].ApiKey = v
 				end
+			elseif k == "Username" then
+				SL[pn].GrooveStatsUsername = v
 			elseif k == "IsPadPlayer" then
 				-- Must be explicitly set to 1.
 				if v == 1 then
@@ -232,7 +235,44 @@ ParseGrooveStatsIni = function(player)
 				end
 			end
 		end
+
+		-- Always write the file back to disk to ensure it's up to date with
+		-- any new fields that may have been added.
+		IniFile.WriteFile(path, {
+			["GrooveStats"]={
+				["ApiKey"]=SL[pn].ApiKey,
+				["Username"]=SL[pn].GrooveStatsUsername,
+				["IsPadPlayer"]=SL[pn].IsPadPlayer and "1" or "0",
+			}
+		})
 	end
+end
+
+-- -----------------------------------------------------------------------
+WriteGrooveStatsIni = function(player)
+	if not player then return end
+
+	local profile_slot = {
+		[PLAYER_1] = "ProfileSlot_Player1",
+		[PLAYER_2] = "ProfileSlot_Player2"
+	}
+	
+	if not profile_slot[player] then return "" end
+
+	local dir = PROFILEMAN:GetProfileDir(profile_slot[player])
+	local pn = ToEnumShortString(player)
+	-- We require an explicit profile to be loaded.
+	if not dir or #dir == 0 then return "" end
+
+	local path = dir .. "GrooveStats.ini"
+
+	IniFile.WriteFile(path, {
+		["GrooveStats"]={
+			["ApiKey"]=SL[pn].ApiKey,
+			["Username"]=SL[pn].GrooveStatsUsername,
+			["IsPadPlayer"]=SL[pn].IsPadPlayer and "1" or "0",
+		}
+	})
 end
 
 -- -----------------------------------------------------------------------
@@ -241,7 +281,7 @@ end
 --  - GrooveStats is enabled in the operator menu.
 --  - We were successfully able to make a GrooveStats conenction previously.
 --  - We must be in the "dance" game mode (not "pump", etc)
---  - We must be in either ITG or FA+ mode.
+--  - We must be in ITG.
 --  - At least one Api Key must be available (this condition may be relaxed in the future)
 --  - We must not be in course mode (ZANKOKU: moving this specific check to autosubmitscore instead, since otherwise it blocks scorebox when playing course mode).
 IsServiceAllowed = function(condition)
@@ -249,7 +289,7 @@ IsServiceAllowed = function(condition)
 		ThemePrefs.Get("EnableGrooveStats") and
 		SL.GrooveStats.IsConnected and
 		GAMESTATE:GetCurrentGame():GetName()=="dance" and
-		(SL.Global.GameMode == "ITG" or SL.Global.GameMode == "FA+") and
+		SL.Global.GameMode == "ITG" and
 		(SL.P1.ApiKey ~= "" or SL.P2.ApiKey ~= ""))
 end
 
@@ -285,7 +325,7 @@ ValidForGrooveStats = function(player)
 	-- FA+ is okay because it just halves ITG's TimingWindowW1 but keeps everything else the same.
 	-- Casual (and Experimental, Demonic, etc.) uses different settings
 	-- that are incompatible with GrooveStats ranking.
-	valid[4] = (SL.Global.GameMode == "ITG" or SL.Global.GameMode == "FA+")
+	valid[4] = SL.Global.GameMode == "ITG"
 
 	-- ------------------------------------------
 	-- Next, check global Preferences that would invalidate the score.
@@ -377,42 +417,6 @@ ValidForGrooveStats = function(player)
 
 			valid[7] = valid[7] and THEME:GetMetric("ScoreKeeperNormal", "PercentScoreWeight"..window) == ExpectedScoreWeight[i]
 		end
-	elseif SL.Global.GameMode == "FA+" then
-		for i, window in ipairs(TimingWindows) do
-			-- This handles the "offset" for the FA+ window, while also retaining the correct indices for Holds/Mines/Rolls
-			-- i idx
-			-- 1  * - FA+ (idx doesn't matter as we explicitly handle the i == 1 case)
-			-- 2  1 - Fantastic
-			-- 3  2 - Excellent
-			-- 4  3 - Greats
-			-- 5  4 - Decents
-			-- 6  6 - Holds (notice how we skipped idx == 5, which would've been the Way Off window)
-			-- 7  7 - Mines
-			-- 8  8 - Rolls
-			-- Only check if the Timing Window is actually "enabled".
-			if i > 5 or SL[pn].ActiveModifiers.TimingWindows[i] then
-				local idx = (i < 6 and i-1 or i)
-				if i == 1 then
-					-- For the FA+ fantastic, the first window can be anything as long as it's <= the actual fantastic window
-					-- We could use FloatEquals here, but that's a 0.0001 margin of error for the equality case which I think 
-					-- will be generally irrelevant.
-					valid[7] = valid[7] and (PREFSMAN:GetPreference("TimingWindowSeconds"..window) + TWA <= ExpectedWindows[1])
-				else
-					valid[7] = valid[7] and FloatEquals(PREFSMAN:GetPreference("TimingWindowSeconds"..window) + TWA, ExpectedWindows[idx])
-				end
-			end
-		end
-
-		for i, window in ipairs(LifeWindows) do
-			local idx = (i < 6 and i-1 or i)
-			if i == 1 then
-				valid[7] = valid[7] and FloatEquals(THEME:GetMetric("LifeMeterBar", "LifePercentChange"..window), ExpectedLife[1])
-				valid[7] = valid[7] and THEME:GetMetric("ScoreKeeperNormal", "PercentScoreWeight"..window) == ExpectedScoreWeight[1]
-			else
-				valid[7] = valid[7] and FloatEquals(THEME:GetMetric("LifeMeterBar", "LifePercentChange"..window), ExpectedLife[idx])
-				valid[7] = valid[7] and THEME:GetMetric("ScoreKeeperNormal", "PercentScoreWeight"..window) == ExpectedScoreWeight[idx]
-			end
-		end
 	end
 
 	-- Validate Rate Mod
@@ -441,8 +445,11 @@ ValidForGrooveStats = function(player)
 		or po:Big()
 	)
 
+	-- we can't use po:FailSetting() here because effective fail type can be overridden by preferences
+	-- use GAMESTATE:GetPlayerFailType() since ScreenGameplay uses the same function internally
+	local failType = GAMESTATE:GetPlayerFailType(player);
 	-- only FailTypes "Immediate" and "ImmediateContinue" are valid for GrooveStats
-	valid[11] = (po:FailSetting() == "FailType_Immediate" or po:FailSetting() == "FailType_ImmediateContinue")
+	valid[11] = (failType == "FailType_Immediate" or failType == "FailType_ImmediateContinue")
 
 	-- AutoPlay/AutoplayCPU is not allowed
 	valid[12] = IsHumanPlayer(player)
@@ -454,9 +461,6 @@ ValidForGrooveStats = function(player)
 		-- Anything else is not allowed for GrooveStats submission.
 		-- "invalid" options (like HitMine or something), resolve to TNS_None.
 		valid[13] = minTNSToScoreNores ~= "W1" and minTNSToScoreNores ~= "W2"
-	elseif SL.Global.GameMode == "FA+" then
-		-- In FA+ mode, Greats are set to W4.
-		valid[13] = minTNSToScoreNores ~= "W1" and minTNSToScoreNores ~= "W2" and minTNSToScoreNores ~= "W3"
 	else
 		-- Other game modes are not supported.
 		valid[13] = false
@@ -482,7 +486,7 @@ CreateCommentString = function(player)
 
 	local suffixes = {"w", "e", "g", "d", "wo"}
 
-	local comment = SL.Global.GameMode == "FA+" and "FA+" or ""
+	local comment = ""
 
 	local rate = SL.Global.ActiveModifiers.MusicRate
 	if rate ~= 1 then
@@ -494,8 +498,7 @@ CreateCommentString = function(player)
 
 	-- Ignore the top window in all cases.
 	for i=2, 6 do
-		local idx = SL.Global.GameMode == "FA+" and i-1 or i
-		local suffix = i == 6 and "m" or suffixes[idx]
+		local suffix = i == 6 and "m" or suffixes[i]
 		local tns = i == 6 and "TapNoteScore_Miss" or "TapNoteScore_W"..i
 		
 		local number = pss:GetTapNoteScores(tns)
@@ -518,18 +521,6 @@ CreateCommentString = function(player)
 			timingWindowOption = "No WO"
 		elseif not SL[pn].ActiveModifiers.TimingWindows[1] and not SL[pn].ActiveModifiers.TimingWindows[2] then
 			timingWindowOption = "No Fan/Exc"
-		end
-	elseif SL.Global.GameMode == "FA+" then
-		if not SL[pn].ActiveModifiers.TimingWindows[4] and not SL[pn].ActiveModifiers.TimingWindows[5] then
-			timingWindowOption = "No Gre/Dec/WO"
-		elseif not SL[pn].ActiveModifiers.TimingWindows[5] then
-			timingWindowOption = "No Dec/WO"
-		elseif not SL[pn].ActiveModifiers.TimingWindows[1] and not SL[pn].ActiveModifiers.TimingWindows[2] then
-			-- Weird flex but okay
-			timingWindowOption = "No Fan/WO"
-		else
-			-- Way Offs are always removed in FA+ mode.
-			timingWindowOption = "No WO"
 		end
 	end
 
@@ -555,7 +546,7 @@ end
 
 -- -----------------------------------------------------------------------
 
-ParseGroovestatsDate = function(date)
+ParseGrooveStatsDate = function(date)
 	if not date or #date == 0 then return "" end
 
 	-- Dates are formatted like:
@@ -716,13 +707,35 @@ DownloadEventUnlock = function(url, unlockName, packName)
 				if response.headers["Content-Type"] == "application/zip" then
 					-- Downloads are usually of the form:
 					--    /Downloads/<name>.zip/<song_folders/
-					if not FILEMAN:Unzip("/Downloads/"..downloadfile, "/Songs/"..packName.."/") then
+					local destinationPack = "/Songs/"..packName.."/"
+					if not FILEMAN:Unzip("/Downloads/"..downloadfile, destinationPack) then
 						downloadInfo.ErrorMessage = "Failed to Unzip!"
 					else
 						if SL.GrooveStats.UnlocksCache[url] == nil then
 							SL.GrooveStats.UnlocksCache[url] = {}
 						end
 						SL.GrooveStats.UnlocksCache[url][packName] = true
+
+						-- If Pack.ini doesn't exist (new unlock for this player), create it.
+						local group = string.lower(packName)
+						local year = 2025
+						if string.find(group, "itl online "..year.." unlocks") then
+							local packIniPath = destinationPack.."Pack.ini"
+							if not FILEMAN:DoesFileExist(packIniPath) then
+								IniFile.WriteFile(packIniPath, {
+									["Group"]={
+										["Version"]=1,
+										["DisplayTitle"]=packName,
+										["TranslitTitle"]=packName,
+										["SortTitle"]=packName,
+										["Series"]="ITL Online",
+										["Year"]=year,
+										["Banner"]="",
+										["SyncOffset"]="ITG",
+									}
+								})
+							end
+						end
 
 						WriteUnlocksCache()
 					end

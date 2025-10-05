@@ -1,7 +1,7 @@
 local songs = {
-	Hearts = "feel",
-	Arrows = "cloud break",
-	Bears  = "crystalis",
+	Hearts = "in_two",
+	Arrows = "halcyon farms",
+	Bears  = "vrtuous faults",
 	Ducks  = "Xuxa fami VRC6",
 	Cats   = "Beanmania IIDX",
 	Spooky = "Spooky Scary Chiptunes",
@@ -9,7 +9,7 @@ local songs = {
 	Stars  = "Shooting Star - faux VRC6 remix",
 	Thonk  = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
 	Technique = "Quaq",
-	SRPG8  = "SRPG8"
+	SRPG9  = "SRPG9"
 }
 
 -- retrieve the current VisualStyle from the ThemePrefs system

@@ -12,6 +12,8 @@ local IsUltraWide = (GetScreenAspectRatio() > 21/9)
 local NoteFieldIsCentered = (GetNotefieldX(player) == _screen.cx)
 local NumEntries = 5
 
+local style = GAMESTATE:GetCurrentStyle():GetName()
+
 local border = 5
 local width = 162
 local height = 80
@@ -107,7 +109,7 @@ local LeaderboardRequestProcessor = function(res, master)
 		SetScoreData(2, 1, "", "No Scores", "", false, false, false, false)
 
 		local numEntries = 0
-		if SL["P"..n].ActiveModifiers.ShowEXScore then
+		if SL["P"..n].ActiveModifiers.ShowExScore then
 			-- If the player is using EX scoring, then we want to display the EX leaderboard first.
 			if data[playerStr]["exLeaderboard"] then
 				numEntries = 0
@@ -221,16 +223,21 @@ end
 local af = Def.ActorFrame{
 	Name="ScoreBox"..pn,
 	InitCommand=function(self)
-		self:xy(70 * (player==PLAYER_1 and 1 or -1), -115)
-		-- offset a bit more when NoteFieldIsCentered
-		if NoteFieldIsCentered and IsUsingWideScreen() then
-			self:addx( 2 * (player==PLAYER_1 and 1 or -1) )
-		end
+		if style ~= "double" then
+			self:xy(70 * (player==PLAYER_1 and 1 or -1), -115)
+			-- offset a bit more when NoteFieldIsCentered
+			if NoteFieldIsCentered and IsUsingWideScreen() then
+				self:addx( 2 * (player==PLAYER_1 and 1 or -1) )
+			end
 
-		-- ultrawide and both players joined
-		if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
-			self:x(self:GetX() * -1)
+			-- ultrawide and both players joined
+			if IsUltraWide and #GAMESTATE:GetHumanPlayers() > 1 then
+				self:x(self:GetX() * -1)
+			end
+		else
+			self:xy(GetNotefieldWidth() - 140, -115)
 		end
+		
 		self.isFirst = true
 	end,
 	CheckScoreboxCommand=function(self)
@@ -293,7 +300,7 @@ local af = Def.ActorFrame{
 			-- both players will have their own individual scoreboxes.
 			-- Should be fine though.
 			if sendRequest then
-				self:GetParent():GetChild("Name1"):settext("Loading...")
+				self:GetParent():GetChild("Name1"):settext(THEME:GetString("GrooveStats", "Loading"))
 				self:playcommand("MakeGrooveStatsRequest", {
 					endpoint="player-leaderboards.php?"..NETWORK:EncodeQueryParameters(query),
 					method="GET",
@@ -355,10 +362,10 @@ local af = Def.ActorFrame{
 	},
 	-- SRPG Logo
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_VisualStyles/SRPG8/logo_main (doubleres).png"),
-		Name="SRPG8Logo",
+		Texture=THEME:GetPathG("", "_VisualStyles/SRPG9/logo_alt (doubleres).png"),
+		Name="SRPG9Logo",
 		InitCommand=function(self)
-			self:diffusealpha(0.4):zoom(0.03):diffusealpha(0)
+			self:diffusealpha(0.4):zoom(0.07):diffusealpha(0)
 		end,
 		LoopScoreboxCommand=function(self)
 			if cur_style == 2 then
@@ -468,7 +475,7 @@ for i=1,NumEntries do
 			if score.isFail then
 				clr = Color.Red
 			elseif score.isEx then
-				clr = SL.JudgmentColors["FA+"][1]
+				clr = SL.JudgmentColors["ITG"][1]
 			elseif score.isSelf then
 				clr = self_color
 			elseif score.isRival then

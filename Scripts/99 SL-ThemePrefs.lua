@@ -24,16 +24,16 @@ SL_CustomPrefs.Get = function()
 	local day = DayOfMonth()
 	local today = year * 10000 + month * 100 + day
 
-	if today >= 20230620 then
-		visualStyleChoices[#visualStyleChoices+1] = "😈"
-		visualStyleValues[#visualStyleValues+1] = "SRPG8"
+	if today >= 20240620 then
+		visualStyleChoices[#visualStyleChoices+1] = "✨"
+		visualStyleValues[#visualStyleValues+1] = "SRPG9"
 	else
 		local prefs = IniFile.ReadFile("/Save/ThemePrefs.ini")
 		local theme = PREFSMAN:GetPreference("Theme")
 		local lastActiveEvent = nil
-		if prefs[theme] and prefs[theme].LastActiveEvent == "SRPG8" then
-			visualStyleChoices[#visualStyleChoices+1] = "😈"
-			visualStyleValues[#visualStyleValues+1] = "SRPG8"
+		if prefs[theme] and prefs[theme].LastActiveEvent == "SRPG9" then
+			visualStyleChoices[#visualStyleChoices+1] = "✨"
+			visualStyleValues[#visualStyleValues+1] = "SRPG9"
 		end
 	end
 
@@ -76,6 +76,7 @@ SL_CustomPrefs.Get = function()
 			},
 			Values = { "Casual", "ITG" }
 		},
+
 		AutoStyle =
 		{
 			Default = "none",
@@ -130,6 +131,12 @@ SL_CustomPrefs.Get = function()
 			Choices =  { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
 			Values	= { true, false }
 		},
+		AnimateBanners =
+		{
+			Default = true,
+			Choices = { THEME:GetString("ThemePrefs", "On"), THEME:GetString("ThemePrefs", "Off") },
+			Values  = { true, false }
+		},
 		-- - - - - - - - - - - - - - - - - - - -
 		-- SimplyLoveColor saves the theme color for the next time
 		-- the StepMania application is started.
@@ -162,6 +169,12 @@ SL_CustomPrefs.Get = function()
 		},
 		-- - - - - - - - - - - - - - - - - - - -
 		-- MenuTimer values for various screens
+		ScreenGrooveStatsLoginMenuTimer =
+		{
+			Default = 30,
+			Choices = map(SecondsToMSS, range(15, 90, 5)),
+			Values  = range(15, 90, 5),
+		},
 		ScreenSelectMusicMenuTimer =
 		{
 			Default = 300,
@@ -181,6 +194,12 @@ SL_CustomPrefs.Get = function()
 			Values  = range(30, 450, 15),
 		},
 		ScreenEvaluationMenuTimer =
+		{
+			Default = 60,
+			Choices = map(SecondsToMSS, range(15, 450, 15)),
+			Values  = range(15, 450, 15),
+		},
+		ScreenEvaluationNonstopMenuTimer =
 		{
 			Default = 60,
 			Choices = map(SecondsToMSS, range(15, 450, 15)),
@@ -210,6 +229,18 @@ SL_CustomPrefs.Get = function()
 		AllowScreenSelectColor =
 		{
 			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values  = { true, false }
+		},
+		AllowScreenSelectPlayMode =
+		{
+			Default = true,
+			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values  = { true, false }
+		},
+		AllowScreenSelectPlayMode2 =
+		{
+			Default = true,
 			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
 			Values  = { true, false }
 		},
@@ -298,6 +329,16 @@ SL_CustomPrefs.Get = function()
 			Choices =  { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
 			Values  = { true, false }
 		},
+
+		QRLogin = {
+			Default = "Sometimes",
+			Choices = {
+				THEME:GetString("ThemePrefs", "Always"),
+				THEME:GetString("ThemePrefs", "Sometimes"),
+				THEME:GetString("ThemePrefs", "Never"),
+			},
+			Values = { "Always", "Sometimes", "Never" }
+		}
 	}
 end
 

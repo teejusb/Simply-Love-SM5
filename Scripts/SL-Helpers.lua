@@ -33,7 +33,7 @@ end
 -- that expect it to behave a particular way.
 
 SL_WideScale = function(AR4_3, AR16_9)
-	return clamp(scale( SCREEN_WIDTH, 640, 854, AR4_3, AR16_9 ), AR4_3, AR16_9)
+	return clamp(scale( SCREEN_WIDTH, 640, 854, AR4_3, AR16_9 ), math.min(AR4_3, AR16_9), math.max(AR4_3, AR16_9))
 end
 
 
@@ -208,15 +208,6 @@ GetComboThreshold = function( MaintainOrContinue )
 	-- include dummy values here to prevent Lua errors in case players accidentally switch to lights
 	Combo.lights  = { Maintain = "TapNoteScore_W3", Continue = "TapNoteScore_W3" }
 
-
-	-- handle FA+ for Dance
-	-- should these values change for Pump?  I guess that's up to me.
-	if SL.Global.GameMode=="FA+" then
-		Combo.dance.Maintain = "TapNoteScore_W4"
-		Combo.dance.Continue = "TapNoteScore_W4"
-	end
-
-
 	local game = GAMESTATE:GetCurrentGame():GetName() or "dance"
 	return Combo[game][MaintainOrContinue]
 end
@@ -325,7 +316,7 @@ end
 -- -----------------------------------------------------------------------
 
 SetGameModePreferences = function()
-	-- apply the preferences associated with this SL GameMode (Casual, ITG, FA+)
+	-- apply the preferences associated with this SL GameMode (Casual, ITG)
 	for key,val in pairs(SL.Preferences[SL.Global.GameMode]) do
 		PREFSMAN:SetPreference(key, val)
 	end
@@ -372,10 +363,6 @@ SetGameModePreferences = function()
 	-- this was probably a Bad Decision™ on my part in hindsight  -quietly
 	prefix["ITG"] = ""
 
-	-- "FA+" mode is prefixed with "ECFA-" because the mode was previously known as "ECFA Mode"
-	-- and I don't want to deal with renaming relatively critical files from the theme.
-	-- Thus, scores from FA+ mode will continue to go into ECFA-Stats.xml.
-	prefix["FA+"] = "ECFA-"
 	prefix["Casual"] = "Casual-"
 
 	if PROFILEMAN:GetStatsPrefix() ~= prefix[SL.Global.GameMode] then
@@ -388,7 +375,7 @@ end
 -- manages for you back to their stock SM5 values.
 --
 -- These "managed" Preferences are listed in ./Scripts/SL_Init.lua
--- per-gamemode (Casual, ITG, FA+), and actively applied (and reapplied)
+-- per-gamemode (Casual, ITG), and actively applied (and reapplied)
 -- for each new game using SetGameModePreferences()
 --
 -- SL normally calls ResetPreferencesToStockSM5() from
@@ -594,7 +581,7 @@ IsW0Judgment = function(params, player)
 	if params.HoldNoteScore then return false end
 
 	-- Only check/update FA+ count if we received a TNS in the top window.
-	if params.TapNoteScore == "TapNoteScore_W1" and SL.Global.GameMode == "ITG"  then
+	if params.TapNoteScore == "TapNoteScore_W1" and SL.Global.GameMode == "ITG" then
 		local prefs = SL.Preferences["FA+"]
 		local scale = PREFSMAN:GetPreference("TimingWindowScale")
 		local W0 = prefs["TimingWindowSecondsW1"] * scale + prefs["TimingWindowAdd"]
@@ -643,28 +630,7 @@ GetExJudgmentCounts = function(player)
 
 	local TNS = { "W1", "W2", "W3", "W4", "W5", "Miss" }
 
-	if SL.Global.GameMode == "FA+" then
-		for window in ivalues(TNS) do
-			adjusted_window = window
-			-- In FA+ mode, we need to shift the windows up 1 so that the key we're using is accurate.
-			-- E.g. W1 window becomes W0, W2 becomes W1, etc.
-			if window ~= "Miss" then
-				adjusted_window = "W"..(tonumber(window:sub(-1))-1)
-			end
-
-			-- Get the count.
-			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
-			-- For the last window (Decent) in FA+ mode...
-			if window == "W5" then
-				-- Only populate if the window is still active.
-				if SL[pn].ActiveModifiers.TimingWindows[5] then
-					counts[adjusted_window] = number
-				end
-			else
-				counts[adjusted_window] = number
-			end
-		end
-	elseif SL.Global.GameMode == "ITG" then
+    if SL.Global.GameMode == "ITG" then
 		for window in ivalues(TNS) do
 			-- Get the count.
 			local number = stats:GetTapNoteScores( "TapNoteScore_"..window )
@@ -945,7 +911,8 @@ GetPlayerOptionsString = function(player, modsLevel)
 	for i,option in ipairs(PlayerOptions) do
 
 		-- these don't need to show up in the mods list
-		if option ~= "FailAtEnd" and option ~= "FailImmediateContinue" and option ~= "FailImmediate" then
+		if option ~= "FailAtEnd" and option ~= "FailImmediateContinue" and option ~= "FailImmediate" and 
+			not string.find(option, "Lights") then
 			-- 100% Mini will be in the PlayerOptions as just "Mini" so use the value from the SL table instead
 			if option:match("Mini") then
 				option = SL[pn].ActiveModifiers.Mini .. " Mini"
@@ -982,3 +949,98 @@ GetPlayerOptionsString = function(player, modsLevel)
 
 	return optionslist
 end
+
+-- -----------------------------------------------------------------------
+-- helper function for returning the player AF
+-- Works as expected in ScreenGameplay + Edit + Practice Mode
+--     arguments:  pn is short string PlayerNumber like "P1" or "P2"
+--     returns:    the "PlayerP1" or "PlayerP2" ActorFrame in ScreenGameplay
+--                 or, the unnamed equivalent in ScrenEdit
+GetPlayerAF = function(pn)
+	local topscreen = SCREENMAN:GetTopScreen()
+	if not topscreen then
+		lua.ReportScriptError("GetPlayerAF() failed to find the player ActorFrame because there is no Screen yet.")
+		return nil
+	end
+
+	local playerAF = nil
+
+	-- Get the player ActorFrame on ScreenGameplay
+	-- It's a direct child of the screen and named "PlayerP1" for P1
+	-- and "PlayerP2" for P2.
+	-- This naming convention is hardcoded in the SM5 engine.
+	--
+	-- ScreenEdit does not name its player ActorFrame, but we can still find it.
+
+	-- find the player ActorFrame in edit mode
+	local notefields = {}
+	if (THEME:GetMetric(topscreen:GetName(), "Class") == "ScreenEdit") then
+		-- loop through all nameless children of topscreen
+		-- and find the one that contains the NoteField
+		-- which is thankfully still named "NoteField"1
+
+		for _,nameless_child in ipairs(topscreen:GetChild("")) do
+			if nameless_child:GetChild("NoteField") then
+				notefields[#notefields+1] = nameless_child
+			end
+		end
+		-- If there is only one side joined always return the first one.
+		if #notefields == 1 then
+			return notefields[1]
+		-- If there are two sides joined, return the one that matches the player number.
+		else
+			return notefields[pn == "P1" and 1 or 2]
+		end
+
+	-- find the player ActorFrame in gameplay
+	else
+		local player_af = topscreen:GetChild("Player"..pn)
+		if player_af then
+			playerAF = player_af
+		end
+	end
+
+	return playerAF
+end
+
+-- -----------------------------------------------------------------------
+-- If the banner is missing, use the VisualStyle fallback banner according to selected color.
+GetFallbackBanner = function()
+    local path = "/" .. THEME:GetCurrentThemeDirectory() .. "Graphics/_FallbackBanners/" .. ThemePrefs.Get("VisualStyle")
+    local banner_directory = FILEMAN:DoesFileExist(path) and path or THEME:GetPathG("", "_FallbackBanners/Arrows")
+
+    return banner_directory .. "/banner" .. SL.Global.ActiveColorIndex .. " (doubleres).png"
+end
+
+-- -----------------------------------------------------------------------
+-- cool functions for scatterplotting course mode
+
+-- calculate each chart's actual length by GetLastSecond instead of song length
+TotalCourseLength = function(player)
+    local trail = GAMESTATE:GetCurrentTrail(player)
+    local t = 0
+    for te in ivalues(trail:GetTrailEntries()) do
+        t = t + te:GetSong():GetLastSecond()
+    end
+
+    return t / SL.Global.ActiveModifiers.MusicRate
+end
+
+-- calculate amount of course played for properly scaling the scatterplot of judgments
+TotalCourseLengthPlayed = function(player)
+	local pn = ToEnumShortString(player)
+	local trail = GAMESTATE:GetCurrentTrail(player)
+	local storage = SL[pn].Stages.Stats[SL.Global.Stages.PlayedThisGame + 1]
+	if storage.DeathSecond ~= nil then
+		local deathSecond = storage.DeathSecond
+		local t = 0
+		for te in ivalues(trail:GetTrailEntries()) do
+			t = t + ( te:GetSong():GetLastSecond() / SL.Global.ActiveModifiers.MusicRate )
+			if t > deathSecond then break end
+		end
+		return t
+	else
+		return -1
+	end
+end
+

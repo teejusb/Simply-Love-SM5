@@ -3,49 +3,6 @@ local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 local sprite
 
--- helper function for returning the player AF
--- works as expected in ScreenGameplay
---     arguments:  pn is short string PlayerNumber like "P1" or "P2"
---     returns:    the "PlayerP1" or "PlayerP2" ActorFrame in ScreenGameplay
---                 or, the unnamed equivalent in ScrenEdit
-local GetPlayerAF = function(pn)
-	local topscreen = SCREENMAN:GetTopScreen()
-	if not topscreen then
-		lua.ReportScriptError("GetPlayerAF() failed to find the player ActorFrame because there is no Screen yet.")
-		return nil
-	end
-
-	local playerAF = nil
-
-	-- Get the player ActorFrame on ScreenGameplay
-	-- It's a direct child of the screen and named "PlayerP1" for P1
-	-- and "PlayerP2" for P2.
-	-- This naming convention is hardcoded in the SM5 engine.
-	--
-	-- ScreenEdit does not name its player ActorFrame, but we can still find it.
-
-	-- find the player ActorFrame in edit mode
-	if (THEME:GetMetric(topscreen:GetName(), "Class") == "ScreenEdit") then
-		-- loop through all nameless children of topscreen
-		-- and find the one that contains the NoteField
-		-- which is thankfully still named "NoteField"
-		for _,nameless_child in ipairs(topscreen:GetChild("")) do
-			if nameless_child:GetChild("NoteField") then
-				playerAF = nameless_child
-				break
-			end
-		end
-
-	-- find the player ActorFrame in gameplay
-	else
-		local player_af = topscreen:GetChild("Player"..pn)
-		if player_af then
-			playerAF = player_af
-		end
-	end
-
-	return playerAF
-end
 ------------------------------------------------------------
 -- A profile might ask for a judgment graphic that doesn't exist
 -- If so, use the first available Judgment graphic
@@ -63,9 +20,14 @@ if file_to_load == "None" then
 			if ToEnumShortString(param.TapNoteScore) == "W1" and mods.ShowFaPlusWindow then
 				if not IsW0Judgment(param, player) and not IsAutoplay(player) then
 					frame = 1
-					
-					for col,tapnote in pairs(param.Notes) do
-						local tnt = ToEnumShortString(tapnote:GetTapNoteType())
+					if param.Notes ~= nil then
+						for col,tapnote in pairs(param.Notes) do
+							local tnt = ToEnumShortString(tapnote:GetTapNoteType())
+							if tnt == "Tap" or tnt == "HoldHead" or tnt == "Lift" then
+								GetPlayerAF(pn):GetChild("NoteField"):did_tap_note(col, "TapNoteScore_W1", --[[bright]] true)
+							end
+						end
+					elseif param.TapNote ~= nil then
 						if tnt == "Tap" or tnt == "HoldHead" or tnt == "Lift" then
 							GetPlayerAF(pn):GetChild("NoteField"):did_tap_note(col, "TapNoteScore_W1", --[[bright]] true)
 						end
@@ -91,7 +53,9 @@ local TNSFrames = {
 	TapNoteScore_W3 = 2,
 	TapNoteScore_W4 = 3,
 	TapNoteScore_W5 = 4,
-	TapNoteScore_Miss = 5
+	TapNoteScore_Miss = 5,
+	TapNoteScore_CheckpointHit = -1,
+	TapNoteScore_CheckpointMiss = 5
 }
 
 return Def.ActorFrame{
@@ -126,12 +90,10 @@ return Def.ActorFrame{
 					end
 					-- We don't need to adjust the top window otherwise.
 				else
-					-- Everything outside of W1 needs to be shifted down a row if not in FA+ mode.
-					-- Some people might be using 2x7s in FA+ mode (by copying ITG graphics to FA+).
-					-- Don't need to shift in that case.
-					if SL.Global.GameMode ~= "FA+" then
-						frame = frame + 1
-					end
+                    -- Everything outside of W1 needs to be shifted down a row if not in FA+ mode.
+                    -- Some people might be using 2x7s in FA+ mode (by copying ITG graphics to FA+).
+                    -- Don't need to shift in that case.
+					frame = frame + 1
 				end
 			end
 
@@ -146,10 +108,10 @@ return Def.ActorFrame{
 
 			sprite:visible(true):setstate(frame)
 
-			if SL[ToEnumShortString(player)].ActiveModifiers.JudgmentTilt then
+			if mods.JudgmentTilt then
 				-- How much to rotate.
 				-- We cap it at 50ms (15px) since anything after likely to be too distracting.
-				local offset = math.min(math.abs(param.TapNoteOffset), 0.050) * 300
+				local offset = math.min(math.abs(param.TapNoteOffset), 0.050) * 300 * mods.TiltMultiplier
 				-- Which direction to rotate.
 				local direction = param.TapNoteOffset < 0 and -1 or 1
 				sprite:rotationz(direction * offset)
@@ -168,15 +130,9 @@ return Def.ActorFrame{
 			local earlyTns = ToEnumShortString(param.EarlyTapNoteScore)
 
 			if earlyTns ~= "None" then
-				if SL.Global.GameMode == "FA+" then
-					if tns == "W5" then
-						return
-					end
-				else
-					if tns == "W4" or tns == "W5" then
-						return
-					end
-				end
+				if tns == "W4" or tns == "W5" then
+                    return
+                end
 			end
 		end
 
@@ -211,9 +167,7 @@ return Def.ActorFrame{
 				-- Everything outside of W1 needs to be shifted down a row if not in FA+ mode.
 				-- Some people might be using 2x7s in FA+ mode (by copying ITG graphics to FA+).
 				-- In that case, we need to shift the Way Off down to a Miss
-				if SL.Global.GameMode ~= "FA+" or tns == "Miss" then
-					frame = frame + 1
-				end
+				frame = frame + 1
 			end
 		end
 
@@ -234,7 +188,7 @@ return Def.ActorFrame{
 			if tns ~= "Miss" then
 				-- How much to rotate.
 				-- We cap it at 50ms (15px) since anything after likely to be too distracting.
-				local offset = math.min(math.abs(param.TapNoteOffset), 0.050) * 300
+				local offset = math.min(math.abs(param.TapNoteOffset), 0.050) * 300 * mods.TiltMultiplier
 				-- Which direction to rotate.
 				local direction = param.TapNoteOffset < 0 and -1 or 1
 				sprite:rotationz(direction * offset)

@@ -147,7 +147,7 @@ return Def.ActorFrame{
 			SelectedProfileMessageCommand=function(self, params)
 				if params.PlayerNumber ~= player then return end
 
-				self:settext("Waiting...")
+				self:settext(THEME:GetString("ScreenSelectProfile", "Waiting"))
 			end,
 			CoinsChangedMessageCommand=function(self)
 				if IsArcade() and GAMESTATE:EnoughCreditsToJoin() then
@@ -277,7 +277,7 @@ return Def.ActorFrame{
 						LoadActor(THEME:GetPathG("", "_VisualStyles/".. ThemePrefs.Get("VisualStyle") .."/SelectColor"))..{
 							InitCommand=function(self)
 								self:align(0,0):zoom(0.09):diffusealpha(0.9):xy(13, 8)
-								if ThemePrefs.Get("VisualStyle") == "SRPG8" then
+								if ThemePrefs.Get("VisualStyle") == "SRPG9" then
 									self:zoom(0.3):xy(5, 0)
 								end
 							end

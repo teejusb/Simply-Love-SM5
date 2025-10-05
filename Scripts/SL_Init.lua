@@ -4,8 +4,8 @@ local PlayerDefaults = {
 	__index = {
 		initialize = function(self)
 			self.ActiveModifiers = {
-				SpeedModType = "X",
-				SpeedMod = 1.00,
+				SpeedModType = "M",
+				SpeedMod = 250,
 				JudgmentGraphic = "Love 2x6 (doubleres).png",
 				ComboFont = "Wendy",
 				HoldJudgment = "Love 1x2 (doubleres).png",
@@ -35,6 +35,7 @@ local PlayerDefaults = {
 				LifeMeterType = "Standard",
 				NPSGraphAtTop = false,
 				JudgmentTilt = false,
+				TiltMultiplier = 1,
 				ColumnCues = false,
 				DisplayScorebox = true,
 
@@ -48,7 +49,7 @@ local PlayerDefaults = {
 
 				TimingWindows = {true, true, true, true, true},
 				ShowFaPlusWindow = false,
-				ShowEXScore = false,
+				ShowExScore = false,
 				ShowFaPlusPane = true,
 
 				NoteFieldOffsetX = 0,
@@ -99,8 +100,9 @@ local PlayerDefaults = {
 			self.EvalPanePrimary   = 1 -- large score and judgment counts
 			self.EvalPaneSecondary = 5 -- offset histogram
 
-			-- The Groovestats API key loaded for this player
+			-- The GrooveStats API key loaded for this player
 			self.ApiKey = ""
+			self.GrooveStatsUsername = ""
 			-- Whether or not the player is playing on pad.
 			self.IsPadPlayer = false
 			self.Favorites = {}
@@ -132,12 +134,14 @@ local GlobalDefaults = {
 			self.GameMode = ThemePrefs.Get("DefaultGameMode") or "ITG"
 			self.ScreenshotTexture = nil
 			self.MenuTimer = {
-				ScreenSelectMusic = ThemePrefs.Get("ScreenSelectMusicMenuTimer"),
+				ScreenGrooveStatsLogin  = ThemePrefs.Get("ScreenGrooveStatsLoginMenuTimer"),
+				ScreenSelectMusic       = ThemePrefs.Get("ScreenSelectMusicMenuTimer"),
 				ScreenSelectMusicCasual = ThemePrefs.Get("ScreenSelectMusicCasualMenuTimer"),
-				ScreenPlayerOptions = ThemePrefs.Get("ScreenPlayerOptionsMenuTimer"),
-				ScreenEvaluation = ThemePrefs.Get("ScreenEvaluationMenuTimer"),
+				ScreenPlayerOptions     = ThemePrefs.Get("ScreenPlayerOptionsMenuTimer"),
+				ScreenEvaluation        = ThemePrefs.Get("ScreenEvaluationMenuTimer"),
+				ScreenEvaluationNonstop = ThemePrefs.Get("ScreenEvaluationNonstopMenuTimer"),
 				ScreenEvaluationSummary = ThemePrefs.Get("ScreenEvaluationSummaryMenuTimer"),
-				ScreenNameEntry = ThemePrefs.Get("ScreenNameEntryMenuTimer"),
+				ScreenNameEntry         = ThemePrefs.Get("ScreenNameEntryMenuTimer"),
 			}
 			self.TimeAtSessionStart = nil
 			self.SampleMusicLoops = ThemePrefs.Get("SampleMusicLoops")
