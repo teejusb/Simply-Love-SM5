@@ -568,7 +568,12 @@ t[#t+1] = Def.ActorFrame {
 			self:finishtweening():diffusealpha(0.85)
 			self:zoomto(_screen.w, (bmt:GetHeight() + 16) * SL_WideScale(0.8, 1) )
 			-- use 3.33 seconds as a default duration if none was provided as the second arg in SM()
-			self:sleep(type(params.Duration)=="number" and params.Duration or 3.33):linear(0.25):diffusealpha(0)
+			local sleep_time = 3.33
+			if params and type(params.Duration)=="number" then
+				sleep_time = params.Duration
+			end
+
+			self:sleep(sleep_time):linear(0.25):diffusealpha(0)
 		end,
 	},
 
@@ -585,7 +590,11 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=function(self, params)
 			self:finishtweening():diffusealpha(1)
 			-- use 3 seconds as a default duration if none was provided as the second arg in SM()
-			self:sleep(type(params.Duration)=="number" and params.Duration or 3):linear(0.5):diffusealpha(0)
+			local sleep_time = 3
+			if params and type(params.Duration)=="number" then
+				sleep_time = params.Duration
+			end
+			self:sleep(sleep_time):linear(0.5):diffusealpha(0)
 		end,
 	}
 }

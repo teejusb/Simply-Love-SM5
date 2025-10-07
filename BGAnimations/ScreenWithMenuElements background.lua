@@ -1,31 +1,18 @@
 local t = Def.ActorFrame{}
 
 t[#t+1] = Def.Sprite {
-		Texture=THEME:GetPathG("", "_ECS/pendulum.png"),
+		Texture=THEME:GetPathG("", "_ECS/bg 2x2 (doubleres).png"),
+		Frame0000="0",
+		Delay0000="0.1",
+		Frame0001="1",
+		Delay0001="0.1",
+		Frame0002="2",
+		Delay0002="0.1",
+		Frame0003="3",
+		Delay0003="0.1",
 		InitCommand=function(self)
-			self:xy(SCREEN_CENTER_X + 250, 0):blend("BlendMode_Add"):zoom(0.6):rotationz(-40)
+			self:Center():addy(-70):zoom(0.65)
 		end,
-		OnCommand=function(self)
-			self:queuecommand("Tick")
-		end,
-		TickCommand=function(self)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenTitleMenu" or
-					SCREENMAN:GetTopScreen():GetName() == "ScreenInit" then
-				SOUND:PlayOnce(THEME:GetPathG("", "_ECS/ticktock2.ogg"))
-			end
-			self:accelerate(0.5):rotationz(0):decelerate(0.5):rotationz(40)
-			self:queuecommand("Tock")
-			
-		end,
-		TockCommand=function(self)
-			if SCREENMAN:GetTopScreen():GetName() == "ScreenTitleMenu" or
-					SCREENMAN:GetTopScreen():GetName() == "ScreenInit" then
-				SOUND:PlayOnce(THEME:GetPathG("", "_ECS/ticktock2.ogg"))
-			end
-			self:accelerate(0.5):rotationz(0):decelerate(0.5):rotationz(-40)
-			self:queuecommand("Tick")
-			
-		end
 	}
 
 t[#t+1] = Def.Quad{
