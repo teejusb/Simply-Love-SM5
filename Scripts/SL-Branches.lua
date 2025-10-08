@@ -80,7 +80,7 @@ Branch.AfterScreenSelectProfile = function()
 		-- the engine, but I guess we're doing it here, in SL-Branches.lua, for now.
 		GAMESTATE:SetCurrentStyle( preferred_style )
 
-		return Branch.AllowScreenSelectPlayMode()
+		return "ScreenSelectPlayMode"
 	end
 
 	return "ScreenSelectStyle"
