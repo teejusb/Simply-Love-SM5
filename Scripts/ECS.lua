@@ -3132,7 +3132,7 @@ end
 ECS.SongInfo = {}
 ECS.SongInfo.Lower = {
 	-- These values will be calculated and set below.
-	PackName = "ECS13 - Lower",
+	PackName = "ECS14 - Lower",
 	MinBpm = 0,
 	MaxBpm = 0,
 	MinScaled16ths = 0,
@@ -5204,7 +5204,7 @@ ECS.SongInfo.Lower = {
 
 ECS.SongInfo.Mid = {
 	-- These values will be calculated and set below.
-	PackName = "ECS13 - Mid",
+	PackName = "ECS14 - Mid",
 	MinBpm = 0,
 	MaxBpm = 0,
 	MinScaled16ths = 0,
@@ -7276,7 +7276,7 @@ ECS.SongInfo.Mid = {
 
 ECS.SongInfo.Upper = {
 	-- These values will be calculated and set below.
-	PackName = "ECS13 - Upper",
+	PackName = "ECS14 - Upper",
 	MinBpm = 0,
 	MaxBpm = 0,
 	MinScaled16ths = 0,
@@ -9180,7 +9180,7 @@ ECS.SongInfo.Upper = {
 
 ECS.SongInfo.Speed = {
 	-- These values will be calculated and set below.
-	PackName = "ECS13 - Speed",
+	PackName = "ECS14 - Speed",
 	MinBpm = 0,
 	MaxBpm = 0,
 	MinScaled16ths = 0,

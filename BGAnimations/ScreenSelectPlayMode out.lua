@@ -5,39 +5,39 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS13 - Upper/[24] [240] Opasnyje Jadjernaja")
+				local default = SONGMAN:FindSong("ECS14 - Upper/[24] [240] Opasnyje Jadjernaja")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS13 - Mid/[18] [180] Fractal Glitch Works (Part 3) Nirvikalpa Samadhi")
+				local default = SONGMAN:FindSong("ECS14 - Mid/[18] [180] Fractal Glitch Works (Part 3) Nirvikalpa Samadhi")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS13 - Lower/[12] [120] Adventure")
+				local default = SONGMAN:FindSong("ECS14 - Lower/[12] [120] Adventure")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS13 - Speed/[24] [240] Satanic Static")
+			local default = SONGMAN:FindSong("ECS14 - Speed/[24] [240] Satanic Static")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS13 - Upper Marathon/HIGHER TEMPO")
+				local default = SONGMAN:FindSong("ECS14 - Upper Marathon/HIGHER TEMPO")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS13 - Mid Marathon/NO MORE GAMES")
+				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/NO MORE GAMES")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS13 - Lower Marathon/TIMELESS BEATZ")
+				local default = SONGMAN:FindSong("ECS14 - Lower Marathon/TIMELESS BEATZ")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
