@@ -28564,6 +28564,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		steps=song_data.steps,
 		bpm=song_data.bpm,
 		bpm_tier=song_data.bpm_tier,
+		length=song_data.length,
 		failed=failed,
 		relics_used=DeepCopy(relics_used),
 		score=score,

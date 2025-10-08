@@ -1,19 +1,11 @@
 local Players = GAMESTATE:GetHumanPlayers();
 
-local BreadsUsed = function(relics_used)
-	local count = 0
-	for relic in ivalues(relics_used) do
-		local name = relic.name
-		if (name == "Baguette" or name == "Khachapuri" or name == "Pain Brioche" or name == "Fougasse" or
-			name == "Faluche") then
-			count = count + 1
-		end
-	end
-	return count
+local IsMarathonSong = function(song_data)
+	return song_data.length >= 16
 end
 
-local IsSquirrelSong = function(song_data)
-	return song_data.pack:find("Squirrel Metal") or song_data.pack:find("Squirrel Singles") or song_data.pack:find("Mozee Metal")
+local IsChasePinesSong = function(song_data)
+	return song_data.stepartist:find("ChasePines")
 end
 
 local t = Def.ActorFrame{
@@ -80,6 +72,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local black_garb = 0 -- +BP equal to Passes^2.2
 				local holy_pineble = 0 -- +BP equal to (77 * number of passed ChasePines songs)
 				local double_cheeseburger = 0 -- if used on a marathon that has been played more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 5
+				local double_cheeseburger_song = nil
 
 				for i=1,7 do
 					local song_played = ECS.Player.SongsPlayed[i]
@@ -94,6 +87,10 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							local accuracy_potion_used = false
 							local tpa_standard_used = false
 							local memepeace_beret_used = false
+							local wrench_used = false
+							local black_garb_used = false
+							local holy_pineble_used = false
+							local double_cheeseburger_used = false
 
 							for relic in ivalues(song_played.relics_used) do
 								if relic.name == "Slime Badge" then
@@ -114,6 +111,24 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 								if relic.name == "Memepeace Beret" then
 									memepeace_beret_used = true
 								end
+								if relic.name == "Wrench" then
+									wrench_used = true
+								end
+								if relic.name == "Black Garb" then
+									black_garb_used = true
+								end
+								if relic.name == "The Holy Pineble" then
+									holy_pineble_used = true
+								end
+								if relic.name == "DOUBLE CHEESEBURGER" then
+									double_cheeseburger_used = true
+									-- People only have one double cheeseburger ever.
+									-- Only set if it's used on a marathon.
+									if song_played.length >= 16 then
+										double_cheeseburger_song = song_played.name
+									end
+								end
+
 								if relic.name == "Kraken Club" then
 									kraken_multiplier = 2
 								end
@@ -125,6 +140,10 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							accuracy_potion = accuracy_potion + (accuracy_potion_used and 1 or 0) * kraken_multiplier
 							tpa_standard = tpa_standard + (tpa_standard_used and 1 or 0) * kraken_multiplier
 							memepeace_beret = memepeace_beret + (memepeace_beret_used and 1 or 0) * kraken_multiplier
+							wrench = wrench + (wrench_used and 1 or 0) * kraken_multiplier
+							black_garb = black_garb + (black_garb_used and 1 or 0) * kraken_multiplier
+							holy_pineble = holy_pineble + (holy_pineble_used and 1 or 0) * kraken_multiplier
+							double_cheeseburger = double_cheeseburger + (double_cheeseburger_used and 1 or 0) * kraken_multiplier
 						end
 					end
 				end
@@ -132,17 +151,17 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				-- Add additional BP from the end of set relics
 				local songs_passed = 0
 				local songs_passed_not_in_top_7 = 0
-				local total_bread = 0
 				local total_bpm = 0
 				local tiers = {}
 				local total_steps = 0
 				local total_score = 0
 				local total_over_95 = 0
-				local squirrel_songs = 0
+				local marathons_played = 0
+				local chasepines_songs = 0
+				local double_cheeseburger_song_times_played = 0
 
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
-						total_bread = total_bread + BreadsUsed(song_played.relics_used)
 						total_bpm = total_bpm + song_played.bpm
 						if tiers[song_played.bpm_tier] == nil then
 							tiers[song_played.bpm_tier] = 0
@@ -158,8 +177,16 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							total_over_95 = total_over_95 + 1
 						end
 
-						if IsSquirrelSong(song_played) then
-							squirrel_songs = squirrel_songs + 1
+						if double_cheeseburger_song ~= nil and song_played.name == double_cheeseburger_song then
+							double_cheeseburger_song_times_played = double_cheeseburger_song_times_played + 1
+						end
+
+						if IsMarathonSong(song_played) then
+							marathons_played = marathons_played + 1
+						end
+
+						if IsChasePinesSong(song_played) then
+							chasepines_songs = chasepines_songs + 1
 						end
 					end
 				end
@@ -181,6 +208,16 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
+				if wrench > 0 then total_points = total_points + (250 * marathons_played) * wrench end
+				if black_garb > 0 then total_points = total_points + math.floor(songs_passed^2.2) * black_garb end
+				if holy_pineble > 0 then total_points = total_points + (77 * chasepines_songs) * holy_pineble end
+				if double_cheeseburger > 0 then
+					-- The same marathon must be played more than once.
+					-- TODO(teejusb): Clarify computation.
+					if double_cheeseburger_song_times_played > 1 then
+						total_points = total_points + (((0 / 100) * total_points ) / 5) * double_cheeseburger
+					end
+				end
 
 				self:settext(tostring(total_points))
 			elseif ECS.Mode == "Marathon" then
