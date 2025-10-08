@@ -608,7 +608,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite {
 		Texture=THEME:GetPathG("", "_ECS/crt.png"),
 		InitCommand=function(self)
-			self:blend("BlendMode_Add")
+			self:blend("BlendMode_Add"):zoom(2)
 		end,
 		ScreenChangedMessageCommand=function(self)
 			local screen = SCREENMAN:GetTopScreen()
