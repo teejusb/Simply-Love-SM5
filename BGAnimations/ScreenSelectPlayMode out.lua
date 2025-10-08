@@ -3,9 +3,11 @@ return Def.Actor{
 		self:sleep(0.9)
 		if GetDivision() == nil then return end
 
+		-- FindSong needs the song title + subtitle (from the simfile, not the folder name).
+
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS14 - Upper/[24] [240] Opasnyje Jadjernaja")
+				local default = SONGMAN:FindSong("ECS14 - Upper/[24] [240] Fumisugi Annihilation")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
@@ -15,29 +17,29 @@ return Def.Actor{
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS14 - Lower/[12] [120] Adventure")
+				local default = SONGMAN:FindSong("ECS14 - Lower/[12] [120] Colors of Love")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS14 - Speed/[24] [240] Satanic Static")
+			local default = SONGMAN:FindSong("ECS14 - Speed/[24] [240] The Eighth Circle - Fraud")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS14 - Upper Marathon/HIGHER TEMPO")
+				local default = SONGMAN:FindSong("ECS14 - Upper Marathon/TrancemaniaXXX - HyperTranced")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/NO MORE GAMES")
+				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/They Be Groovin")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS14 - Lower Marathon/TIMELESS BEATZ")
+				local default = SONGMAN:FindSong("ECS14 - Lower Marathon/Pem-D-Monium")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
