@@ -1965,8 +1965,15 @@ ECS.Relics = {
 		is_marathon=false,
 		img="164car.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Implement engine disabling
-			-- Set preference MinTNSToScoreNotes to "TapNoteScore_None",
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_None")
+			end
+
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				-- Already gets reset in ScreenEvaluationStage in as well as ScreenSelectMusic overlay,
+				-- but doesn't hurt to restt it here too.
+				PREFSMAN:SetPreference("MinTNSToScoreNotes", "TapNoteScore_W3")
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return math.floor(song_data.dp * 0.2)
@@ -1982,9 +1989,38 @@ ECS.Relics = {
 		img="extensionlessfile.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement mods selection
+			local player = GAMESTATE:GetMasterPlayerNumber()
+			local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Preferred')
+
+			local total_number = 0
+			-- Acceleration: Boost, Brake, Wave, Expand, Boomerang
+			if po:Boost() == 1 then total_number = total_number + 1 end
+			if po:Brake() == 1 then total_number = total_number + 1 end
+			if po:Wave() == 1 then total_number = total_number + 1 end
+			if po:Expand() == 1 then total_number = total_number + 1 end
+			if po:Boomerang() == 1 then total_number = total_number + 1 end
+
+			-- Effect: Drunk, Dizzy, Confusion, Big, Flip, Invert, Tornado, Tipsy, Bumpy, Beat
+			if po:Drunk() == 1 then total_number = total_number + 1 end
+			if po:Dizzy() == 1 then total_number = total_number + 1 end
+			if po:Confusion() == 1 then total_number = total_number + 1 end
+			if po:Big() then total_number = total_number + 1 end  -- Big returns true/false
+			if po:Flip() == 1 then total_number = total_number + 1 end
+			if po:Invert() == 1 then total_number = total_number + 1 end
+			if po:Tornado() == 1 then total_number = total_number + 1 end
+			if po:Tipsy() == 1 then total_number = total_number + 1 end
+			if po:Bumpy() == 1 then total_number = total_number + 1 end
+			if po:Beat() == 1 then total_number = total_number + 1 end
+
+			-- Appearance: Hidden, Sudden, Stealth, Blink, RandomVanish (R.Vanish)
+			if po:Hidden() == 1 then total_number = total_number + 1 end
+			if po:Sudden() == 1 then total_number = total_number + 1 end
+			if po:Stealth() == 1 then total_number = total_number + 1 end
+			if po:Blink() == 1 then total_number = total_number + 1 end
+			if po:RandomVanish() == 1 then total_number = total_number + 1 end
+
 			-- TODO(teejusb): Implement Open With prompt
-			return 75
+			return total_number * 75
 		end,
 	},
 	{
@@ -2171,7 +2207,14 @@ ECS.Relics = {
 		is_marathon=false,
 		img="kyubeyplush.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Force robot, but not robot (50% stealth).
+			-- TODO(teejusb): Test this
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				GAMESTATE:ApplyGameCommand("mod,50% stealth", GAMESTATE:GetMasterPlayerNumber())
+			end
+
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				GAMESTATE:ApplyGameCommand("mod,no stealth", GAMESTATE:GetMasterPlayerNumber())
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
