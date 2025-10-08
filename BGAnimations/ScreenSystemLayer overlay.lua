@@ -616,6 +616,8 @@ t[#t+1] = Def.ActorFrame{
 				-- Turn off the effect for screen gameplay
 				if screen:GetName() == "ScreenGameplay" then
 					self:visible(false)
+				else
+					self:visible(true)
 				end
 			else
 				self:visible(true)

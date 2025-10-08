@@ -108,4 +108,4 @@ af[#af+1] = LoadFont("Common Header")..{
 	LoadActor( THEME:GetPathG("", "_header.lua") ),
 }
 
-return t
+return af
