@@ -275,7 +275,7 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/hellfire.png"),
+		Texture=THEME:GetPathG("", "_relics/wrench.png"),
 		InitCommand=function(self)
 			self:zoom(0.28):addx(-8):addx(240):addy(100)
 		end,
@@ -285,7 +285,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Hellfire" then
+						if relic.name == "Wrench" then
 							relic_used = true
 						end
 					end
@@ -296,7 +296,7 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/despotschapeau.png"),
+		Texture=THEME:GetPathG("", "_relics/blackgarb.png"),
 		InitCommand=function(self)
 			self:zoom(0.28):addx(-8):addx(280):addy(100)
 		end,
@@ -306,7 +306,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Despot's Chapeau" then
+						if relic.name == "Black Garb" then
 							relic_used = true
 						end
 					end
@@ -316,6 +316,49 @@ t[#t+1] = Def.ActorFrame{
 			self:visible(relic_used)
 		end,
 	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/theholypineble.png"),
+		InitCommand=function(self)
+			self:zoom(0.28):addx(-8):addx(320):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "The Holy Pineble" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/doublecheeseburger.png"),
+		InitCommand=function(self)
+			self:zoom(0.28):addx(-8):addx(360):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "DOUBLE CHEESEBURGER" then
+							relic_used = true
+						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+
 }
 
 if not GAMESTATE:IsCourseMode() then

@@ -75,8 +75,11 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local accuracy_potion = 0
 				local tpa_standard = 0
 				local memepeace_beret = 0
-				local despots_chapeau = 0
-				local hellfire = 0
+				
+				local wrench = 0 -- +BP equal to number of marathons played * 250|Song becomes dark psytrance
+				local black_garb = 0 -- +BP equal to Passes^2.2
+				local holy_pineble = 0 -- +BP equal to (77 * number of passed ChasePines songs)
+				local double_cheeseburger = 0 -- if used on a marathon that has been played more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 5
 
 				for i=1,7 do
 					local song_played = ECS.Player.SongsPlayed[i]
@@ -91,8 +94,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							local accuracy_potion_used = false
 							local tpa_standard_used = false
 							local memepeace_beret_used = false
-							local despots_chapeau_used = false
-							local hellfire_used = false
 
 							for relic in ivalues(song_played.relics_used) do
 								if relic.name == "Slime Badge" then
@@ -113,14 +114,8 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 								if relic.name == "Memepeace Beret" then
 									memepeace_beret_used = true
 								end
-								if relic.name == "Despot's Chapeau" then
-									despots_chapeau_used = true
-								end
 								if relic.name == "Kraken Club" then
 									kraken_multiplier = 2
-								end
-								if relic.name == "Hellfire" then
-									hellfire_used = true
 								end
 							end
 
@@ -130,8 +125,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							accuracy_potion = accuracy_potion + (accuracy_potion_used and 1 or 0) * kraken_multiplier
 							tpa_standard = tpa_standard + (tpa_standard_used and 1 or 0) * kraken_multiplier
 							memepeace_beret = memepeace_beret + (memepeace_beret_used and 1 or 0) * kraken_multiplier
-							despots_chapeau = despots_chapeau + (despots_chapeau_used and 1 or 0) * kraken_multiplier
-							hellfire = hellfire + (hellfire_used and 1 or 0) * kraken_multiplier
 						end
 					end
 				end
@@ -188,8 +181,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if tpa_standard > 0 then total_points = total_points + (100 * total_over_95) * tpa_standard end
 				if memepeace_beret > 0 then total_points = total_points + (100 * beret_tiers) * memepeace_beret end
-				if despots_chapeau > 0 then total_points = total_points + (20 * songs_passed + 130 * squirrel_songs) * despots_chapeau end
-				if hellfire > 0 then total_points = total_points + math.floor((songs_passed) ^ 2.25) * hellfire end
 
 				self:settext(tostring(total_points))
 			elseif ECS.Mode == "Marathon" then
