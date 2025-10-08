@@ -33,4 +33,4 @@ if PREFSMAN:GetPreference("EasterEggs") and style ~= "Thonk" then
 	if MonthOfYear()==11 then file = "HolidayCheer" end
 end
 
-return THEME:GetPathS("", "_common menu music/Chrono Trigger Main Theme")
+return THEME:GetPathS("", "_common menu music/Welcome to VA-11 Hall-A")
