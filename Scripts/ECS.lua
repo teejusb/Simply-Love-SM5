@@ -41,8 +41,7 @@ local BowEquipped = function(relics_used)
 	for relic in ivalues(relics_used) do
 		local name = relic.name
 		if (name == "Short Bow" or name == "Composite Bow" or name == "Long Bow" or name == "Twisted Bow" or
-			name == "Taulmaril" or name == "Taulmaril +1" or name == "Taulmaril +2" or
-			name == "Gontr Mael" or name == "Gontr Mael +1" or name == "Gontr Mael +2") then
+			name == "Igon's Greatbow" or name == "Igon's Greatbow +1" or name == "Igon's Greatbow +2") then
 			return true
 		end
 	end
@@ -74,26 +73,6 @@ local BulletEquipped = function(relics_used)
 	for relic in ivalues(relics_used) do
 		local name = relic.name
 		if (name == "Bullet" or name == "Pulse Ammo") then
-			return true
-		end
-	end
-	return false
-end
-
-local UsingHadenaDoresu = function(relics_used)
-	for relic in ivalues(relics_used) do
-		local name = relic.name
-		if (name == "Hadena Doresu") then
-			return true
-		end
-	end
-	return false
-end
-
-local UsingFancyDress = function(relics_used)
-	for relic in ivalues(relics_used) do
-		local name = relic.name
-		if (name == "Fancy Dress") then
 			return true
 		end
 	end
@@ -1121,7 +1100,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.bpm_tier == 180 then
-				return math.floor(song_data.dp * 0.1)
+				return math.floor(song_data.dp * 0.2)
 			else
 				return 0
 			end
@@ -2096,7 +2075,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.pack:find("Kyypakkaus") then
-				return 200
+				return 225
 			else
 				return 0
 			end
@@ -2282,7 +2261,11 @@ ECS.Relics = {
 			-- SL should almost always exist, unless we're running VerifyRelics
 			if SL ~= nil then
 				local music_rate = SL.Global.ActiveModifiers.MusicRate or 1.0
-				return math.floor(((music_rate * 100) - 100) * 100)
+				if music_rate <= 1.0 then
+					return 0
+				else
+					return math.floor(((music_rate * 100) - 100) * 100)
+				end
 			else
 				return 0
 			end
@@ -2604,7 +2587,7 @@ ECS.Relics = {
 		id=143,
 		name="Tetsusaiga",
 		desc="KAGOMEEEEEEEEEEEEEEE",
-		effect="+3000 MP",
+		effect="+3000 MP, but only if you pass",
 		is_consumable=false,
 		is_marathon=true,
 		img="tetsusaiga.png",
@@ -2612,7 +2595,17 @@ ECS.Relics = {
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- NOTE(teejusb): MP Relics will only show up during the marathon so
 			-- returning the actual MP points is fine.
-			return 3000
+			-- NOTE(teejusb): MP Relics will only show up during the marathon so
+			-- returning the actual MP points is fine.
+			if SCREENMAN and SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local player = GAMESTATE:GetMasterPlayerNumber()
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
+				local failed = pss:GetFailed()
+				if not failed then
+					return 3000
+				end
+			end
+			return 0
 		end,
 	},
 	{
