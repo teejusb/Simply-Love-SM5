@@ -284,15 +284,6 @@ local SeaRingIsActive = function()
 	return false
 end
 
-local NurseJoyPlushIsActive = function()
-	for active_relic in ivalues(ECS.Player.Relics) do
-		if active_relic.name == "Nurse Joy Plush" then
-			return true
-		end
-	end
-	return false
-end
-
 local DaggerOfTimeIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
 		if active_relic.name == "Dagger of Time" then
@@ -300,6 +291,131 @@ local DaggerOfTimeIsActive = function()
 		end
 	end
 	return false
+end
+
+local ExtensionlessFileIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Extensionless File" then
+			return true
+		end
+	end
+	return false
+end
+
+local GoldDustIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Gold Dust" then
+			return true
+		end
+	end
+	return false
+end
+
+local HelicopterIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "1/100 Helicopter" then
+			return true
+		end
+	end
+	return false
+end
+
+local WrenchIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Wrench" then
+			return true
+		end
+	end
+	return false
+end
+
+local TurntableIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Turntable" then
+			return true
+		end
+	end
+	return false
+end
+
+if HelicopterIsActive() then
+	local step_count = 0
+	af[#af+1] = Def.Sound{
+		Name="Helicopter",
+		File=THEME:GetPathG("","_ECS/helicopter.ogg"),
+		SupportRateChanging=true,
+		JudgmentMessageCommand=function(self, params)
+			if params.Player == nil then return end
+
+			if params.Player ~= player then return end
+			step_count = step_count + 1
+			if step_count % 100 == 0 then
+				self:queuecommand("Play")
+			end
+		end,
+		PlayCommand=function(self)
+			self:play()
+		end,
+	}
+end
+
+if WrenchIsActive() then
+	-- The audio is 4 measures of 214 BPM
+	local bpm = 214
+	local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
+	local prev_measure = -1
+	local first_step_passed = false
+	local Update = function(self, delta)
+		local cur_measure = (math.floor(player_state:GetSongPosition():GetSongBeatVisible()))/4
+
+		if cur_measure % 4 == 0 and cur_measure > prev_measure then
+			prev_measure = cur_measure
+			self:GetChild("Wrench"):queuecommand("Play")
+		end
+	end
+
+
+	af[#af+1] = Def.ActorFrame{
+		InitCommand=function(self)
+			self:queuecommand("SetUpdate")
+		end,
+		SetUpdateCommand=function(self) self:SetUpdateFunction( Update ) end,
+
+		Def.Sound{
+			Name="Wrench",
+			File=THEME:GetPathG("","_ECS/darkpsy.ogg"),
+			SupportRateChanging=true,
+			PlayCommand=function(self)
+				self:stop()
+				local ragesound = self:get()
+				local song_position = player_state:GetSongPosition()
+				local so = GAMESTATE:GetSongOptionsObject("ModsLevel_Song")
+				local music_rate = so:MusicRate()
+				local cur_bpm = song_position:GetCurBPS() * 60 * music_rate
+
+				ragesound:speed(cur_bpm / bpm)
+				self:play()
+			end,
+		}
+	}
+end
+
+if TurntableIsActive() then
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			self:queuecommand("Start")
+		end,
+		StartCommand=function(self)
+			local sleep_time = math.random(0, 30)
+			self:sleep(sleep_time):queuecommand("Loop")
+		end,
+		LoopCommand=function(self)
+			local sleep_time = math.random(0, 30)
+			local rate = math.random(85,115) / 100
+			GAMESTATE:ApplyGameCommand("mod,"..rate.."xmusic")
+			self:sleep(sleep_time):queuecommand("Loop")
+		end,
+	}
 end
 
 if SeaRingIsActive() then
@@ -406,24 +522,6 @@ if SeaRingIsActive() then
 	end
 
 	af[#af+1] = seaLevels
-end
-
-if NurseJoyPlushIsActive() then
-	local lifeHitCount = 5
-	af[#af+1] = Def.ActorFrame{
-		LifeChangedMessageCommand=function(self, params)
-			if params.Player == player and lifeHitCount ~= 0 and params.LifeMeter:GetLife() < 1.0 then
-				local pn = ToEnumShortString(player)
-				if SCREENMAN:GetTopScreen() then
-					local player_af = SCREENMAN:GetTopScreen():GetChild("Player"..pn)
-					if player_af then
-						player_af:SetLife(1.0)
-						lifeHitCount = lifeHitCount - 1
-					end
-				end
-			end
-		end,
-	}
 end
 
 if IsPlayingMarathon() then

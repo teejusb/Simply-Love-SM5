@@ -2047,7 +2047,6 @@ ECS.Relics = {
 		img="1100helicopter.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement helikopter sound effect
 			return math.floor((song_data.steps / 100) * 15)
 		end,
 	},
@@ -2061,7 +2060,6 @@ ECS.Relics = {
 		img="wrench.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement dark psytrance
 			-- End of set relics are handled in ScreenGameOver
 			return 0
 		end,
@@ -2496,7 +2494,6 @@ ECS.Relics = {
 		img="turntable.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement rate mod changes randomly during song
 			return math.floor(song_data.rp * 0.6)
 		end,
 	},
