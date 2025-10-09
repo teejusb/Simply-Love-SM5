@@ -411,7 +411,7 @@ if TurntableIsActive() then
 		end,
 		LoopCommand=function(self)
 			local sleep_time = math.random(0, 30)
-			local rate = math.random(85,115) / 100
+			local rate = math.random(89,115) / 100
 			GAMESTATE:ApplyGameCommand("mod,"..rate.."xmusic")
 			self:sleep(sleep_time):queuecommand("Loop")
 		end,
