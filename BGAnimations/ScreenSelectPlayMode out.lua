@@ -7,7 +7,7 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS14 - Upper/[24] [240] Fumisugi Annihilation")
+				local default = SONGMAN:FindSong("ECS14 - Upper/[25] [250] Apocalyptic Dawn FP 250")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
@@ -23,7 +23,7 @@ return Def.Actor{
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS14 - Speed/[24] [240] The Eighth Circle - Fraud")
+			local default = SONGMAN:FindSong("ECS14 - Speed/[25] [250] The Ninth Circle - Treachery")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
@@ -34,7 +34,7 @@ return Def.Actor{
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/They Be Groovin")
+				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/They Be Groovin'")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
