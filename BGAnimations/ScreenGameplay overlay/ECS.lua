@@ -34,6 +34,20 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	data = data..hour..":"..minute..":"..second.."\n"
 	data = data..music_rate.."\n"
 
+	-- Handle special "theme" points.
+	local theme_points = 0
+	for i=1, 5 do
+		local relic = ECS.Player.Relics[i]
+		local name = relic and relic.name or "*"
+		if name == "Extensionless File" then
+			-- Subtract 75 since we only want to consider the theme specific
+			-- bonus and not the +75 base.
+			theme_points = relic.score - 75
+		end
+	end
+	data = data .. theme_points .. "\n"
+
+
 	local f = RageFileUtil.CreateRageFile()
 
 	if f:Open(path, 2) then
@@ -65,22 +79,7 @@ local CreateRelicFile = function(day, month_string, year, seconds)
 
 	for i=1, 5 do
 		local relic = ECS.Player.Relics[i]
-		--local name = relic and relic.name or "*"
-		local name = "*"
-		if relic then
-			-- Only do drops for Great Power since it has BP, and rename it back to Dragonball.
-			local adjusted_name = relic.name
-			if relic.name:match("^Dragonball") then
-				if relic.name == "Dragonball - Great Power" then
-					adjusted_name = "Dragonball"
-				else
-					adjusted_name = "*"
-				end
-			end
-
-			name = adjusted_name
-		end
-
+		local name = relic and relic.name or "*"
 		data = data .. name .. "\n"
 	end
 

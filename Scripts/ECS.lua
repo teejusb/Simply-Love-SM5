@@ -2010,8 +2010,7 @@ ECS.Relics = {
 			if po:Blink() == 1 then total_number = total_number + 1 end
 			if po:RandomVanish() == 1 then total_number = total_number + 1 end
 
-			-- TODO(teejusb): Implement Open With prompt
-			return total_number * 75
+			return 75 + total_number * 75
 		end,
 	},
 	{
@@ -2024,7 +2023,6 @@ ECS.Relics = {
 		img="golddust.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement dust accumulation
 			return math.floor(ap * 0.5)
 		end,
 	},
@@ -2196,7 +2194,6 @@ ECS.Relics = {
 		is_marathon=false,
 		img="kyubeyplush.png",
 		action=function(relics_used)
-			-- TODO(teejusb): Test this
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				GAMESTATE:ApplyGameCommand("mod,50% stealth", GAMESTATE:GetMasterPlayerNumber())
 			end
