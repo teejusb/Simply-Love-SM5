@@ -2573,8 +2573,14 @@ ECS.Relics = {
 		img="meteorite.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): How does this work?
-			return 0
+			local total_passes = 0
+			for song in ivalues(ECS.Player.SongsPlayed) do
+				if not song.failed then
+					total_passes = total_passes + 1
+				end
+			end
+
+			return math.floor(math.pow(total_passes, 2.5))
 		end,
 	},
 	{
@@ -2667,8 +2673,14 @@ ECS.Relics = {
 		img="camellia.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement loading length of passed songs in timed set
-			return 0
+			local total_length = 0
+			for song in ivalues(ECS.Player.SongsPlayed) do
+				if not song.failed then
+					total_length = total_length + song.length
+				end
+			end
+
+			return math.floor(total_length * 30)
 		end,
 	},
 	{
