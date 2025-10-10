@@ -389,7 +389,7 @@ if ExtensionlessFileIsActive() then
 		InitCommand=function(self) self:Center() self:SetUpdateFunction( UpdateText ) self:visible(false) end,
 		OnCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback( ExtensionlessCallback ) self:queuecommand("Sleep") end,
 		SleepCommand=function(self)
-			local totalseconds = GAMESTATE:GetCurrentSong():GetLastSecond() / SL.Global.ActiveModifiers.MusicRate
+			local totalseconds = GAMESTATE:GetCurrentSong():MusicLengthSeconds() / SL.Global.ActiveModifiers.MusicRate
 			local random_time = math.random(1, math.floor(totalseconds))
 			self:sleep(random_time):queuecommand("Pause")
 		end,
@@ -518,6 +518,42 @@ if TurntableIsActive() then
 			self:sleep(sleep_time):queuecommand("Loop")
 		end,
 	}
+end
+
+if GoldDustIsActive() then
+	local songLength = GAMESTATE:GetCurrentSong():MusicLengthSeconds() / SL.Global.ActiveModifiers.MusicRate
+	local gravity = 98.1
+	local height = SCREEN_HEIGHT -- Should be 480
+
+
+	af[#af+1] = Def.ActorFrame{
+		Def.Quad{
+			InitCommand=function(self)
+				self:SetWidth(10):SetHeight(height):diffuse(color("#ffbb00")):x(SCREEN_CENTER_X):y(-height/2)
+			end,
+			OnCommand=function(self)
+				self:accelerate(height / gravity):y(height/2)
+				self:queuecommand("Wait")
+			end,
+			WaitCommand=function(self)
+				self:sleep(songLength - height/gravity):queuecommand("Finish")
+			end,
+			FinishCommand=function(self)
+				self:decelerate(height / gravity):y(SCREEN_HEIGHT + height/2)
+			end,
+		},
+
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/sand.png"),
+			InitCommand=function(self)
+				self:Center():y(height):zoom(height/1080)
+			end,
+			OnCommand=function(self)
+				self:linear(songLength):y(height/2+70)
+			end,
+		}
+	}
+
 end
 
 if SeaRingIsActive() then
