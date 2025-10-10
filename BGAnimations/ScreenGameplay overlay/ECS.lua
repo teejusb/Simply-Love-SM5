@@ -355,6 +355,11 @@ if HelicopterIsActive() then
 		end,
 		PlayCommand=function(self)
 			self:play()
+			GAMESTATE:ApplyGameCommand("mod,200% dizzy", player)
+			self:sleep(3):queuecommand("Stop")
+		end,
+		StopCommand=function(self)
+			GAMESTATE:ApplyGameCommand("mod,no dizzy", player)
 		end,
 	}
 end
