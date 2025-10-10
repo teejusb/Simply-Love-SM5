@@ -338,6 +338,103 @@ local TurntableIsActive = function()
 	return false
 end
 
+if ExtensionlessFileIsActive() then
+	local ExtensionlessCallback = function(event)
+		if not event.PlayerNumber or not event.button then return false end
+
+		if event.type == "InputEventType_FirstPress" and event.GameButton == "Start" then
+			MESSAGEMAN:Broadcast("DismissError")
+		end
+
+		return false
+	end
+
+	local pause_time = -1
+	local unpause_time = -1
+
+	local UpdateText = function(self, delta)
+		if pause_time == -1 and unpause_time == -1 then return end
+
+		if unpause_time == -1 then
+			local elapsed = GetTimeSinceStart() - pause_time
+			-- Player has 10 seconds to dismiss the message.
+			local max_time = 5
+			local time_remaining = max_time - elapsed
+			if time_remaining <= 0 then
+				STATSMAN:GetCurStageStats():GetPlayerStageStats(player):FailPlayer()
+				if not SCREENMAN:GetTopScreen():IsTransitioning() then
+					SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_DoNextScreen")
+				end
+			else
+				local text = ("%.1f"):format(time_remaining)
+				self:GetChild("Timer"):settext("Must dismiss in "..text.." seconds or will fail!")
+			end
+		else
+			local elapsed = GetTimeSinceStart() - unpause_time
+			-- Give the player a short moment to unpause to get back to the pad.
+			local max_time = 2
+			local time_remaining = max_time - elapsed
+			if time_remaining <= 0 then
+				pause_time = -1
+				unpause_time = -1
+				self:queuecommand("Hide")
+			else
+				local text = ("%.1f"):format(time_remaining)
+				self:GetChild("Timer"):settext("Starting in "..text.." seconds")
+			end
+		end
+	end
+
+	af[#af+1] = Def.ActorFrame{
+		InitCommand=function(self) self:Center() self:SetUpdateFunction( UpdateText ) self:visible(false) end,
+		OnCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback( ExtensionlessCallback ) self:queuecommand("Sleep") end,
+		SleepCommand=function(self)
+			local totalseconds = GAMESTATE:GetCurrentSong():GetLastSecond() / SL.Global.ActiveModifiers.MusicRate
+			local random_time = math.random(1, math.floor(totalseconds))
+			self:sleep(random_time):queuecommand("Pause")
+		end,
+		PauseCommand=function(self)
+			pause_time = GetTimeSinceStart()
+			self:visible(true)
+			SCREENMAN:GetTopScreen():PauseGame(true)
+		end,
+		DismissErrorMessageCommand=function(self)
+			if pause_time ~= -1 then
+				pause_time = -1
+				unpause_time = GetTimeSinceStart()
+				SCREENMAN:GetTopScreen():PauseGame(true)
+			end
+		end,
+		HideCommand=function(self)
+			self:visible(false)
+			SCREENMAN:GetTopScreen():PauseGame(false)
+		end,
+
+		-- slightly darken the entire screen
+		Def.Quad {
+			InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0.6) end
+		},
+
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/extensionless.png"),
+		},
+
+		LoadFont("Common Normal")..{
+			Name="Timer",
+			InitCommand=function(self)
+				self:y(100)
+			end,
+		},
+
+		LoadFont("Common Normal")..{
+			Text="Press &START; to Dismiss",
+			InitCommand=function(self)
+				self:y(200)
+			end,
+		},
+	}
+end
+
 if HelicopterIsActive() then
 	local step_count = 0
 	af[#af+1] = Def.Sound{
