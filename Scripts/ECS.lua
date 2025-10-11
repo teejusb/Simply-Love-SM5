@@ -2218,7 +2218,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 and not UsingMedalOfFreedomOrSoulSuppressingOrb(relics_used) or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
+				if (cur_life_scale == 1.0 and not UsingMedalOfFreedomOrSoulSuppressingOrb(relics_used)) or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
 					SM("Set to Life 5")
 				end
@@ -2427,7 +2427,7 @@ ECS.Relics = {
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenEquipRelics" then
 				local cur_life_scale = PREFSMAN:GetPreference("LifeDifficultyScale")
-				if cur_life_scale == 1.0 and not UsingMedalOfFreedomOrSoulSuppressingOrb(relics_used) or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
+				if (cur_life_scale == 1.0 and not UsingMedalOfFreedomOrSoulSuppressingOrb(relics_used)) or (cur_life_scale ~= 1.0 and cur_life_scale < 0.8) then
 					PREFSMAN:SetPreference("LifeDifficultyScale", 0.8)
 					SM("Set to Life 5")
 				end
