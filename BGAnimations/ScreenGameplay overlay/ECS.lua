@@ -42,7 +42,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 		if name == "Extensionless File" then
 			-- Subtract 75 since we only want to consider the theme specific
 			-- bonus and not the +75 base.
-			theme_points = relic.score - 75
+			-- NOTE: Score usually requires arguments but Extensionless File 
+			-- doesn't use any of them so rel.score() is safe.
+			theme_points = relic.score() - 75
 		end
 	end
 	data = data .. theme_points .. "\n"
