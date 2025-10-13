@@ -160,6 +160,9 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local chasepines_songs = 0
 				local double_cheeseburger_song_times_played = 0
 
+				local ecs_player = ECS.Players[PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())]
+				local num_burgers = ecs_player and ecs_player.relics and ecs_player.relics["BURGER"] and ecs_player.relics["BURGER"].quantity or 0
+
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
 						total_bpm = total_bpm + song_played.bpm
@@ -215,7 +218,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					-- The same marathon must be played more than once.
 					-- TODO(teejusb): Clarify computation.
 					if double_cheeseburger_song_times_played > 1 then
-						total_points = total_points + (((0 / 100) * total_points ) / 2.5) * double_cheeseburger
+						total_points = total_points + (((num_burgers / 100) * total_points ) / 2.5) * double_cheeseburger
 					end
 				end
 
