@@ -2036,7 +2036,7 @@ ECS.Relics = {
 		img="1100helicopter.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor((song_data.steps / 100) * 15)
+			return math.floor((song_data.steps / 100) * 6)
 		end,
 	},
 	{
@@ -2096,7 +2096,7 @@ ECS.Relics = {
 		name="Black Garb",
 		desc="Looks like some sort of cosplay?",
 		effect="+75 BP|At end of set, +BP equal to Passes^2.2",
-		is_consumable=false,
+		is_consumable=true,
 		is_marathon=false,
 		img="blackgarb.png",
 		action=function(relics_used) end,
@@ -2110,7 +2110,7 @@ ECS.Relics = {
 		name="The Holy Pineble",
 		desc="The divinely inspired word of God of Streaming, as recorded by ChasePines.",
 		effect="At end of set, +BP equal to (77 * number of passed ChasePines songs)",
-		is_consumable=false,
+		is_consumable=true,
 		is_marathon=false,
 		img="theholypineble.png",
 		action=function(relics_used) end,
@@ -2466,7 +2466,7 @@ ECS.Relics = {
 		id=135,
 		name="DOUBLE CHEESEBURGER",
 		desc="Sovereign of all known burgers.  It reigns supreme over all bun-based foods.",
-		effect="At the end of set, if used on a marathon that has been played more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 5",
+		effect="At the end of set, if used on a marathon that has been passed more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 5",
 		is_consumable=true,
 		is_marathon=false,
 		img="doublecheeseburger.png",

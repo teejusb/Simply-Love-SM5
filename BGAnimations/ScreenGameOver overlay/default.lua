@@ -215,7 +215,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					-- The same marathon must be played more than once.
 					-- TODO(teejusb): Clarify computation.
 					if double_cheeseburger_song_times_played > 1 then
-						total_points = total_points + (((0 / 100) * total_points ) / 5) * double_cheeseburger
+						total_points = total_points + (((0 / 100) * total_points ) / 2.5) * double_cheeseburger
 					end
 				end
 
