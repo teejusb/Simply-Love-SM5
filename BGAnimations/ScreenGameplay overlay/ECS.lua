@@ -438,6 +438,10 @@ end
 
 if HelicopterIsActive() then
 	local step_count = 0
+	local player = GAMESTATE:GetMasterPlayerNumber()
+	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Preferred')
+	local using_dizzy = po:Dizzy() == 1
+
 	af[#af+1] = Def.Sound{
 		Name="Helicopter",
 		File=THEME:GetPathG("","_ECS/helicopter.ogg"),
@@ -457,7 +461,11 @@ if HelicopterIsActive() then
 			self:sleep(3):queuecommand("Stop")
 		end,
 		StopCommand=function(self)
-			GAMESTATE:ApplyGameCommand("mod,no dizzy", player)
+			if not using_dizzy then
+				GAMESTATE:ApplyGameCommand("mod,no dizzy", player)
+			else
+				GAMESTATE:ApplyGameCommand("mod,100% dizzy", player)
+			end
 		end,
 	}
 end
