@@ -45,6 +45,12 @@ local af = Def.ActorFrame{
 	OnCommand=function(self)
 		-- Protect ring functions differently for ECS, but no reason not to always set fail type appropriately.
 		local player_state = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber())
+
+		local player_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
+		if ECS.Player.ProfileName == nil then
+			ECS.Player.ProfileName = player_name
+		end
+
 		if player_state then
 			local po = player_state:GetPlayerOptions("ModsLevel_Preferred")
 			if po then

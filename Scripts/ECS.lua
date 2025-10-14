@@ -10,7 +10,7 @@ InitializeECS = function()
 	ECS.TimeToRemoveFromBreakTimer = 0
 
 	ECS.Player = {
-		Profile=nil,
+		ProfileName=nil,
 		Relics={},
 		-- Use AddPlayedSongs to append to this table which will keep this table
 		-- sorted in descending order of points.
@@ -2466,7 +2466,7 @@ ECS.Relics = {
 		id=135,
 		name="DOUBLE CHEESEBURGER",
 		desc="Sovereign of all known burgers.  It reigns supreme over all bun-based foods.",
-		effect="At the end of set, if used on a marathon that has been passed more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 5",
+		effect="At the end of set, if used on a marathon that has been passed more than once, +BP equal to ( (quantity of burgers possessed / 100) * pre-BP point total ) / 2.5",
 		is_consumable=true,
 		is_marathon=false,
 		img="doublecheeseburger.png",

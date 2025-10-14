@@ -160,8 +160,11 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local chasepines_songs = 0
 				local double_cheeseburger_song_times_played = 0
 
-				local ecs_player = ECS.Players[PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())]
-				local num_burgers = ecs_player and ecs_player.relics and ecs_player.relics["BURGER"] and ecs_player.relics["BURGER"].quantity or 0
+				local num_burgers = 0
+				if ECS.Player.ProfileName then
+					local ecs_player = ECS.Players[ECS.Player.ProfileName]
+					num_burgers = ecs_player and ecs_player.relics and ecs_player.relics["BURGER"] and ecs_player.relics["BURGER"].quantity or 0
+				end
 
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
