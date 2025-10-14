@@ -1995,7 +1995,6 @@ ECS.Relics = {
 			if po:Drunk() == 1 then total_number = total_number + 1 end
 			if po:Dizzy() == 1 then total_number = total_number + 1 end
 			if po:Confusion() == 1 then total_number = total_number + 1 end
-			if po:Mini() == -100 then total_number = total_number + 1 end  -- The Big option is equivalent to Mini -100
 			if po:Flip() == 1 then total_number = total_number + 1 end
 			if po:Invert() == 1 then total_number = total_number + 1 end
 			if po:Tornado() == 1 then total_number = total_number + 1 end
