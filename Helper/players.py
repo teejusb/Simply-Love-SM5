@@ -5,8 +5,12 @@ PREFIX = "srpg9"
 
 def GetDivision(tplp, id):
 	mid_overrides = [
+		66364,
+		132065,
+		75645
 	]
 	upper_overrides = [
+		77437
 	]
 	mid_cutoff = 22500
 	upper_cutooff = 140000
