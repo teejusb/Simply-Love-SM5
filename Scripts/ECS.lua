@@ -2146,7 +2146,8 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if UsingTuucsCrackers(relics_used) then
-				return math.floor(song_data.ep * 0.2) + math.floor(song_data.rp * 0.2)
+				local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+				return math.floor(song_data.ep * 0.2) + math.floor(song_data.rp/(max_division_rp/1000) * 0.2)
 			else
 				return 0
 			end
@@ -2224,7 +2225,8 @@ ECS.Relics = {
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 200 + math.floor(song_data.rp * 0.4)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return 200 + math.floor(song_data.rp/(max_division_rp/1000) * 0.4)
 		end,
 	},
 	{
@@ -2485,7 +2487,8 @@ ECS.Relics = {
 		img="turntable.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return math.floor(song_data.rp * 0.6)
+			local max_division_rp = 1000 * (1 + (song_info.MaxBlockLevel-song_info.MinBlockLevel))
+			return math.floor(song_data.rp/(max_division_rp/1000) * 0.6)
 		end,
 	},
 	{
