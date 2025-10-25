@@ -323,7 +323,7 @@ SL = {
 			PercentScoreWeightW5=0,
 			PercentScoreWeightMiss=0,
 			PercentScoreWeightLetGo=0,
-			PercentScoreWeightHeld=IsGame("pump") and 0 or 3,
+			PercentScoreWeightHeld=3,
 			PercentScoreWeightHitMine=-1,
 			PercentScoreWeightCheckpointHit=0,
 
@@ -334,7 +334,7 @@ SL = {
 			GradeWeightW5=0,
 			GradeWeightMiss=0,
 			GradeWeightLetGo=0,
-			GradeWeightHeld=IsGame("pump") and 0 or 3,
+			GradeWeightHeld=3,
 			GradeWeightHitMine=-1,
 			GradeWeightCheckpointHit=0,
 
@@ -358,7 +358,7 @@ SL = {
 			PercentScoreWeightW5=-6,
 			PercentScoreWeightMiss=-12,
 			PercentScoreWeightLetGo=0,
-			PercentScoreWeightHeld=IsGame("pump") and 0 or 5,
+			PercentScoreWeightHeld=5,
 			PercentScoreWeightHitMine=-6,
 			PercentScoreWeightCheckpointHit=0,
 
@@ -369,7 +369,7 @@ SL = {
 			GradeWeightW5=-6,
 			GradeWeightMiss=-12,
 			GradeWeightLetGo=0,
-			GradeWeightHeld=IsGame("pump") and 0 or 5,
+			GradeWeightHeld=5,
 			GradeWeightHitMine=-6,
 			GradeWeightCheckpointHit=0,
 
@@ -379,8 +379,8 @@ SL = {
 			LifePercentChangeW4=0.000,
 			LifePercentChangeW5=-0.050,
 			LifePercentChangeMiss=-0.100,
-			LifePercentChangeLetGo=IsGame("pump") and 0.000 or -0.080,
-			LifePercentChangeHeld=IsGame("pump") and 0.000 or 0.008,
+			LifePercentChangeLetGo=-0.080,
+			LifePercentChangeHeld=0.008,
 			LifePercentChangeHitMine=-0.050,
 
 			InitialValue=0.5,
@@ -393,7 +393,7 @@ SL = {
 			PercentScoreWeightW5=0,
 			PercentScoreWeightMiss=-12,
 			PercentScoreWeightLetGo=0,
-			PercentScoreWeightHeld=IsGame("pump") and 0 or 5,
+			PercentScoreWeightHeld=5,
 			PercentScoreWeightHitMine=-6,
 			PercentScoreWeightCheckpointHit=0,
 
@@ -404,7 +404,7 @@ SL = {
 			GradeWeightW5=0,
 			GradeWeightMiss=-12,
 			GradeWeightLetGo=0,
-			GradeWeightHeld=IsGame("pump") and 0 or 5,
+			GradeWeightHeld=5,
 			GradeWeightHitMine=-6,
 			GradeWeightCheckpointHit=0,
 
@@ -414,8 +414,8 @@ SL = {
 			LifePercentChangeW4=0.004,
 			LifePercentChangeW5=0,
 			LifePercentChangeMiss=-0.1,
-			LifePercentChangeLetGo=IsGame("pump") and 0.000 or -0.080,
-			LifePercentChangeHeld=IsGame("pump") and 0.000 or 0.008,
+			LifePercentChangeLetGo=-0.080,
+			LifePercentChangeHeld=0.008,
 			LifePercentChangeHitMine=-0.05,
 
 			InitialValue=0.5,
