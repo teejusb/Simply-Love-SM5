@@ -52,7 +52,7 @@ local t = Def.ActorFrame{
 
 		self:queuecommand("Update")
 	end,
-	OffCommand=function(self)
+	MenuStartP1MessageCommand=function(self)
 		if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
 			-- set the GameMode now; we'll use it throughout the theme
 			-- to set certain Gameplay settings and determine which screen comes next
@@ -78,8 +78,16 @@ local t = Def.ActorFrame{
 			-- and reload the theme's Metrics
 			THEME:ReloadMetrics()
 		end
+		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 	end,
-
+	MenuStartP2MessageCommand=function(self)
+		if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
+			-- set the GameMode now; we'll use it throughout the theme
+			-- to set certain Gameplay settings and determine which screen comes next
+			SL.Global.GameMode = choices[cursor.index+1]
+		end
+		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+	end,
 	-- side mask
 	Def.Quad{
 		InitCommand=function(self) self:zoomto(450, 450):diffuse(1,1,1,1):x(375):MaskSource() end
