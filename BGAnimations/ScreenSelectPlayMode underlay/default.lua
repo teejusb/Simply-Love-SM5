@@ -31,6 +31,41 @@ local Update = function(af, delta)
 	end
 end
 
+local InputHandler = function(event)
+	if not event.PlayerNumber or not event.button then return false end
+
+	if event.type == "InputEventType_FirstPress" then
+		if event.GameButton == "Start" then
+			if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
+				-- set the GameMode now; we'll use it throughout the theme
+				-- to set certain Gameplay settings and determine which screen comes next
+				ECS.Mode = choices[cursor.index+1]
+
+				-- Override practice mode as ECS. The large majority of the behavior should be common
+				-- to ECS, so we'd rather selectively disable features instead of littering the codebase with
+				-- 'if ECS.Mode == "ECS" or ECS.Mode == "PracticeSet"'.
+				if choices[cursor.index+1] == "PracticeSet" then
+					ECS.Mode = "ECS"
+					ECS.IsPractice = true
+				end
+
+				if ECS.Mode == "Speed" then
+					ECS.BreakTimer = (20 * 60)
+				end
+
+				-- hardcode this to always be ITG windows for the ECS event
+				SL.Global.GameMode = "ITG"
+
+				-- now that a GameMode has been selected, set related preferences
+				SetGameModePreferences()
+				-- and reload the theme's Metrics
+				THEME:ReloadMetrics()
+				SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
+			end
+		end
+	end
+end
+
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		self:SetUpdateFunction( Update )
@@ -49,44 +84,9 @@ local t = Def.ActorFrame{
 			choices[#choices+1] = choice
 			choice_actors[#choice_actors+1] = TopScreen:GetChild("IconChoice"..choice)
 		end
+    	SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 
 		self:queuecommand("Update")
-	end,
-	MenuStartP1MessageCommand=function(self)
-		if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
-			-- set the GameMode now; we'll use it throughout the theme
-			-- to set certain Gameplay settings and determine which screen comes next
-			ECS.Mode = choices[cursor.index+1]
-
-			-- Override practice mode as ECS. The large majority of the behavior should be common
-			-- to ECS, so we'd rather selectively disable features instead of littering the codebase with
-			-- 'if ECS.Mode == "ECS" or ECS.Mode == "PracticeSet"'.
-			if choices[cursor.index+1] == "PracticeSet" then
-				ECS.Mode = "ECS"
-				ECS.IsPractice = true
-			end
-
-			if ECS.Mode == "Speed" then
-				ECS.BreakTimer = (20 * 60)
-			end
-
-			-- hardcode this to always be ITG windows for the ECS event
-			SL.Global.GameMode = "ITG"
-
-			-- now that a GameMode has been selected, set related preferences
-			SetGameModePreferences()
-			-- and reload the theme's Metrics
-			THEME:ReloadMetrics()
-		end
-		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
-	end,
-	MenuStartP2MessageCommand=function(self)
-		if ScreenName=="ScreenSelectPlayMode" or ScreenName=="ScreenSelectPlayModeThonk" then
-			-- set the GameMode now; we'll use it throughout the theme
-			-- to set certain Gameplay settings and determine which screen comes next
-			SL.Global.GameMode = choices[cursor.index+1]
-		end
-		SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 	end,
 	-- side mask
 	Def.Quad{
