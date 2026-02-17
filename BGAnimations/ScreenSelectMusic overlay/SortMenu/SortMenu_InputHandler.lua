@@ -109,6 +109,9 @@ local input = function(event)
 					overlay:GetChild("PaneDisplayMaster"):GetChild("GetScoresRequester"):playcommand("Cancel")
 					overlay:playcommand("DirectInputToEngine")
 					SCREENMAN:SetNewScreen("ScreenViewDownloads")
+				elseif focus.new_overlay == "OnlineLobbies" then
+					overlay:queuecommand("DirectInputToEngine")
+					SCREENMAN:SetNewScreen("ScreenOnlineLobbies")
 				elseif focus.new_overlay == "SwitchProfile" then
 					-- There's a race condition that occurs when a player mashes the Start button
 					-- fast enough, when the Switch Profiles button is highlighted, that causes

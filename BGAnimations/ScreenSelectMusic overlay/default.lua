@@ -97,10 +97,6 @@ local af = Def.ActorFrame{
 		ApplyMods(params.Player)
 	end,
 
-	OnCommand=function(self)
-		MESSAGEMAN:Broadcast("ConnectOnline")
-	end,
-
 	PlayerProfileSetMessageCommand=function(self, params)
 		if not PROFILEMAN:IsPersistentProfile(params.Player) then
 			LoadGuest(params.Player)

@@ -122,13 +122,18 @@ RequestResponseActor = function(x, y)
 						end
 					end
 
-					self:GetChild("Spinner"):visible(false)
+					MESSAGEMAN:Broadcast("GrooveStatsRequestFinished", {id=request_actor_id})
 				end,
 			}
 			-- Keep track of when we started making the request
 			self.request_time = GetTimeSinceStart()
 			-- Start looping for the spinner.
 			self:queuecommand("GrooveStatsRequestLoop")
+		end,
+		GrooveStatsRequestFinishedMessageCommand=function(self, params)
+			if params and params.id == request_actor_id then
+				self:GetChild("Spinner"):visible(false)
+			end
 		end,
 		GrooveStatsRequestLoopCommand=function(self)
 			local now = GetTimeSinceStart()
