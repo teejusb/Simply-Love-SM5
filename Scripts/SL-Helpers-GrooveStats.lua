@@ -736,7 +736,7 @@ DownloadEventUnlock = function(url, unlockName, packName)
 
 						-- If Pack.ini doesn't exist (new unlock for this player), create it.
 						local group = string.lower(packName)
-						local year = 2025
+						local year = 2026
 						if string.find(group, "itl online "..year.." unlocks") then
 							local packIniPath = destinationPack.."Pack.ini"
 							if not FILEMAN:DoesFileExist(packIniPath) then
@@ -749,7 +749,7 @@ DownloadEventUnlock = function(url, unlockName, packName)
 										["Series"]="ITL Online",
 										["Year"]=year,
 										["Banner"]="",
-										["SyncOffset"]="ITG",
+										["SyncOffset"]="NULL",
 									}
 								})
 							end

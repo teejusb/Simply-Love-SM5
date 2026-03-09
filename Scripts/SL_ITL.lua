@@ -4,7 +4,7 @@ IsItlSong = function(player)
 	local song_dir = song:GetSongDir()
 	local group = string.lower(song:GetGroupName())
 	local pn = ToEnumShortString(player)
-	return string.find(group, "itl online 2025") or string.find(group, "itl 2025") or SL[pn].ITLData["pathMap"][song_dir] ~= nil
+	return string.find(group, "itl online 2026") or string.find(group, "itl 2026") or SL[pn].ITLData["pathMap"][song_dir] ~= nil
 end
 
 
@@ -44,7 +44,7 @@ end
 -- This set up lets us display song wheel grades for ITL both from playing within the
 -- ITL pack and also outside of it.
 -- Note that songs resynced for ITL but played outside of the pack will not be covered in the pathMap.
-local itlFilePath = "itl2025.json"
+local itlFilePath = "ITL2026.json"
 
 local TableContainsData = function(t)
 	if t == nil then return false end
