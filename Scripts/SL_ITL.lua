@@ -60,7 +60,8 @@ WriteItlFile = function(player)
 	local pn = ToEnumShortString(player)
 	-- No data to write, return early.
 	if (not TableContainsData(SL[pn].ITLData["pathMap"]) and
-			not TableContainsData(SL[pn].ITLData["hashMap"])) then
+			not TableContainsData(SL[pn].ITLData["hashMap"]) and
+			not TableContainsData(SL[pn].ITLData["unlockFolders"])) then
 		return
 	end
 
@@ -100,6 +101,7 @@ ReadItlFile = function(player)
 	local itlData = { 
 		["pathMap"] = {},
 		["hashMap"] = {},
+		["unlockFolders"] = {},
 	}
 	if FILEMAN:DoesFileExist(path) then
 		local f = RageFileUtil:CreateRageFile()
@@ -113,6 +115,14 @@ ReadItlFile = function(player)
 	end
 
 	SL[pn].ITLData = itlData
+end
+
+UpdateItlUnlocks = function(player, downloadFolders)
+	local pn = ToEnumShortString(player)
+	local unlockFolders = SL[pn].ITLData["unlockFolders"]
+	for _, folder in ipairs(downloadFolders) do
+		unlockFolders["/Songs/ITL Online 2026 Unlocks/" .. folder..] = true
+	end
 end
 
 -- EX score is a number like 92.67
