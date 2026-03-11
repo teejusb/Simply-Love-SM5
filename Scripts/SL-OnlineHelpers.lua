@@ -11,7 +11,8 @@ local songSelected = false
 local scoreScreens = {"ScreenGameplay", "ScreenEvaluationStage"}
 
 -- TESTING Variables
-local url = "127.0.0.1"
+local host = "syncservice.groovestats.com:1337"
+local port = 1337
 local roomCode = ""
 local action = "create" -- "create" or "join"
 local autoConnect = false
@@ -350,7 +351,7 @@ CreateOnlineHandler = function()
         if self.socket == nil or self.errorMsg ~= nil then
 					onlineHandlerShuttingDown = false
           self.socket = NETWORK:WebSocket{
-            url="ws://"..url..":3000",
+            url="ws://"..host..":"..port,
             pingInterval=15,
             automaticReconnect=true,
             onMessage=function(msg)

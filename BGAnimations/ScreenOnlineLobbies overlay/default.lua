@@ -228,10 +228,14 @@ local InputHandler = function(event)
 			end
 		elseif event.GameButton == "Start" then
 			if active_index == 0 then
-				list_selected = true
-				SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
-				t:queuecommand("GainFocus")
-				t:queuecommand("Selected")
+				if #candidates > 0 then
+					list_selected = true
+					SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
+					t:queuecommand("GainFocus")
+					t:queuecommand("Selected")
+				else
+					SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
+				end
 			elseif active_index == 1 then
 				SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
 				local onlineHandler = GetOnlineHandlerInstance()
@@ -304,6 +308,12 @@ local af = Def.ActorFrame{
 		})
 		self:queuecommand("CheckConnect")
   end,
+	OffCommand=function(self)
+		local onlineHandler = GetOnlineHandlerInstance()
+		if onlineHandler and onlineHandler.connected and not onlineHandler.inLobby then
+			MESSAGEMAN:Broadcast("DisconnectOnline")
+		end
+	end,
 	HoverCommand=function(self)
 		self:GetChild("LobbyContent"):playcommand("Hover")
 		self:GetChild("JoinedLobbyContent"):playcommand("Hover")
