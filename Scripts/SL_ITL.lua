@@ -121,7 +121,7 @@ UpdateItlUnlocks = function(player, downloadFolders)
 	local pn = ToEnumShortString(player)
 	local unlockFolders = SL[pn].ITLData["unlockFolders"]
 	for _, folder in ipairs(downloadFolders) do
-		unlockFolders["/Songs/ITL Online 2026 Unlocks/" .. folder..] = true
+		unlockFolders["/Songs/ITL Online 2026 Unlocks/" .. folder .. "/"] = true
 	end
 end
 
