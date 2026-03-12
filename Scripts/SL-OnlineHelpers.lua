@@ -10,8 +10,19 @@ local songSelected = false
 -- These screens are the ones we want to display the player's scores for.
 local scoreScreens = {"ScreenGameplay", "ScreenEvaluationStage"}
 
+local syncLockScreens = {
+	["ScreenSelectMusic"] = true,
+	["ScreenGameplay"] = true,
+	["ScreenEvaluationStage"] = true,
+}
+
+local autoReadyScreens = {
+	["ScreenSelectMusic"] = true,
+	["ScreenEvaluationStage"] = true,
+}
+
 -- TESTING Variables
-local host = "syncservice.groovestats.com:1337"
+local host = "syncservice.groovestats.com"
 local port = 1337
 local roomCode = ""
 local action = "create" -- "create" or "join"
@@ -214,7 +225,18 @@ local DisplayLobbyState = function(data, actor)
 	local lines = {}
 
 	if isWaiting then
-		if updatedData.aux.allPlayersReady then
+		local readyToUnlock = false
+		if screenName == "ScreenGameplay" then
+			-- Gameplay requires everyone to be in gameplay and manually ready-up.
+			readyToUnlock = updatedData.aux.allInSameScreen and updatedData.aux.allPlayersReady
+		elseif autoReadyScreens[screenName] then
+			-- Select Music and Evaluation only require everyone to arrive at the same screen.
+			readyToUnlock = updatedData.aux.allInSameScreen
+		else
+			readyToUnlock = updatedData.aux.allPlayersReady
+		end
+
+		if readyToUnlock then
 			isWaiting = false
 			-- Lift the lock.
 			-- SCREENMAN:GetTopScreen():RemoveInputCallback(InputHandler)
@@ -228,14 +250,14 @@ local DisplayLobbyState = function(data, actor)
 				SCREENMAN:GetTopScreen():PauseGame(false)
 			end
 		else
-			lines[#lines+1] = "Waiting for players...\n"
+			lines[#lines+1] = "Waiting for players to sync screens...\n"
 		end
 	end
 
 	for player in ivalues(updatedData.players) do
 		local displayedScreen = player.screenName ~= "NoScreen" and player.screenName:gsub("Screen", "") or "Transitioning"
 		local readyText = ""
-		if not updatedData.aux.allPlayersReady then
+		if screenName == "ScreenGameplay" and not updatedData.aux.allPlayersReady then
 			readyText =" ["..(player.ready and "✔" or "❌").."]"
 		end
 
@@ -397,8 +419,8 @@ CreateOnlineHandler = function()
           local screen = SCREENMAN:GetTopScreen()
           local screenName = screen and screen:GetName() or "NoScreen"
 
-          -- When users navigate to any of these screens, we want to wait for the other player to be ready.
-          if screenName == "ScreenSelectMusic" or screenName == "ScreenGameplay" or screenName == "ScreenEvaluationStage" then
+					-- Lock input while syncing arrival on key screens.
+					if syncLockScreens[screenName] then
             isWaiting = true
 
             -- The below does work, but it's currently possible that other screens are resetting this early.
@@ -407,9 +429,18 @@ CreateOnlineHandler = function()
             end
           end
 
+					if autoReadyScreens[screenName] then
+						for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
+							local pn = ToEnumShortString(player)
+							readyState[pn] = true
+						end
+					end
+
           if screenName == "ScreenGameplay" then
-            readyState["P1"] = false
-            readyState["P2"] = false
+						for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
+							local pn = ToEnumShortString(player)
+							readyState[pn] = false
+						end
             -- Input callbacks get cleared out when we transition screens, so we don't need to worry about explicitly removing it.
             SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
             SCREENMAN:GetTopScreen():PauseGame(true)
