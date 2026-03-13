@@ -29,7 +29,7 @@ local show_password_in_lobby = false
 local showing_password_prompt = false
 local password_char_limit = 4
 local password_chars = {
-	"&BACK;", "&OK;",
+	"❌", "✔",
 	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 	"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 }
@@ -46,10 +46,10 @@ local password_character_mt = {
 				end,
 				OnCommand=function(self) self:linear(0.2):diffusealpha(1) end,
 				Def.BitmapText{
-					Font="Common Bold",
+					Font="Wendy/_wendy white",
 					InitCommand=function(subself)
 						self.bmt = subself
-						subself:zoom(1.1):diffuse(0.75,0.75,0.75,1)
+						subself:zoom(0.8):diffuse(0.75,0.75,0.75,1)
 					end,
 				}
 			}
@@ -145,7 +145,7 @@ local InputHandler = function(event)
 				SOUND:PlayOnce(THEME:GetPathS("ScreenSelectMaster", "change"))
 			elseif event.GameButton == "Start" then
 				local selected_char = password_wheel:get_info_at_focus_pos()
-				if selected_char == "&OK;" then
+				if selected_char == "✔" then
 					if password_prompt_mode == "join" and join_lobby_code == "" then
 						SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
 						return false
@@ -173,7 +173,7 @@ local InputHandler = function(event)
 						MESSAGEMAN:Broadcast("CreateLobby", {password=create_lobby_password})
 					end
 					SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
-				elseif selected_char == "&BACK;" then
+				elseif selected_char == "❌" then
 					local password = GetPromptPassword()
 					if password:len() > 0 then
 						SetPromptPassword(password:sub(1, -2))
@@ -408,11 +408,11 @@ local af = Def.ActorFrame{
 		if password_prompt_mode == "join" then
 			if title then title:settext("Enter Lobby Password") end
 			if hint then hint:settext("Use &MENULEFT;/&MENURIGHT; to pick characters, &START; to select, &SELECT; to delete.") end
-			if footer then footer:settext("&BACK; removes a character. &OK; joins lobby.") end
+			if footer then footer:settext("❌ removes a character. ✔ joins lobby.") end
 		else
 			if title then title:settext("Create Lobby Password (Optional)") end
 			if hint then hint:settext("Use &MENULEFT;/&MENURIGHT; to pick characters, &START; to select, &SELECT; to delete.") end
-			if footer then footer:settext("&BACK; removes a character. &OK; confirms.") end
+			if footer then footer:settext("❌ removes a character. ✔ confirms.") end
 		end
 	end,
 	UpdateJoinedLobbyTextCommand=function(self)
@@ -981,7 +981,7 @@ local af = Def.ActorFrame{
 		password_wheel:create_actors("PasswordWheel", 7, password_character_mt, 50, 38),
 		LoadFont("Common Normal")..{
 			Name="PromptFooter",
-			Text="&BACK; removes a character. &OK; confirms.",
+			Text="❌ removes a character. ✔ confirms.",
 			InitCommand=function(self)
 				self:y(90):zoom(0.6)
 			end
