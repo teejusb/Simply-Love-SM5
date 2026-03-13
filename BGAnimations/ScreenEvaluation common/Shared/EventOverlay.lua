@@ -540,7 +540,7 @@ local GetItlPaneFunctions = function(eventAf, itlData, player)
 					local tier = reward["tier"]
 					if tier ~= "Default" then
 						table.insert(achievementStrings, string.format(
-							"\"%s\" Tier",
+							"Tier %s",
 							tier
 						))
 					end
