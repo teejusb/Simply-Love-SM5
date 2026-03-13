@@ -552,7 +552,7 @@ local GetItlPaneFunctions = function(eventAf, itlData, player)
 						))
 					end
 
-					if reward["titleUnlocked"] then
+					if reward["titleUnlocked"] and #reward["titleUnlocked"] > 0 then
 						table.insert(achievementStrings, string.format(
 							"Unlocked the \"%s\" Title!",
 							reward["titleUnlocked"]
