@@ -22,6 +22,9 @@ local showing_leave_confirm = false
 local leave_confirm_index = 0
 
 local create_lobby_password = ""
+local join_lobby_password = ""
+local join_lobby_code = ""
+local password_prompt_mode = "create"
 local show_password_in_lobby = false
 local showing_password_prompt = false
 local password_char_limit = 4
@@ -73,6 +76,28 @@ local password_character_mt = {
 
 SL.Global.Online = SL.Global.Online or {}
 
+-- Just for testing
+local sample_lobby = {
+	code = "ABCD",
+	playerCount = 1,
+	isPasswordProtected = true,
+}
+
+local function GetPromptPassword()
+	if password_prompt_mode == "join" then
+		return join_lobby_password
+	end
+	return create_lobby_password
+end
+
+local function SetPromptPassword(value)
+	if password_prompt_mode == "join" then
+		join_lobby_password = value
+	else
+		create_lobby_password = value
+	end
+end
+
 local InputHandler = function(event)
   if not event.PlayerNumber or not event.button then return false end
 
@@ -121,28 +146,46 @@ local InputHandler = function(event)
 			elseif event.GameButton == "Start" then
 				local selected_char = password_wheel:get_info_at_focus_pos()
 				if selected_char == "&OK;" then
+					if password_prompt_mode == "join" and join_lobby_code == "" then
+						SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
+						return false
+					end
 					showing_password_prompt = false
 					t:GetChild("PasswordPrompt"):visible(false)
 					t:GetChild("LobbyContent"):visible(false)
-					SL.Global.Online.LastLobbyPassword = create_lobby_password
-					t:playcommand("SetStatus", {
-						text="Creating lobby...",
-						showSpinner=true,
-						showPrompt=false
-					})
-					MESSAGEMAN:Broadcast("CreateLobby", {password=create_lobby_password})
+					if password_prompt_mode == "join" then
+						t:playcommand("SetStatus", {
+							text="Joining lobby...",
+							showSpinner=true,
+							showPrompt=false
+						})
+						MESSAGEMAN:Broadcast("JoinLobby", {
+							code=join_lobby_code,
+							password=join_lobby_password
+						})
+					else
+						SL.Global.Online.LastLobbyPassword = create_lobby_password
+						t:playcommand("SetStatus", {
+							text="Creating lobby...",
+							showSpinner=true,
+							showPrompt=false
+						})
+						MESSAGEMAN:Broadcast("CreateLobby", {password=create_lobby_password})
+					end
 					SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
 				elseif selected_char == "&BACK;" then
-					if create_lobby_password:len() > 0 then
-						create_lobby_password = create_lobby_password:sub(1, -2)
+					local password = GetPromptPassword()
+					if password:len() > 0 then
+						SetPromptPassword(password:sub(1, -2))
 						SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
 					end
 					t:queuecommand("UpdatePasswordText")
 				else
-					if create_lobby_password:len() < password_char_limit then
-						create_lobby_password = create_lobby_password .. selected_char
+					local password = GetPromptPassword()
+					if password:len() < password_char_limit then
+						SetPromptPassword(password .. selected_char)
 						SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
-						if create_lobby_password:len() >= password_char_limit then
+						if GetPromptPassword():len() >= password_char_limit then
 							password_wheel:scroll_to_pos(2)
 						end
 					else
@@ -151,8 +194,9 @@ local InputHandler = function(event)
 					t:queuecommand("UpdatePasswordText")
 				end
 			elseif event.GameButton == "Select" then
-				if create_lobby_password:len() > 0 then
-					create_lobby_password = create_lobby_password:sub(1, -2)
+				local password = GetPromptPassword()
+				if password:len() > 0 then
+					SetPromptPassword(password:sub(1, -2))
 					SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
 					t:queuecommand("UpdatePasswordText")
 				end
@@ -227,6 +271,17 @@ local InputHandler = function(event)
 				end
 			end
 		elseif event.GameButton == "Start" then
+			if list_selected then
+				local lobbyList = t:GetChild("LobbyContent") and t:GetChild("LobbyContent"):GetChild("LobbyList")
+				if lobbyList then
+					SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
+					lobbyList:playcommand("SelectLobby")
+				else
+					SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
+				end
+				return false
+			end
+
 			if active_index == 0 then
 				if #candidates > 0 then
 					list_selected = true
@@ -238,6 +293,18 @@ local InputHandler = function(event)
 				end
 			elseif active_index == 1 then
 				SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
+
+				-- Uncomment the below to inject a sample lobby for testing purposes when refreshing the lobby list. --- IGNORE ---
+				-- t:playcommand("SetStatus", {
+				-- 	text="Loaded sample lobby (test mode).",
+				-- 	showSpinner=false,
+				-- 	showPrompt=false
+				-- })
+				-- MESSAGEMAN:Broadcast("LobbySearched", {
+				-- 	lobbies = {sample_lobby}
+				-- })
+				-- return false
+
 				local onlineHandler = GetOnlineHandlerInstance()
 				if onlineHandler and onlineHandler.connected then
 					t:playcommand("SetStatus", {
@@ -268,11 +335,13 @@ local InputHandler = function(event)
 				end
 			elseif active_index == 2 then
 				SOUND:PlayOnce(THEME:GetPathS("Common", "Start"))
+				password_prompt_mode = "create"
 				create_lobby_password = SL.Global.Online.LastLobbyPassword or ""
 				show_password_in_lobby = false
 				showing_password_prompt = true
 				t:GetChild("PasswordPrompt"):visible(true)
 				password_wheel:scroll_to_pos(3)
+				t:queuecommand("UpdatePasswordPromptUI")
 				t:queuecommand("UpdatePasswordText")
 			end
 		elseif event.GameButton == "Select" then
@@ -319,13 +388,31 @@ local af = Def.ActorFrame{
 		self:GetChild("JoinedLobbyContent"):playcommand("Hover")
 	end,
 	UpdatePasswordTextCommand=function(self)
-		local text = create_lobby_password
+		local text = GetPromptPassword()
 		if text == "" then
 			text = "(empty)"
 		end
 		local prompt = self:GetChild("PasswordPrompt")
 		if prompt then
 			prompt:GetChild("PasswordValue"):settext(text)
+		end
+	end,
+	UpdatePasswordPromptUICommand=function(self)
+		local prompt = self:GetChild("PasswordPrompt")
+		if not prompt then return end
+
+		local title = prompt:GetChild("PromptTitle")
+		local hint = prompt:GetChild("PromptHint")
+		local footer = prompt:GetChild("PromptFooter")
+
+		if password_prompt_mode == "join" then
+			if title then title:settext("Enter Lobby Password") end
+			if hint then hint:settext("Use &MENULEFT;/&MENURIGHT; to pick characters, &START; to select, &SELECT; to delete.") end
+			if footer then footer:settext("&BACK; removes a character. &OK; joins lobby.") end
+		else
+			if title then title:settext("Create Lobby Password (Optional)") end
+			if hint then hint:settext("Use &MENULEFT;/&MENURIGHT; to pick characters, &START; to select, &SELECT; to delete.") end
+			if footer then footer:settext("&BACK; removes a character. &OK; confirms.") end
 		end
 	end,
 	UpdateJoinedLobbyTextCommand=function(self)
@@ -502,6 +589,9 @@ local af = Def.ActorFrame{
 		showing_leave_confirm = false
 		list_selected = false
 		showing_password_prompt = false
+		password_prompt_mode = "create"
+		join_lobby_code = ""
+		join_lobby_password = ""
 		joined_lobby_code = params and params.code or ""
 		joined_lobby_players = params and params.players or {}
 
@@ -513,6 +603,36 @@ local af = Def.ActorFrame{
 		self:GetChild("JoinedLobbyContent"):visible(true)
 		joined_active_index = 0
 		self:queuecommand("Hover")
+	end,
+	OnlineLobbyJoinSelectedMessageCommand=function(self, params)
+		if not params or not params.code then
+			SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
+			return
+		end
+
+		join_lobby_code = params.code
+		if params.isPasswordProtected then
+			password_prompt_mode = "join"
+			join_lobby_password = ""
+			showing_password_prompt = true
+			self:GetChild("PasswordPrompt"):visible(true)
+			password_wheel:scroll_to_pos(3)
+			self:queuecommand("UpdatePasswordPromptUI")
+			self:queuecommand("UpdatePasswordText")
+		else
+			showing_password_prompt = false
+			self:GetChild("PasswordPrompt"):visible(false)
+			self:GetChild("LobbyContent"):visible(false)
+			self:playcommand("SetStatus", {
+				text="Joining lobby...",
+				showSpinner=true,
+				showPrompt=false
+			})
+			MESSAGEMAN:Broadcast("JoinLobby", {
+				code=params.code,
+				password=params.password or ""
+			})
+		end
 	end,
 	OnlineLobbyLeftMessageCommand=function(self, params)
 		if params == nil or params.left == nil or params.left then
@@ -539,6 +659,15 @@ local af = Def.ActorFrame{
 			self:GetChild("LobbyContent"):visible(true)
 			self:playcommand("SetStatus", {
 				text=params.message and ("Create lobby failed:\n"..params.message) or "Create lobby failed.",
+				showSpinner=false,
+				showPrompt=false
+			})
+		elseif params and params.event == "joinLobby" and params.success == false then
+			mode = "browse"
+			self:GetChild("JoinedLobbyContent"):visible(false)
+			self:GetChild("LobbyContent"):visible(true)
+			self:playcommand("SetStatus", {
+				text=params.message and ("Join lobby failed:\n"..params.message) or "Join lobby failed.",
 				showSpinner=false,
 				showPrompt=false
 			})
@@ -829,12 +958,14 @@ local af = Def.ActorFrame{
 			end
 		},
 		LoadFont("Common Normal")..{
+			Name="PromptTitle",
 			Text="Create Lobby Password (Optional)",
 			InitCommand=function(self)
 				self:y(-72):zoom(0.85)
 			end
 		},
 		LoadFont("Common Normal")..{
+			Name="PromptHint",
 			Text="Use &MENULEFT;/&MENURIGHT; to pick characters, &START; to select, &SELECT; to delete.",
 			InitCommand=function(self)
 				self:y(-46):zoom(0.55)
@@ -849,6 +980,7 @@ local af = Def.ActorFrame{
 		},
 		password_wheel:create_actors("PasswordWheel", 7, password_character_mt, 50, 38),
 		LoadFont("Common Normal")..{
+			Name="PromptFooter",
 			Text="&BACK; removes a character. &OK; confirms.",
 			InitCommand=function(self)
 				self:y(90):zoom(0.6)

@@ -10,6 +10,10 @@ local t = Def.ActorFrame{
   UpdateDataCommand=function(self, params)
     data = params.data
     focus_pos = 1
+    offset = 0
+    if self:GetParent() then
+      self:GetParent():playcommand("UpdateIndex", {idx=(#data > 0 and 1 or 0), total=#data})
+    end
     self:queuecommand("UpdateSelf")
   end,
   NextLobbyCommand=function(self)
@@ -39,14 +43,17 @@ local t = Def.ActorFrame{
     end
   end,
   SelectLobbyCommand=function(self, params)
-    if data[focus_pos + offset].isPasswordProtected then
-      if params == nil then
-        self:GetParent():queuecommand("DisplayKeyboard")
-      else
-        -- Try joining lobby with params.password
-      end
+    local selected = data[focus_pos + offset]
+    if not selected then
+      SOUND:PlayOnce(THEME:GetPathS("Common", "Cancel"))
+      return
     end
-    -- Try joining lobby
+
+    MESSAGEMAN:Broadcast("OnlineLobbyJoinSelected", {
+      code = selected.code,
+      isPasswordProtected = selected.isPasswordProtected,
+      password = (params and params.password) or ""
+    })
   end
 }
 
@@ -103,7 +110,7 @@ for i=1,num_rows+2 do
   af[#af+1] = LoadFont("Common Bold")..{
     Text="",
     InitCommand=function(self)
-			self:zoom(1):x(-120):y(10)
+			self:zoom(0.5):x(-120):y(10)
     end,
     UpdateSelfCommand=function(self)
       if i + offset <= #data then
@@ -122,7 +129,7 @@ for i=1,num_rows+2 do
   af[#af+1] = LoadFont("Common Bold")..{
     Text="",
     InitCommand=function(self)
-			self:zoom(1):y(10)
+			self:zoom(0.5):y(10)
     end,
     UpdateSelfCommand=function(self)
       if i + offset <= #data then
