@@ -444,7 +444,7 @@ local af = Def.ActorFrame{
 				passwordLabel:visible(false)
 				passwordValue:visible(false)
 			else
-				local value = passwordHidden and string.rep("+", create_lobby_password:len()) or create_lobby_password
+				local value = passwordHidden and string.rep("+", 4) or create_lobby_password
 				passwordLabel:visible(true)
 				passwordValue:visible(true)
 				passwordValue:settext(value)
@@ -540,6 +540,7 @@ local af = Def.ActorFrame{
 				if emptyText then
 					emptyText:visible(#candidates == 0)
 				end
+				MESSAGEMAN:Broadcast("SearchLobby")
 				self:queuecommand("Hover")
 			end
 
@@ -681,60 +682,6 @@ local af = Def.ActorFrame{
 			})
 		end
 	end,
-
-	Def.ActorFrame{
-		Name="NetworkStatus",
-		InitCommand=function(self)
-			self:y(-130)
-		end,
-		SetCommand=function(self, params)
-			if not params then return end
-			local showPrompt = params.showPrompt == true
-			self:GetChild("Spinner"):visible(params.showSpinner == true)
-			self:GetChild("StatusText"):settext(params.text or "")
-			self:GetChild("PromptText"):visible(showPrompt)
-			self:GetChild("PromptText"):settext(showPrompt and (params.promptText or "") or "")
-
-			local statusWidth = self:GetChild("StatusText"):GetWidth()
-			local promptWidth = showPrompt and self:GetChild("PromptText"):GetWidth() or 0
-			local width = math.min(math.max(math.max(statusWidth, promptWidth) + 50, 360), 620)
-			local height = showPrompt and 78 or 52
-			self:GetChild("Background"):zoomto(width, height)
-			self:GetChild("Spinner"):x(-width/2 + 22)
-		end,
-
-		Def.Quad{
-			Name="Background",
-			InitCommand=function(self)
-				self:zoomto(280, 44):diffuse(0,0,0,0.75)
-			end
-		},
-		Def.Sprite{
-			Name="Spinner",
-			Texture=THEME:GetPathG("", "LoadingSpinner 10x3.png"),
-			Frames=Sprite.LinearFrames(30,1),
-			InitCommand=function(self)
-				self:x(-118):zoom(0.14):diffuse(GetHexColor(SL.Global.ActiveColorIndex, true)):visible(false)
-			end,
-			VisualStyleSelectedMessageCommand=function(self)
-				self:diffuse(GetHexColor(SL.Global.ActiveColorIndex, true))
-			end
-		},
-		LoadFont("Common Normal")..{
-			Name="StatusText",
-			Text="",
-			InitCommand=function(self)
-				self:maxwidth(560):zoom(0.82):diffuse(Color.White):y(-10)
-			end
-		},
-		LoadFont("Common Normal")..{
-			Name="PromptText",
-			Text="",
-			InitCommand=function(self)
-				self:maxwidth(560):zoom(0.95):diffuse(Color.White):y(18):visible(false)
-			end
-		}
-	},
 
 	Def.ActorFrame{
 		Name="LobbyContent",
@@ -1271,6 +1218,63 @@ local af = Def.ActorFrame{
 					self:diffuse(leave_confirm_index == 1 and GetHexColor(SL.Global.ActiveColorIndex) or Color.White)
 				end
 			}
+		}
+	},
+
+
+
+	-- Keep this on top of everything else so that it doesn't get covered up by any other elements.
+	Def.ActorFrame{
+		Name="NetworkStatus",
+		InitCommand=function(self)
+			self:y(-130)
+		end,
+		SetCommand=function(self, params)
+			if not params then return end
+			local showPrompt = params.showPrompt == true
+			self:GetChild("Spinner"):visible(params.showSpinner == true)
+			self:GetChild("StatusText"):settext(params.text or "")
+			self:GetChild("PromptText"):visible(showPrompt)
+			self:GetChild("PromptText"):settext(showPrompt and (params.promptText or "") or "")
+
+			local statusWidth = self:GetChild("StatusText"):GetWidth()
+			local promptWidth = showPrompt and self:GetChild("PromptText"):GetWidth() or 0
+			local width = math.min(math.max(math.max(statusWidth, promptWidth) + 50, 360), 620)
+			local height = showPrompt and 78 or 52
+			self:GetChild("Background"):zoomto(width, height)
+			self:GetChild("Spinner"):x(-width/2 + 22)
+		end,
+
+		Def.Quad{
+			Name="Background",
+			InitCommand=function(self)
+				self:zoomto(280, 44):diffuse(0,0,0,0.75)
+			end
+		},
+		Def.Sprite{
+			Name="Spinner",
+			Texture=THEME:GetPathG("", "LoadingSpinner 10x3.png"),
+			Frames=Sprite.LinearFrames(30,1),
+			InitCommand=function(self)
+				self:x(-118):zoom(0.14):diffuse(GetHexColor(SL.Global.ActiveColorIndex, true)):visible(false)
+			end,
+			VisualStyleSelectedMessageCommand=function(self)
+				self:diffuse(GetHexColor(SL.Global.ActiveColorIndex, true))
+			end
+		},
+		LoadFont("Common Normal")..{
+			Name="StatusText",
+			Text="",
+			InitCommand=function(self)
+				self:maxwidth(560):zoom(0.82):diffuse(Color.White):y(-10)
+			end
+		},
+		LoadFont("Common Normal")..{
+			Name="PromptText",
+			Text="",
+			InitCommand=function(self)
+				self:maxwidth(560):zoom(0.95):diffuse(Color.White):y(18):visible(false)
+			end
 		}
 	},
 }
