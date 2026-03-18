@@ -2,6 +2,7 @@
 -- set up the SortMenu's choices first, prior to Actor initialization
 -- sick_wheel_mt is a metatable with global scope defined in ./Scripts/Consensual-sick_wheel.lua
 local sort_wheel = setmetatable({}, sick_wheel_mt)
+sort_wheel.custom_functions = {}
 -- the logic that handles navigating the SortMenu
 -- (scrolling through choices, choosing one, canceling)
 -- is large enough that I moved it to its own file
@@ -331,7 +332,9 @@ end
 local t = Def.ActorFrame {
 	Name="SortMenu",
 	wheel_options = {},
+	custom_functions = {},
 	InitCommand=function(self)
+		self.custom_functions = sort_wheel.custom_functions
 		self.wheel_options = {
 			-- This is the master table that controls the SortMenu's choices
 			-- The structure is as follows:
