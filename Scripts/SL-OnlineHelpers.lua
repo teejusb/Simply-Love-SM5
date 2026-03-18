@@ -258,6 +258,13 @@ local DisplayLobbyState = function(data, actor)
 			readyToUnlock = updatedData.aux.allPlayersReady
 		end
 
+		if screenName == "ScreenSelectMusic" and data.songInfo ~= nil then
+			-- If we're navigating back to screen select music (say from options),
+			-- then don't lock input as we will have already synced before.
+			-- In this case a song will have been selected already.
+			readyToUnlock = true
+		end
+
 		if readyToUnlock then
 			isWaiting = false
 			-- Lift the lock.
