@@ -27,7 +27,7 @@ end
 
 
 -- -----------------------------------------------------------------------
--- The ITL file is a JSON file that contains two mappings:
+-- The ITL file is a JSON file that contains three mappings:
 --
 -- {
 --    pathMap = {
@@ -35,6 +35,9 @@ end
 --    },
 --    hashMap = {
 --      '<song_hash': { ..itl metadata .. }
+--    }
+--    unlockFolders = {
+--      '<song_dir>': true
 --    }
 -- }
 --

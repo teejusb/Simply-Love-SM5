@@ -23,14 +23,24 @@ local af = Def.ActorFrame {
             self:Load( THEME:GetPathG("", "lock.png") )
         end,
         SetCommand=function(self, params)
+            -- Don't display anything if the player isn't even enabled.
+            if not GAMESTATE:IsPlayerEnabled(player) then
+                self:visible(false)
+                return
+            end
+
             if params.Song then
                 local song = params.Song
                 local song_dir = song:GetSongDir()
 
                 local year = 2026
                 if string.find(string.lower(song_dir), "itl online "..year.." unlocks") then
-                    local unlockData = SL[pn].ITLData["unlockFolders"][song_dir] or {}
-                    self:visible(unlockData[song_dir] or false)
+                    local unlockData = SL[pn].ITLData["unlockFolders"] or {}
+                    local songUnlocked = (unlockData[song_dir]==true)
+                    if songUnlocked then
+                        SM("Unlocked: "..song_dir.. " for "..pn)
+                    end
+                    self:visible(not songUnlocked)
                 else
                     self:visible(false)
                 end
