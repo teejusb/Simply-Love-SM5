@@ -302,7 +302,23 @@ local DisplayLobbyState = function(data, actor)
 				end
 			end
 		else
-			lines[#lines+1] = "Song: "..data.songInfo.songPath
+      -- Split the song path into pack and song name for easier reading.
+      -- It looks like "<pack>/<song>" so we can just split on the first "/"
+      local songPathParts = data.songInfo.songPath:split("/")
+      local pack = songPathParts[1] or "Unknown"
+      local song = songPathParts[2] or "Unknown"
+
+      -- Sometimes the pack or song can get quite long, so add ... if it's too long.
+      local maxLength = 30
+      if #pack > maxLength then
+        pack = string.sub(pack, 1, maxLength) .. "..."
+      end
+      if #song > maxLength then
+        song = string.sub(song, 1, maxLength) .. "..."
+      end
+
+      lines[#lines+1] = "Pack: "..pack
+      lines[#lines+1] = "Song: "..song
 		end
 	end
 
@@ -587,13 +603,16 @@ CreateOnlineHandler = function()
         Def.Quad{
           Name="Background",
           InitCommand=function(self)
-            self:zoomto(SCREEN_WIDTH / 3, SCREEN_HEIGHT):diffuse(0, 0, 0, 0.5):y(_screen.cy)
+            self:zoomto(SCREEN_WIDTH / 3, SCREEN_HEIGHT):diffuse(0, 0, 0, 0.5)
           end,
         },
 
         LoadFont("Common Normal").. {
           Name="Text",
           Text="",
+          InitCommand=function(self)
+            self:diffuse(Color.Yellow)
+          end,
           ResizeCommand=function(self, params)
             self:settext(params.text)
             -- We don't want text to be cut off.
