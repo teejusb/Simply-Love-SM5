@@ -509,6 +509,18 @@ CreateOnlineHandler = function()
           MESSAGEMAN:Broadcast("UpdateMachineState")
         end
       end,
+      PlayerJoinedMessageCommand=function(self)
+				if self.connected and self.socket ~= nil and self.inLobby then	
+          local request = CreateRequest("updateMachine", GetMachineState())
+          self.socket:Send(request)
+        end
+      end,
+      PlayerUnjoinedMessageCommand=function(self)
+				if self.connected and self.socket ~= nil and self.inLobby then	
+          local request = CreateRequest("updateMachine", GetMachineState())
+          self.socket:Send(request)
+        end
+      end,
       UpdateMachineStateMessageCommand=function(self)
 				if self.connected and self.socket ~= nil and self.inLobby then	
           local request = CreateRequest("updateMachine", GetMachineState())
