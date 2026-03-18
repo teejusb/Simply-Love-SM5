@@ -635,8 +635,11 @@ CreateOnlineHandler = function()
         Name="Display",
         InitCommand=function(self)
           self:visible(false)
-        end,
 
+					local width = 200
+					local LEFT = width/2
+					self:xy(LEFT, _screen.cy)
+        end,
         UpdateTextCommand=function(self, params)
           local screen = SCREENMAN:GetTopScreen()
           local screenName = screen and screen:GetName() or "NoScreen"
@@ -652,10 +655,6 @@ CreateOnlineHandler = function()
 
           -- If we're on a different screen, we'll just retain the last position.
           if screenName == "ScreenSelectMusic" then
-            local p1Joined = GAMESTATE:IsSideJoined("PlayerNumber_P1")
-            local p2Joined = GAMESTATE:IsSideJoined("PlayerNumber_P2")
-
-            -- If both are joined then push it to the left so keep it out of the way.
             self:xy(LEFT, _screen.cy)
             bg:zoomto(width, height)
           elseif screenName == "ScreenEvaluationStage" or screenName == "ScreenGameplay" then
