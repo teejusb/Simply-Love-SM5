@@ -37,11 +37,13 @@ local af = Def.ActorFrame {
             if params.Song then
                 local song = params.Song
                 local song_dir = song:GetSongDir()
+                -- Only take the <song> parth of /Songs/<pack>/<song>/
+                local song_folder = song_dir:gsub("[/\\]+$", ""):match("([^/\\]+)$") or song_dir
 
                 local year = 2026
                 if string.find(string.lower(song_dir), "itl online "..year.." unlocks") then
                     local unlockData = SL[pn].ITLData["unlockFolders"] or {}
-                    local songUnlocked = (unlockData[song_dir]==true)
+                    local songUnlocked = (unlockData[song_folder]==true)
                     self:visible(not songUnlocked)
                 else
                     self:visible(false)
