@@ -21,6 +21,13 @@ local autoReadyScreens = {
 	["ScreenEvaluationStage"] = true,
 }
 
+local knownDisconnectScreens = {
+  ["ScreenTitleMenu"] = true,
+  ["ScreenGameOver"] = true,
+  ["ScreenNameEntry"] = true,
+  ["ScreenOptionsService"] = true,
+}
+
 -- TESTING Variables
 local host = "syncservice.groovestats.com"
 local port = 1337
@@ -410,15 +417,20 @@ CreateOnlineHandler = function()
       end,
       ScreenChangedMessageCommand=function(self)
         if self.connected and self.socket ~= nil then
-				if not self.inLobby then
-					return
-				end
+					if not self.inLobby then
+						return
+					end
 
           local screen = SCREENMAN:GetTopScreen()
           local screenName = screen and screen:GetName() or "NoScreen"
 
-					-- Lock input while syncing arrival on key screens.
-					if syncLockScreens[screenName] then
+          if knownDisconnectScreens[screenName] then
+            MESSAGEMAN:Broadcast("DisconnectOnline")
+            return
+          end
+
+          -- Lock input while syncing arrival on key screens.
+          if syncLockScreens[screenName] then
             isWaiting = true
 
             -- The below does work, but it's currently possible that other screens are resetting this early.
