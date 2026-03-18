@@ -185,6 +185,16 @@ local function DownloadsExist()
     return SL.GrooveStats.IsConnected and ThemePrefs.Get("AutoDownloadUnlocks")
 end
 
+local function PracticeModeAvailable()
+	-- Don't allow practice mode if we're using online lobbies
+	local onlineHandler = GetOnlineHandlerInstance()
+	if onlineHandler and onlineHandler.connected then
+		return false
+	end
+
+	return GAMESTATE:IsEventMode() and GAMESTATE:GetCurrentSong() ~= nil and ThemePrefs.Get("KeyboardFeatures")
+end
+
 local function AddPlayerSortOptions()
     local player_sort_options = {}
     for player in ivalues(GAMESTATE:GetHumanPlayers()) do
@@ -387,7 +397,7 @@ local t = Def.ActorFrame {
 				{"", "CategoryAdvanced"},
 				{
 					{ {"FeelingSalty", "TestInput"}, GAMESTATE:IsEventMode() },
-					{ {"HardTime", "PracticeMode"}, function() return GAMESTATE:IsEventMode() and GAMESTATE:GetCurrentSong() ~= nil and ThemePrefs.Get("KeyboardFeatures") end },
+					{ {"HardTime", "PracticeMode"}, PracticeModeAvailable },
 					{ {"TakeABreather", "LoadNewSongs"} },
 					{ {"NeedMoreRam", "ViewDownloads"}, DownloadsExist },
 					{ {"SetSummaryText", "SetSummary"}, SL.Global.Stages.PlayedThisGame > 0 },
