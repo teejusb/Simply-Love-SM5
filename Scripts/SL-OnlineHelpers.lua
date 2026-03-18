@@ -55,9 +55,9 @@ local InputHandler = function(event)
 			end
 		elseif event.type == "InputEventType_Repeat" and event.GameButton == "Start" then
 			-- Check if Start has been held for 5 seconds
-			SM("Continue holding &START; for " .. (5 - math.floor(GetTimeSinceStart() - startHoldTime[pn])) .. " more seconds to disconnect...")
 			if startHoldTime[pn] ~= nil then
 				local holdDuration = GetTimeSinceStart() - startHoldTime[pn]
+        SM("Continue holding &START; for " .. (5 - math.floor(holdDuration)) .. " more seconds to disconnect...")
 				if holdDuration >= 5.0 then
 					SM("Disconnected from lobby.")
 					startHoldTime[pn] = nil
