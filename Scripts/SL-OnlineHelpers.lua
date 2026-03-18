@@ -322,23 +322,27 @@ local DisplayLobbyState = function(data, actor)
 				end
 			end
 		else
-      -- Split the song path into pack and song name for easier reading.
-      -- It looks like "<pack>/<song>" so we can just split on the first "/"
-      local songPathParts = data.songInfo.songPath:split("/")
-      local pack = songPathParts[1] or "Unknown"
-      local song = songPathParts[2] or "Unknown"
+      -- Only display the song in ScreenSelectMusic so that players know
+      -- which songs they may need to navigate to.
+      if screenName == "ScreenSelectMusic" then
+        -- Split the song path into pack and song name for easier reading.
+        -- It looks like "<pack>/<song>" so we can just split on the first "/"
+        local songPathParts = data.songInfo.songPath:split("/")
+        local pack = songPathParts[1] or "Unknown"
+        local song = songPathParts[2] or "Unknown"
 
-      -- Sometimes the pack or song can get quite long, so add ... if it's too long.
-      local maxLength = 30
-      if #pack > maxLength then
-        pack = string.sub(pack, 1, maxLength) .. "..."
-      end
-      if #song > maxLength then
-        song = string.sub(song, 1, maxLength) .. "..."
-      end
+        -- Sometimes the pack or song can get quite long, so add ... if it's too long.
+        local maxLength = 30
+        if #pack > maxLength then
+          pack = string.sub(pack, 1, maxLength) .. "..."
+        end
+        if #song > maxLength then
+          song = string.sub(song, 1, maxLength) .. "..."
+        end
 
-      lines[#lines+1] = "Pack: "..pack
-      lines[#lines+1] = "Song: "..song
+        lines[#lines+1] = "Pack: "..pack
+        lines[#lines+1] = "Song: "..song
+      end
 		end
 	end
 
@@ -635,6 +639,7 @@ CreateOnlineHandler = function()
           end,
           ResizeCommand=function(self, params)
             self:settext(params.text)
+            DiffuseEmojis(self)
             -- We don't want text to be cut off.
             -- Incrementally adjust the zoom while checking the width until it fits.
             -- Not the prettiest solution but it works.
