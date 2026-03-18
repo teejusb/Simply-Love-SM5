@@ -15,6 +15,11 @@ local af = Def.ActorFrame {
     Def.Sprite{
         InitCommand=function(self)
             self:animate(false):visible(false)
+            if player == PLAYER_1 then
+                self:diffuse(Color.Yellow)
+            else
+                self:diffuse(Color.Orange)
+            end
             if #GAMESTATE:GetHumanPlayers() > 1 then
                 self:x(-12)
             else
@@ -37,9 +42,6 @@ local af = Def.ActorFrame {
                 if string.find(string.lower(song_dir), "itl online "..year.." unlocks") then
                     local unlockData = SL[pn].ITLData["unlockFolders"] or {}
                     local songUnlocked = (unlockData[song_dir]==true)
-                    if songUnlocked then
-                        SM("Unlocked: "..song_dir.. " for "..pn)
-                    end
                     self:visible(not songUnlocked)
                 else
                     self:visible(false)
