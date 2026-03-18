@@ -182,7 +182,7 @@ Branch.AfterSelectMusic = function()
 
 				-- Using an unknown profile, just go straight to ScreenGameplay.
 				if GetDivision() == nil then
-					return "ScreenGameplay"
+					return Branch.GameplayScreen()
 				end
 
 				-- IsPlayingFromPackForDivision generally also considers speed, but we
@@ -192,7 +192,7 @@ Branch.AfterSelectMusic = function()
 					return "ScreenEquipRelics"
 				else
 					-- Otherwise go directly to gameplay.
-					return "ScreenGameplay"
+					return Branch.GameplayScreen()
 				end
 			else
 				-- If for some reason we can't determine the song, then try to equip relics just in case.
@@ -200,7 +200,7 @@ Branch.AfterSelectMusic = function()
 			end
 		else
 			-- No need to select relics in warmup or freeplay or speed.
-			return "ScreenGameplay"
+			return Branch.GameplayScreen()
 		end
 	end
 end
