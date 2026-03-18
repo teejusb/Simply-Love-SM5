@@ -282,7 +282,12 @@ local DisplayLobbyState = function(data, actor)
 			readyText =" ["..(player.ready and "✔" or "❌").."]"
 		end
 
-		local playerAndScreen = i..'. '..player.profileName..readyText.." - in "..displayedScreen
+		-- Only display the screen name of the players that are on a different
+		-- screen than we are.
+		local playerAndScreen = i..'. '..player.profileName..readyText
+		if screenName ~= player.screenName then
+			playerAndScreen = playerAndScreen.." - in "..displayedScreen
+		end
 
 		lines[#lines+1] = playerAndScreen
 		for scoreScreen in ivalues(scoreScreens) do
