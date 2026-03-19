@@ -29,16 +29,13 @@ local autoReadyScreens = {
 local knownDisconnectScreens = {
   ["ScreenTitleMenu"] = true,
   ["ScreenGameOver"] = true,
-  ["ScreenNameEntry"] = true,
+  ["ScreenNameEntryTraditional"] = true,
   ["ScreenOptionsService"] = true,
 }
 
 -- TESTING Variables
 local host = "syncservice.groovestats.com"
 local port = 1337
-local roomCode = ""
-local action = "create" -- "create" or "join"
-local autoConnect = false
 
 -- This input handler is used to lock input while we're waiting on the server to tell us to proceed.
 -- It does nothing, but it's necessary to prevent the player from interacting with the screen
@@ -469,11 +466,6 @@ CreateOnlineHandler = function()
                 self.connected = true
 								self.inLobby = false
                 self.errorMsg = nil
-                -- if action == "join" then
-                --   MESSAGEMAN:Broadcast("JoinLobby")
-                -- elseif action == "create" then
-                --   MESSAGEMAN:Broadcast("CreateLobby")
-                -- end
                 self:GetChild("Display"):visible(true)
               elseif msgType == "Message" then
                 local response = JsonDecode(msg.data)
@@ -588,7 +580,7 @@ CreateOnlineHandler = function()
         if self.connected and self.socket ~= nil then
 				self.inLobby = false
           local data = GetMachineState()
-          data.code = params.code and params.code or roomCode
+          data.code = params.code and params.code
           data.password = params.password and params.password or ""
           local request = CreateRequest("joinLobby", data)
           self.socket:Send(request)
