@@ -284,7 +284,18 @@ local DisplayLobbyState = function(data, actor)
 			-- If we're navigating back to screen select music (say from options),
 			-- then don't lock input as we will have already synced before.
 			-- In this case a song will have been selected already.
-			readyToUnlock = true
+			-- However, if someone is still in EvaluationStage, we are transitioning
+			-- eval -> music and should keep input locked until everyone arrives.
+			local anyInEval = false
+			for _, player in ipairs(updatedData.players) do
+				if player.screenName == "ScreenEvaluationStage" then
+					anyInEval = true
+					break
+				end
+			end
+			if not anyInEval then
+				readyToUnlock = true
+			end
 		end
 
 		if readyToUnlock then
