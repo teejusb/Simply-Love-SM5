@@ -123,7 +123,7 @@ end
 UpdateItlUnlocks = function(player, downloadFolders)
 	local pn = ToEnumShortString(player)
 	local unlockFolders = SL[pn].ITLData["unlockFolders"]
-	for _, folder in ipairs(downloadFolders) do
+	for folder in ivalues(downloadFolders) do
 		unlockFolders[folder] = true
 	end
 end
