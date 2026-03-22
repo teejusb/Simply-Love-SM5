@@ -12,6 +12,7 @@ local startHoldTime = {
 	["P1"] = 0,
 	["P2"] = 0
 }
+local lastDisconnectCountdown = nil
 -- These screens are the ones we want to display the player's scores for.
 local scoreScreens = {"ScreenGameplay", "ScreenEvaluationStage"}
 
@@ -46,6 +47,7 @@ local InputHandler = function(event)
 		local pn = ToEnumShortString(event.PlayerNumber)
 		if event.type == "InputEventType_FirstPress" and event.GameButton == "Start" then
 			startHoldTime[pn] = GetTimeSinceStart()
+			lastDisconnectCountdown = nil
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 				readyState[pn] = true
 				MESSAGEMAN:Broadcast("UpdateMachineState")
@@ -54,10 +56,15 @@ local InputHandler = function(event)
 			-- Check if Start has been held for 5 seconds
 			if startHoldTime[pn] > 0 then
 				local holdDuration = GetTimeSinceStart() - startHoldTime[pn]
-        SM("Continue holding &START; for " .. (5 - math.floor(holdDuration)) .. " more seconds to disconnect...")
+				local remainingSeconds = math.max(0, 5 - math.floor(holdDuration))
+				if remainingSeconds ~= lastDisconnectCountdown then
+					SM("Continue holding &START; for " .. remainingSeconds .. " more seconds to disconnect...")
+					lastDisconnectCountdown = remainingSeconds
+				end
 				if holdDuration >= 5.0 then
 					SM("Disconnected from lobby.")
 					startHoldTime[pn] = 0
+					lastDisconnectCountdown = nil
 					isWaiting = false
 					if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 						SCREENMAN:GetTopScreen():PauseGame(false)
@@ -67,6 +74,7 @@ local InputHandler = function(event)
 			end
 		elseif event.type == "InputEventType_Release" and event.GameButton == "Start" then
 			startHoldTime[pn] = 0
+			lastDisconnectCountdown = nil
 		end
 	end
 
