@@ -120,35 +120,37 @@ local GetMachineState = function()
 
 	local players = {}
 	for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
-		local profileName = "NoName"
-		if (PROFILEMAN:IsPersistentProfile(player) and
-				PROFILEMAN:GetProfile(player)) then
-			profileName = PROFILEMAN:GetProfile(player):GetDisplayName()
+		if GAMESTATE:IsSideJoined(player) then
+			local profileName = "NoName"
+			if (PROFILEMAN:IsPersistentProfile(player) and
+					PROFILEMAN:GetProfile(player)) then
+				profileName = PROFILEMAN:GetProfile(player):GetDisplayName()
+			end
+
+			local judgments = nil
+			local score = nil
+			local exScore = nil
+			if screenName == "ScreenGameplay" or screenName == "ScreenEvaluationStage" then
+				judgments = GetJudgmentCounts(player)
+				local dance_points = STATSMAN:GetCurStageStats():GetPlayerStageStats(player):GetPercentDancePoints()
+				local percent = FormatPercentScore( dance_points ):gsub("%%", "")
+				score = tonumber(percent)
+				exScore = CalculateExScore(player)
+			end
+
+			local pn = ToEnumShortString(player)
+			players[pn] = {
+				playerId = pn,
+				profileName = profileName,
+				screenName=screenName,
+				ready=readyState[pn],
+
+				judgments = judgments,
+				score = score,
+				exScore = exScore,
+				-- TODO(teejusb): Add song progression.
+			}
 		end
-
-		local judgments = nil
-		local score = nil
-		local exScore = nil
-		if screenName == "ScreenGameplay" or screenName == "ScreenEvaluationStage" then
-			judgments = GetJudgmentCounts(player)
-			local dance_points = STATSMAN:GetCurStageStats():GetPlayerStageStats(player):GetPercentDancePoints()
-			local percent = FormatPercentScore( dance_points ):gsub("%%", "")
-			score = tonumber(percent)
-			exScore = CalculateExScore(player)
-		end
-
-		local pn = ToEnumShortString(player)
-		players[pn] = {
-			playerId = pn,
-			profileName = profileName,
-			screenName=screenName,
-			ready=readyState[pn],
-
-			judgments = judgments,
-			score = score,
-			exScore = exScore,
-			-- TODO(teejusb): Add song progression.
-		}
 	end
 
 	-- If "P1"/"P2" is missing from players, then the player isn't enabled and the corresponding
