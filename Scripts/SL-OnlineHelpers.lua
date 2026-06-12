@@ -506,6 +506,12 @@ CreateOnlineHandler = function()
           }
         end
       end,
+      UpdateOnlineStateMessageCommand=function(self)
+        if self.connected and self.socket ~= nil and self.inLobby then
+          local request = CreateRequest("updateMachine", GetMachineState())
+          self.socket:Send(request)
+        end
+      end,
       ScreenChangedMessageCommand=function(self)
         if self.connected and self.socket ~= nil then
 					if not self.inLobby then
