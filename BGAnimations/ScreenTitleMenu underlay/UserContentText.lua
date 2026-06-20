@@ -97,9 +97,10 @@ return LoadFont("Common Normal")..{
 		if ThemePrefs.Get("RainbowMode") and not HolidayCheer() then
 			textColor = Color.Black
 		end
-		if ThemePrefs.Get("VisualStyle") == "SRPG9" then
-			textColor = color(SL.SRPG9.TextColor)
+		if ThemePrefs.Get("VisualStyle") == "SRPG10" then
+			textColor = color(SL.SRPG10.TextColor)
 			shadowLength = 0.4
+			self:y(-190)
 		end
 
 		self:diffuse(Color.White):shadowlength(shadowLength)

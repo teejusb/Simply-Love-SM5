@@ -10,7 +10,7 @@ end
 local InputHandler = function(event)
 	if not event then return false end
 	if event.type == "InputEventType_FirstPress" and event.GameButton == "Back" then
-		 if CurrentGameIsSupported() and StepManiaVersionIsSupported() then
+		 if ThonkAndRTTOkay() and CurrentGameIsSupported() and StepManiaVersionIsSupported() then
 			 SCREENMAN:GetTopScreen():Cancel()
 		 end
 	end
@@ -21,8 +21,8 @@ local a = Def.Actor{}
 
 a.OnCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback( InputHandler ) end
 a.BeginCommand=function(self)
-	-- In case we switched into SRPG9 and had Rainbow Mode enabled, disable it.
-	if ThemePrefs.Get("VisualStyle") == "SRPG9" and ThemePrefs.Get("RainbowMode") == true then
+	-- In case we switched into SRPG10 and had Rainbow Mode enabled, disable it.
+	if ThemePrefs.Get("VisualStyle") == "SRPG10" and ThemePrefs.Get("RainbowMode") == true then
 		ThemePrefs.Set("RainbowMode", false)
 	end
 
@@ -51,6 +51,10 @@ end
 -- so we handle that case using a Lua InputCallback function
 a.OffCommand=function(self)
 	if SCREENMAN:GetTopScreen():AllAreOnLastRow() then
+		if not ThonkAndRTTOkay() then
+			SCREENMAN:SetNewScreen("ScreenOptionsService")
+		end
+
 		if not CurrentGameIsSupported() then
 			SM( THEME:GetString("ScreenInit", "UnsupportedGame"):format(GAMESTATE:GetCurrentGame():GetName()) )
 			SCREENMAN:SetNewScreen("ScreenSystemOptions")

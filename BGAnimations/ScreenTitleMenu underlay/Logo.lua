@@ -33,8 +33,8 @@ af[#af+1] = Def.Sprite{
 		self:zoom(0.2):y(30)
 		return
 
-		-- if ThemePrefs.Get("VisualStyle") == "SRPG9" then
-		-- 	self:Load(THEME:GetPathG("", "_VisualStyles/SRPG9/"..SL.SRPG9.GetLogo()))
+		-- if ThemePrefs.Get("VisualStyle") == "SRPG10" then
+		-- 	self:Load(THEME:GetPathG("", "_VisualStyles/SRPG10/"..SL.SRPG10.GetLogo()))
 		-- 	self:zoom(0.225):vertalign(top)
 		-- 	self:y(-115):shadowlength(0)
 		-- else
@@ -78,9 +78,9 @@ if false then
 			end
 		end,
 		VisualStyleSelectedMessageCommand=function(self)
-			-- In case we auto-switch to SRPG9, then it's possible this actor may have been added to the screen.
-			-- If so, we want to hide the logo as it interferes with the SRPG9 logo.
-			if ThemePrefs.Get("VisualStyle") == "SRPG9" then
+			-- In case we auto-switch to SRPG10, then it's possible this actor may have been added to the screen.
+			-- If so, we want to hide the logo as it interferes with the SRPG10 logo.
+			if ThemePrefs.Get("VisualStyle") == "SRPG10" then
 				self:visible(false)
 			end
 		end
