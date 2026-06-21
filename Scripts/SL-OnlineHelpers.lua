@@ -565,25 +565,24 @@ CreateOnlineHandler = function()
             end
           end
 
-    if autoReadyScreens[screenName] then
-      for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
-        local pn = ToEnumShortString(player)
-        readyState[pn] = true
-      end
-    end
+          if autoReadyScreens[screenName] then
+            for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
+              local pn = ToEnumShortString(player)
+              readyState[pn] = true
+            end
+          end
 
-    if screenName == "ScreenGameplay" then
-      for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
-        local pn = ToEnumShortString(player)
-        readyState[pn] = false
-      end
-        -- Input callbacks get cleared out when we transition screens, so we don't need to worry about explicitly removing it.
-        SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
-        SCREENMAN:GetTopScreen():PauseGame(true)
-    elseif isWaiting then
-      SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
-
-    end
+          if screenName == "ScreenGameplay" then
+            for player in ivalues(GAMESTATE:GetEnabledPlayers()) do
+              local pn = ToEnumShortString(player)
+              readyState[pn] = false
+            end
+            -- Input callbacks get cleared out when we transition screens, so we don't need to worry about explicitly removing it.
+            SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
+            SCREENMAN:GetTopScreen():PauseGame(true)
+          elseif isWaiting then
+            SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
+          end
 
           MESSAGEMAN:Broadcast("UpdateMachineState")
         end
