@@ -112,7 +112,9 @@ local t = Def.ActorFrame {
 	OffCommand=function(self)
 		-- Update the lobby state in case we're online. This won't do anything
 		-- if we're not connected to a lobby.
-		MESSAGEMAN:Broadcast("UpdateOnlineState")
+		-- Replace the screen with ScreenSelectMusic so we don't send ScreenSelectProfile as the
+		-- current screen to the lobby.
+		MESSAGEMAN:Broadcast("UpdateOnlineState", {screenName="ScreenSelectMusic"})
 		self:sleep(0.5):queuecommand("Finish")
 	end,
 	FinishCommand=function(self)
