@@ -1,26 +1,22 @@
 import csv
 import json
 
-PREFIX = "srpg9"
+PREFIX = "srpg10"
 
 def GetDivision(tplp, id):
 	mid_overrides = [
-		66364,
-		132065,
-		75645
 	]
 	upper_overrides = [
-		77437
 	]
 	mid_cutoff = 22500
-	upper_cutooff = 140000
+	upper_cutoff = 145000
 
 	if id in mid_overrides:
 		return "mid"
 	elif id in upper_overrides:
 		return "upper"
 	else:
-		if tplp >= upper_cutooff:
+		if tplp >= upper_cutoff:
 			return "upper"
 		elif tplp >= mid_cutoff:
 			return "mid"
@@ -28,7 +24,7 @@ def GetDivision(tplp, id):
 			return "lower"
 
 def OptedForSpeed(tp):
-	speed_cutoff = 65000
+	speed_cutoff = 85000
 	return tp >= speed_cutoff
 
 relics = {}
