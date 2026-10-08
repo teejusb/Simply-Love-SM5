@@ -2268,7 +2268,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			if song_data.stepartist:find("Kyy") then
-				return 225
+				return 200
 			else
 				return 0
 			end
@@ -2285,7 +2285,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- End of set relics are handled in ScreenGameOver
-			return 1 + math.floor(ap * 0.2) + math.floor(song_data.ep * 0.1)
+			return 1 + math.floor(ap * 0.1) + math.floor(song_data.ep * 0.1)
 		end,
 	},
 	{
@@ -2609,14 +2609,14 @@ ECS.Relics = {
 		img="comet.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local total_length = 0
+			local total_songs = 0
 			for song in ivalues(ECS.Player.SongsPlayed) do
 				if not song.failed then
-					total_length = total_length + song.length
+					total_songs = total_songs + 1
 				end
 			end
 
-			return math.pow(total_length, 2.45)
+			return math.pow(total_songs, 2.45)
 		end,
 	},
 	{
@@ -2629,14 +2629,14 @@ ECS.Relics = {
 		img="meteor.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			local total_length = 0
+			local total_songs = 0
 			for song in ivalues(ECS.Player.SongsPlayed) do
 				if not song.failed then
-					total_length = total_length + song.length
+					total_songs = total_songs + 1
 				end
 			end
 
-			return math.pow(total_length, 2.5)
+			return math.pow(total_songs, 2.5)
 		end,
 	},
 	{
@@ -2694,7 +2694,7 @@ ECS.Relics = {
 				end
 			end
 
-			return math.pow(total_songs, 2.5)
+			return math.min(total_songs * 1000, 6000)
 		end,
 	},
 	{
@@ -2748,7 +2748,7 @@ ECS.Relics = {
 			if po:Expand() == 1 then total_number = total_number + 1 end
 			if po:Boomerang() == 1 then total_number = total_number + 1 end
 
-			-- Effect: Drunk, Dizzy, Confusion, Big, Flip, Invert, Tornado, Tipsy, Bumpy, Beat
+			-- Effect: Drunk, Dizzy, Confusion, Flip, Invert, Tornado, Tipsy, Bumpy, Beat
 			if po:Drunk() == 1 then total_number = total_number + 1 end
 			if po:Dizzy() == 1 then total_number = total_number + 1 end
 			if po:Confusion() == 1 then total_number = total_number + 1 end
