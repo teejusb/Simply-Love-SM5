@@ -3198,7 +3198,7 @@ ECS.Relics = {
 		img="orderofcallisto.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- End of set relics are handled in ScreenGameOver
+			-- TODO(teejusb): Implement this
 			return 0
 		end,
 	},
@@ -29676,6 +29676,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		failed=failed,
 		relics_used=DeepCopy(relics_used),
 		score=score,
+		pre_bp_points=song_data.dp + song_data.ep + song_data.rp + math.ceil((score^4) * 1000),
 		rate=rate,
 	}
 
