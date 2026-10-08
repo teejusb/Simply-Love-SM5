@@ -57,5 +57,6 @@ for player in data:
 	print(r"""	affinities = {%s},""" % ", ".join("%s=%s" % (name, player[f"{PREFIX}_entrants_aff%s" % name]) for name in ["dp", "ep", "rp", "ap"]))
 	print(r"""	lifetime_song_gold = %s,""" % player[f"{PREFIX}_entrants_rankgold"])
 	print(r"""	lifetime_jp = %s,""" % player[f"{PREFIX}_entrants_rankjp"])
+	print(r"""	lifetime_ws = %s,""" % player[f"{PREFIX}_entrants_rankws"])
 	print(r"""}""")
 	print(r"")
