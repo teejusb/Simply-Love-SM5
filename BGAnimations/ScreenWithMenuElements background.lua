@@ -1,17 +1,9 @@
 local t = Def.ActorFrame{}
 
 t[#t+1] = Def.Sprite {
-		Texture=THEME:GetPathG("", "_ECS/bg 2x2 (doubleres).png"),
-		Frame0000="0",
-		Delay0000="0.1",
-		Frame0001="1",
-		Delay0001="0.1",
-		Frame0002="2",
-		Delay0002="0.1",
-		Frame0003="3",
-		Delay0003="0.1",
+		Texture=THEME:GetPathG("", "_ECS/bg (doubleres).png"),
 		InitCommand=function(self)
-			self:Center():addy(-70):zoom(0.65)
+			self:Center():zoom(0.9)
 		end,
 	}
 

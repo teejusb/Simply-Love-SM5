@@ -30,7 +30,7 @@ af[#af+1] = Def.Sprite{
 	end,
 	LoadImageCommand=function(self)
 		self:Load(THEME:GetPathG("", "_ECS/logo (doubleres).png"))
-		self:zoom(0.2):y(30)
+		self:zoom(0.4)
 		return
 
 		-- if ThemePrefs.Get("VisualStyle") == "SRPG10" then

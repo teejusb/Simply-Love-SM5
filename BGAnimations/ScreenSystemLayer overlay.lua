@@ -605,32 +605,5 @@ t[#t+1] = Def.ActorFrame {
 		end,
 	}
 }
--- -----------------------------------------------------------------------
-
-t[#t+1] = Def.ActorFrame{
-	InitCommand=function(self)
-		self:Center()
-	end,
-
-	Def.Sprite {
-		Texture=THEME:GetPathG("", "_ECS/crt.png"),
-		InitCommand=function(self)
-			self:blend("BlendMode_Add"):zoom(2)
-		end,
-		ScreenChangedMessageCommand=function(self)
-			local screen = SCREENMAN:GetTopScreen()
-			if screen then
-				-- Turn off the effect for screen gameplay
-				if screen:GetName() == Branch.GameplayScreen() then
-					self:visible(false)
-				else
-					self:visible(true)
-				end
-			else
-				self:visible(true)
-			end
-		end,
-	}
-}
 
 return t
