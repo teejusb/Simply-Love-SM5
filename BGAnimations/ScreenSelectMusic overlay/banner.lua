@@ -151,7 +151,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/slimebadge.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(0):addy(100)
+			self:zoom(0.28):addx(-8):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -172,7 +172,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/agilitypotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(40):addy(100)
+			self:zoom(0.28):addx(22):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -193,7 +193,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/staminapotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(80):addy(100)
+			self:zoom(0.28):addx(52):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -214,7 +214,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/accuracypotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(120):addy(100)
+			self:zoom(0.28):addx(82):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -233,9 +233,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/tpastandard.png"),
+		Texture=THEME:GetPathG("", "_relics/doublingpotion.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(160):addy(100)
+			self:zoom(0.28):addx(112):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -243,9 +243,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "TPA Standard" then
-							relic_used = true
-						end
+						if relic.name == "Doubling Potion" then relic_used = true end
 					end
 				end
 			end
@@ -254,9 +252,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/memepeaceberet.png"),
+		Texture=THEME:GetPathG("", "_relics/squirreleffigy.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(200):addy(100)
+			self:zoom(0.28):addx(142):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -264,9 +262,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Memepeace Beret" then
-							relic_used = true
-						end
+						if relic.name == "Squirrel Effigy" then relic_used = true end
 					end
 				end
 			end
@@ -277,7 +273,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/wrench.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(240):addy(100)
+			self:zoom(0.28):addx(172):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -296,9 +292,28 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/bapeshirt.png"),
+		InitCommand=function(self)
+			self:zoom(0.28):addx(202):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Bape Shirt" then relic_used = true end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
 		Texture=THEME:GetPathG("", "_relics/blackgarb.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(280):addy(100)
+			self:zoom(0.28):addx(232):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -317,9 +332,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/theholypineble.png"),
+		Texture=THEME:GetPathG("", "_relics/tpastandard.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(320):addy(100)
+			self:zoom(0.28):addx(262):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -327,7 +342,7 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "The Holy Pineble" then
+						if relic.name == "TPA Standard" then
 							relic_used = true
 						end
 					end
@@ -338,9 +353,9 @@ t[#t+1] = Def.ActorFrame{
 		end,
 	},
 	Def.Sprite{
-		Texture=THEME:GetPathG("", "_relics/doublecheeseburger.png"),
+		Texture=THEME:GetPathG("", "_relics/orderofvidopnir.png"),
 		InitCommand=function(self)
-			self:zoom(0.28):addx(-8):addx(360):addy(100)
+			self:zoom(0.28):addx(292):addy(100)
 		end,
 		OnCommand=function(self)
 			local relic_used = false
@@ -348,9 +363,47 @@ t[#t+1] = Def.ActorFrame{
 				local song_played = ECS.Player.SongsPlayed[i]
 				if song_played ~= nil and not song_played.failed then
 					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "DOUBLE CHEESEBURGER" then
+						if relic.name == "Order of Vidopnir" then relic_used = true end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/memepeaceberet.png"),
+		InitCommand=function(self)
+			self:zoom(0.28):addx(322):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Memepeace Beret" then
 							relic_used = true
 						end
+					end
+				end
+			end
+			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
+			self:visible(relic_used)
+		end,
+	},
+	Def.Sprite{
+		Texture=THEME:GetPathG("", "_relics/nomadcloak.png"),
+		InitCommand=function(self)
+			self:zoom(0.28):addx(352):addy(100)
+		end,
+		OnCommand=function(self)
+			local relic_used = false
+			for i=1,7 do
+				local song_played = ECS.Player.SongsPlayed[i]
+				if song_played ~= nil and not song_played.failed then
+					for relic in ivalues(song_played.relics_used) do
+						if relic.name == "Nomad Cloak" then relic_used = true end
 					end
 				end
 			end
