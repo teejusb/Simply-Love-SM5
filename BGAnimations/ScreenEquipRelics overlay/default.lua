@@ -197,24 +197,10 @@ local InputHandler = function(event)
 
 					-- create a smaller list out of non-active relics
 					local smaller_list = { {name="(nothing)"} }
-					local used_dragonball = false
-
-					for _relic in ivalues(player_relics) do
-						if _relic.name:match("^Dragonball") and IsActiveRelic(_relic) then
-							used_dragonball = true
-						end
-					end
 
 					for _relic in ivalues(player_relics) do
 						if not IsActiveRelic(_relic) and _relic.name ~= "(nothing)" then
-							-- Only allow one Dragonball to be selected at a time.
-							if _relic.name:match("^Dragonball") then
-								if not used_dragonball then
-									smaller_list[#smaller_list+1] = _relic
-								end
-							else
-								smaller_list[#smaller_list+1] = _relic
-							end
+							smaller_list[#smaller_list+1] = _relic
 						end
 					end
 
