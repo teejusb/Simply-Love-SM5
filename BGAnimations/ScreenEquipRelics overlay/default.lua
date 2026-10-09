@@ -24,25 +24,25 @@ local IsActiveRelic = function(relic)
 end
 
 local GetNumActiveRows = function()
-	local has_ambrosia = false
+	local has_orthrus = false
 	local has_belt = false
-	local has_amrita = false  -- Marathon only relic
+	local has_azi_dahaka = false  -- Marathon only relic
 
 	for active_relic in ivalues(active_relics) do
-		if active_relic.name == "Order of Ambrosia" then
-			has_ambrosia = true
+		if active_relic.name == "Order of Orthrus" then
+			has_orthrus = true
 		elseif active_relic.name == "Champion Belt" then
 			has_belt = true
-		elseif active_relic.name == "Order of Amrita" then
-			has_amrita = true
+		elseif active_relic.name == "Order of Azi Dahaka" then
+			has_azi_dahaka = true
 		end
 	end
 
 	local num_active_rows = 2
 
-	if has_ambrosia and has_belt then
+	if has_orthrus and has_belt then
 		num_active_rows = 5
-	elseif has_ambrosia or has_amrita then
+	elseif has_orthrus or has_azi_dahaka then
 		num_active_rows = 4
 	elseif has_belt then
 		num_active_rows = 3
