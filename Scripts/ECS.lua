@@ -3249,8 +3249,9 @@ ECS.Relics = {
 		img="orderofcallisto.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this
-			return 0
+			local rate = SL.Global.ActiveModifiers.MusicRate
+			local bpm = song_data.bpm
+			return 750 * math.floor(math.max(0, ((bpm * rate) - bpm) / 10))
 		end,
 	},
 	{
