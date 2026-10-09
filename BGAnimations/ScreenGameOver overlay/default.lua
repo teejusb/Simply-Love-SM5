@@ -72,7 +72,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local slime_badge = 0
 				local nomad_cloak = 0
 
-				local twin_lance = 0
+				local twin_lance_multipler = 1
 
 				for i=1,7 do
 					local song_played = ECS.Player.SongsPlayed[i]
@@ -93,8 +93,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							local slime_badge_used = false
 							local nomad_cloak_used = false
 
-							local twin_lance_multipler = 1
-
 							for relic in ivalues(song_played.relics_used) do
 								if relic.name == "Accuracy Potion" then
 									accuracy_potion_used = true
@@ -110,10 +108,8 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 								end
 								if relic.name == "Squirrel Effigy" then
 									if squirrel_effigy_songs[song_played.name] == nil then
-										squirrel_effigy_songs[song_played.name] = {play_count = 0, pre_bp_points = 0}
+										squirrel_effigy_songs[song_played.name] = {pass_count = 0, pre_bp_points = 0}
 									end
-									-- Don't increment play count here. We'll determine it later below.
-									squirrel_effigy_songs[song_played.name].pre_bp_points = squirrel_effigy_songs[song_played.name].pre_bp_points + song_played.pre_bp_points
 								end
 								if relic.name == "Wrench" then
 									wrench_used = true
@@ -149,11 +145,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 							stamina_potion = stamina_potion + (stamina_potion_used and 1 or 0) * twin_lance_multipler
 							agility_potion = agility_potion + (agility_potion_used and 1 or 0) * twin_lance_multipler
 							doubling_potion = doubling_potion + (doubling_potion_used and 1 or 0) * twin_lance_multipler
-
-							for name, squirrel_data in pairs(squirrel_effigy_songs) do
-								squirrel_data.pre_bp_points = squirrel_data.pre_bp_points * twin_lance_multipler
-							end
-
 							wrench = wrench + (wrench_used and 1 or 0) * twin_lance_multipler
 							bape_shirt = bape_shirt + (bape_shirt_used and 1 or 0) * twin_lance_multipler
 							black_garb = black_garb + (black_garb_used and 1 or 0) * twin_lance_multipler
@@ -188,7 +179,13 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						if song_played.score >= 0.95 then
 							total_over_95 = total_over_95 + 1
 						end
-						squirrel_effigy_songs[song_played.name].play_count = squirrel_effigy_songs[song_played.name].play_count + 1
+
+						for song_name, data in pairs(squirrel_effigy_songs) do
+							if squirrel_effigy_songs[song_name] ~= nil and song_played.name == song_name then
+								data.pass_count = math.max(data.pass_count, song_played.pass_count)
+								data.pre_bp_points = math.max(data.pre_bp_points, song_played.pre_bp_points)
+							end
+						end
 
 						if IsMarathonSong(song_played) then
 							marathons_played = marathons_played + 1
@@ -210,16 +207,14 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if stamina_potion > 0 then total_points = total_points + (math.floor(total_steps / 45)) * stamina_potion end
 				if agility_potion > 0 then total_points = total_points + (math.floor((math.floor(total_bpm / songs_passed) - 120)^1.3)) * agility_potion end
-				
 				if doubling_potion > 0 then total_points = total_points + (math.floor(40 * math.pow(2, doubling_potion - 1))) * doubling_potion end
 				
-				if #squirrel_effigy_songs > 0 then
-					for name, squirrel_data in pairs(squirrel_effigy_songs) do
-						local play_count = squirrel_data.play_count
-						if play_count >= 2 then
-							total_points = total_points + math.floor(effigy.song.pre_bp_points / 7.5)
-						end
+				for song_name, data in pairs(squirrel_effigy_songs) do
+					local pre_bp_point_total = 0
+					if data.pass_count >= 2 then
+						pre_bp_point_total = pre_bp_point_total + data.pre_bp_points
 					end
+					total_points = total_points + (math.floor(pre_bp_point_total / 7.5)) * twin_lance_multipler
 				end
 
 				if wrench > 0 then total_points = total_points + (250 * marathons_played) * wrench end
@@ -233,7 +228,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 					for i=1,7 do
 						local song_played = ECS.Player.SongsPlayed[i]
 						if song_played then
-							top_7_ap = top_7_ap + math.ceil(song_played.score^4 * 1000)
+							top_7_ap = top_7_ap + math.ceil(song_played.score ^ 4 * 1000)
 						end
 					end
 					total_points = total_points + math.floor(top_7_ap / 3) * order_of_vidopnir
@@ -243,7 +238,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if slime_badge > 0 then total_points = total_points + (100 * slime_tiers) * slime_badge end
 				
 				if nomad_cloak > 0 then
-					total_points = total_points + math.min(math.floor(songs_passed / 2), 4) * 225 * nomad_cloak
+					total_points = total_points + math.min(math.floor(songs_passed / 2) * 225, 900) * nomad_cloak
 				end
 
 				self:settext(tostring(total_points))

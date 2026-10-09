@@ -2140,7 +2140,7 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- TODO(teejusb): Check that #ecs_player.relics maps correctly.
-			return 35 + math.pow(#ecs_player.relics, 1.25)
+			return 35 + ((#ecs_player.relics) ^ 1.25)
 		end,
 	},
 	{
@@ -2616,7 +2616,7 @@ ECS.Relics = {
 				end
 			end
 
-			return math.pow(total_songs, 2.45)
+			return total_songs ^ 2.45
 		end,
 	},
 	{
@@ -2636,7 +2636,7 @@ ECS.Relics = {
 				end
 			end
 
-			return math.pow(total_songs, 2.5)
+			return total_songs ^ 2.5
 		end,
 	},
 	{
@@ -29634,11 +29634,14 @@ end
 
 AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	local points, song_data = CalculateScoreForSong(ecs_player, song_name, score, relics_used, failed)
+	local pre_bp_points = failed and 0 or CalculateScoreForSong(ecs_player, song_name, score, {}, failed)
 	if song_data == nil then return end
 
 	local index = #ECS.Player.SongsPlayed + 1
+	local pass_count = 0
 	for i=1,#ECS.Player.SongsPlayed do
 		if ECS.Player.SongsPlayed[i].name == song_name then
+			pass_count = math.max(pass_count, ECS.Player.SongsPlayed[i].pass_count or (ECS.Player.SongsPlayed[i].failed and 0 or 1))
 			if points > ECS.Player.SongsPlayed[i].points then
 				index = i
 			end
@@ -29674,9 +29677,10 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 		bpm_tier=song_data.bpm_tier,
 		length=song_data.length,
 		failed=failed,
+		pass_count=pass_count + (failed and 0 or 1),
 		relics_used=DeepCopy(relics_used),
 		score=score,
-		pre_bp_points=song_data.dp + song_data.ep + song_data.rp + math.ceil((score^4) * 1000),
+		pre_bp_points=pre_bp_points,
 		rate=rate,
 	}
 
