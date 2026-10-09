@@ -920,7 +920,6 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- End of set relics are handled in ScreenGameOver
-			-- TODO(teejusb): Implement this
 			return 0
 		end,
 	},
@@ -935,7 +934,6 @@ ECS.Relics = {
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			-- End of set relics are handled in ScreenGameOver
-			-- TODO(teejusb): Implement this
 			return 0
 		end,
 	},
@@ -2169,7 +2167,6 @@ ECS.Relics = {
 		img="cabby.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Check that #ecs_player.relics maps correctly.
 			return 35 + ((#ecs_player.relics) ^ 1.25)
 		end,
 	},
