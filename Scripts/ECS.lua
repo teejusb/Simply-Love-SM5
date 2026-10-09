@@ -786,8 +786,38 @@ ECS.Relics = {
 		img="krakenclub.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			--  TODO(teejusb): Implement this
-			return 0
+			-- Hit distribution
+			local dist = {
+				2.08, 10.66, 22.78, 28.44, 21.36, 10.83, 3.17, 0.67
+			}
+
+			-- Only display points from the hits when it's actually scored on
+			-- ScreenEval.
+			if score > 0 then
+				local points = 0
+				local total_probability = 0
+				for probability in ivalues(dist) do
+					total_probability = total_probability + probability
+				end
+
+				local rand = math.random() * total_probability
+				local cumulative_probability = 0
+				local hits = 0
+				for i, probability in ipairs(dist) do
+					cumulative_probability = cumulative_probability + probability
+					if rand < cumulative_probability then
+						hits = i
+						break
+					end
+				end
+
+				points = hits * (math.floor(song_data.dp * 0.2) + 100)
+				SM("Kraken Club hit "..hits.."time(s) for "..points.." points!")
+				return points
+			else
+				-- Always assume at least one hit.
+				return math.floor(song_data.dp * 0.2) + 100
+			end
 		end,
 	},
 	{
