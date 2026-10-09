@@ -335,6 +335,15 @@ local IVBagIsActive = function()
 	return false
 end
 
+local TwoUpIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "2UP" then
+			return true
+		end
+	end
+	return false
+end
+
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
 		if not event.PlayerNumber or not event.button then return false end
@@ -487,13 +496,32 @@ if IVBagIsActive() then
 			
 			if percentage >= interval and interval < 100 then
 				interval = interval + 20
-				local player = GetPlayerAF(ToEnumShortString(player))
-				player:SetLife(1.0)
+				local playerAf = GetPlayerAF(ToEnumShortString(player))
+				playerAf:SetLife(1.0)
 				SM("Set Life to 100%")
 			end
 
 			if interval < 100 then
 				self:sleep(1):queuecommand("Loop")
+			end
+		end,
+	}
+end
+
+if TwoUpIsActive() then
+	local lives = 2
+
+	af[#af+1] = Def.ActorFrame{
+		LifeChangedMessageCommand=function(self,params)
+			if params.Player == player then
+				local playerAf = GetPlayerAF(ToEnumShortString(player))
+				local lifemeter = SCREENMAN:GetTopScreen():GetLifeMeter(player)
+
+				local cur_life = lifemeter:GetLife()
+				if cur_life <= 0.10 and lives > 0 then
+					playerAf:SetLife(1.0)
+					lives = lives - 1
+				end
 			end
 		end,
 	}

@@ -3355,7 +3355,6 @@ ECS.Relics = {
 		img="2up.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this
 			return 0
 		end,
 	},
