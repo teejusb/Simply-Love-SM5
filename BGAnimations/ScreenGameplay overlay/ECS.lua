@@ -317,27 +317,9 @@ local GoldDustIsActive = function()
 	return false
 end
 
-local HelicopterIsActive = function()
-	for active_relic in ivalues(ECS.Player.Relics) do
-		if active_relic.name == "1/100 Helicopter" then
-			return true
-		end
-	end
-	return false
-end
-
 local WrenchIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
 		if active_relic.name == "Wrench" then
-			return true
-		end
-	end
-	return false
-end
-
-local TurntableIsActive = function()
-	for active_relic in ivalues(ECS.Player.Relics) do
-		if active_relic.name == "Turntable" then
 			return true
 		end
 	end
@@ -441,40 +423,6 @@ if ExtensionlessFileIsActive() then
 	}
 end
 
-if HelicopterIsActive() then
-	local step_count = 0
-	local player = GAMESTATE:GetMasterPlayerNumber()
-	local po = GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Preferred')
-	local using_dizzy = po:Dizzy() == 1
-
-	af[#af+1] = Def.Sound{
-		Name="Helicopter",
-		File=THEME:GetPathG("","_ECS/helicopter.ogg"),
-		SupportRateChanging=true,
-		JudgmentMessageCommand=function(self, params)
-			if params.Player == nil then return end
-
-			if params.Player ~= player then return end
-			step_count = step_count + 1
-			if step_count % 100 == 0 then
-				self:queuecommand("Play")
-			end
-		end,
-		PlayCommand=function(self)
-			self:play()
-			GAMESTATE:ApplyGameCommand("mod,200% dizzy", player)
-			self:sleep(3):queuecommand("Stop")
-		end,
-		StopCommand=function(self)
-			if not using_dizzy then
-				GAMESTATE:ApplyGameCommand("mod,no dizzy", player)
-			else
-				GAMESTATE:ApplyGameCommand("mod,100% dizzy", player)
-			end
-		end,
-	}
-end
-
 if WrenchIsActive() then
 	-- The audio is 4 measures of 214 BPM
 	local bpm = 214
@@ -513,24 +461,6 @@ if WrenchIsActive() then
 				self:play()
 			end,
 		}
-	}
-end
-
-if TurntableIsActive() then
-	af[#af+1] = Def.ActorFrame{
-		OnCommand=function(self)
-			self:queuecommand("Start")
-		end,
-		StartCommand=function(self)
-			local sleep_time = math.random(0, 30)
-			self:sleep(sleep_time):queuecommand("Loop")
-		end,
-		LoopCommand=function(self)
-			local sleep_time = math.random(0, 30)
-			local rate = math.random(89,115) / 100
-			GAMESTATE:ApplyGameCommand("mod,"..rate.."xmusic")
-			self:sleep(sleep_time):queuecommand("Loop")
-		end,
 	}
 end
 
