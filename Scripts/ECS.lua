@@ -2825,9 +2825,35 @@ ECS.Relics = {
 		is_consumable=true,
 		is_marathon=false,
 		img="urn.png",
-		action=function(relics_used) end,
+		action=function(relics_used)
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenEvaluationStage" then
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+				local failed = pss:GetFailed()
+				if not failed then
+					local profile_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
+					local player = ECS.Players[profile_name]
+					if player then
+						for song in ivalues(ECS.Player.SongsPlayed) do
+							if song.failed then
+								-- Check which relics we used on this failed song
+								for used_relic in ivalues(song.relics_used or {}) do
+									if used_relic.is_consumable then
+										-- Iterate over the player's available relics
+										for relic in ivalues(player.relics) do
+											if relic.name == used_relic.name then
+												relic.quantity = relic.quantity + 1
+												break
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this
 			return 0
 		end,
 	},
