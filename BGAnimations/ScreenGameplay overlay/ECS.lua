@@ -25,6 +25,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	local base_theme_path = THEME:GetCurrentThemeDirectory()
 	local path = base_theme_path.."ECSData/"..day..month_string..year.."-"..seconds.."-"..ECS.Players[profile_name].id.."-".."SCORE-"..ECS.Mode.."-"..attempt_number..".txt"
 
+	local game = GAMESTATE:GetCurrentGame():GetName()
+	local style = GAMESTATE:GetCurrentStyle():GetName()
+
 	local data = ""
 	data = data..percent_score .."\n"
 	data = data..passed_song.."\n"
@@ -33,6 +36,8 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 	data = data..day.." "..month_string.." "..year.."\n"
 	data = data..hour..":"..minute..":"..second.."\n"
 	data = data..music_rate.."\n"
+	data = data..(game == "dance" and "itg" or game).."\n"
+	data = data..style.."\n"
 
 	-- Handle special "theme" points.
 	local theme_points = 0
