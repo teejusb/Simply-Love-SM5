@@ -29515,9 +29515,31 @@ end
 
 IsPlayingMarathon = function()
 	local hashes = {
-		["Lower"] = "905ed6e184ffd916",
-		["Mid"] = "d13a3c563adb9e9f",
-		["Upper"] = "95a61ce8346942cf",
+		["dance"] = {
+			["single"] = {
+				["Lower"] = "12cdbb5a346801af",
+				["Mid"] = "e109be48c27d4705",
+				["Upper"] = "0973efa532008552",
+			},
+			["double"] = {
+				["Lower"] = "f6f9f50ba96d4581",
+				["Mid"] = "97466a105ebbee08",
+				["Upper"] = "4cfab4e86a3c23b4",
+			},
+		},
+		["pump"] = {
+			["single"] = {
+				["Lower"] = "c9d6fa0c011e306a",
+				["Mid"] = "12d9bb48de8c70f3",
+				["Upper"] = "a20f44d5978bfe03",
+			},
+			["double"] = {
+				["Lower"] = "9967ed49971e9171",
+				["Mid"] = "137a91d1630328fe",
+				["Upper"] = "f63ff46ad4cf0ac4",
+			},
+		},
+
 	}
 	local division = GetDivision()
 	if division == nil then
@@ -29526,7 +29548,14 @@ IsPlayingMarathon = function()
 	-- Uppercase the fist letter
 	division = division:gsub("^%l", string.upper)
 
-	return hashes[division] == SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].Streams.Hash
+	local game = GAMESTATE:GetCurrentGame():GetName()
+	local style = GAMESTATE:GetCurrentStyle():GetName()
+
+	if hashes[game] == nil or hashes[game][style] == nil or hashes[game][style][division] == nil then
+		return false
+	end
+
+	return hashes[game][style][division] == SL[ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())].Streams.Hash
 end
 
 PlayerCanUseRateModForMarathon = function()
