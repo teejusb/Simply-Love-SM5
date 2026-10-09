@@ -2405,8 +2405,6 @@ ECS.Relics = {
 					SM("Set to Life 4")
 				end
 			end
-
-			-- TODO(teejusb): Implement set intervals
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return 0

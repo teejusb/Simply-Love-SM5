@@ -326,6 +326,15 @@ local WrenchIsActive = function()
 	return false
 end
 
+local IVBagIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "IV Bag" then
+			return true
+		end
+	end
+	return false
+end
+
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
 		if not event.PlayerNumber or not event.button then return false end
@@ -461,6 +470,32 @@ if WrenchIsActive() then
 				self:play()
 			end,
 		}
+	}
+end
+
+if IVBagIsActive() then
+	local songLength = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
+	local interval = 20
+
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			self:queuecommand("Loop")
+		end,
+		LoopCommand=function(self)
+			local cur_second = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
+			local percentage = cur_second / songLength * 100
+			
+			if percentage >= interval and interval < 100 then
+				interval = interval + 20
+				local player = GetPlayerAF(ToEnumShortString(player))
+				player:SetLife(1.0)
+				SM("Set Life to 100%")
+			end
+
+			if interval < 100 then
+				self:sleep(1):queuecommand("Loop")
+			end
+		end,
 	}
 end
 
