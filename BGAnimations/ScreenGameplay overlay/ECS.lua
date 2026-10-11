@@ -654,22 +654,37 @@ end
 
 if FutonIsActive() then
 	local is_paused = false
-	local pause_elapsed_seconds = 0
+	local is_unpausing = false
+	local pause_started_at = 0
 	local pause_timeout_seconds = 5 * 60
+	local unpause_started_at = 0
+	local unpause_countdown_seconds = 3
+	local BeginFutonUnpause = function()
+		if is_paused and not is_unpausing then
+			is_unpausing = true
+			unpause_started_at = GetTimeSinceStart()
+			MESSAGEMAN:Broadcast("FutonUnpausing")
+		end
+	end
+	local ResumeFuton = function()
+		is_paused = false
+		is_unpausing = false
+		SCREENMAN:GetTopScreen():PauseGame(false)
+		MESSAGEMAN:Broadcast("FutonUnpaused")
+	end
+
 	local FutonInputHandler = function(event)
 		if not event.PlayerNumber or not event.button or event.PlayerNumber ~= player then return false end
 		if event.type ~= "InputEventType_FirstPress" or event.GameButton ~= "Start" then return false end
 
 		if is_paused then
-			is_paused = false
-			SCREENMAN:GetTopScreen():PauseGame(false)
-			MESSAGEMAN:Broadcast("FutonUnpaused")
+			BeginFutonUnpause()
 		else
 			local music_rate = SL.Global.ActiveModifiers.MusicRate
 			local elapsed_seconds = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / music_rate
 			if elapsed_seconds >= 5 then
 				is_paused = true
-				pause_elapsed_seconds = 0
+				pause_started_at = GetTimeSinceStart()
 				SCREENMAN:GetTopScreen():PauseGame(true)
 				MESSAGEMAN:Broadcast("FutonPaused")
 			end
@@ -684,13 +699,21 @@ if FutonIsActive() then
 		end,
 		CheckPauseTimeoutCommand=function(self)
 			if is_paused then
-				pause_elapsed_seconds = pause_elapsed_seconds + 1
-				local remaining_seconds = math.max(0, pause_timeout_seconds - pause_elapsed_seconds)
-				self:GetChild("FutonPauseOverlay"):GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
-				if pause_elapsed_seconds >= pause_timeout_seconds then
-					is_paused = false
-					SCREENMAN:GetTopScreen():PauseGame(false)
-					MESSAGEMAN:Broadcast("FutonUnpaused")
+				local pause_overlay = self:GetChild("FutonPauseOverlay")
+				if is_unpausing then
+					local elapsed_seconds = GetTimeSinceStart() - unpause_started_at
+					local remaining_seconds = math.max(0, math.ceil(unpause_countdown_seconds - elapsed_seconds))
+					pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
+					if elapsed_seconds >= unpause_countdown_seconds then
+						ResumeFuton()
+					end
+				else
+					local elapsed_seconds = GetTimeSinceStart() - pause_started_at
+					local remaining_seconds = math.max(0, math.ceil(pause_timeout_seconds - elapsed_seconds))
+					pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
+					if elapsed_seconds >= pause_timeout_seconds then
+							BeginFutonUnpause()
+					end
 				end
 			end
 			self:sleep(1):queuecommand("CheckPauseTimeout")
@@ -699,7 +722,15 @@ if FutonIsActive() then
 		Def.ActorFrame{
 			Name="FutonPauseOverlay",
 			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-70):visible(false) end,
-			FutonPausedMessageCommand=function(self) self:visible(true) end,
+			FutonPausedMessageCommand=function(self)
+				self:visible(true)
+				self:GetChild("FutonPauseLabel"):settext("Auto-unpausing in:")
+				self:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(pause_timeout_seconds))
+			end,
+			FutonUnpausingMessageCommand=function(self)
+				self:GetChild("FutonPauseLabel"):settext("Unpausing in:")
+				self:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(unpause_countdown_seconds))
+			end,
 			FutonUnpausedMessageCommand=function(self) self:visible(false) end,
 			Def.Quad{
 				InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0.4) end,
@@ -711,6 +742,7 @@ if FutonIsActive() then
 				InitCommand=function(self) self:diffuse(Color.Black):zoomto(200, 200) end,
 			},
 			LoadFont("Common Normal")..{
+				Name="FutonPauseLabel",
 				InitCommand=function(self)
 					self:y(-52):settext("Auto-unpausing in:")
 				end,
