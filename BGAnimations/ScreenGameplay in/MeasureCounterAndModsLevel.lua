@@ -16,9 +16,8 @@ return function(SongNumberInCourse)
 			end
 		end
 
-		has_les_paul = true
-
 		if has_les_paul then
+			ECS.Player.LesPaulPoints = 0
 			local mods = SL[pn].ActiveModifiers
 			local player_options = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Song")
 			local original = ECS.Player.LesPaulOriginalSettings[pn] or {}
