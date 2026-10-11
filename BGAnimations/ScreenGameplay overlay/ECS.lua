@@ -330,6 +330,16 @@ local EricsIronSlabIsActive = function()
 	return false
 end
 
+local FutonIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Futon" then
+			return true
+		end
+	end
+	return false
+end
+
+
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
 		if not event.PlayerNumber or not event.button then return false end
@@ -640,6 +650,67 @@ if EricsIronSlabIsActive() then
 		}
 	end
 	af[#af+1] = iron_slabs
+end
+
+if FutonIsActive() then
+	local is_paused = false
+	local FutonInputHandler = function(event)
+		if not event.PlayerNumber or not event.button or event.PlayerNumber ~= player then return false end
+		if event.type ~= "InputEventType_FirstPress" or event.GameButton ~= "Start" then return false end
+
+		if is_paused then
+			is_paused = false
+			SCREENMAN:GetTopScreen():PauseGame(false)
+			MESSAGEMAN:Broadcast("FutonUnpaused")
+		else
+			local music_rate = SL.Global.ActiveModifiers.MusicRate
+			local elapsed_seconds = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / music_rate
+			if elapsed_seconds >= 5 then
+				is_paused = true
+				SCREENMAN:GetTopScreen():PauseGame(true)
+				MESSAGEMAN:Broadcast("FutonPaused")
+			end
+		end
+		return false
+	end
+
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			SCREENMAN:GetTopScreen():AddInputCallback(FutonInputHandler)
+		end,
+
+		Def.ActorFrame{
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-70):visible(false) end,
+			FutonPausedMessageCommand=function(self) self:visible(true) end,
+			FutonUnpausedMessageCommand=function(self) self:visible(false) end,
+			Def.Quad{
+				InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0.4) end,
+			},
+			Def.Quad{
+				InitCommand=function(self) self:diffuse(Color.White):zoomto(202, 202) end,
+			},
+			Def.Quad{
+				InitCommand=function(self) self:diffuse(Color.Black):zoomto(200, 200) end,
+			},
+			LoadFont("Common Normal")..{
+				InitCommand=function(self)
+					self:y(40):wrapwidthpixels(200):settext("Press &START; to Resume!")
+				end,
+			},
+			LoadActor(THEME:GetPathB("", "_modules/TestInput Pad/default.lua"), {Player=player, ShowMenuButtons=false, ShowPlayerLabel=false})..{
+				InitCommand=function(self) self:zoom(0.8):y(260) end,
+			},
+		},
+
+		LoadFont("Common Normal")..{
+			InitCommand=function(self)
+				local w = SL_WideScale(310, 417)
+				self:horizalign(left):xy(_screen.cx + w/2 + 105, 20):settext("Press &START; to Pause!")
+			end,
+			FutonPausedMessageCommand=function(self) self:visible(false) end,
+			FutonUnpausedMessageCommand=function(self) self:visible(true) end,
+		},
+	}
 end
 
 if GoldDustIsActive() then
