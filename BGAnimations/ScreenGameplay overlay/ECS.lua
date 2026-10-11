@@ -344,6 +344,15 @@ local TwoUpIsActive = function()
 	return false
 end
 
+local CoreDrillIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Core Drill" then
+			return true
+		end
+	end
+	return false
+end
+
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
 		if not event.PlayerNumber or not event.button then return false end
@@ -524,6 +533,61 @@ if TwoUpIsActive() then
 				end
 			end
 		end,
+	}
+end
+
+if CoreDrillIsActive() then
+	local panelsPerGame = {
+		["dance"] = {
+			"Left", "Down", "Up", "Right"
+		},
+		["pump"] = {
+			"DownLeft", "Upleft", "Center", "UpRight", "DownRight",
+		}
+	}
+
+	local game = GAMESTATE:GetCurrentGame():GetName()
+	local panels = panelsPerGame[game]
+	local panel1 = nil
+	local panel2 = nil
+	local panel1name = nil
+	local panel2name = nil
+
+	local CoreDrillInputHandler = function(event)
+		if not event.PlayerNumber == player then return end
+
+		if event.type == "InputEventType_FirstPress" then
+			if (panel1name ~= nil and event.button == panel1name) or (panel2name ~= nil and event.button == panel2name) then
+				ECS.Player.CoreDrillCount = ECS.Player.CoreDrillCount + 1
+			end
+		end
+
+	end
+
+	af[#af+1] = Def.ActorFrame{
+		OnCommand=function(self)
+			ECS.Player.CoreDrillCount = 0
+			panel1 = math.random(1, #panelsPerGame[game])
+			panel2 = math.random(1, #panelsPerGame[game])
+			while panel1 == panel2 then
+				panel2 = math.random(1, #panelsPerGame[game])
+			end
+			panel1name = panelsPerGame[game][panel1]
+			panel2name = panelsPerGame[game][panel2]
+			SCREENMAN:GetTopScreen():AddInputCallback(CoreDrillInputHandler)
+		end,
+		JudgmentMessageCommand=function(self, params)
+			if params.player == player then
+				if params.Notes then
+					for i, col in pairs(params.Notes) do
+						if i == panel1 or i == panel2 then
+							ECS.Player.CoreDrillCount = ECS.Player.CoreDrillCount - 1
+							ECS.Player.CoreDrillCount = math.max(0, ECS.Player.CoreDrillCount)
+						end
+					end
+				end
+			end
+		end
 	}
 end
 

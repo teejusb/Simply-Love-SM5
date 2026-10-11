@@ -21,6 +21,7 @@ InitializeECS = function()
 		MixTapesRandomSong = nil,
 		WrapperActive = false,
 		EternalYouthActive = false,
+		CoreDrillCount = 0
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
@@ -2194,8 +2195,7 @@ ECS.Relics = {
 		img="coredrill.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
-			return 0
+			return ECS.Player.CoreDrillCount
 		end,
 	},
 	{
