@@ -17,7 +17,8 @@ InitializeECS = function()
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
 		MixTapesRandomSong = nil,
-		CoreDrillCount = 0
+		CoreDrillCount = 0,
+		EricsIronSlabCount = 0,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
@@ -2204,8 +2205,7 @@ ECS.Relics = {
 		img="ericsironslab.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
-			return 0
+			return ECS.Player.EricsIronSlabCount * 60
 		end,
 	},
 	{

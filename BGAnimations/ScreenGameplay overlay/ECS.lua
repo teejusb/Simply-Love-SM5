@@ -570,50 +570,76 @@ end
 
 if EricsIronSlabIsActive() then
 	local side = 64
-	local index = 1
+	local step = side / 2
+	local spawn_x = GetNotefieldX(player)
+	local spawn_y = side / 2
+	local bottom_y = SCREEN_HEIGHT - side / 2
+	local placed = {}
+	local current_block = 1
+	local current_x, current_y = spawn_x, spawn_y
+	local slab_actor
+	local directions = {
+		Up={0, -step},
+		Down={0, step},
+		Left={-step, 0},
+		Right={step, 0},
+		DownLeft={-step, step},
+		UpLeft={-step, -step},
+		Center={0, 0},
+		UpRight={step, -step},
+		DownRight={step, step},
+	}
 
 	local EricsIronSlabInputHandler = function(event)
 		if event.PlayerNumber ~= player then return end
+		if event.type ~= "InputEventType_FirstPress" or current_block > 4 then return false end
 
-		if event.type == "InputEventType_FirstPress" then
-			if event.button == "Left" then
-				
+		local direction = directions[event.button]
+		if not direction then return false end
+
+		local block = slab_actor:GetChild("Block"..current_block)
+		local x, y = current_x + direction[1], current_y + direction[2]
+		if direction[2] > 0 and y > bottom_y then y = bottom_y end
+		if x < side / 2 or x > SCREEN_WIDTH - side / 2 or y < side / 2 or y > bottom_y then return false end
+
+		for _, position in ipairs(placed) do
+			if math.abs(x - position.x) < side and math.abs(y - position.y) < side then return false end
+		end
+
+		block:xy(x, y)
+		current_x, current_y = x, y
+		if y == bottom_y then
+			placed[#placed + 1] = {x=x, y=y}
+			ECS.Player.EricsIronSlabCount = #placed
+			current_block = current_block + 1
+			if current_block <= 4 then
+				current_x, current_y = spawn_x, spawn_y
+				slab_actor:GetChild("Block"..current_block):xy(spawn_x, spawn_y):visible(true)
 			end
 		end
+		return false
 	end
 
-	af[#af+1] = Def.ActorFrame{
-
-		Def.Sprite{
-			Texture=THEME:GetPathG("","_ECS/slab.png"),
-			Name="Block1",
-			InitCommand=function(self)
-				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25)
-			end,
-		},
-		Def.Sprite{
-			Texture=THEME:GetPathG("","_ECS/slab.png"),
-			Name="Block2",
-			InitCommand=function(self)
-				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
-			end,
-		},
-		Def.Sprite{
-			Texture=THEME:GetPathG("","_ECS/slab.png"),
-			Name="Block3",
-			InitCommand=function(self)
-				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
-			end,
-		},
-		Def.Sprite{
-			Texture=THEME:GetPathG("","_ECS/slab.png"),
-			Name="Block4",
-			InitCommand=function(self)
-				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
-			end,
-		},
+	local iron_slabs = Def.ActorFrame{
+		Name="IronSlabs",
+		OnCommand=function(self)
+			slab_actor = self
+			ECS.Player.EricsIronSlabCount = 0
+			SCREENMAN:GetTopScreen():AddInputCallback(EricsIronSlabInputHandler)
+		end,
 	}
 
+	for i=1,4 do
+		local block_index = i
+		iron_slabs[#iron_slabs+1] = Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/slab.png"),
+			Name="Block"..block_index,
+			InitCommand=function(self)
+				self:xy(spawn_x, spawn_y):zoom(0.25):visible(block_index == 1)
+			end,
+		}
+	end
+	af[#af+1] = iron_slabs
 end
 
 if GoldDustIsActive() then
