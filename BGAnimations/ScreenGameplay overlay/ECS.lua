@@ -802,9 +802,9 @@ if IsPlayingMarathon() then
 end
 
 local second_to_pause = {
-	["lower"] = 1776.542603,
-	["mid"] = 1772.860596,
-	["upper"] = 1268.354614,
+	["lower"] = 1725.251099,
+	["mid"] = 1847.469482,
+	["upper"] = 2046.740967,
 }
 
 local pause_duration_seconds = 300
