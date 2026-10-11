@@ -136,6 +136,12 @@ local InputHandler = function(event)
 			-- Require the player to press the start button so they don't accidentally leave the screen
 			-- during navigation.
 			if OptionRowWheels[pn]:get_info_at_focus_pos() == Rows[#Rows] and event.button == "Start" then
+				for relic in ivalues(active_relics) do
+					if relic.name == "Contrakt" then
+						SCREENMAN:GetTopScreen():SetNextScreenName("ScreenContrakt")
+						break
+					end
+				end
 				SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 				return false
 			end

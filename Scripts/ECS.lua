@@ -20,6 +20,8 @@ InitializeECS = function()
 		CoreDrillCount = 0,
 		EricsIronSlabCount = 0,
 		DryBonesPlushCorrect = false,
+		ContraktOptions = {},
+		ContraktPlaying = false,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
@@ -2241,8 +2243,23 @@ ECS.Relics = {
 		img="contrakt.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this
-			return 0
+			if not ECS.Player.ContraktPlaying then return 0 end
+
+			local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(GAMESTATE:GetMasterPlayerNumber())
+			local misses = stats:GetTapNoteScores("TapNoteScore_Miss")
+			local greats = stats:GetTapNoteScores("TapNoteScore_W3")
+			local fulfilled = 0
+			for contract in ivalues(ECS.Player.ContraktOptions) do
+				if contract.selected then
+					local complete = contract.kind == "misses" and misses <= contract.value
+						or contract.kind == "greats" and greats <= contract.value
+						or contract.kind == "percent" and score * 100 >= contract.value
+						or contract.kind == "mini" or contract.kind == "perspective"
+						or contract.kind == "turn" or contract.kind == "scroll"
+					if complete then fulfilled = fulfilled + 1 end
+				end
+			end
+			return fulfilled * 50
 		end,
 	},
 	{
@@ -29716,7 +29733,13 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 	if song_data == nil then return 0, nil end
 
 	if failed then
-		return FailedScore(ecs_player, song_data, song_info, score), song_data
+		local relic_bonus = 0
+		for relic in ivalues(relics_used) do
+			if relic.name == "Contrakt" then
+				relic_bonus = relic.score(ecs_player, song_info, song_data, relics_used, 0, score)
+			end
+		end
+		return FailedScore(ecs_player, song_data, song_info, score) + relic_bonus, song_data
 	else
 		local dp = song_data.dp
 		local ep = song_data.ep
@@ -29735,6 +29758,7 @@ end
 AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	local points, song_data = CalculateScoreForSong(ecs_player, song_name, score, relics_used, failed)
 	local pre_bp_points = failed and 0 or CalculateScoreForSong(ecs_player, song_name, score, {}, failed)
+	ECS.Player.ContraktPlaying = false
 	if song_data == nil then return end
 
 	local index = #ECS.Player.SongsPlayed + 1
