@@ -7,39 +7,39 @@ return Def.Actor{
 
 		if ECS.Mode == "ECS" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS14 - Upper/[25] [250] Apocalyptic Dawn FP 250")
+				local default = SONGMAN:FindSong("ECS15 - Upper/[25] [240] Get Delinsed")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS14 - Mid/[18] [180] Fractal Glitch Works (Part 3) Nirvikalpa Samadhi")
+				local default = SONGMAN:FindSong("ECS15 - Mid/[18] [180] Fractal Glitch Works (Part 3) Nirvikalpa Samadhi")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS14 - Lower/[12] [120] Colors of Love")
+				local default = SONGMAN:FindSong("ECS15 - Lower/[12] [120] Colors of Love")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			end
 		elseif ECS.Mode == "Speed" then
-			local default = SONGMAN:FindSong("ECS14 - Speed/[25] [250] The Ninth Circle - Treachery")
+			local default = SONGMAN:FindSong("ECS15 - Speed/[25] [250] The Ninth Circle - Treachery")
 			if default then
 				GAMESTATE:SetPreferredSong(default)
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS14 - Upper Marathon/TrancemaniaXXX - HyperTranced")
+				local default = SONGMAN:FindSong("ECS15 - Upper Marathon/TrancemaniaXXX - HyperTranced")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS14 - Mid Marathon/They Be Groovin'")
+				local default = SONGMAN:FindSong("ECS15 - Mid Marathon/They Be Groovin'")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS14 - Lower Marathon/Pem-D-Monium")
+				local default = SONGMAN:FindSong("ECS15 - Lower Marathon/Pem-D-Monium")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
