@@ -41,17 +41,43 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 
 	-- Handle special "theme" points.
 	local theme_points = 0
-	for i=1, 5 do
-		local relic = ECS.Player.Relics[i]
-		local name = relic and relic.name or "*"
+	local score = tonumber(percent_score) / 100
+	local song_info = GetDivision() == "upper" and ECS.SongInfo.Upper
+		or GetDivision() == "mid" and ECS.SongInfo.Mid or ECS.SongInfo.Lower
+	local song_data = FindEcsSong(song:GetDisplayFullTitle(), song_info)
+	local ecs_player = ECS.Players[profile_name]
+	local ap = math.ceil(score ^ 4 * 1000)
+	local has_twin_lance = false
+
+	for relic in ivalues(ECS.Player.Relics) do
+		local name = relic.name
+
+		-- NOTE: relic.score() usually requires arguments but the ones defined below
+		-- doesn't use any of them so rel.score() is safe.
+		if name == "Core Drill" then
+			theme_points = theme_points + relic.score()
+		end
 		if name == "Extensionless File" then
 			-- Subtract 75 since we only want to consider the theme specific
 			-- bonus and not the +75 base.
-			-- NOTE: Score usually requires arguments but Extensionless File 
-			-- doesn't use any of them so rel.score() is safe.
-			theme_points = relic.score() - 75
+			theme_points = theme_points + relic.score() - 75
+		end
+		if name == "Les Paul" then
+			theme_points = theme_points + relic.score()
+		end
+		if name == "eric's iron slab" then
+			theme_points = theme_points + relic.score()
+		end
+		if name == "Kraken Club" and song_data then
+			local points = relic.score(ecs_player, song_info, song_data, ECS.Player.Relics, ap, score)
+			-- The first hit is the relic's normal bonus; only extra hits count as theme points.
+			theme_points = theme_points + points - (math.floor(song_data.dp * 0.2) + 100)
+		end
+		if name == "Twin Lance" then
+			has_twin_lance = true
 		end
 	end
+	if has_twin_lance then theme_points = theme_points * 2 end
 	data = data .. theme_points .. "\n"
 
 
