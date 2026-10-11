@@ -115,6 +115,14 @@ local af = Def.ActorFrame{
 		if params.Name == "Favorite1" or params.Name == "Favorite2" then
 			addOrRemoveFavorite(params.PlayerNumber)
 		elseif params.Name == "EscapeFromEventMode" then
+			-- Reset relics to default when quitting through ScreenSelectMusic.
+			if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
+				local mpn = GAMESTATE:GetMasterPlayerNumber()
+				local profile_name = PROFILEMAN:GetPlayerName(mpn)
+				-- profile_name will exist if we're already in this mode.
+				ECS.Players[profile_name].relics = DeepCopy(ECS.Players[profile_name].default_relics)
+			end
+
 			SCREENMAN:GetTopScreen():Cancel()
 		end
 	end,
