@@ -8,6 +8,40 @@ return function(SongNumberInCourse)
 		local pn = ToEnumShortString(player)
 		SL[pn].PlayerOptionsString = GAMESTATE:GetPlayerState(player):GetPlayerOptionsString("ModsLevel_Preferred")
 
+		local has_les_paul = false
+		for relic in ivalues(ECS.Player.Relics) do
+			if relic.name == "Les Paul" then
+				has_les_paul = true
+				break
+			end
+		end
+
+		has_les_paul = true
+
+		if has_les_paul then
+			local mods = SL[pn].ActiveModifiers
+			local player_options = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Song")
+			local original = ECS.Player.LesPaulOriginalSettings[pn] or {}
+			original.Mini = original.Mini or mods.Mini
+			original.BackgroundFilter = original.BackgroundFilter or mods.BackgroundFilter
+			original.NoteFieldOffsetX = original.NoteFieldOffsetX or mods.NoteFieldOffsetX
+			original.NoteFieldOffsetY = original.NoteFieldOffsetY or mods.NoteFieldOffsetY
+			original.DataVisualizations = original.DataVisualizations or mods.DataVisualizations
+			original.MeasureLines = original.MeasureLines or mods.MeasureLines
+			original.PlayerMini = original.PlayerMini or player_options:Mini()
+			original.Reverse = original.Reverse or player_options:Reverse()
+			ECS.Player.LesPaulOriginalSettings[pn] = original
+
+			mods.Mini = "0%"
+			mods.BackgroundFilter = "Off"
+			mods.NoteFieldOffsetX = 0
+			mods.NoteFieldOffsetY = 0
+			mods.DataVisualizations = "None"
+			mods.MeasureLines = "Quarter"
+			player_options:Mini(0)
+			player_options:Reverse(1)
+		end
+
 		-- Check if MeasureCounter are turned on.
 		-- We may need to parse the chart
 		local mods = SL[pn].ActiveModifiers

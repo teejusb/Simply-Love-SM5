@@ -22,6 +22,8 @@ InitializeECS = function()
 		DryBonesPlushCorrect = false,
 		ContraktOptions = {},
 		ContraktPlaying = false,
+		LesPaulPoints = 0,
+		LesPaulOriginalSettings = {},
 		KrakenClubHits = nil,
 
 		TotalMarathonPoints=0,
@@ -2128,14 +2130,15 @@ ECS.Relics = {
 		id=119,
 		name="Les Paul",
 		desc="Any aspiring hero of the guitar would love to get their hands on this beautiful instrument.",
-		effect="+3 BP for each note hit during star power without breaking combo",
+		effect="+3 BP for each note hit during star power",
 		is_consumable=false,
 		is_marathon=false,
 		img="lespaul.png",
-		action=function(relics_used) end,
+		action=function(relics_used)
+			ECS.Player.LesPaulPoints = 0
+		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this
-			return 0
+			return ECS.Player.LesPaulPoints
 		end,
 	},
 	{
