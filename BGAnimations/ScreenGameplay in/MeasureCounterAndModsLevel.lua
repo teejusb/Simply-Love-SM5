@@ -6,7 +6,9 @@ return function(SongNumberInCourse)
 		-- in this way, we can override the effects of songs that forced modifiers during gameplay
 		-- the old-school (ie. ITG) way of GAMESTATE:ApplyGameCommand()
 		local pn = ToEnumShortString(player)
-		SL[pn].PlayerOptionsString = GAMESTATE:GetPlayerState(player):GetPlayerOptionsString("ModsLevel_Preferred")
+		SL[pn].PlayerOptionsString = player == GAMESTATE:GetMasterPlayerNumber()
+			and ECS.Player.ContraktOriginalPlayerOptionsString
+			or GAMESTATE:GetPlayerState(player):GetPlayerOptionsString("ModsLevel_Preferred")
 
 		local has_les_paul = false
 		for relic in ivalues(ECS.Player.Relics) do

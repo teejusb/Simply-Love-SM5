@@ -75,17 +75,32 @@ local Refresh = function()
 end
 
 local ApplySelectedMods = function()
-	local options = GAMESTATE:GetPlayerState(GAMESTATE:GetMasterPlayerNumber()):GetPlayerOptions("ModsLevel_Song")
+	local player = GAMESTATE:GetMasterPlayerNumber()
+	local player_state = GAMESTATE:GetPlayerState(player)
+	ECS.Player.ContraktOriginalPlayerOptionsString = player_state:GetPlayerOptionsString("ModsLevel_Preferred")
+	local mods = {
+		Overhead="overhead", Hallway="hallway", Distant="distant", Incoming="incoming", Space="space",
+		Mirror="mirror", Left="left", Right="right", LRMirror="lrmirror", UDMirror="udmirror",
+		Shuffle="shuffle", Blender="supershuffle", Random="hypershuffle",
+		Reverse="reverse", Alternate="alternate", Cross="cross", Centered="centered",
+	}
+	for contract in ivalues(contracts) do
+		if contract.selected then
+			if contract.kind == "perspective" then
+				GAMESTATE:ApplyGameCommand("mod,overhead", player)
+			elseif contract.kind == "turn" then
+				GAMESTATE:ApplyGameCommand("mod,no turn", player)
+			elseif contract.kind == "scroll" then
+				GAMESTATE:ApplyGameCommand("mod,no reverse,no split,no alternate,no cross,no centered", player)
+			end
+		end
+	end
 	for contract in ivalues(contracts) do
 		if contract.selected then
 			if contract.kind == "mini" then
-				options:Mini(contract.value / 100)
-			elseif contract.kind == "perspective" then
-				options[contract.mod](options, true)
-			elseif contract.kind == "turn" then
-				options[contract.mod](options, true)
-			elseif contract.kind == "scroll" then
-				options[contract.mod](options, contract.mod == "Reverse" and 1 or true)
+				GAMESTATE:ApplyGameCommand("mod,"..contract.value.."% mini", player)
+			elseif contract.kind == "perspective" or contract.kind == "turn" or contract.kind == "scroll" then
+				GAMESTATE:ApplyGameCommand("mod,"..mods[contract.mod], player)
 			end
 		end
 	end

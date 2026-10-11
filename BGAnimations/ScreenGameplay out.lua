@@ -2,6 +2,12 @@ return Def.Quad{
 	InitCommand=function(self) self:FullScreen():diffuse(0,0,0,0) end,
 	OnCommand=function(self) self:sleep(0.5):linear(1):diffusealpha(1) end,
 	OffCommand=function(self)
+		if ECS.Player.ContraktOriginalPlayerOptionsString then
+			local player = GAMESTATE:GetMasterPlayerNumber()
+			GAMESTATE:GetPlayerState(player):SetPlayerOptions("ModsLevel_Preferred", ECS.Player.ContraktOriginalPlayerOptionsString)
+			ECS.Player.ContraktOriginalPlayerOptionsString = nil
+		end
+
 		if SL.Global.GameMode == "ITG" then
 			local song = GAMESTATE:GetCurrentSong()
 			local totalWhites = 0
