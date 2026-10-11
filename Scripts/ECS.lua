@@ -19,6 +19,7 @@ InitializeECS = function()
 		MixTapesRandomSong = nil,
 		CoreDrillCount = 0,
 		EricsIronSlabCount = 0,
+		DryBonesPlushCorrect = false,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
@@ -2178,8 +2179,7 @@ ECS.Relics = {
 		img="drybonesplush.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			-- TODO(teejusb): Implement this.
-			return 0
+			return ecs_player.DryBonesPlushCorrect and 125 or 0
 		end,
 	},
 	{

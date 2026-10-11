@@ -339,6 +339,15 @@ local FutonIsActive = function()
 	return false
 end
 
+local DryBonesPlushIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Dry Bones Plush" then
+			return true
+		end
+	end
+	return false
+end
+
 
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
@@ -770,6 +779,165 @@ if FutonIsActive() then
 			end,
 			FutonPausedMessageCommand=function(self) self:visible(false) end,
 			FutonUnpausedMessageCommand=function(self) self:visible(true) end,
+		},
+	}
+end
+
+if DryBonesPlushIsActive() then
+	local quiz_questions = {
+		{rating=11, bpm=122, breakdown="15 15 16 (4) 2 13 15 15"},
+		{rating=12, bpm=145, breakdown="4 (2) 6 (2) 2 1 (2) 3 13 2 (2) 12 3 1 (2) 3 13 10 (3) 6 13 2 (4) 1"},
+		{rating=12, bpm=150, breakdown="7 7 4 (2) 1 8 (4) 7 (5) 3 4 (2) 1 8 (4) 7 (7) 1 4 (2) 1 (9) 8 (4) 7"},
+		{rating=13, bpm=140, breakdown="7 8 (6) 1 79 (19) 47"},
+		{rating=13, bpm=140, breakdown="34 (8) 24 (7) 1 (7) 5 (2) 5 (3) 65 67"},
+		{rating=13, bpm=150, breakdown="3 7 15 15 23 15 8 (16) 15 16"},
+		{rating=14, bpm=165, breakdown="15 15 15 32 (3) 16 (17) 36"},
+		{rating=16, bpm=174, breakdown="15 (7) 2 (8) 16 13 (8) 2 (8) 15 (17) 7 8 (6) 2 (8) 32 (6) 2 (8) 15"},
+		{rating=16, bpm=183, breakdown="119 (11) 58"},
+		{rating=16, bpm=203, breakdown="1 16 (22) 1 32 (22) 1 64"},
+		{rating=17, bpm=190, breakdown="23 8 18 8 7 3 12 (2) 31 (4) 1 1 (9) 8 (4) 40 (13) 14 (4) 13 (3) 6 6 8 1 (2) 2 2 (16) 79"},
+		{rating=18, bpm=205, breakdown="39 16 (8) 55 32"},
+		{rating=18, bpm=210, breakdown="144 (24) 32 (2) 12"},
+		{rating=19, bpm=216, breakdown="37 96"},
+		{rating=19, bpm=215, breakdown="7 7 3 26 24 10 19 7 21 4 (3) 1 (15) 7 31 19 5 1 19 3 15 23 20 (2) 19 2 2 (2) 2 4"},
+		{rating=19, bpm=228, breakdown="40 (8) 8 (2) 40 (7) 1 (7) 1 (8) 32 (4) 28"},
+		{rating=20, bpm=208, breakdown="129 28 (2) 2 (24) 3 7 4 114 119"},
+		{rating=20, bpm=214, breakdown="15 15 7 7 38 (2) 23 6 (2) 7 7 15 31 15 95 23 23 47 32"},
+		{rating=20, bpm=230, breakdown="7 60 (4) 8 (8) 40 (16) 64 (4) 28"},
+		{rating=21, bpm=220, breakdown="7 39 32 (24) 7 15 16 (8) 9 23 8 (8) 39 16 (3) 1 2 15 78 (2) 18 (2) 3 14 (2) 7 14 (2) 6 (2) 6 (2) 7 17 1 18 (2) 14 (2) 14 (2) 48 (10) 49 32"},
+		{rating=21, bpm=230, breakdown="13 (11) 4 (8) 12 (2) 25 (3) 5 (3) 32 (2) 14 (2) 46 (22) 8 (2) 14 (4) 13 5 (3) 20 (24) 14 (4) 32 (32) 32 (16) 16 (8) 21 (3) 64 (20) 30 (2) 8 (10) 13 (11) 4 (8) 12 (2) 25 (3) 5"},
+		{rating=21, bpm=240, breakdown="16 (16) 14 (2) 31 (10) 63 (3) 16 (8) 27 16"},
+		{rating=21, bpm=250, breakdown="32 (16) 36 (17) 1 (2) 32 (16) 36 (17) 1 (2) 6"},
+		{rating=22, bpm=244, breakdown="71 64 (32) 72"},
+		{rating=23, bpm=240, breakdown="15 80 (16) 15 16 (15) 16 (17) 145 23 8 (16) 31 16 (18) 7 7 11 3 (17) 48 (15) 29 (2) 34"},
+		{rating=23, bpm=250, breakdown="62 (2) 78 (2) 44"},
+		{rating=24, bpm=262, breakdown="19 15 11 (5) 15 (5) 16 (6) 9 (5) 7 (11) 7 8 1 5 3 1 1 1 (3) 3 7 (5) 5 (3) 7 (7) 1 13 (3) 13 (4) 2 3 (2) 2 (3) 9 (2) 2 (2) 1 15 1 5 1 1 8 (4) 16 (2) 14"},
+		{rating=24, bpm=261, breakdown="/16/ (14) 1 /49/ (4) /64/ (18) /34/"},
+		{rating=26, bpm=299, breakdown="/16/ (16) /21/ 1 (24) /22/ (28) /35/"},
+		{rating=27, bpm=290, breakdown="64 (17) 32 (17) 32 (2) 32 (17) 32 (17) 72"},
+		{rating=28, bpm=290, breakdown="32 (36) 64 (2) 64 (2) 60 (2) 18 (2) 96 (4) 36"},
+	}
+	local question = nil
+	local options = {}
+	local selected = 1
+	local answered = false
+	local quiz_actor = nil
+
+	local UpdateChoices = function()
+		for i=1,#options do
+			local choice = quiz_actor:GetChild("QuizChoices"):GetChild("Choice"..i)
+			choice:settext((i == selected and "> " or "  ")..options[i])
+			choice:diffuse(answered and i == selected and (ECS.Player.DryBonesPlushCorrect and color("#00ff00") or color("#ff3030")) or color("#ffffff"))
+		end
+	end
+
+	local DryBonesInputHandler = function(event)
+		if not event.PlayerNumber or not event.button or event.PlayerNumber ~= player then return false end
+		if event.type ~= "InputEventType_FirstPress" then return false end
+
+		local button = event.GameButton or event.button
+		if button == "Left" or button == "MenuLeft" then
+			if answered then return false end
+			selected = (selected - 2) % #options + 1
+			UpdateChoices()
+		elseif button == "Right" or button == "MenuRight" then
+			if answered then return false end
+			selected = selected % #options + 1
+			UpdateChoices()
+		elseif button == "Start" and not answered then
+			answered = true
+			ECS.Player.DryBonesPlushCorrect = options[selected] == question.rating
+			UpdateChoices()
+			quiz_actor:GetChild("QuizPrompt"):settext(ECS.Player.DryBonesPlushCorrect and "Correct!" or "Incorrect!")
+			quiz_actor:queuecommand("CountdownThree")
+		end
+		return false
+	end
+
+	af[#af+1] = Def.ActorFrame{
+		Name="DryBonesQuiz",
+		InitCommand=function(self) self:visible(false) end,
+		OnCommand=function(self)
+			quiz_actor = self
+			self:queuecommand("StartQuiz")
+		end,
+		StartQuizCommand=function(self)
+			answered = false
+			ECS.Player.DryBonesPlushCorrect = false
+			question = quiz_questions[math.random(#quiz_questions)]
+			local triple_step = math.random(0, 1) == 0 and -1 or 1
+			local single_step = -triple_step
+			options = {
+				question.rating,
+				question.rating + single_step,
+				question.rating + triple_step * 2,
+				question.rating + triple_step * 3,
+			}
+			for i=#options,2,-1 do
+				local j = math.random(i)
+				options[i], options[j] = options[j], options[i]
+			end
+			selected = 1
+			self:GetChild("QuizDetails"):settext(question.bpm.." BPM\n"..question.breakdown)
+			self:GetChild("QuizCountdown"):settext("")
+			UpdateChoices()
+			self:visible(true)
+			SCREENMAN:GetTopScreen():PauseGame(true)
+			SCREENMAN:GetTopScreen():AddInputCallback(DryBonesInputHandler)
+		end,
+		CountdownThreeCommand=function(self)
+			self:GetChild("QuizCountdown"):settext("Song will start in 3 seconds")
+			self:sleep(1):queuecommand("CountdownTwo")
+		end,
+		CountdownTwoCommand=function(self)
+			self:GetChild("QuizCountdown"):settext("Song will start in 2 seconds")
+			self:sleep(1):queuecommand("CountdownOne")
+		end,
+		CountdownOneCommand=function(self)
+			self:GetChild("QuizCountdown"):settext("Song will start in 1 second")
+			self:sleep(1):queuecommand("ResumeSong")
+		end,
+		ResumeSongCommand=function(self)
+			self:visible(false)
+			SCREENMAN:GetTopScreen():PauseGame(false)
+		end,
+
+		Def.Quad{
+			InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0.85) end,
+		},
+		Def.Quad{
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y):zoomto(600, 390):diffuse(Color.Black) end,
+		},
+		LoadFont("Common Normal")..{
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-165):zoom(1.3):settext("Ratings Quiz") end,
+		},
+		LoadFont("Common Normal")..{
+			Name="QuizDetails",
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-100):wrapwidthpixels(560):settext("") end,
+		},
+		LoadFont("Common Normal")..{
+			Name="QuizPrompt",
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+15):settext("What is the chart rating?") end,
+		},
+		(function()
+			local choices = Def.ActorFrame{Name="QuizChoices"}
+			for i=1,4 do
+				local choice_index = i
+				choices[#choices+1] = LoadFont("Common Normal")..{
+					Name="Choice"..choice_index,
+					InitCommand=function(self) self:xy(SCREEN_CENTER_X-210 + (choice_index-1)*140, SCREEN_CENTER_Y+70):zoom(1.2) end,
+				}
+			end
+			return choices
+		end)(),
+		LoadFont("Common Normal")..{
+			InitCommand=function(self)
+				self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+140):zoom(0.8):settext("&LEFT; / &RIGHT; to choose, &START; to answer")
+			end,
+		},
+		LoadFont("Common Normal")..{
+			Name="QuizCountdown",
+			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+175):zoom(0.8):settext("") end,
 		},
 	}
 end
