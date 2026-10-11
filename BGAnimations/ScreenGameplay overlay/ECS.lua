@@ -654,6 +654,8 @@ end
 
 if FutonIsActive() then
 	local is_paused = false
+	local pause_elapsed_seconds = 0
+	local pause_timeout_seconds = 5 * 60
 	local FutonInputHandler = function(event)
 		if not event.PlayerNumber or not event.button or event.PlayerNumber ~= player then return false end
 		if event.type ~= "InputEventType_FirstPress" or event.GameButton ~= "Start" then return false end
@@ -667,6 +669,7 @@ if FutonIsActive() then
 			local elapsed_seconds = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / music_rate
 			if elapsed_seconds >= 5 then
 				is_paused = true
+				pause_elapsed_seconds = 0
 				SCREENMAN:GetTopScreen():PauseGame(true)
 				MESSAGEMAN:Broadcast("FutonPaused")
 			end
@@ -677,9 +680,24 @@ if FutonIsActive() then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(FutonInputHandler)
+			self:queuecommand("CheckPauseTimeout")
+		end,
+		CheckPauseTimeoutCommand=function(self)
+			if is_paused then
+				pause_elapsed_seconds = pause_elapsed_seconds + 1
+				local remaining_seconds = math.max(0, pause_timeout_seconds - pause_elapsed_seconds)
+				self:GetChild("FutonPauseOverlay"):GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
+				if pause_elapsed_seconds >= pause_timeout_seconds then
+					is_paused = false
+					SCREENMAN:GetTopScreen():PauseGame(false)
+					MESSAGEMAN:Broadcast("FutonUnpaused")
+				end
+			end
+			self:sleep(1):queuecommand("CheckPauseTimeout")
 		end,
 
 		Def.ActorFrame{
+			Name="FutonPauseOverlay",
 			InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-70):visible(false) end,
 			FutonPausedMessageCommand=function(self) self:visible(true) end,
 			FutonUnpausedMessageCommand=function(self) self:visible(false) end,
@@ -691,6 +709,17 @@ if FutonIsActive() then
 			},
 			Def.Quad{
 				InitCommand=function(self) self:diffuse(Color.Black):zoomto(200, 200) end,
+			},
+			LoadFont("Common Normal")..{
+				InitCommand=function(self)
+					self:y(-52):settext("Auto-unpausing in:")
+				end,
+			},
+			LoadFont("Common Normal")..{
+				Name="FutonPauseTimer",
+				InitCommand=function(self)
+					self:y(-27):settext(SecondsToMMSS(pause_timeout_seconds))
+				end,
 			},
 			LoadFont("Common Normal")..{
 				InitCommand=function(self)
