@@ -16,11 +16,7 @@ InitializeECS = function()
 		-- sorted in descending order of points.
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
-		ConsecutivePasses = 0,
-		StethoscopeActive = false,
 		MixTapesRandomSong = nil,
-		WrapperActive = false,
-		EternalYouthActive = false,
 		CoreDrillCount = 0
 
 		TotalMarathonPoints=0,
@@ -29750,21 +29746,6 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 				index = i
 			end
 		end
-	end
-
-	if failed then
-		ECS.Player.ConsecutivePasses = 0
-		ECS.Player.StethoscopeActive = false
-	else
-		ECS.Player.ConsecutivePasses = ECS.Player.ConsecutivePasses + 1
-	end
-
-	if ECS.Player.StethoscopeActive then
-		ECS.BreakTimer = ECS.BreakTimer + 10 + 5 * ECS.Player.ConsecutivePasses
-	end
-
-	if ECS.Player.EternalYouthActive then
-		ECS.BreakTimer = ECS.BreakTimer + 5 + (2 * #ECS.Player.SongsPlayed)
 	end
 
 	-- We can always reset this since Mix Tapes usage doesn't get to ScreenEvaluation.

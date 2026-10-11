@@ -162,22 +162,6 @@ end
 
 -- ----------------------------------------------------------
 
-local RestoreChargesForNonWrapperRelics = function()
-	for relic in ivalues(ECS.Players[profile_name].relics) do
-		for active_relic in ivalues(ECS.Player.Relics) do
-			local name = active_relic.name
-			if name:match("^Dragonball") then
-				name = "Dragonball"
-			end
-			if name == relic.name and relic.name ~= "Wrapper" and active_relic.is_consumable then
-				relic.quantity = relic.quantity + 1
-			end
-		end
-	end
-end
-
--- ----------------------------------------------------------
-
 local ApplyRelicActions = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
 		if active_relic.name == "Xynn's Mix Tape" and GetQuantityForRelic(active_relic.name) > 0 then
@@ -211,16 +195,6 @@ end
 -- actually hook into the screen so that we can do thing at screen's OnCommand and OffCommand
 local af = Def.ActorFrame{}
 af[#af+1] = Def.Actor{
-	HealthStateChangedMessageCommand=function(self, params)
-		if params.PlayerNumber == player and params.HealthState == "HealthState_Dead" and ECS.Player.WrapperActive then
-			if ECS.Player.MixTapesRandomSong == nil then
-				-- Consume the wrapper.
-				ECS.Player.WrapperActive = false
-				RestoreChargesForNonWrapperRelics()
-				SCREENMAN:GetTopScreen():SetPrevScreenName("ScreenGameplay"):SetNextScreenName("ScreenGameplay"):begin_backing_out()
-			end
-		end
-	end,
 	OnCommand=function(self)
 		-- Speed mode doesn't have relics, but the functions are still safe to call.
 		if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
@@ -247,16 +221,10 @@ af[#af+1] = Def.Actor{
 
 			-- The cases where we don't want to write a score file are:
 			-- 1. The player is about to play a random song from a mixtape OR
-			-- 2. The player has Wrappers active and has failed (they will restart).
-			if not (ECS.Player.MixTapesRandomSong ~= nil or (ECS.Player.WrapperActive and failed)) then
+			if not (ECS.Player.MixTapesRandomSong ~= nil) then
 				CreateScoreFile(day, month_string, year, seconds, hour, minute, second)
 				CreateRelicFile(day, month_string, year, seconds)
 				WriteRelicDataToDisk()
-			end
-
-			-- We can always reset the Wrapper status (when we're not about to random a song).
-			if ECS.Player.MixTapesRandomSong == nil and ECS.Player.WrapperActive then
-				ECS.Player.WrapperActive = false
 			end
 		end
 	end
