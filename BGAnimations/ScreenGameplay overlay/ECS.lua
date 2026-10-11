@@ -590,7 +590,7 @@ if CoreDrillIsActive() then
 			ECS.Player.CoreDrillCount = 0
 			panel1 = math.random(1, #panels)
 			panel2 = math.random(1, #panels)
-			while panel1 == panel2 then
+			while panel1 == panel2 do
 				panel2 = math.random(1, #panels)
 			end
 			panel1name = panelsPerGame[game][panel1]
