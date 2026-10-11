@@ -535,20 +535,21 @@ if CoreDrillIsActive() then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			ECS.Player.CoreDrillCount = 0
-			panel1 = math.random(1, #panelsPerGame[game])
-			panel2 = math.random(1, #panelsPerGame[game])
+			panel1 = math.random(1, #panels)
+			panel2 = math.random(1, #panels)
 			while panel1 == panel2 then
-				panel2 = math.random(1, #panelsPerGame[game])
+				panel2 = math.random(1, #panels)
 			end
 			panel1name = panelsPerGame[game][panel1]
 			panel2name = panelsPerGame[game][panel2]
+			SM("Core Drill Panels are: "..panel1name.." and "..panel2name)
 			SCREENMAN:GetTopScreen():AddInputCallback(CoreDrillInputHandler)
 		end,
 		JudgmentMessageCommand=function(self, params)
 			if params.player == player then
 				if params.Notes then
 					for i, col in pairs(params.Notes) do
-						if i == panel1 or i == panel2 then
+						if (i == panel1 or i == panel2 or i == panel1 + #panels or i == panel2 + #panels) then
 							ECS.Player.CoreDrillCount = ECS.Player.CoreDrillCount - 1
 							ECS.Player.CoreDrillCount = math.max(0, ECS.Player.CoreDrillCount)
 						end
