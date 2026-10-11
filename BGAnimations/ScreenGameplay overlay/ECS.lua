@@ -321,6 +321,15 @@ local CoreDrillIsActive = function()
 	return false
 end
 
+local EricsIronSlabIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "eric's iron slab" then
+			return true
+		end
+	end
+	return false
+end
+
 if ExtensionlessFileIsActive() then
 	local ExtensionlessCallback = function(event)
 		if not event.PlayerNumber or not event.button then return false end
@@ -522,14 +531,13 @@ if CoreDrillIsActive() then
 	local panel2name = nil
 
 	local CoreDrillInputHandler = function(event)
-		if not event.PlayerNumber == player then return end
+		if event.PlayerNumber ~= player then return end
 
 		if event.type == "InputEventType_FirstPress" then
 			if (panel1name ~= nil and event.button == panel1name) or (panel2name ~= nil and event.button == panel2name) then
 				ECS.Player.CoreDrillCount = ECS.Player.CoreDrillCount + 1
 			end
 		end
-
 	end
 
 	af[#af+1] = Def.ActorFrame{
@@ -558,6 +566,54 @@ if CoreDrillIsActive() then
 			end
 		end
 	}
+end
+
+if EricsIronSlabIsActive() then
+	local side = 64
+	local index = 1
+
+	local EricsIronSlabInputHandler = function(event)
+		if event.PlayerNumber ~= player then return end
+
+		if event.type == "InputEventType_FirstPress" then
+			if event.button == "Left" then
+				
+			end
+		end
+	end
+
+	af[#af+1] = Def.ActorFrame{
+
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/slab.png"),
+			Name="Block1",
+			InitCommand=function(self)
+				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25)
+			end,
+		},
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/slab.png"),
+			Name="Block2",
+			InitCommand=function(self)
+				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
+			end,
+		},
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/slab.png"),
+			Name="Block3",
+			InitCommand=function(self)
+				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
+			end,
+		},
+		Def.Sprite{
+			Texture=THEME:GetPathG("","_ECS/slab.png"),
+			Name="Block4",
+			InitCommand=function(self)
+				self:x(GetNotefieldX(player)):y(side/2):zoom(0.25):visible(false)
+			end,
+		},
+	}
+
 end
 
 if GoldDustIsActive() then
