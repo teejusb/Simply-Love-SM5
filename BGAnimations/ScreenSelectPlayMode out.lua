@@ -29,17 +29,17 @@ return Def.Actor{
 			end
 		elseif ECS.Mode == "Marathon" then
 			if GetDivision() == "upper" then
-				local default = SONGMAN:FindSong("ECS15 - Upper Marathon/TrancemaniaXXX - HyperTranced")
+				local default = SONGMAN:FindSong("ECS15 - Upper Marathon/La Basse Saison")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			elseif GetDivision() == "mid" then
-				local default = SONGMAN:FindSong("ECS15 - Mid Marathon/They Be Groovin'")
+				local default = SONGMAN:FindSong("ECS15 - Mid Marathon/Les Jeux Sont Faits")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
 			else
-				local default = SONGMAN:FindSong("ECS15 - Lower Marathon/Pem-D-Monium")
+				local default = SONGMAN:FindSong("ECS15 - Lower Marathon/La Machine De Danse")
 				if default then
 					GAMESTATE:SetPreferredSong(default)
 				end
