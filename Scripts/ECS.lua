@@ -23,7 +23,7 @@ InitializeECS = function()
 		ContraktPlaying = false,
 		LesPaulPoints = 0,
 		LesPaulOriginalSettings = {},
-		KrakenClubHits = nil,
+		KrakenClubHits = 1,
 
 		TotalMarathonPoints=0,
 		MarathonRateMod=1,
