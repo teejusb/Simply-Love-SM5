@@ -29668,7 +29668,7 @@ FindEcsSong = function(song_name, SongInfo)
 	return nil
 end
 
-CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed)
+CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, failed, include_bp)
 	if ecs_player == nil then SM("NO ECS PLAYER") return 0,nil end
 	if song_name == nil then SM("NO SONG NAME") return 0,nil end
 	if score == nil then SM("NO SCORE") return 0,nil end
@@ -29746,7 +29746,7 @@ CalculateScoreForSong = function(ecs_player, song_name, score, relics_used, fail
 		local rp = song_data.rp
 		local ap = AP(score)
 		local bp = 0
-		if ECS.Mode ~= "Speed" then
+		if ECS.Mode ~= "Speed" and include_bp ~= false then
 			bp = BP(ecs_player, song_info, song_data, relics_used, ap, score)
 		end
 		return (dp + ep + rp + ap + bp), song_data
@@ -29757,7 +29757,7 @@ end
 
 AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	local points, song_data = CalculateScoreForSong(ecs_player, song_name, score, relics_used, failed)
-	local pre_bp_points = failed and 0 or CalculateScoreForSong(ecs_player, song_name, score, {}, failed)
+	local pre_bp_points = failed and 0 or CalculateScoreForSong(ecs_player, song_name, score, {}, failed, false)
 	ECS.Player.ContraktPlaying = false
 	if song_data == nil then return end
 
