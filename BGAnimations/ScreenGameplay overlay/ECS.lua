@@ -622,6 +622,7 @@ if EricsIronSlabIsActive() then
 	local placed = {}
 	local current_block = 1
 	local current_x, current_y = spawn_x, spawn_y
+	local has_hit_arrow = false
 	local slab_actor
 	local directions = {
 		Up={0, -step},
@@ -638,6 +639,7 @@ if EricsIronSlabIsActive() then
 	local EricsIronSlabInputHandler = function(event)
 		if event.PlayerNumber ~= player then return end
 		if event.type ~= "InputEventType_FirstPress" or current_block > 4 then return false end
+		if not has_hit_arrow then return false end
 
 		local direction = directions[event.button]
 		if not direction then return false end
@@ -671,6 +673,13 @@ if EricsIronSlabIsActive() then
 			slab_actor = self
 			ECS.Player.EricsIronSlabCount = 0
 			SCREENMAN:GetTopScreen():AddInputCallback(EricsIronSlabInputHandler)
+		end,
+		JudgmentMessageCommand=function(self, params)
+			if params.Player ~= player or not params.TapNoteScore then return end
+			local score = ToEnumShortString(params.TapNoteScore)
+			if score ~= "HitMine" and score ~= "AvoidMine" then
+				has_hit_arrow = true
+			end
 		end,
 	}
 
