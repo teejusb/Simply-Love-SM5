@@ -165,6 +165,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local total_score = 0
 				local total_over_95 = 0
 				local marathons_played = 0
+				local passed_doubling_potion_songs = 0
 
 				for song_played in ivalues(ECS.Player.SongsPlayed) do
 					if not song_played.failed then
@@ -178,6 +179,12 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						total_score = total_score + song_played.score
 						if song_played.score >= 0.95 then
 							total_over_95 = total_over_95 + 1
+						end
+
+						for relic in ivalues(song_played.relics_used) do
+							if relic.name == "Doubling Potion" then
+								passed_doubling_potion_songs = passed_doubling_potion_songs + 1
+							end
 						end
 
 						for song_name, data in pairs(squirrel_effigy_songs) do
@@ -207,7 +214,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if accuracy_potion > 0 then total_points = total_points + (math.max(math.floor(1000^(total_score / songs_passed)-50), 0)) * accuracy_potion end
 				if stamina_potion > 0 then total_points = total_points + (math.floor(total_steps / 45)) * stamina_potion end
 				if agility_potion > 0 then total_points = total_points + (math.floor((math.floor(total_bpm / songs_passed) - 120)^1.3)) * agility_potion end
-				if doubling_potion > 0 then total_points = total_points + (math.floor(40 * math.pow(2, doubling_potion - 1))) * doubling_potion end
+				if doubling_potion > 0 then total_points = total_points + (math.floor(40 * math.pow(2, passed_doubling_potion_songs - 1))) * doubling_potion end
 				
 				for song_name, data in pairs(squirrel_effigy_songs) do
 					local pre_bp_point_total = 0
