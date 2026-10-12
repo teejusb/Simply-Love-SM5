@@ -12,8 +12,7 @@ InitializeECS = function()
 	ECS.Player = {
 		ProfileName=nil,
 		Relics={},
-		-- Use AddPlayedSongs to append to this table which will keep this table
-		-- sorted in descending order of points.
+		-- AddPlayedSong appends every result and keeps this table sorted by points.
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
 		MixTapesRandomSong = nil,
@@ -29757,14 +29756,11 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	ECS.Player.ContraktPlaying = false
 	if song_data == nil then return end
 
-	local index = #ECS.Player.SongsPlayed + 1
 	local pass_count = 0
 	for i=1,#ECS.Player.SongsPlayed do
 		if ECS.Player.SongsPlayed[i].name == song_name then
-			pass_count = math.max(pass_count, ECS.Player.SongsPlayed[i].pass_count or (ECS.Player.SongsPlayed[i].failed and 0 or 1))
-			if points > ECS.Player.SongsPlayed[i].points then
-				index = i
-			end
+			local previous = ECS.Player.SongsPlayed[i]
+			pass_count = math.max(pass_count, previous.pass_count or (previous.failed and 0 or 1))
 		end
 	end
 
@@ -29772,7 +29768,7 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	ECS.MixTapesUsed = false
 
 	local rate = tonumber(string.format("%.0f", SL.Global.ActiveModifiers.MusicRate * 100))
-	ECS.Player.SongsPlayed[index] = {
+	ECS.Player.SongsPlayed[#ECS.Player.SongsPlayed + 1] = {
 		name=song_data.name,
 		stepartist=song_data.stepartist,
 		pack=song_data.pack,
@@ -29794,4 +29790,55 @@ AddPlayedSong = function(ecs_player, song_name, score, relics_used, failed)
 	end
 
 	table.sort(ECS.Player.SongsPlayed, SortByPointsDesc)
+end
+
+GetTopSevenSongsPlayed = function()
+	local best_by_song = {}
+	for song_played in ivalues(ECS.Player.SongsPlayed) do
+		local best = best_by_song[song_played.name]
+		if best == nil or song_played.points > best.points then
+			best_by_song[song_played.name] = song_played
+		end
+	end
+
+	local top_songs = {}
+	for _, song_played in pairs(best_by_song) do
+		top_songs[#top_songs + 1] = song_played
+	end
+	table.sort(top_songs, function(a, b) return a.points > b.points end)
+	while #top_songs > 7 do
+		top_songs[#top_songs] = nil
+	end
+	return top_songs
+end
+
+HasRelicUsedOnPassedSong = function(relic_name)
+	for song_played in ivalues(ECS.Player.SongsPlayed) do
+		if not song_played.failed then
+			for relic in ivalues(song_played.relics_used) do
+				if relic.name == relic_name then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+HasRelicUsedOnTopSevenSong = function(relic_name)
+	local top_seven_names = {}
+	for _, song_played in ipairs(GetTopSevenSongsPlayed()) do
+		top_seven_names[song_played.name] = true
+	end
+
+	for song_played in ivalues(ECS.Player.SongsPlayed) do
+		if not song_played.failed and top_seven_names[song_played.name] then
+			for relic in ivalues(song_played.relics_used) do
+				if relic.name == relic_name then
+					return true
+				end
+			end
+		end
+	end
+	return false
 end

@@ -131,10 +131,8 @@ t[#t+1] = Def.ActorFrame{
 		InitCommand=function(self) self:shadowlength(1):zoom(2):horizalign(left) end,
 		OnCommand=function(self)
 			local total_points = 0
-			for i=1,7 do
-				if ECS.Player.SongsPlayed[i] ~= nil then
-					total_points = total_points + ECS.Player.SongsPlayed[i].points
-				end
+			for _, song_played in ipairs(GetTopSevenSongsPlayed()) do
+				total_points = total_points + song_played.points
 			end
 			self:settext("Total Set Points: " .. tostring(total_points))
 		end
@@ -154,17 +152,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(-8):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Slime Badge" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Slime Badge")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -175,17 +163,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(22):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Agility Potion" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Agility Potion")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -196,17 +174,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(52):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Stamina Potion" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Stamina Potion")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -217,17 +185,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(82):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Accuracy Potion" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Accuracy Potion")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -238,15 +196,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(112):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Doubling Potion" then relic_used = true end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnPassedSong("Doubling Potion")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -257,15 +207,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(142):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Squirrel Effigy" then relic_used = true end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Squirrel Effigy")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -276,17 +218,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(172):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Wrench" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Wrench")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -297,15 +229,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(202):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Bape Shirt" then relic_used = true end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Bape Shirt")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -316,17 +240,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(232):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Black Garb" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Black Garb")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -337,17 +251,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(262):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "TPA Standard" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("TPA Standard")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -358,15 +262,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(292):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Order of Vidopnir" then relic_used = true end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Order of Vidopnir")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -377,17 +273,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(322):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Memepeace Beret" then
-							relic_used = true
-						end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Memepeace Beret")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,
@@ -398,15 +284,7 @@ t[#t+1] = Def.ActorFrame{
 			self:zoom(0.28):addx(352):addy(100)
 		end,
 		OnCommand=function(self)
-			local relic_used = false
-			for i=1,7 do
-				local song_played = ECS.Player.SongsPlayed[i]
-				if song_played ~= nil and not song_played.failed then
-					for relic in ivalues(song_played.relics_used) do
-						if relic.name == "Nomad Cloak" then relic_used = true end
-					end
-				end
-			end
+			local relic_used = HasRelicUsedOnTopSevenSong("Nomad Cloak")
 			if relic_used then self:GetParent():GetChild("EndOfSetBg"):visible(true) end
 			self:visible(relic_used)
 		end,

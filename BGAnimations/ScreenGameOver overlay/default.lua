@@ -57,12 +57,59 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 
 				-- Add best 7 scores and also check which end of set relics were active.
 				local total_points = 0
+				local top_7_songs = GetTopSevenSongsPlayed()
+				local top_7_song_names = {}
+				local effigy_twin_lance_multiplier = 1
+				for _, song_played in ipairs(top_7_songs) do
+					top_7_song_names[song_played.name] = true
+				end
+				if HasRelicUsedOnPassedSong("Twin Lance") then
+					effigy_twin_lance_multiplier = 2
+				end
+
+				local passed_counts = {}
+				for song_played in ivalues(ECS.Player.SongsPlayed) do
+					if not song_played.failed then
+						passed_counts[song_played.name] = (passed_counts[song_played.name] or 0) + 1
+					end
+				end
+
+				local effigy_runs = {}
+				for song_played in ivalues(ECS.Player.SongsPlayed) do
+					if not song_played.failed and not song_played.squirrel_effigy_rescored and top_7_song_names[song_played.name] and passed_counts[song_played.name] >= 2 then
+						for relic in ivalues(song_played.relics_used) do
+							if relic.name == "Squirrel Effigy" then
+								local best = effigy_runs[song_played.name]
+								if best == nil or song_played.pre_bp_points > best.pre_bp_points then
+									effigy_runs[song_played.name] = song_played
+								end
+								break
+							end
+						end
+					end
+				end
+				for _, song_played in pairs(effigy_runs) do
+					song_played.points = song_played.points + math.floor(song_played.pre_bp_points / 7.5) * effigy_twin_lance_multiplier
+					song_played.squirrel_effigy_rescored = true
+				end
+				if next(effigy_runs) ~= nil then
+					table.sort(ECS.Player.SongsPlayed, function(a, b) return a.points > b.points end)
+					top_7_songs = GetTopSevenSongsPlayed()
+				end
+				top_7_song_names = {}
+				local twin_lance_multipler = 1
+				for _, song_played in ipairs(top_7_songs) do
+					total_points = total_points + song_played.points
+					top_7_song_names[song_played.name] = true
+				end
+				if HasRelicUsedOnPassedSong("Twin Lance") then
+					twin_lance_multipler = 2
+				end
 
 				local accuracy_potion = 0
 				local stamina_potion = 0
 				local agility_potion = 0
 				local doubling_potion = 0
-				local squirrel_effigy_songs = {}
 				local wrench = 0
 				local bape_shirt = 0
 				local black_garb = 0
@@ -72,88 +119,68 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local slime_badge = 0
 				local nomad_cloak = 0
 
-				local twin_lance_multipler = 1
+				-- Count relic uses on passed plays of the seven selected songs.
+				for song_played in ivalues(ECS.Player.SongsPlayed) do
+					if not song_played.failed and top_7_song_names[song_played.name] then
+						local accuracy_potion_used = false
+						local stamina_potion_used = false
+						local agility_potion_used = false
+						local wrench_used = false
+						local bape_shirt_used = false
+						local black_garb_used = false
+						local tpa_standard_used = false
+						local order_of_vidopnir_used = false
+						local memepeace_beret_used = false
+						local slime_badge_used = false
+						local nomad_cloak_used = false
 
-				for i=1,7 do
-					local song_played = ECS.Player.SongsPlayed[i]
-					if song_played ~= nil then
-						total_points = total_points + song_played.points
-						-- Relics are only active if you passed the song you used them on.
-						if not song_played.failed then
-							local accuracy_potion_used = false
-							local stamina_potion_used = false
-							local agility_potion_used = false
-							local doubling_potion_used = false
-							local wrench_used = false
-							local bape_shirt_used = false
-							local black_garb_used = false
-							local tpa_standard_used = false
-							local order_of_vidopnir_used = false
-							local memepeace_beret_used = false
-							local slime_badge_used = false
-							local nomad_cloak_used = false
-
-							for relic in ivalues(song_played.relics_used) do
-								if relic.name == "Accuracy Potion" then
-									accuracy_potion_used = true
-								end
-								if relic.name == "Stamina Potion" then
-									stamina_potion_used = true
-								end
-								if relic.name == "Agility Potion" then
-									agility_potion_used = true
-								end
-								if relic.name == "Doubling Potion" then
-									doubling_potion_used = true
-								end
-								if relic.name == "Squirrel Effigy" then
-									if squirrel_effigy_songs[song_played.name] == nil then
-										squirrel_effigy_songs[song_played.name] = {pass_count = 0, pre_bp_points = 0}
-									end
-								end
-								if relic.name == "Wrench" then
-									wrench_used = true
-								end
-								if relic.name == "Bape Shirt" then
-									bape_shirt_used = true
-								end
-								if relic.name == "Black Garb" then
-									black_garb_used = true
-								end
-								if relic.name == "TPA Standard" then
-									tpa_standard_used = true
-								end
-								if relic.name == "Order of Vidopnir" then
-									order_of_vidopnir_used = true
-								end
-								if relic.name == "Memepeace Beret" then
-									memepeace_beret_used = true
-								end
-								if relic.name == "Slime Badge" then
-									slime_badge_used = true
-								end
-								if relic.name == "Nomad Cloak" then
-									nomad_cloak_used = true
-								end
-
-								if relic.name == "Twin Lance" then
-									twin_lance_multipler = 2
-								end
+						for relic in ivalues(song_played.relics_used) do
+							if relic.name == "Accuracy Potion" then
+								accuracy_potion_used = true
 							end
-
-							accuracy_potion = accuracy_potion + (accuracy_potion_used and 1 or 0) * twin_lance_multipler
-							stamina_potion = stamina_potion + (stamina_potion_used and 1 or 0) * twin_lance_multipler
-							agility_potion = agility_potion + (agility_potion_used and 1 or 0) * twin_lance_multipler
-							doubling_potion = doubling_potion + (doubling_potion_used and 1 or 0) * twin_lance_multipler
-							wrench = wrench + (wrench_used and 1 or 0) * twin_lance_multipler
-							bape_shirt = bape_shirt + (bape_shirt_used and 1 or 0) * twin_lance_multipler
-							black_garb = black_garb + (black_garb_used and 1 or 0) * twin_lance_multipler
-							tpa_standard = tpa_standard + (tpa_standard_used and 1 or 0) * twin_lance_multipler
-							order_of_vidopnir = order_of_vidopnir + (order_of_vidopnir_used and 1 or 0) * twin_lance_multipler
-							memepeace_beret = memepeace_beret + (memepeace_beret_used and 1 or 0) * twin_lance_multipler
-							slime_badge = slime_badge + (slime_badge_used and 1 or 0) * twin_lance_multipler
-							nomad_cloak = nomad_cloak + (nomad_cloak_used and 1 or 0) * twin_lance_multipler
+							if relic.name == "Stamina Potion" then
+								stamina_potion_used = true
+							end
+							if relic.name == "Agility Potion" then
+								agility_potion_used = true
+							end
+							if relic.name == "Wrench" then
+								wrench_used = true
+							end
+							if relic.name == "Bape Shirt" then
+								bape_shirt_used = true
+							end
+							if relic.name == "Black Garb" then
+								black_garb_used = true
+							end
+							if relic.name == "TPA Standard" then
+								tpa_standard_used = true
+							end
+							if relic.name == "Order of Vidopnir" then
+								order_of_vidopnir_used = true
+							end
+							if relic.name == "Memepeace Beret" then
+								memepeace_beret_used = true
+							end
+							if relic.name == "Slime Badge" then
+								slime_badge_used = true
+							end
+							if relic.name == "Nomad Cloak" then
+								nomad_cloak_used = true
+							end
 						end
+
+						accuracy_potion = accuracy_potion + (accuracy_potion_used and 1 or 0) * twin_lance_multipler
+						stamina_potion = stamina_potion + (stamina_potion_used and 1 or 0) * twin_lance_multipler
+						agility_potion = agility_potion + (agility_potion_used and 1 or 0) * twin_lance_multipler
+						wrench = wrench + (wrench_used and 1 or 0) * twin_lance_multipler
+						bape_shirt = bape_shirt + (bape_shirt_used and 1 or 0) * twin_lance_multipler
+						black_garb = black_garb + (black_garb_used and 1 or 0) * twin_lance_multipler
+						tpa_standard = tpa_standard + (tpa_standard_used and 1 or 0) * twin_lance_multipler
+						order_of_vidopnir = order_of_vidopnir + (order_of_vidopnir_used and 1 or 0) * twin_lance_multipler
+						memepeace_beret = memepeace_beret + (memepeace_beret_used and 1 or 0) * twin_lance_multipler
+						slime_badge = slime_badge + (slime_badge_used and 1 or 0) * twin_lance_multipler
+						nomad_cloak = nomad_cloak + (nomad_cloak_used and 1 or 0) * twin_lance_multipler
 					end
 				end
 
@@ -184,13 +211,7 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 						for relic in ivalues(song_played.relics_used) do
 							if relic.name == "Doubling Potion" then
 								passed_doubling_potion_songs = passed_doubling_potion_songs + 1
-							end
-						end
-
-						for song_name, data in pairs(squirrel_effigy_songs) do
-							if squirrel_effigy_songs[song_name] ~= nil and song_played.name == song_name then
-								data.pass_count = math.max(data.pass_count, song_played.pass_count)
-								data.pre_bp_points = math.max(data.pre_bp_points, song_played.pre_bp_points)
+								doubling_potion = doubling_potion + twin_lance_multipler
 							end
 						end
 
@@ -216,14 +237,6 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				if agility_potion > 0 then total_points = total_points + (math.floor((math.floor(total_bpm / songs_passed) - 120)^1.3)) * agility_potion end
 				if doubling_potion > 0 then total_points = total_points + (math.floor(40 * math.pow(2, passed_doubling_potion_songs - 1))) * doubling_potion end
 				
-				for song_name, data in pairs(squirrel_effigy_songs) do
-					local pre_bp_point_total = 0
-					if data.pass_count >= 2 then
-						pre_bp_point_total = pre_bp_point_total + data.pre_bp_points
-					end
-					total_points = total_points + (math.floor(pre_bp_point_total / 7.5)) * twin_lance_multipler
-				end
-
 				if wrench > 0 then total_points = total_points + (250 * marathons_played) * wrench end
 				
 				if bape_shirt > 0 then total_points = total_points + (songs_passed * 5) * bape_shirt end
@@ -232,11 +245,8 @@ if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 
 				if order_of_vidopnir > 0 then
 					local top_7_ap = 0
-					for i=1,7 do
-						local song_played = ECS.Player.SongsPlayed[i]
-						if song_played then
-							top_7_ap = top_7_ap + math.ceil(song_played.score ^ 4 * 1000)
-						end
+					for _, song_played in ipairs(top_7_songs) do
+						top_7_ap = top_7_ap + math.ceil(song_played.score ^ 4 * 1000)
 					end
 					total_points = total_points + math.floor(top_7_ap / 3) * order_of_vidopnir
 				end
