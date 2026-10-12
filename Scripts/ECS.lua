@@ -2820,11 +2820,8 @@ ECS.Relics = {
 		img="kappaplush.png",
 		action=function(relics_used)
 			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
-				local songOptions = GAMESTATE:GetSongOptionsObject("ModsLevel_Preferred")
-				if songOptions:MusicRate() == 1 and not ForcesOneRate(relics_used) or songOptions:MusicRate() > 1.15 then
-					SL.Global.ActiveModifiers.MusicRate = 1.15
-					GAMESTATE:ApplyGameCommand("mod,1.15xmusic")
-				end
+				SL.Global.ActiveModifiers.MusicRate = 1.15
+				GAMESTATE:ApplyGameCommand("mod,1.15xmusic")
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)

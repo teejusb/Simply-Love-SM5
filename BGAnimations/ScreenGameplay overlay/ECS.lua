@@ -293,6 +293,15 @@ local DaggerOfTimeIsActive = function()
 	return false
 end
 
+local KappaPlushIsActive = function()
+	for active_relic in ivalues(ECS.Player.Relics) do
+		if active_relic.name == "Kappa Plush" then
+			return true
+		end
+	end
+	return false
+end
+
 local ExtensionlessFileIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
 		if active_relic.name == "Extensionless File" then
@@ -1143,11 +1152,8 @@ end
 if IsPlayingMarathon() then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
-			-- Force 1.0x for music rate if dagger not active.
-			-- It's possible for dagger to be available but the player not opting to
-			-- use it, so the music rate selector will be available but we want to
-			-- ensure the players actually play on 1.0x.
-			if not DaggerOfTimeIsActive() then
+			-- Force 1.0x unless a relic explicitly changes Marathon rate.
+			if not DaggerOfTimeIsActive() and not KappaPlushIsActive() then
 				GAMESTATE:ApplyGameCommand("mod,1.0xmusic")
 				SL.Global.ActiveModifiers.MusicRate = 1
 			end
