@@ -554,16 +554,22 @@ if TwoUpIsActive() then
 	af[#af+1] = Def.ActorFrame{
 		LifeChangedMessageCommand=function(self,params)
 			if params.Player == player then
-				local playerAf = GetPlayerAF(ToEnumShortString(player))
-				local lifemeter = SCREENMAN:GetTopScreen():GetLifeMeter(player)
-
-				local cur_life = lifemeter:GetLife()
-				if cur_life <= 0.10 and lives > 0 then
-					playerAf:SetLife(1.0)
-					lives = lives - 1
+				local top_screen = SCREENMAN:GetTopScreen()
+				if top_screen ~= nil then
+					local lifemeter = top_screen:GetLifeMeter(player)
+					local cur_life = lifemeter:GetLife()
+					if cur_life <= 0.10 and lives > 0 then
+						self:queuecommand("SetTwoUpLife")
+					end
 				end
 			end
 		end,
+		SetTwoUpLifeCommand=function(self)
+			local playerAf = GetPlayerAF(ToEnumShortString(player))
+			playerAf:SetLife(1.0)
+			lives = lives - 1
+			SM("Set Life to 100%")
+		end
 	}
 end
 
