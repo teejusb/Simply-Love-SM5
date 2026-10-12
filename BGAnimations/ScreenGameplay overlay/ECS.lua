@@ -698,69 +698,86 @@ end
 
 if FutonIsActive() then
 	local is_paused = false
+	local has_paused_once = false
 	local is_unpausing = false
-	local pause_started_at = 0
+	local pause_timeout_at = 0
 	local pause_timeout_seconds = 5 * 60
-	local unpause_started_at = 0
+	local unpause_at = 0
 	local unpause_countdown_seconds = 3
+	local pause_delay_seconds = 1
+	local style_type = GAMESTATE:GetCurrentStyle():GetStyleType()
+	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
+	local prompt_x = is_double and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170) or SCREEN_CENTER_X
+	local prompt_y = SCREEN_CENTER_Y
+
+	local CanPauseFuton = function()
+		local music_rate = tonumber(SL.Global.ActiveModifiers.MusicRate) or 1
+		local music_seconds = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds()
+		return not has_paused_once and music_seconds > 0 and music_seconds / music_rate >= pause_delay_seconds
+	end
+
 	local BeginFutonUnpause = function()
 		if is_paused and not is_unpausing then
 			is_unpausing = true
-			unpause_started_at = GetTimeSinceStart()
+			unpause_at = GetTimeSinceStart() + unpause_countdown_seconds
 			MESSAGEMAN:Broadcast("FutonUnpausing")
 		end
 	end
+
 	local ResumeFuton = function()
-		is_paused = false
-		is_unpausing = false
-		SCREENMAN:GetTopScreen():PauseGame(false)
+		if not is_paused or not is_unpausing or GetTimeSinceStart() < unpause_at then return end
 		MESSAGEMAN:Broadcast("FutonUnpaused")
 	end
 
+	local UpdateFuton = function(self)
+		local can_pause = not is_paused and CanPauseFuton()
+		self:GetChild("FutonPausePromptBackdrop"):visible(can_pause)
+		self:GetChild("FutonPausePromptText"):visible(can_pause)
+		if not is_paused then return end
+
+		local pause_overlay = self:GetChild("FutonPauseOverlay")
+		local now = GetTimeSinceStart()
+		if is_unpausing then
+			local remaining_seconds = math.max(0, math.ceil(unpause_at - now))
+			pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
+			if now >= unpause_at then ResumeFuton() end
+		else
+			local remaining_seconds = math.max(0, math.ceil(pause_timeout_at - now))
+			pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
+			if now >= pause_timeout_at then BeginFutonUnpause() end
+		end
+	end
+
 	local FutonInputHandler = function(event)
-		if not event.PlayerNumber or not event.button or event.PlayerNumber ~= player then return false end
+		if event.PlayerNumber and event.PlayerNumber ~= player then return false end
 		if event.type ~= "InputEventType_FirstPress" or event.GameButton ~= "Start" then return false end
 
 		if is_paused then
 			BeginFutonUnpause()
-		else
-			local music_rate = SL.Global.ActiveModifiers.MusicRate
-			local elapsed_seconds = GAMESTATE:GetPlayerState(player):GetSongPosition():GetMusicSeconds() / music_rate
-			if elapsed_seconds >= 5 then
-				is_paused = true
-				pause_started_at = GetTimeSinceStart()
-				SCREENMAN:GetTopScreen():PauseGame(true)
-				MESSAGEMAN:Broadcast("FutonPaused")
-			end
+		elseif CanPauseFuton() then
+			is_paused = true
+			has_paused_once = true
+			pause_timeout_at = GetTimeSinceStart() + pause_timeout_seconds
+			SCREENMAN:set_input_redirected(player, true)
+			SCREENMAN:GetTopScreen():PauseGame(true)
+			MESSAGEMAN:Broadcast("FutonPaused")
 		end
-		return false
+		return true
 	end
 
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(FutonInputHandler)
-			self:queuecommand("CheckPauseTimeout")
+			self:SetUpdateFunction(UpdateFuton)
 		end,
-		CheckPauseTimeoutCommand=function(self)
-			if is_paused then
-				local pause_overlay = self:GetChild("FutonPauseOverlay")
-				if is_unpausing then
-					local elapsed_seconds = GetTimeSinceStart() - unpause_started_at
-					local remaining_seconds = math.max(0, math.ceil(unpause_countdown_seconds - elapsed_seconds))
-					pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
-					if elapsed_seconds >= unpause_countdown_seconds then
-						ResumeFuton()
-					end
-				else
-					local elapsed_seconds = GetTimeSinceStart() - pause_started_at
-					local remaining_seconds = math.max(0, math.ceil(pause_timeout_seconds - elapsed_seconds))
-					pause_overlay:GetChild("FutonPauseTimer"):settext(SecondsToMMSS(remaining_seconds))
-					if elapsed_seconds >= pause_timeout_seconds then
-							BeginFutonUnpause()
-					end
-				end
-			end
-			self:sleep(1):queuecommand("CheckPauseTimeout")
+		FutonUnpausedMessageCommand=function(self)
+			if not is_paused or not is_unpausing or GetTimeSinceStart() < unpause_at then return end
+			SCREENMAN:GetTopScreen():PauseGame(false)
+			SCREENMAN:set_input_redirected(player, false)
+			is_paused = false
+			is_unpausing = false
+			pause_timeout_at = 0
+			unpause_at = 0
 		end,
 
 		Def.ActorFrame{
@@ -807,13 +824,17 @@ if FutonIsActive() then
 			},
 		},
 
-		LoadFont("Common Normal")..{
+		Def.Quad{
+			Name="FutonPausePromptBackdrop",
 			InitCommand=function(self)
-				local w = SL_WideScale(310, 417)
-				self:horizalign(left):xy(_screen.cx + w/2 + 105, 20):settext("Press &START; to Pause!")
+				self:xy(prompt_x, prompt_y):zoomto(160, 34):diffuse(Color.Black):diffusealpha(0.85):visible(false)
 			end,
-			FutonPausedMessageCommand=function(self) self:visible(false) end,
-			FutonUnpausedMessageCommand=function(self) self:visible(true) end,
+		},
+		LoadFont("Common Normal")..{
+			Name="FutonPausePromptText",
+			InitCommand=function(self)
+				self:xy(prompt_x, prompt_y):shadowlength(1):settext("&START; to Pause"):visible(false)
+			end,
 		},
 	}
 end
