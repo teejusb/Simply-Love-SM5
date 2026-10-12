@@ -72,7 +72,12 @@ local DeductFromBreakTimer = function()
 	or screen_name == "ScreenPlayerOptions"
 	or screen_name == "ScreenPlayerOptions2"
 	or screen_name == "ScreenEquipRelics"
+	or screen_name == "ScreenContrakt"
 	or screen_name == "ScreenEvaluationStage" then
+		return true
+	end
+
+	if screen_name == "ScreenGameplay" and ECS.Player.DryBonesPlushQuizActive then
 		return true
 	end
 

@@ -19,6 +19,7 @@ InitializeECS = function()
 		CoreDrillCount = 0,
 		EricsIronSlabCount = 0,
 		DryBonesPlushCorrect = false,
+		DryBonesPlushQuizActive = false,
 		ContraktOptions = {},
 		ContraktPlaying = false,
 		LesPaulPoints = 0,

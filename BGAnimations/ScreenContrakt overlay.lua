@@ -63,6 +63,11 @@ local contracts = {}
 local focus = 1
 local screen
 
+local FormatBreakTime = function(seconds)
+	seconds = math.max(0, seconds)
+	return string.format("%02d:%02d", math.floor(seconds / 60), math.floor(seconds % 60))
+end
+
 local Refresh = function()
 	for i, contract in ipairs(contracts) do
 		local actor = screen:GetChild("Contract"..i)
@@ -136,6 +141,9 @@ local t = Def.ActorFrame{
 		self:queuecommand("Setup")
 	end,
 	SetupCommand=function(self)
+		self:SetUpdateFunction(function(actor)
+			actor:GetChild("ContractTimer"):settext("Break time left: "..FormatBreakTime(ECS.BreakTimer))
+		end)
 		local group_indices = {1,2,3,4,5,6,7}
 		for i=#group_indices,2,-1 do
 			local j = math.random(i)
@@ -183,6 +191,10 @@ t[#t+1] = LoadFont("Common Normal")..{
 	InitCommand=function(self)
 		self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+200):zoom(0.75):settext("&LEFT; / &RIGHT; to navigate   &START; to toggle / begin")
 	end,
+}
+t[#t+1] = LoadFont("Common Normal")..{
+	Name="ContractTimer",
+	InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+225):zoom(0.75):settext("Break time left: "..FormatBreakTime(ECS.BreakTimer)) end,
 }
 
 return t
