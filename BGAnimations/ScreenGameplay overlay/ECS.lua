@@ -73,6 +73,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 			-- The first hit is the relic's normal bonus; only extra hits count as theme points.
 			theme_points = theme_points + points - (math.floor(song_data.dp * 0.2) + 100)
 		end
+		if name == "Contrakt" and song_data then
+			theme_points = theme_points + relic.score(ecs_player, song_info, song_data, ECS.Player.Relics, ap, score)
+		end
 		if name == "Twin Lance" then
 			has_twin_lance = true
 		end
