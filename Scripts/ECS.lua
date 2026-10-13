@@ -20,6 +20,7 @@ InitializeECS = function()
 		EricsIronSlabCount = 0,
 		DryBonesPlushCorrect = false,
 		DryBonesPlushQuizActive = false,
+		DryBonesPlushUsedQuestions = {},
 		ContraktOptions = {},
 		ContraktPlaying = false,
 		LesPaulPoints = 0,

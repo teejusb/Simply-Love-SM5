@@ -910,6 +910,27 @@ if DryBonesPlushIsActive() then
 		{rating=27, bpm=290, breakdown="64 (17) 32 (17) 32 (2) 32 (17) 32 (17) 72"},
 		{rating=28, bpm=290, breakdown="32 (36) 64 (2) 64 (2) 60 (2) 18 (2) 96 (4) 36"},
 	}
+	local NextDryBonesQuestion = function()
+		local used_questions = ECS.Player.DryBonesPlushUsedQuestions or {}
+		local available_questions = {}
+		for i=1,#quiz_questions do
+			if not used_questions[i] then
+				available_questions[#available_questions + 1] = i
+			end
+		end
+
+		if #available_questions == 0 then
+			used_questions = {}
+			for i=1,#quiz_questions do
+				available_questions[i] = i
+			end
+		end
+
+		local selected_question = available_questions[math.random(#available_questions)]
+		used_questions[selected_question] = true
+		ECS.Player.DryBonesPlushUsedQuestions = used_questions
+		return quiz_questions[selected_question]
+	end
 	local question = nil
 	local options = {}
 	local selected = 1
@@ -965,7 +986,7 @@ if DryBonesPlushIsActive() then
 			quiz_break_time = math.max(0, ECS.BreakTimer)
 			ECS.Player.DryBonesPlushQuizActive = true
 			ECS.Player.DryBonesPlushCorrect = false
-			question = quiz_questions[math.random(#quiz_questions)]
+			question = NextDryBonesQuestion()
 			local triple_step = math.random(0, 1) == 0 and -1 or 1
 			local single_step = -triple_step
 			options = {
