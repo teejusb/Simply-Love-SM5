@@ -577,6 +577,9 @@ if TwoUpIsActive() then
 end
 
 if CoreDrillIsActive() then
+	local style_type = GAMESTATE:GetCurrentStyle():GetStyleType()
+	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
+	local core_drill_x = is_double and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170) or SCREEN_CENTER_X
 	local panelsPerGame = {
 		["dance"] = {
 			"Left", "Down", "Up", "Right"
@@ -606,6 +609,9 @@ if CoreDrillIsActive() then
 	af[#af+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			ECS.Player.CoreDrillCount = 0
+			self:SetUpdateFunction(function(actor)
+				actor:GetChild("CoreDrillPoints"):settext("Core Drill: "..math.min(ECS.Player.CoreDrillCount, 475).." BP")
+			end)
 			panel1 = math.random(1, #panels)
 			panel2 = math.random(1, #panels)
 			while panel1 == panel2 do
@@ -617,17 +623,27 @@ if CoreDrillIsActive() then
 			SCREENMAN:GetTopScreen():AddInputCallback(CoreDrillInputHandler)
 		end,
 		JudgmentMessageCommand=function(self, params)
-			if params.player == player then
+			if params.Player == player then
 				if params.Notes then
 					for i, col in pairs(params.Notes) do
 						if (i == panel1 or i == panel2 or i == panel1 + #panels or i == panel2 + #panels) then
-							ECS.Player.CoreDrillCount = ECS.Player.CoreDrillCount - 1
-							ECS.Player.CoreDrillCount = math.max(0, ECS.Player.CoreDrillCount)
+							ECS.Player.CoreDrillCount = math.max(0, ECS.Player.CoreDrillCount - 1)
 						end
 					end
 				end
 			end
-		end
+		end,
+		Def.Quad{
+			InitCommand=function(self)
+				self:xy(core_drill_x, 80):zoomto(220, 30):diffuse(Color.Black):diffusealpha(0.7)
+			end,
+		},
+		LoadFont("Common Normal")..{
+			Name="CoreDrillPoints",
+			InitCommand=function(self)
+				self:xy(core_drill_x, 80):zoom(0.8):shadowlength(1):settext("Core Drill: 0 BP")
+			end,
+		},
 	}
 end
 
