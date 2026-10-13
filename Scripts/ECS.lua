@@ -2184,13 +2184,13 @@ ECS.Relics = {
 		id=123,
 		name="Core Drill",
 		desc="Believe in the me that believes in you!",
-		effect="+BP equal to (number of inputs on given set of arrows - total notes in chart for those arrows)",
+		effect="+BP equal to (number of inputs on given set of arrows - total notes in chart for those arrows) (Max 475)",
 		is_consumable=true,
 		is_marathon=false,
 		img="coredrill.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return ECS.Player.CoreDrillCount
+			return math.min(ECS.Player.CoreDrillCount, 475)
 		end,
 	},
 	{
