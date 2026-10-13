@@ -789,28 +789,31 @@ ECS.Relics = {
 		is_marathon=false,
 		img="krakenclub.png",
 		action=function(relics_used)
-			-- Hit distribution
-			local dist = {
-				2.08, 10.66, 22.78, 28.44, 21.36, 10.83, 3.17, 0.67
-			}
+			-- Only calculate the hits once on Screen Gameplay
+			if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+				-- Hit distribution
+				local dist = {
+					2.08, 10.66, 22.78, 28.44, 21.36, 10.83, 3.17, 0.67
+				}
 
-			local total_probability = 0
-			for probability in ivalues(dist) do
-				total_probability = total_probability + probability
-			end
-
-			ECS.Player.KrakenClubHits = 1
-			local rand = math.random() * total_probability
-			local cumulative_probability = 0
-			for i, probability in ipairs(dist) do
-				cumulative_probability = cumulative_probability + probability
-				if rand < cumulative_probability then
-					ECS.Player.KrakenClubHits = i
-					break
+				local total_probability = 0
+				for probability in ivalues(dist) do
+					total_probability = total_probability + probability
 				end
-			end
 
-			SM("Kraken Club hit "..ECS.Player.KrakenClubHits.." time(s)!")
+				ECS.Player.KrakenClubHits = 1
+				local rand = math.random() * total_probability
+				local cumulative_probability = 0
+				for i, probability in ipairs(dist) do
+					cumulative_probability = cumulative_probability + probability
+					if rand < cumulative_probability then
+						ECS.Player.KrakenClubHits = i
+						break
+					end
+				end
+
+				SM("Kraken Club hit "..ECS.Player.KrakenClubHits.." time(s)!")
+			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
 			return ECS.Player.KrakenClubHits * (math.floor(song_data.dp * 0.2) + 100)
