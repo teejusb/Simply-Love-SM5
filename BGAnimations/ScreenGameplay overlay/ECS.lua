@@ -912,6 +912,7 @@ if DryBonesPlushIsActive() then
 	local selected = 1
 	local answered = false
 	local quiz_actor = nil
+	local quiz_break_time = 0
 
 	local UpdateChoices = function()
 		for i=1,#options do
@@ -949,14 +950,16 @@ if DryBonesPlushIsActive() then
 		InitCommand=function(self) self:visible(false) end,
 		OnCommand=function(self)
 			quiz_actor = self
-			self:SetUpdateFunction(function(actor)
+			self:SetUpdateFunction(function(actor, delta)
 				if not ECS.Player.DryBonesPlushQuizActive or answered then return end
-				actor:GetChild("QuizCountdown"):settext("Break time left: "..SecondsToMMSS(math.max(0, ECS.BreakTimer)))
+				quiz_break_time = math.max(0, quiz_break_time - delta)
+				actor:GetChild("QuizCountdown"):settext("Break time left: "..SecondsToMMSS(quiz_break_time))
 			end)
 			self:queuecommand("StartQuiz")
 		end,
 		StartQuizCommand=function(self)
 			answered = false
+			quiz_break_time = math.max(0, ECS.BreakTimer)
 			ECS.Player.DryBonesPlushQuizActive = true
 			ECS.Player.DryBonesPlushCorrect = false
 			question = quiz_questions[math.random(#quiz_questions)]
