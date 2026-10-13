@@ -31486,8 +31486,15 @@ end
 GetDivision = function()
 	local mpn = GAMESTATE:GetMasterPlayerNumber()
 	local profile_name = PROFILEMAN:GetPlayerName(mpn)
-	if profile_name and ECS.Players[profile_name] and ECS.Players[profile_name].division ~= nil then
-		return ECS.Players[profile_name].division
+	local style = GAMESTATE:GetCurrentStyle():GetName()
+	if profile_name and ECS.Players[profile_name] then
+		if style == "single" and ECS.Players[profile_name].division ~= nil then
+			return ECS.Players[profile_name].division
+		end
+
+		if style == "double" and ECS.Players[profile_name].division ~= nil then
+			return ECS.Players[profile_name].double_division
+		end
 	end
 	return nil
 end
