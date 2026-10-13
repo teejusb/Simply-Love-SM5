@@ -5,10 +5,19 @@ PREFIX = "srpg10"
 
 def GetDivision(tplp, id):
 	mid_overrides = [
+		66246,
+		177769,
+		179840,
+		66364,
+		77065,
+		4707,
+		176805,
+		133770,
+		66666
 	]
 	upper_overrides = [
 	]
-	mid_cutoff = 22500
+	mid_cutoff = 25000
 	upper_cutoff = 145000
 
 	if id in mid_overrides:
@@ -22,6 +31,16 @@ def GetDivision(tplp, id):
 			return "mid"
 		else:
 			return "lower"
+
+def GetDoublesDivision(id):
+	mid_overrides = [
+		4707
+	]
+
+	if id in mid_overrides:
+		return "mid"
+
+	return "lower"
 
 def OptedForSpeed(tp):
 	speed_cutoff = 85000
@@ -40,6 +59,7 @@ for player in data:
 	print(r"""ECS.Players["%s"] = {""" % player["members_name"])
 	print(r"""	id=%s,""" % player[f"{PREFIX}_entrants_member_id"])
 	print(r"""	division="%s",""" % (GetDivision(int(player[f"{PREFIX}_entrants_tplp"]), int(player[f"{PREFIX}_entrants_member_id"]))))
+	print(r"""	double_division="%s",""" % (GetDoublesDivision(int(player[f"{PREFIX}_entrants_member_id"]))))
 	print(r"""	opted_for_speed=%s,""" % (OptedForSpeed(int(player[f"{PREFIX}_entrants_tp"])) and "true" or "false"))
 	print(r"""	country="%s",""" % player["COUNTRY"])
 	print(r"""	level=%s,""" % player[f"{PREFIX}_entrants_level"])
