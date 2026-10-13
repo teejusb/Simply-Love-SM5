@@ -2171,7 +2171,7 @@ ECS.Relics = {
 		img="cabby.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return 35 + math.floor((#ecs_player.relics) ^ 1.25)
+			return 35 + math.floor((#ecs_player.default_relics) ^ 1.25)
 		end,
 	},
 	{
