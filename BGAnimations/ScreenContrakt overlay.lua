@@ -103,7 +103,7 @@ local ApplySelectedMods = function()
 	for contract in ivalues(contracts) do
 		if contract.selected then
 			if contract.kind == "mini" then
-				GAMESTATE:ApplyGameCommand("mod,"..contract.value.."% mini", player)
+				player_state:GetPlayerOptions("ModsLevel_Preferred"):Mini(contract.value / 100)
 			elseif contract.kind == "perspective" or contract.kind == "turn" or contract.kind == "scroll" then
 				GAMESTATE:ApplyGameCommand("mod,"..mods[contract.mod], player)
 			end
