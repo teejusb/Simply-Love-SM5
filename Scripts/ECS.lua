@@ -813,6 +813,10 @@ ECS.Relics = {
 				end
 
 				SM("Kraken Club hit "..ECS.Player.KrakenClubHits.." time(s)!")
+			else
+				-- Reset the kraken club hits on other screens. Score is saved in
+				-- ScreenGameplay out so Evaluation should be fine.
+				ECS.Player.KrakenClubHits = 1
 			end
 		end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
