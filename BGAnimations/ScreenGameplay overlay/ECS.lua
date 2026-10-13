@@ -65,6 +65,9 @@ local CreateScoreFile = function(day, month_string, year, seconds, hour, minute,
 		if name == "Les Paul" then
 			theme_points = theme_points + relic.score()
 		end
+		if name == "Dry Bones Plush" then
+			theme_points = theme_points + relic.score(ecs_player, song_info, song_data, ECS.Player.Relics, ap, score)
+		end
 		if name == "eric's iron slab" then
 			theme_points = theme_points + relic.score()
 		end

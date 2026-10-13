@@ -2184,7 +2184,7 @@ ECS.Relics = {
 		img="drybonesplush.png",
 		action=function(relics_used) end,
 		score=function(ecs_player, song_info, song_data, relics_used, ap, score)
-			return ecs_player.DryBonesPlushCorrect and 125 or 0
+			return ECS.Player.DryBonesPlushCorrect and 125 or 0
 		end,
 	},
 	{
