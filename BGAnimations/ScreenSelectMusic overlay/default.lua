@@ -114,7 +114,7 @@ local af = Def.ActorFrame{
 	CodeMessageCommand=function(self, params)
 		if params.Name == "Favorite1" or params.Name == "Favorite2" then
 			addOrRemoveFavorite(params.PlayerNumber)
-		elseif params.Name == "EscapeFromEventMode" then
+		elseif params.Name == "EscapeFromEventMode" or params.Name == "EscapeFromEventMode2" then
 			-- Reset relics to default when quitting through ScreenSelectMusic.
 			if ECS.Mode == "ECS" or ECS.Mode == "Speed" or ECS.Mode == "Marathon" then
 				local mpn = GAMESTATE:GetMasterPlayerNumber()
