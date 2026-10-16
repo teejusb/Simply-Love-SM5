@@ -12,6 +12,8 @@ InitializeECS = function()
 	ECS.Player = {
 		ProfileName=nil,
 		Relics={},
+		-- Original quantities for relics available in the filtered set-start list.
+		SetRelicCounts={},
 		-- AddPlayedSong appends every result and keeps this table sorted by points.
 		SongsPlayed={},
 		-- Also updated in AddPlayedSongs below.
@@ -127,6 +129,27 @@ local UsingGameCartridge = function(relics_used)
 end
 
 -- the master list
+local RestoreConsumedSetRelics = function(player, failed_only, exclude_name)
+	local recovered_names = {}
+
+	for song in ivalues(ECS.Player.SongsPlayed) do
+		if not failed_only or song.failed then
+			for used_relic in ivalues(song.relics_used or {}) do
+				if used_relic.is_consumable and ECS.Player.SetRelicCounts[used_relic.name] ~= nil
+					and used_relic.name ~= exclude_name then
+					recovered_names[used_relic.name] = true
+				end
+			end
+		end
+	end
+
+	for relic in ivalues(player.relics) do
+		if recovered_names[relic.name] then
+			relic.quantity = ECS.Player.SetRelicCounts[relic.name]
+		end
+	end
+end
+
 ECS.Relics = {
 	{
 		id=0,
@@ -2855,22 +2878,7 @@ ECS.Relics = {
 					local profile_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
 					local player = ECS.Players[profile_name]
 					if player then
-						for song in ivalues(ECS.Player.SongsPlayed) do
-							if song.failed then
-								-- Check which relics we used on this failed song
-								for used_relic in ivalues(song.relics_used or {}) do
-									if used_relic.is_consumable then
-										-- Iterate over the player's available relics
-										for relic in ivalues(player.relics) do
-											if relic.name == used_relic.name then
-												relic.quantity = relic.quantity + 1
-												break
-											end
-										end
-									end
-								end
-							end
-						end
+						RestoreConsumedSetRelics(player, true)
 					end
 				end
 			end
@@ -3462,20 +3470,7 @@ ECS.Relics = {
 					local profile_name = PROFILEMAN:GetPlayerName(GAMESTATE:GetMasterPlayerNumber())
 					local player = ECS.Players[profile_name]
 					if player then
-						for song in ivalues(ECS.Player.SongsPlayed) do
-							-- Check which relics we used on this failed song
-							for used_relic in ivalues(song.relics_used or {}) do
-								if used_relic.is_consumable then
-									-- Iterate over the player's available relics
-									for relic in ivalues(player.relics) do
-										if relic.name == used_relic.name and relic.name ~= "Order of Ambrosia" then
-											relic.quantity = relic.quantity + 1
-											break
-										end
-									end
-								end
-							end
-						end
+						RestoreConsumedSetRelics(player, false, "Order of Ambrosia")
 					end
 				end
 			end

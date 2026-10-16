@@ -212,10 +212,24 @@ local t = Def.ActorFrame{
 
 		-- Update the complete table.
 		ECS.Players[profile_name].relics = all_relics
+
+		-- Capture original quantities after the player has limited the set's
+		-- relic pool. Use default_relics as the untouched quantity source.
+		local limited_names = {}
+		for relic in ivalues(all_relics) do
+			limited_names[relic.name] = true
+		end
+		ECS.Player.SetRelicCounts = {}
+		for relic in ivalues(ECS.Players[profile_name].default_relics) do
+			if limited_names[relic.name] then
+				ECS.Player.SetRelicCounts[relic.name] = relic.quantity
+			end
+		end
 	end,
 	TransitionBackCommand=function(self)
 		-- Reset chosen relics since if a player is "exiting" out of this screen
 		ECS.Players[profile_name].relics = DeepCopy(ECS.Players[profile_name].default_relics)
+		ECS.Player.SetRelicCounts = {}
 		SCREENMAN:GetTopScreen():PostScreenMessage("SM_GoToPrevScreen",0)
 	end,
 	RelicActivatedMessageCommand=function(self, params)
