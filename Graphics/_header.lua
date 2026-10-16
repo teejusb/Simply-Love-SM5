@@ -2,6 +2,10 @@
 local dark  = {0,0,0,0.9}
 local light = {0.65,0.65,0.65,1}
 
+local GetDisplayedGameMode = function()
+	return ECS.IsPractice and "Practice" or ECS.Mode
+end
+
 
 local ArvinsGambitIsActive = function()
 	for active_relic in ivalues(ECS.Player.Relics) do
@@ -236,12 +240,12 @@ local af = Def.ActorFrame{
 			or screen_name == "ScreenEvaluationStage"
 			or screen_name == "ScreenEvaluationSummary"
 			then
-				self:settext(THEME:GetString("ScreenSelectPlayMode", ECS.Mode))
+				self:settext(THEME:GetString("ScreenSelectPlayMode", GetDisplayedGameMode()))
 				self:sleep(0.1):decelerate(0.33):diffusealpha(1)
 			end
 		end,
 		UpdateHeaderTextCommand=function(self)
-			self:settext(THEME:GetString("ScreenSelectPlayMode", ECS.Mode))
+			self:settext(THEME:GetString("ScreenSelectPlayMode", GetDisplayedGameMode()))
 		end
 	}
 }
