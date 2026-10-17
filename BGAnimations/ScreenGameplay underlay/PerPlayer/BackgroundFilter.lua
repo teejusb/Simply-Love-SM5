@@ -2,6 +2,13 @@ local player = ...
 local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 
+-- Les Paul disables the gameplay background filter regardless of the saved
+-- preference. Check the relic here too so the filter actor cannot be created
+-- from a stale ActiveModifiers value.
+for relic in ivalues(ECS.Player.Relics) do
+	if relic.name == "Les Paul" then return end
+end
+
 -- if no BackgroundFilter is necessary, it's safe to bail now
 if mods.BackgroundFilter == "Off" then return end
 if IsRoutine() and player ~= GAMESTATE:GetMasterPlayerNumber() then return end

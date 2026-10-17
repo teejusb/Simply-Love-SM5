@@ -21,7 +21,9 @@ return function(SongNumberInCourse)
 		if has_les_paul then
 			ECS.Player.LesPaulPoints = 0
 			local mods = SL[pn].ActiveModifiers
-			local player_options = GAMESTATE:GetPlayerState(player):GetPlayerOptions("ModsLevel_Song")
+			local player_state = GAMESTATE:GetPlayerState(player)
+			local player_options = player_state:GetPlayerOptions("ModsLevel_Song")
+			local preferred_options = player_state:GetPlayerOptions("ModsLevel_Preferred")
 			local original = ECS.Player.LesPaulOriginalSettings[pn] or {}
 			original.Mini = original.Mini or mods.Mini
 			original.BackgroundFilter = original.BackgroundFilter or mods.BackgroundFilter
@@ -31,6 +33,7 @@ return function(SongNumberInCourse)
 			original.MeasureLines = original.MeasureLines or mods.MeasureLines
 			original.PlayerMini = original.PlayerMini or player_options:Mini()
 			original.Reverse = original.Reverse or player_options:Reverse()
+			original.PreferredReverse = original.PreferredReverse or preferred_options:Reverse()
 			ECS.Player.LesPaulOriginalSettings[pn] = original
 
 			mods.Mini = "0%"
@@ -41,6 +44,11 @@ return function(SongNumberInCourse)
 			mods.MeasureLines = "Quarter"
 			player_options:Mini(0)
 			player_options:Reverse(1)
+			-- Some gameplay modifiers are inherited from Preferred and can override
+			-- Song-level changes. Force reverse at both levels and via the same
+			-- command path used by ScreenContrakt's scroll modifiers.
+			preferred_options:Reverse(1)
+			GAMESTATE:ApplyGameCommand("mod,reverse", player)
 		end
 
 		-- Check if MeasureCounter are turned on.
