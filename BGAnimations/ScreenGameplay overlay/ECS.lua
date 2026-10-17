@@ -584,7 +584,7 @@ if CoreDrillIsActive() then
 	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
 	local centered_single = PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1
 	local core_drill_x = (is_double or centered_single)
-		and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170)
+		and SCREEN_RIGHT - 170
 		or SCREEN_CENTER_X
 	local panelsPerGame = {
 		["dance"] = {
@@ -749,7 +749,7 @@ if FutonIsActive() then
 	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
 	local centered_single = PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1
 	local prompt_x = (is_double or centered_single)
-		and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170)
+		and SCREEN_RIGHT - 170
 		or SCREEN_CENTER_X
 	local prompt_y = SCREEN_CENTER_Y
 

@@ -28,9 +28,9 @@ local max_star_power_beats = star_power_beats * 2
 local is_double = GAMESTATE:GetCurrentStyle():GetName() == "double"
 local is_centered_single = PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1
 local display_x = (is_double or is_centered_single)
-	and (player == PLAYER_1 and 60 or _screen.w - 60)
+	and _screen.w - 70
 	or _screen.cx
-local prompt_x = is_double and (player == PLAYER_1 and 100 or _screen.w - 100) or display_x
+local prompt_x = (is_double or is_centered_single) and _screen.w - 100 or display_x
 local prompt_y = _screen.h * 0.70
 local meter_width = 32
 local meter_height = 128
