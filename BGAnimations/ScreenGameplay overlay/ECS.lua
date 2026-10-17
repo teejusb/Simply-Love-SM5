@@ -582,7 +582,10 @@ end
 if CoreDrillIsActive() then
 	local style_type = GAMESTATE:GetCurrentStyle():GetStyleType()
 	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
-	local core_drill_x = is_double and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170) or SCREEN_CENTER_X
+	local centered_single = #GAMESTATE:GetHumanPlayers() == 1 and GetNotefieldX(player) == SCREEN_CENTER_X
+	local core_drill_x = (is_double or centered_single)
+		and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170)
+		or SCREEN_CENTER_X
 	local panelsPerGame = {
 		["dance"] = {
 			"Left", "Down", "Up", "Right"
@@ -744,7 +747,10 @@ if FutonIsActive() then
 	local pause_delay_seconds = 1
 	local style_type = GAMESTATE:GetCurrentStyle():GetStyleType()
 	local is_double = style_type == "StyleType_OnePlayerTwoSides" or style_type == "StyleType_TwoPlayersSharedSides"
-	local prompt_x = is_double and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170) or SCREEN_CENTER_X
+	local centered_single = #GAMESTATE:GetHumanPlayers() == 1 and GetNotefieldX(player) == SCREEN_CENTER_X
+	local prompt_x = (is_double or centered_single)
+		and (player == PLAYER_1 and SCREEN_LEFT + 170 or SCREEN_RIGHT - 170)
+		or SCREEN_CENTER_X
 	local prompt_y = SCREEN_CENTER_Y
 
 	local CanPauseFuton = function()
