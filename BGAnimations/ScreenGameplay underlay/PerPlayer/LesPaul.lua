@@ -26,7 +26,7 @@ local phrase_beats = beats_per_measure * phrase_measures
 local star_power_beats = beats_per_measure * 4
 local max_star_power_beats = star_power_beats * 2
 local is_double = GAMESTATE:GetCurrentStyle():GetName() == "double"
-local is_centered_single = #GAMESTATE:GetHumanPlayers() == 1 and GetNotefieldX(player) == _screen.cx
+local is_centered_single = PREFSMAN:GetPreference("Center1Player") and #GAMESTATE:GetHumanPlayers() == 1
 local display_x = (is_double or is_centered_single)
 	and (player == PLAYER_1 and 60 or _screen.w - 60)
 	or _screen.cx
